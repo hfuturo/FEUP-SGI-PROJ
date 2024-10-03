@@ -39,7 +39,7 @@ class MyContents  {
         // Create a Cube Mesh with basic material
         let box = new THREE.BoxGeometry(  this.boxMeshSize,  this.boxMeshSize,  this.boxMeshSize );
         this.boxMesh = new THREE.Mesh( box, boxMaterial );
-        this.boxMesh.rotation.x = -Math.PI / 2;
+        // this.boxMesh.rotation.x = -Math.PI / 2;
         this.boxMesh.position.y = this.boxDisplacement.y;
     }
 
@@ -78,6 +78,29 @@ class MyContents  {
         this.planeMesh.rotation.x = -Math.PI / 2;
         this.planeMesh.position.y = -0;
         this.app.scene.add( this.planeMesh );
+        
+        this.wallMesh1 = new THREE.Mesh( plane, this.planeMaterial );
+        this.wallMesh1.position.z = -5;
+        this.wallMesh1.position.y = 5;
+        this.app.scene.add( this.wallMesh1 );
+        
+        this.wallMesh2 = new THREE.Mesh( plane, this.planeMaterial );
+        this.wallMesh2.position.z = 5
+        this.wallMesh2.position.y = 5;
+        this.wallMesh2.rotation.y = Math.PI;
+        this.app.scene.add( this.wallMesh2 );
+
+        this.wallMesh3 = new THREE.Mesh( plane, this.planeMaterial );
+        this.wallMesh3.position.x = -5;
+        this.wallMesh3.position.y = 5;
+        this.wallMesh3.rotation.y = Math.PI / 2;
+        this.app.scene.add( this.wallMesh3 );
+
+        this.wallMesh4 = new THREE.Mesh( plane, this.planeMaterial );
+        this.wallMesh4.position.x = 5
+        this.wallMesh4.position.y = 5;
+        this.wallMesh4.rotation.y = -Math.PI / 2;
+        this.app.scene.add( this.wallMesh4 );
     }
     
     /**
