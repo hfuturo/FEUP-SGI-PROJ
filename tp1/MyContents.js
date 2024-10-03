@@ -51,7 +51,7 @@ class MyContents  {
         this.app.scene.add( this.wallMesh1 );
         
         this.wallMesh2 = new THREE.Mesh( plane, this.planeMaterial );
-        this.wallMesh2.position.z = 5
+        this.wallMesh2.position.z = 5;
         this.wallMesh2.position.y = 5;
         this.wallMesh2.rotation.y = Math.PI;
         this.app.scene.add( this.wallMesh2 );
@@ -63,7 +63,7 @@ class MyContents  {
         this.app.scene.add( this.wallMesh3 );
 
         this.wallMesh4 = new THREE.Mesh( plane, this.planeMaterial );
-        this.wallMesh4.position.x = 5
+        this.wallMesh4.position.x = 5;
         this.wallMesh4.position.y = 5;
         this.wallMesh4.rotation.y = -Math.PI / 2;
         this.app.scene.add( this.wallMesh4 );
@@ -111,6 +111,42 @@ class MyContents  {
         this.app.scene.add(this.plateMesh);
     }
 
+    buildCake() {
+        const cake = new THREE.CylinderGeometry(0.5, 0.5, 0.5, 32, 1, false, 0, Math.PI * 1.8);
+        this.cakeMesh = new THREE.Mesh(cake, this.planeMaterial);
+        this.cakeMesh.position.y = 3.1;
+        this.app.scene.add(this.cakeMesh);
+
+        // fill the inside of the cake where the slice is missing
+        const slice = new THREE.PlaneGeometry(0.5, 0.5);
+        this.sliceBlueAxisMesh = new THREE.Mesh(slice, this.planeMaterial);
+        this.sliceBlueAxisMesh.position.y = 3.1;
+        this.sliceBlueAxisMesh.rotation.y = -Math.PI / 2;
+        this.sliceBlueAxisMesh.position.z = 0.25;
+        this.app.scene.add(this.sliceBlueAxisMesh);
+
+        this.sliceAngledMesh = new THREE.Mesh(slice, this.planeMaterial);
+        this.sliceAngledMesh.position.y = 3.1;
+        this.sliceAngledMesh.rotation.y = Math.PI * 2 - Math.PI * 1.7;
+        this.sliceAngledMesh.position.x = Math.sin(Math.PI * 1.8) * 0.25;
+        this.sliceAngledMesh.position.z = Math.cos(Math.PI * 1.8) * 0.25;
+        this.app.scene.add(this.sliceAngledMesh);
+    }
+
+    buildCandle() {
+        const candle = new THREE.CylinderGeometry(0.025, 0.025, 0.2);
+        this.candleMesh = new THREE.Mesh(candle, this.planeMaterial);
+        this.candleMesh.position.y = 3.4;
+        this.app.scene.add(this.candleMesh);
+    }
+
+    buildFlame() {
+        const flame = new THREE.ConeGeometry(0.025, 0.1);
+        this.flameMesh = new THREE.Mesh(flame, this.planeMaterial);
+        this.flameMesh.position.y = 3.5;
+        this.app.scene.add(this.flameMesh);
+    }
+
     /**
      * initializes the contents
      */
@@ -147,11 +183,12 @@ class MyContents  {
         this.planeMesh.position.y = -0;
         this.app.scene.add( this.planeMesh );
         
-        this.buildWalls()
-
-        this.buildTable()
-
-        this.buildPlate()
+        this.buildWalls();
+        this.buildTable();
+        this.buildPlate();
+        this.buildCake();
+        this.buildCandle();
+        this.buildFlame();
     }
     
     /**
