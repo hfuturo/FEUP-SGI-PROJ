@@ -1,10 +1,10 @@
 # SGI 2024/2025
 
-## Group T0xG0y
+## Group T04G05
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| Henrique Silva   | 202105647 | up202105647@up.pt  |
+| Tomás Gaspar     | 202108828 | up202108828@up.pt  |
 
 ----
 
