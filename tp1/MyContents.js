@@ -45,24 +45,32 @@ class MyContents  {
 
     buildWalls() {
         let plane = new THREE.PlaneGeometry( 10, 10 );
-        this.wallMesh1 = new THREE.Mesh( plane, this.planeMaterial );
+        
+        const wallMaterial = new THREE.MeshPhongMaterial({
+            color: "#cac8be",
+            specular: "#000000",
+            emissive: "#000000",
+            shininess: 0
+        })
+
+        this.wallMesh1 = new THREE.Mesh( plane, wallMaterial );
         this.wallMesh1.position.z = -5;
         this.wallMesh1.position.y = 5;
         this.app.scene.add( this.wallMesh1 );
         
-        this.wallMesh2 = new THREE.Mesh( plane, this.planeMaterial );
+        this.wallMesh2 = new THREE.Mesh( plane, wallMaterial );
         this.wallMesh2.position.z = 5;
         this.wallMesh2.position.y = 5;
         this.wallMesh2.rotation.y = Math.PI;
         this.app.scene.add( this.wallMesh2 );
 
-        this.wallMesh3 = new THREE.Mesh( plane, this.planeMaterial );
+        this.wallMesh3 = new THREE.Mesh( plane, wallMaterial );
         this.wallMesh3.position.x = -5;
         this.wallMesh3.position.y = 5;
         this.wallMesh3.rotation.y = Math.PI / 2;
         this.app.scene.add( this.wallMesh3 );
 
-        this.wallMesh4 = new THREE.Mesh( plane, this.planeMaterial );
+        this.wallMesh4 = new THREE.Mesh( plane, wallMaterial );
         this.wallMesh4.position.x = 5;
         this.wallMesh4.position.y = 5;
         this.wallMesh4.rotation.y = -Math.PI / 2;
@@ -72,31 +80,47 @@ class MyContents  {
     buildTable() {
 
         let tableTop = new THREE.BoxGeometry(5, 0.5, 2.5);
-        this.tableTopMesh = new THREE.Mesh(tableTop, this.planeMaterial);
+
+        // TODO: check
+        const woodTexture = new THREE.TextureLoader().load('textures/wood.jpg');
+        woodTexture.wrapS = THREE.MirroredRepeatWrapping;
+        woodTexture.repeat.set(2, 1);
+        const tableTopMaterial = new THREE.MeshLambertMaterial({
+            map: woodTexture
+        })
+
+        this.tableTopMesh = new THREE.Mesh(tableTop, tableTopMaterial);
         this.tableTopMesh.position.y = 2.5;
         this.app.scene.add(this.tableTopMesh);
 
         this.cylinder = new THREE.CylinderGeometry(0.25, 0.25, 2.5);
 
-        this.leg1 = new THREE.Mesh(this.cylinder, this.planeMaterial);
+        const legMaterial = new THREE.MeshPhongMaterial({
+            color: "#000000",
+            specular: "#c4c4c4",
+            emissive: "#000000",
+            shininess: 0
+        })
+
+        this.leg1 = new THREE.Mesh(this.cylinder, legMaterial);
         this.leg1.position.x = -2;
         this.leg1.position.y = 1;
         this.leg1.position.z = -0.75;
         this.app.scene.add(this.leg1);
 
-        this.leg2 = new THREE.Mesh(this.cylinder, this.planeMaterial);
+        this.leg2 = new THREE.Mesh(this.cylinder, legMaterial);
         this.leg2.position.x = 2;
         this.leg2.position.y = 1;
         this.leg2.position.z = -0.75;
         this.app.scene.add(this.leg2);
 
-        this.leg3 = new THREE.Mesh(this.cylinder, this.planeMaterial);
+        this.leg3 = new THREE.Mesh(this.cylinder, legMaterial);
         this.leg3.position.x = -2;
         this.leg3.position.y = 1;
         this.leg3.position.z = 0.75;
         this.app.scene.add(this.leg3);
 
-        this.leg4 = new THREE.Mesh(this.cylinder, this.planeMaterial);
+        this.leg4 = new THREE.Mesh(this.cylinder, legMaterial);
         this.leg4.position.x = 2;
         this.leg4.position.y = 1;
         this.leg4.position.z = 0.75;
