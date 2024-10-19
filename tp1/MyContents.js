@@ -45,7 +45,8 @@ class MyContents  {
 
     buildWalls() {
         let plane = new THREE.PlaneGeometry( 10, 10 );
-        
+        const horizontalSubplane = new THREE.PlaneGeometry(10, 4);
+        const verticalSubplane = new THREE.PlaneGeometry(2.5, 10);
         const wallMaterial = new THREE.MeshPhongMaterial({
             color: "#cac8be",
             specular: "#000000",
@@ -53,10 +54,45 @@ class MyContents  {
             shininess: 0
         })
 
-        this.wallMesh1 = new THREE.Mesh( plane, wallMaterial );
-        this.wallMesh1.position.z = -5;
-        this.wallMesh1.position.y = 5;
-        this.app.scene.add( this.wallMesh1 );
+        // build subwalls in this one to create a hole 
+        this.wallMesh11 = new THREE.Mesh( horizontalSubplane, wallMaterial );
+        this.wallMesh11.position.z = -5;
+        this.wallMesh11.position.y = 8;
+        this.app.scene.add( this.wallMesh11 );
+
+        this.wallMesh12 = new THREE.Mesh( horizontalSubplane, wallMaterial );
+        this.wallMesh12.position.z = -5;
+        this.wallMesh12.position.y = 2;
+        this.app.scene.add( this.wallMesh12 );
+
+        this.wallMesh13 = new THREE.Mesh( verticalSubplane, wallMaterial );
+        this.wallMesh13.position.x = -3.8;
+        this.wallMesh13.position.z = -5;
+        this.wallMesh13.position.y = 5;
+        this.app.scene.add( this.wallMesh13 );
+
+        this.wallMesh14 = new THREE.Mesh( verticalSubplane, wallMaterial );
+        this.wallMesh14.position.x = 3.8;
+        this.wallMesh14.position.z = -5;
+        this.wallMesh14.position.y = 5;
+        this.app.scene.add( this.wallMesh14 );
+
+        // glass
+        const geometry = new THREE.PlaneGeometry(5.1, 2);
+        const material = new THREE.MeshPhysicalMaterial({  
+            roughness: 0,  
+            transmission: 1, // Add transparency
+        });
+        const mesh = new THREE.Mesh(geometry, material)
+        this.app.scene.add(mesh);
+        mesh.position.set(0, 5, -5);
+
+        const light = new THREE.DirectionalLight(0xFFFFFF, 2, 0);
+        light.position.set(0, 5, -10);
+        light.target.position.set(0, 5, -5);
+        this.app.scene.add(light);
+        const lightHelper = new THREE.DirectionalLightHelper(light, 0.5);
+        this.app.scene.add(lightHelper);
         
         this.wallMesh2 = new THREE.Mesh( plane, wallMaterial );
         this.wallMesh2.position.z = 5;
@@ -171,6 +207,85 @@ class MyContents  {
         this.app.scene.add(this.flameMesh);
     }
 
+    buildLandscape() {
+        const landscape = new THREE.PlaneGeometry(24, 13.5);
+        const landscapeTexture = new THREE.TextureLoader().load('textures/landscape.webp');
+        landscapeTexture.wrapS = THREE.RepeatWrapping;
+        const landscapeMaterial = new THREE.MeshLambertMaterial({
+            map: landscapeTexture
+        });
+
+        this.landscapeMesh = new THREE.Mesh(landscape, landscapeMaterial);
+        this.landscapeMesh.position.set(0, 5, -10);
+        this.app.scene.add(this.landscapeMesh);
+    }
+
+    buildFrame(posX, posY, posZ) {
+        const horizontalPiece = new THREE.BoxGeometry(0.1, 0.1, 1);
+        const verticalPeice = new THREE.BoxGeometry(0.1, 0.1, 1.5);
+
+        const frameMaterial = new THREE.MeshPhongMaterial({
+            color: "#F5BF03",
+            specular: "#000000",
+            emissive: "#000000",
+            shininess: 0
+        });
+
+        // bottom
+        this.frameMesh1 = new THREE.Mesh(horizontalPiece, frameMaterial);
+        this.frameMesh1.position.set(posX, posY - 0.7, posZ);
+        this.app.scene.add(this.frameMesh1);
+
+        // left
+        this.frameMesh2 = new THREE.Mesh(verticalPeice, frameMaterial);
+        this.frameMesh2.rotation.x = Math.PI / 2;
+        this.frameMesh2.position.set(posX, posY, posZ + 0.5);
+        this.app.scene.add(this.frameMesh2);
+
+        // top
+        this.frameMesh3 = new THREE.Mesh(horizontalPiece, frameMaterial);
+        this.frameMesh3.position.set(posX, posY + 0.7, posZ);
+        this.app.scene.add(this.frameMesh3);
+
+        // right
+        this.frameMesh2 = new THREE.Mesh(verticalPeice, frameMaterial);
+        this.frameMesh2.rotation.x = Math.PI / 2;
+        this.frameMesh2.position.set(posX, posY, posZ - 0.5);
+        this.app.scene.add(this.frameMesh2);
+    }
+
+    paintPainting(texture, position) {
+        const image = new THREE.PlaneGeometry(1, 1.4);
+        const imageTexture = new THREE.TextureLoader().load('textures/' + texture);
+        imageTexture.wrapS = THREE.RepeatWrapping;
+        const imageMaterial = new THREE.MeshLambertMaterial({
+            map: imageTexture
+        });
+
+        this.imageMesh = new THREE.Mesh(image, imageMaterial);
+        this.imageMesh.position.set(...position);
+        this.imageMesh.rotation.y = Math.PI / 2;
+        this.app.scene.add(this.imageMesh);
+    }
+
+    illuminatePainting(position) {
+        const paintingSpotlight = new THREE.SpotLight(0xFFFFFF, 100, 0);
+        paintingSpotlight.position.set(0, 10, position[2]);
+        paintingSpotlight.target.position.set(...position);
+        paintingSpotlight.angle = Math.PI / 25;
+        paintingSpotlight.penumbra = 0.6;
+        paintingSpotlight.decay = 3;
+        this.app.scene.add(paintingSpotlight);
+        const paintingSpotlightHelper = new THREE.SpotLightHelper(paintingSpotlight, 0.5);
+        // this.app.scene.add(paintingSpotlightHelper);
+    }
+
+    buildPainting(texture, ...position) {
+        this.buildFrame(...position);
+        this.paintPainting(texture, position);
+        this.illuminatePainting(position);
+    }
+
     /**
      * initializes the contents
      */
@@ -184,7 +299,7 @@ class MyContents  {
         }
 
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
+        const pointLight = new THREE.PointLight( 0xffffff, 300, 0 );
         pointLight.position.set( 0, 20, 0 );
         this.app.scene.add( pointLight );
 
@@ -196,6 +311,14 @@ class MyContents  {
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555 );
         this.app.scene.add( ambientLight );
+
+        const cakeSpotLight = new THREE.SpotLight(0xFFFFFF, 100, 0);
+        cakeSpotLight.position.set(0, 10, 0);
+        cakeSpotLight.penumbra = 0.9;
+        cakeSpotLight.angle = Math.PI / 15;
+        this.app.scene.add(cakeSpotLight);
+        const cakeSpotLightHelper = new THREE.SpotLightHelper(cakeSpotLight, sphereSize);
+        // this.app.scene.add(cakeSpotLightHelper);
 
         this.buildBox()
         
@@ -213,6 +336,9 @@ class MyContents  {
         this.buildCake();
         this.buildCandle();
         this.buildFlame();
+        this.buildLandscape();
+        this.buildPainting("henrique.jpg", -4.95, 5.7, 2.5);
+        this.buildPainting("tomas.jpg", -4.95, 5.7, -2.5);
     }
     
     /**
