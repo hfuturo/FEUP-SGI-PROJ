@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
+import { MyNurbsBuilder } from './MyNurbsBuilder.js'
 
 /**
  *  This class contains the contents of out application
@@ -27,6 +28,8 @@ class MyContents  {
         this.planeShininess = 30
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
             specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
+
+        this.nurbsBuilder = new MyNurbsBuilder(this.app)
     }
 
     /**
@@ -286,6 +289,89 @@ class MyContents  {
         this.illuminatePainting(position);
     }
 
+    buildNewsPaper() {
+        const controlPoints = [// U = 0
+            [// V = 0..2
+                [0, 0, 0, 1],
+                [0.5, 0.5, 0, 1],
+                [1, 0, 0, 1]
+            ],
+            // U = 1
+            [// V = 0..2
+                [0, 0, 1.4, 1],
+                [0.5, 0.5, 1.4, 1],
+                [1, 0, 1.4, 1]
+            ],
+        ]
+
+        const texture = new THREE.TextureLoader().load('textures/newspaper.jpg');
+        texture.rotation = Math.PI / 2;
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        const newspaperMaterial = new THREE.MeshLambertMaterial({
+            map: texture,
+            side: THREE.DoubleSide
+        })
+
+        const surface = this.nurbsBuilder.build(controlPoints, 1, 2, 8, 8, newspaperMaterial);
+
+        const mesh = new THREE.Mesh(surface, newspaperMaterial);
+        mesh.position.set(-2, 2.75, -0.5)
+        this.app.scene.add(mesh);
+    }
+
+    buildJar() {
+        const controlPoints = [// U = 0
+            [// V = 0..4
+                [0, 0, 0.25, 1],
+                [0.25, 0, 0.25, Math.sqrt(2) / 2],
+                [0.25, 0, 0, 1],
+                [0.25, 0, -0.25, Math.sqrt(2) / 2],
+                [0, 0, -0.25, 1]
+            ],
+            // U = 1
+            [// V = 0..4
+                [0, 0.75, 0.75, 1],
+                [0.75, 0.75, 0.75, Math.sqrt(2) / 2],
+                [0.75, 0.75, 0, 1],
+                [0.75, 0.75, -0.75, Math.sqrt(2) / 2],
+                [0, 0.75, -0.75, 1]
+            ],
+            // U = 2
+            [// V = 0..4
+                [0, 1.25, 0.25, 1],
+                [0.25, 1.25, 0.25, Math.sqrt(2) / 2],
+                [0.25, 1.25, 0, 1],
+                [0.25, 1.25, -0.25, Math.sqrt(2) / 2],
+                [0, 1.25, -0.25, 1]
+            ],
+            // U = 3
+            [// V = 0..4
+                [0, 1.5, 0.6, 1],
+                [0.6, 1.5, 0.6, Math.sqrt(2) / 2],
+                [0.6, 1.5, 0, 1],
+                [0.6, 1.5, -0.6, Math.sqrt(2) / 2],
+                [0, 1.5, -0.6, 1]
+            ]
+        ]
+
+        const jarMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/uv_grid_opengl.jpg'),
+            side: THREE.DoubleSide
+        });
+
+        const surface = this.nurbsBuilder.build(controlPoints, 3, 4, 8, 8, jarMaterial);
+
+        const mesh1 = new THREE.Mesh(surface, jarMaterial);
+        mesh1.position.set(0, 0, 3)
+        this.app.scene.add(mesh1);
+
+        const mesh2 = new THREE.Mesh(surface, jarMaterial);
+        mesh2.position.set(0, 0, 3)
+        mesh2.rotation.y = Math.PI;
+        this.app.scene.add(mesh2);
+    }
+
     /**
      * initializes the contents
      */
@@ -339,6 +425,8 @@ class MyContents  {
         this.buildLandscape();
         this.buildPainting("henrique.jpg", -4.95, 5.7, 2.5);
         this.buildPainting("tomas.jpg", -4.95, 5.7, -2.5);
+        this.buildJar();
+        this.buildNewsPaper();
     }
     
     /**
