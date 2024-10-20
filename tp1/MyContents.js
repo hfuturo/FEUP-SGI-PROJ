@@ -420,6 +420,93 @@ class MyContents  {
 
     }
 
+    initQuadraticBezierCurve(points, position) {
+        let curve = new THREE.QuadraticBezierCurve3( points[0], points[1], points[2])
+        // sample a number of points on the curve
+        let sampledPoints = curve.getPoints(32);
+    
+        this.curveGeometry = new THREE.BufferGeometry().setFromPoints( sampledPoints )
+        this.lineMaterial = new THREE.LineBasicMaterial( { color: 0x00ff00 } )
+        this.lineObj = new THREE.Line( this.curveGeometry, this.lineMaterial )
+        this.lineObj.position.set(position.x,position.y,position.z)
+        this.app.scene.add( this.lineObj );
+    }
+
+    initCubicBezierCurve(points, position) {
+        let curve = new THREE.CubicBezierCurve3(points[0], points[1], points[2], points[3])
+        // sample a number of points on the curve
+        let sampledPoints = curve.getPoints(32);
+    
+        this.curveGeometry = new THREE.BufferGeometry().setFromPoints( sampledPoints )
+        this.lineMaterial = new THREE.LineBasicMaterial( { color: 0x00ff00 } )
+        this.lineObj = new THREE.Line( this.curveGeometry, this.lineMaterial )
+        this.lineObj.position.set(position.x,position.y,position.z)
+        this.app.scene.add( this.lineObj );
+    }
+
+    buildBeetle() {
+        const cubicPoints = [
+            new THREE.Vector3(0, 0, 0), 
+            new THREE.Vector3(0,  0.5, 0), 
+            new THREE.Vector3(0.6, 0.5, 0), 
+            new THREE.Vector3(0.6, 0, 0)
+        ];
+
+        const smallQuadraticPoints = [
+            new THREE.Vector3(0.4, 0, 0),
+            new THREE.Vector3(0.4, 0.5, 0),
+            new THREE.Vector3(0, 0.5, 0)
+        ];
+
+        const bigQuadraticPoints = [
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(0.8, 1, 0)
+        ];
+
+        this.buildFrame(-4.95, 5.7, 0);
+
+        const smallCurve1 = new THREE.QuadraticBezierCurve3(...smallQuadraticPoints);
+        const smallTube1 = new THREE.TubeGeometry(smallCurve1, 100, 0.01);
+        const smallTube1Mesh = new THREE.Mesh(smallTube1, this.planeMaterial);
+        smallTube1Mesh.position.set(-4.95, 5.7 - 0.5, 0 - 0.4);
+        smallTube1Mesh.rotation.y = Math.PI / 2;
+        this.app.scene.add(smallTube1Mesh);
+        // this.initQuadraticBezierCurve(smallQuadraticPoints, new THREE.Vector3(1.2, 0, 0));
+
+        const smallCurve2 = new THREE.QuadraticBezierCurve3(...smallQuadraticPoints);
+        const smallTube2 = new THREE.TubeGeometry(smallCurve2, 100, 0.01);
+        const smallTube2Mesh = new THREE.Mesh(smallTube2, this.planeMaterial);
+        smallTube2Mesh.position.set(-4.95, 5.7 - 0.5 + 0.5, 0);
+        smallTube2Mesh.rotation.y = Math.PI / 2;
+        this.app.scene.add(smallTube2Mesh);
+        // this.initQuadraticBezierCurve(smallQuadraticPoints, new THREE.Vector3(0.8, 0.5, 0));
+
+        const bigCurve = new THREE.QuadraticBezierCurve3(...bigQuadraticPoints);
+        const bigTube = new THREE.TubeGeometry(bigCurve, 100, 0.01);
+        const bigTubeMesh = new THREE.Mesh(bigTube, this.planeMaterial);
+        bigTubeMesh.position.set(-4.95, 5.7 - 0.5, 0 + 0.8);
+        bigTubeMesh.rotation.y = Math.PI / 2;
+        this.app.scene.add(bigTubeMesh);
+        // this.initQuadraticBezierCurve(bigQuadraticPoints, new THREE.Vector3(0, 0, 0));
+
+        const cubicCurve1 = new THREE.CubicBezierCurve3(...cubicPoints);
+        const cubic1Tube = new THREE.TubeGeometry(cubicCurve1, 100, 0.01);
+        const cubic1Mesh = new THREE.Mesh(cubic1Tube, this.planeMaterial);
+        cubic1Mesh.position.set(-4.95, 5.7 - 0.5, 0 + 0.8);
+        cubic1Mesh.rotation.y = Math.PI / 2;
+        this.app.scene.add(cubic1Mesh);
+        // this.initCubicBezierCurve(cubicPoints, new THREE.Vector3(0,0,0));
+
+        const cubicCurve2 = new THREE.CubicBezierCurve3(...cubicPoints);
+        const cubic2Tube = new THREE.TubeGeometry(cubicCurve2, 100, 0.01);
+        const cubic2Mesh = new THREE.Mesh(cubic2Tube, this.planeMaterial);
+        cubic2Mesh.position.set(-4.95, 5.7 - 0.5, 0 - 0.2);
+        cubic2Mesh.rotation.y = Math.PI / 2;
+        this.app.scene.add(cubic2Mesh);
+        // this.initCubicBezierCurve(cubicPoints, new THREE.Vector3(1,0,0))
+    }
+
     buildSpring() {
         const points = (() => {
             const points = [];
@@ -442,7 +529,7 @@ class MyContents  {
         mesh.position.set(1, 2.85, 1);
         this.app.scene.add(mesh);
     }
-    
+
     /**
      * initializes the contents
      */
@@ -499,6 +586,7 @@ class MyContents  {
         this.buildJar();
         this.buildNewsPaper();
         this.buildFlower();
+        this.buildBeetle();
         this.buildSpring();
     }
     
