@@ -372,6 +372,54 @@ class MyContents  {
         this.app.scene.add(mesh2);
     }
 
+    buildFlower() {
+        const curve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(0.3, 0.5, 0),
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(0, 1.25, 0)
+        ])
+        const tube = new THREE.TubeGeometry(curve, 20, 0.1);
+
+        const mesh = new THREE.Mesh(tube, this.planeMaterial);
+        mesh.position.set(0, 0, -3);
+        this.app.scene.add(mesh);
+
+        const receptacle = new THREE.SphereGeometry(0.2);
+        const receptacleMesh = new THREE.Mesh(receptacle, this.planeMaterial);
+        receptacleMesh.position.set(0, 1.25, -3);
+        this.app.scene.add(receptacleMesh);
+
+        const petalControlPoints = [// U = 0
+            [// V = 0..1
+                [0, 0, 0, 1],
+                [0.25, 0, 0, 1]
+            ],
+            // U = 1
+            [// V = 0..1
+                [-0.1, 0.5, 0, 1],
+                [0.35, 0.5, 0, 1]
+            ],
+            // U = 2
+            [// V = 0..1
+                [0.125, 0.75, 0, 1],
+                [0.125, 0.75, 0, 1]
+            ]
+        ]
+        const petalSurface = this.nurbsBuilder.build(petalControlPoints, 2, 1, 8, 8, this.planeMaterial);
+        const petalMaterial = this.planeMaterial;
+        petalMaterial.side = THREE.DoubleSide;
+
+        for (let i = 0; i < Math.PI * 2; i += Math.PI / 4) {
+            const petalMesh = new THREE.Mesh(petalSurface, petalMaterial);
+            petalMesh.scale.set(0.5, 0.5, 0.5);
+            petalMesh.position.set(-Math.sin(i)/10, 1.25 + Math.cos(i)/10, -3);
+            petalMesh.rotation.z = i;
+            this.app.scene.add(petalMesh);
+        }
+
+    }
+
     /**
      * initializes the contents
      */
@@ -427,6 +475,7 @@ class MyContents  {
         this.buildPainting("tomas.jpg", -4.95, 5.7, -2.5);
         this.buildJar();
         this.buildNewsPaper();
+        this.buildFlower();
     }
     
     /**
