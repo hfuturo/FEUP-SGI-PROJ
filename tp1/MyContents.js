@@ -420,6 +420,29 @@ class MyContents  {
 
     }
 
+    buildSpring() {
+        const points = (() => {
+            const points = [];
+            let signal = 1;
+
+            for (let i = 0; i < 30; i++) {
+                points.push(new THREE.Vector3(0.1 * +(i % 2 === 0) * signal, i / 20, 0.1 * +(i % 2 !== 0) * signal));
+                signal = i % 2 === 0 ? signal * -1 : signal;
+            }
+            
+            return points;
+        })();
+
+        const curve = new THREE.CatmullRomCurve3(
+            points
+        );
+        const spring = new THREE.TubeGeometry(curve, 30 * 2, 0.01);
+        const mesh = new THREE.Mesh(spring, this.planeMaterial);
+        mesh.rotation.z = -Math.PI / 2;
+        mesh.position.set(1, 2.85, 1);
+        this.app.scene.add(mesh);
+    }
+    
     /**
      * initializes the contents
      */
@@ -476,6 +499,7 @@ class MyContents  {
         this.buildJar();
         this.buildNewsPaper();
         this.buildFlower();
+        this.buildSpring();
     }
     
     /**
