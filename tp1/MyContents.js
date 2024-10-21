@@ -1,6 +1,12 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js'
+import { MySpring } from './MySpring.js';
+import { MyPainting } from './MyPainting.js';
+import { MyBeetle } from './MyBeetle.js';
+import { MyLandscape } from './MyLandscape.js';
+import { MyCake } from './MyCake.js';
+import { MyWindow } from './MyWindow.js';
 
 /**
  *  This class contains the contents of out application
@@ -79,23 +85,6 @@ class MyContents  {
         this.wallMesh14.position.z = -5;
         this.wallMesh14.position.y = 5;
         this.app.scene.add( this.wallMesh14 );
-
-        // glass
-        const geometry = new THREE.PlaneGeometry(5.1, 2);
-        const material = new THREE.MeshPhysicalMaterial({  
-            roughness: 0,  
-            transmission: 1, // Add transparency
-        });
-        const mesh = new THREE.Mesh(geometry, material)
-        this.app.scene.add(mesh);
-        mesh.position.set(0, 5, -5);
-
-        const light = new THREE.DirectionalLight(0xFFFFFF, 2, 0);
-        light.position.set(0, 5, -10);
-        light.target.position.set(0, 5, -5);
-        this.app.scene.add(light);
-        const lightHelper = new THREE.DirectionalLightHelper(light, 0.5);
-        this.app.scene.add(lightHelper);
         
         this.wallMesh2 = new THREE.Mesh( plane, wallMaterial );
         this.wallMesh2.position.z = 5;
@@ -164,7 +153,6 @@ class MyContents  {
         this.leg4.position.y = 1;
         this.leg4.position.z = 0.75;
         this.app.scene.add(this.leg4);
-
     }
 
     buildPlate() {
@@ -172,121 +160,6 @@ class MyContents  {
         this.plateMesh = new THREE.Mesh(plate, this.planeMaterial);
         this.plateMesh.position.y = 2.75;
         this.app.scene.add(this.plateMesh);
-    }
-
-    buildCake() {
-        const cake = new THREE.CylinderGeometry(0.5, 0.5, 0.5, 32, 1, false, 0, Math.PI * 1.8);
-        this.cakeMesh = new THREE.Mesh(cake, this.planeMaterial);
-        this.cakeMesh.position.y = 3.1;
-        this.app.scene.add(this.cakeMesh);
-
-        // fill the inside of the cake where the slice is missing
-        const slice = new THREE.PlaneGeometry(0.5, 0.5);
-        this.sliceBlueAxisMesh = new THREE.Mesh(slice, this.planeMaterial);
-        this.sliceBlueAxisMesh.position.y = 3.1;
-        this.sliceBlueAxisMesh.rotation.y = -Math.PI / 2;
-        this.sliceBlueAxisMesh.position.z = 0.25;
-        this.app.scene.add(this.sliceBlueAxisMesh);
-
-        this.sliceAngledMesh = new THREE.Mesh(slice, this.planeMaterial);
-        this.sliceAngledMesh.position.y = 3.1;
-        this.sliceAngledMesh.rotation.y = Math.PI * 2 - Math.PI * 1.7;
-        this.sliceAngledMesh.position.x = Math.sin(Math.PI * 1.8) * 0.25;
-        this.sliceAngledMesh.position.z = Math.cos(Math.PI * 1.8) * 0.25;
-        this.app.scene.add(this.sliceAngledMesh);
-    }
-
-    buildCandle() {
-        const candle = new THREE.CylinderGeometry(0.025, 0.025, 0.2);
-        this.candleMesh = new THREE.Mesh(candle, this.planeMaterial);
-        this.candleMesh.position.y = 3.4;
-        this.app.scene.add(this.candleMesh);
-    }
-
-    buildFlame() {
-        const flame = new THREE.ConeGeometry(0.025, 0.1);
-        this.flameMesh = new THREE.Mesh(flame, this.planeMaterial);
-        this.flameMesh.position.y = 3.5;
-        this.app.scene.add(this.flameMesh);
-    }
-
-    buildLandscape() {
-        const landscape = new THREE.PlaneGeometry(24, 13.5);
-        const landscapeTexture = new THREE.TextureLoader().load('textures/landscape.webp');
-        landscapeTexture.wrapS = THREE.RepeatWrapping;
-        const landscapeMaterial = new THREE.MeshLambertMaterial({
-            map: landscapeTexture
-        });
-
-        this.landscapeMesh = new THREE.Mesh(landscape, landscapeMaterial);
-        this.landscapeMesh.position.set(0, 5, -10);
-        this.app.scene.add(this.landscapeMesh);
-    }
-
-    buildFrame(posX, posY, posZ) {
-        const horizontalPiece = new THREE.BoxGeometry(0.1, 0.1, 1);
-        const verticalPeice = new THREE.BoxGeometry(0.1, 0.1, 1.5);
-
-        const frameMaterial = new THREE.MeshPhongMaterial({
-            color: "#F5BF03",
-            specular: "#000000",
-            emissive: "#000000",
-            shininess: 0
-        });
-
-        // bottom
-        this.frameMesh1 = new THREE.Mesh(horizontalPiece, frameMaterial);
-        this.frameMesh1.position.set(posX, posY - 0.7, posZ);
-        this.app.scene.add(this.frameMesh1);
-
-        // left
-        this.frameMesh2 = new THREE.Mesh(verticalPeice, frameMaterial);
-        this.frameMesh2.rotation.x = Math.PI / 2;
-        this.frameMesh2.position.set(posX, posY, posZ + 0.5);
-        this.app.scene.add(this.frameMesh2);
-
-        // top
-        this.frameMesh3 = new THREE.Mesh(horizontalPiece, frameMaterial);
-        this.frameMesh3.position.set(posX, posY + 0.7, posZ);
-        this.app.scene.add(this.frameMesh3);
-
-        // right
-        this.frameMesh2 = new THREE.Mesh(verticalPeice, frameMaterial);
-        this.frameMesh2.rotation.x = Math.PI / 2;
-        this.frameMesh2.position.set(posX, posY, posZ - 0.5);
-        this.app.scene.add(this.frameMesh2);
-    }
-
-    paintPainting(texture, position) {
-        const image = new THREE.PlaneGeometry(1, 1.4);
-        const imageTexture = new THREE.TextureLoader().load('textures/' + texture);
-        imageTexture.wrapS = THREE.RepeatWrapping;
-        const imageMaterial = new THREE.MeshLambertMaterial({
-            map: imageTexture
-        });
-
-        this.imageMesh = new THREE.Mesh(image, imageMaterial);
-        this.imageMesh.position.set(...position);
-        this.imageMesh.rotation.y = Math.PI / 2;
-        this.app.scene.add(this.imageMesh);
-    }
-
-    illuminatePainting(position) {
-        const paintingSpotlight = new THREE.SpotLight(0xFFFFFF, 100, 0);
-        paintingSpotlight.position.set(0, 10, position[2]);
-        paintingSpotlight.target.position.set(...position);
-        paintingSpotlight.angle = Math.PI / 25;
-        paintingSpotlight.penumbra = 0.6;
-        paintingSpotlight.decay = 3;
-        this.app.scene.add(paintingSpotlight);
-        const paintingSpotlightHelper = new THREE.SpotLightHelper(paintingSpotlight, 0.5);
-        // this.app.scene.add(paintingSpotlightHelper);
-    }
-
-    buildPainting(texture, ...position) {
-        this.buildFrame(...position);
-        this.paintPainting(texture, position);
-        this.illuminatePainting(position);
     }
 
     buildNewsPaper() {
@@ -420,116 +293,6 @@ class MyContents  {
 
     }
 
-    initQuadraticBezierCurve(points, position) {
-        let curve = new THREE.QuadraticBezierCurve3( points[0], points[1], points[2])
-        // sample a number of points on the curve
-        let sampledPoints = curve.getPoints(32);
-    
-        this.curveGeometry = new THREE.BufferGeometry().setFromPoints( sampledPoints )
-        this.lineMaterial = new THREE.LineBasicMaterial( { color: 0x00ff00 } )
-        this.lineObj = new THREE.Line( this.curveGeometry, this.lineMaterial )
-        this.lineObj.position.set(position.x,position.y,position.z)
-        this.app.scene.add( this.lineObj );
-    }
-
-    initCubicBezierCurve(points, position) {
-        let curve = new THREE.CubicBezierCurve3(points[0], points[1], points[2], points[3])
-        // sample a number of points on the curve
-        let sampledPoints = curve.getPoints(32);
-    
-        this.curveGeometry = new THREE.BufferGeometry().setFromPoints( sampledPoints )
-        this.lineMaterial = new THREE.LineBasicMaterial( { color: 0x00ff00 } )
-        this.lineObj = new THREE.Line( this.curveGeometry, this.lineMaterial )
-        this.lineObj.position.set(position.x,position.y,position.z)
-        this.app.scene.add( this.lineObj );
-    }
-
-    buildBeetle() {
-        const cubicPoints = [
-            new THREE.Vector3(0, 0, 0), 
-            new THREE.Vector3(0,  0.5, 0), 
-            new THREE.Vector3(0.6, 0.5, 0), 
-            new THREE.Vector3(0.6, 0, 0)
-        ];
-
-        const smallQuadraticPoints = [
-            new THREE.Vector3(0.4, 0, 0),
-            new THREE.Vector3(0.4, 0.5, 0),
-            new THREE.Vector3(0, 0.5, 0)
-        ];
-
-        const bigQuadraticPoints = [
-            new THREE.Vector3(0, 0, 0),
-            new THREE.Vector3(0, 1, 0),
-            new THREE.Vector3(0.8, 1, 0)
-        ];
-
-        this.buildFrame(-4.95, 5.7, 0);
-
-        const smallCurve1 = new THREE.QuadraticBezierCurve3(...smallQuadraticPoints);
-        const smallTube1 = new THREE.TubeGeometry(smallCurve1, 100, 0.01);
-        const smallTube1Mesh = new THREE.Mesh(smallTube1, this.planeMaterial);
-        smallTube1Mesh.position.set(-4.95, 5.7 - 0.5, 0 - 0.4);
-        smallTube1Mesh.rotation.y = Math.PI / 2;
-        this.app.scene.add(smallTube1Mesh);
-        // this.initQuadraticBezierCurve(smallQuadraticPoints, new THREE.Vector3(1.2, 0, 0));
-
-        const smallCurve2 = new THREE.QuadraticBezierCurve3(...smallQuadraticPoints);
-        const smallTube2 = new THREE.TubeGeometry(smallCurve2, 100, 0.01);
-        const smallTube2Mesh = new THREE.Mesh(smallTube2, this.planeMaterial);
-        smallTube2Mesh.position.set(-4.95, 5.7 - 0.5 + 0.5, 0);
-        smallTube2Mesh.rotation.y = Math.PI / 2;
-        this.app.scene.add(smallTube2Mesh);
-        // this.initQuadraticBezierCurve(smallQuadraticPoints, new THREE.Vector3(0.8, 0.5, 0));
-
-        const bigCurve = new THREE.QuadraticBezierCurve3(...bigQuadraticPoints);
-        const bigTube = new THREE.TubeGeometry(bigCurve, 100, 0.01);
-        const bigTubeMesh = new THREE.Mesh(bigTube, this.planeMaterial);
-        bigTubeMesh.position.set(-4.95, 5.7 - 0.5, 0 + 0.8);
-        bigTubeMesh.rotation.y = Math.PI / 2;
-        this.app.scene.add(bigTubeMesh);
-        // this.initQuadraticBezierCurve(bigQuadraticPoints, new THREE.Vector3(0, 0, 0));
-
-        const cubicCurve1 = new THREE.CubicBezierCurve3(...cubicPoints);
-        const cubic1Tube = new THREE.TubeGeometry(cubicCurve1, 100, 0.01);
-        const cubic1Mesh = new THREE.Mesh(cubic1Tube, this.planeMaterial);
-        cubic1Mesh.position.set(-4.95, 5.7 - 0.5, 0 + 0.8);
-        cubic1Mesh.rotation.y = Math.PI / 2;
-        this.app.scene.add(cubic1Mesh);
-        // this.initCubicBezierCurve(cubicPoints, new THREE.Vector3(0,0,0));
-
-        const cubicCurve2 = new THREE.CubicBezierCurve3(...cubicPoints);
-        const cubic2Tube = new THREE.TubeGeometry(cubicCurve2, 100, 0.01);
-        const cubic2Mesh = new THREE.Mesh(cubic2Tube, this.planeMaterial);
-        cubic2Mesh.position.set(-4.95, 5.7 - 0.5, 0 - 0.2);
-        cubic2Mesh.rotation.y = Math.PI / 2;
-        this.app.scene.add(cubic2Mesh);
-        // this.initCubicBezierCurve(cubicPoints, new THREE.Vector3(1,0,0))
-    }
-
-    buildSpring() {
-        const points = (() => {
-            const points = [];
-            let signal = 1;
-
-            for (let i = 0; i < 30; i++) {
-                points.push(new THREE.Vector3(0.1 * +(i % 2 === 0) * signal, i / 20, 0.1 * +(i % 2 !== 0) * signal));
-                signal = i % 2 === 0 ? signal * -1 : signal;
-            }
-            
-            return points;
-        })();
-
-        const curve = new THREE.CatmullRomCurve3(
-            points
-        );
-        const spring = new THREE.TubeGeometry(curve, 30 * 2, 0.01);
-        const mesh = new THREE.Mesh(spring, this.planeMaterial);
-        mesh.rotation.z = -Math.PI / 2;
-        mesh.position.set(1, 2.85, 1);
-        this.app.scene.add(mesh);
-    }
-
     /**
      * initializes the contents
      */
@@ -541,6 +304,22 @@ class MyContents  {
             this.axis = new MyAxis(this)
             this.app.scene.add(this.axis)
         }
+
+        const horizontalFaceFrameInfo = {width: 0.1, height: 0.1, depth: 1, rotation: [0, 0, 0]};
+        const verticalFaceFrameInfo = {width: 0.1, height: 0.1, depth: 1.5, rotation: [Math.PI / 2, 0, 0]};
+        const horizontalBeetleInfo = {width: 0.1, height: 0.1, depth: 3, rotation: [0, 0, 0]};
+        const verticalBeetleInfo = {width: 0.1, height: 0.1, depth: 1.5, rotation: [Math.PI / 2, 0, 0]};
+        const horizontalWindowInfo = {width: 0.1, height: 0.1, depth: 5.1, rotation: [0, Math.PI / 2, 0]};
+        const verticalWindowInfo = {width: 0.1, height: 0.1, depth: 2, rotation: [Math.PI / 2, 0, 0]};
+        
+        const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0]);
+        const landscape = new MyLandscape(this.app, 24, 13.5, [0, 5, -10]);
+        const window = new MyWindow(this.app, horizontalWindowInfo, verticalWindowInfo, [0, 5, -5]);
+        const hPainting = new MyPainting(this.app, horizontalFaceFrameInfo, verticalFaceFrameInfo, [-4.95, 5.7, 2.5], "henrique.jpg", [0, Math.PI / 2, 0]);
+        const tPainting = new MyPainting(this.app, horizontalFaceFrameInfo, verticalFaceFrameInfo, [-4.95, 5.7, -2.5], "tomas.jpg", [0, Math.PI / 2, 0]);
+        const beetlePainting = new MyPainting(this.app, horizontalBeetleInfo, verticalBeetleInfo, [-4.95, 5.7, 0], "beetle_background.webp", [0, Math.PI / 2, 0]);
+        const beetle = new MyBeetle(this.app, 100, 0.01, [0, Math.PI / 2, 0], this.planeMaterial);
+        const spring = new MySpring(this.app, 30, 0.01, [1, 2.85, 1], [0, 0, -Math.PI / 2]);
 
         // add a point light on top of the model
         const pointLight = new THREE.PointLight( 0xffffff, 300, 0 );
@@ -556,14 +335,6 @@ class MyContents  {
         const ambientLight = new THREE.AmbientLight( 0x555555 );
         this.app.scene.add( ambientLight );
 
-        const cakeSpotLight = new THREE.SpotLight(0xFFFFFF, 100, 0);
-        cakeSpotLight.position.set(0, 10, 0);
-        cakeSpotLight.penumbra = 0.9;
-        cakeSpotLight.angle = Math.PI / 15;
-        this.app.scene.add(cakeSpotLight);
-        const cakeSpotLightHelper = new THREE.SpotLightHelper(cakeSpotLight, sphereSize);
-        // this.app.scene.add(cakeSpotLightHelper);
-
         this.buildBox()
         
         // Create a Plane Mesh with basic material
@@ -577,17 +348,22 @@ class MyContents  {
         this.buildWalls();
         this.buildTable();
         this.buildPlate();
-        this.buildCake();
-        this.buildCandle();
-        this.buildFlame();
-        this.buildLandscape();
-        this.buildPainting("henrique.jpg", -4.95, 5.7, 2.5);
-        this.buildPainting("tomas.jpg", -4.95, 5.7, -2.5);
+        cake.display();
+        landscape.display();
+        window.display();
         this.buildJar();
         this.buildNewsPaper();
         this.buildFlower();
-        this.buildBeetle();
-        this.buildSpring();
+
+        // pintura beetle
+        beetlePainting.display();
+        beetle.display();
+
+        // pinturas das caras
+        hPainting.display();
+        tPainting.display();
+
+        spring.display();
     }
     
     /**
@@ -637,7 +413,7 @@ class MyContents  {
         if (this.boxEnabled !== this.lastBoxEnabled) {
             this.lastBoxEnabled = this.boxEnabled
             if (this.boxEnabled) {
-                this.app.scene.add(this.boxMesh)
+                // this.app.scene.add(this.boxMesh)
             }
             else {
                 this.app.scene.remove(this.boxMesh)
@@ -658,7 +434,6 @@ class MyContents  {
         this.boxMesh.position.x = this.boxDisplacement.x
         this.boxMesh.position.y = this.boxDisplacement.y
         this.boxMesh.position.z = this.boxDisplacement.z
-        
     }
 
 }
