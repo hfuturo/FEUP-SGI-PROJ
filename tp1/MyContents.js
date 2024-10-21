@@ -7,6 +7,12 @@ import { MyBeetle } from './MyBeetle.js';
 import { MyLandscape } from './MyLandscape.js';
 import { MyCake } from './MyCake.js';
 import { MyWindow } from './MyWindow.js';
+import { MyFlower } from './MyFlower.js';
+import { MyJar } from './MyJar.js';
+import { MyNewspaper } from './MyNewspaper.js';
+import { MyPlate } from './MyPlate.js';
+import { MyWall } from './MyWall.js';
+import { MyTable } from './MyTable.js';
 
 /**
  *  This class contains the contents of out application
@@ -52,247 +58,6 @@ class MyContents  {
         this.boxMesh.position.y = this.boxDisplacement.y;
     }
 
-    buildWalls() {
-        let plane = new THREE.PlaneGeometry( 10, 10 );
-        const horizontalSubplane = new THREE.PlaneGeometry(10, 4);
-        const verticalSubplane = new THREE.PlaneGeometry(2.5, 10);
-        const wallMaterial = new THREE.MeshPhongMaterial({
-            color: "#cac8be",
-            specular: "#000000",
-            emissive: "#000000",
-            shininess: 0
-        })
-
-        // build subwalls in this one to create a hole 
-        this.wallMesh11 = new THREE.Mesh( horizontalSubplane, wallMaterial );
-        this.wallMesh11.position.z = -5;
-        this.wallMesh11.position.y = 8;
-        this.app.scene.add( this.wallMesh11 );
-
-        this.wallMesh12 = new THREE.Mesh( horizontalSubplane, wallMaterial );
-        this.wallMesh12.position.z = -5;
-        this.wallMesh12.position.y = 2;
-        this.app.scene.add( this.wallMesh12 );
-
-        this.wallMesh13 = new THREE.Mesh( verticalSubplane, wallMaterial );
-        this.wallMesh13.position.x = -3.8;
-        this.wallMesh13.position.z = -5;
-        this.wallMesh13.position.y = 5;
-        this.app.scene.add( this.wallMesh13 );
-
-        this.wallMesh14 = new THREE.Mesh( verticalSubplane, wallMaterial );
-        this.wallMesh14.position.x = 3.8;
-        this.wallMesh14.position.z = -5;
-        this.wallMesh14.position.y = 5;
-        this.app.scene.add( this.wallMesh14 );
-        
-        this.wallMesh2 = new THREE.Mesh( plane, wallMaterial );
-        this.wallMesh2.position.z = 5;
-        this.wallMesh2.position.y = 5;
-        this.wallMesh2.rotation.y = Math.PI;
-        this.app.scene.add( this.wallMesh2 );
-
-        this.wallMesh3 = new THREE.Mesh( plane, wallMaterial );
-        this.wallMesh3.position.x = -5;
-        this.wallMesh3.position.y = 5;
-        this.wallMesh3.rotation.y = Math.PI / 2;
-        this.app.scene.add( this.wallMesh3 );
-
-        this.wallMesh4 = new THREE.Mesh( plane, wallMaterial );
-        this.wallMesh4.position.x = 5;
-        this.wallMesh4.position.y = 5;
-        this.wallMesh4.rotation.y = -Math.PI / 2;
-        this.app.scene.add( this.wallMesh4 );
-    }
-
-    buildTable() {
-
-        let tableTop = new THREE.BoxGeometry(5, 0.5, 2.5);
-
-        // TODO: check
-        const woodTexture = new THREE.TextureLoader().load('textures/wood.jpg');
-        woodTexture.wrapS = THREE.MirroredRepeatWrapping;
-        woodTexture.repeat.set(2, 1);
-        const tableTopMaterial = new THREE.MeshLambertMaterial({
-            map: woodTexture
-        })
-
-        this.tableTopMesh = new THREE.Mesh(tableTop, tableTopMaterial);
-        this.tableTopMesh.position.y = 2.5;
-        this.app.scene.add(this.tableTopMesh);
-
-        this.cylinder = new THREE.CylinderGeometry(0.25, 0.25, 2.5);
-
-        const legMaterial = new THREE.MeshPhongMaterial({
-            color: "#000000",
-            specular: "#c4c4c4",
-            emissive: "#000000",
-            shininess: 0
-        })
-
-        this.leg1 = new THREE.Mesh(this.cylinder, legMaterial);
-        this.leg1.position.x = -2;
-        this.leg1.position.y = 1;
-        this.leg1.position.z = -0.75;
-        this.app.scene.add(this.leg1);
-
-        this.leg2 = new THREE.Mesh(this.cylinder, legMaterial);
-        this.leg2.position.x = 2;
-        this.leg2.position.y = 1;
-        this.leg2.position.z = -0.75;
-        this.app.scene.add(this.leg2);
-
-        this.leg3 = new THREE.Mesh(this.cylinder, legMaterial);
-        this.leg3.position.x = -2;
-        this.leg3.position.y = 1;
-        this.leg3.position.z = 0.75;
-        this.app.scene.add(this.leg3);
-
-        this.leg4 = new THREE.Mesh(this.cylinder, legMaterial);
-        this.leg4.position.x = 2;
-        this.leg4.position.y = 1;
-        this.leg4.position.z = 0.75;
-        this.app.scene.add(this.leg4);
-    }
-
-    buildPlate() {
-        let plate = new THREE.CylinderGeometry(0.75, 0.75, 0.25);
-        this.plateMesh = new THREE.Mesh(plate, this.planeMaterial);
-        this.plateMesh.position.y = 2.75;
-        this.app.scene.add(this.plateMesh);
-    }
-
-    buildNewsPaper() {
-        const controlPoints = [// U = 0
-            [// V = 0..2
-                [0, 0, 0, 1],
-                [0.5, 0.5, 0, 1],
-                [1, 0, 0, 1]
-            ],
-            // U = 1
-            [// V = 0..2
-                [0, 0, 1.4, 1],
-                [0.5, 0.5, 1.4, 1],
-                [1, 0, 1.4, 1]
-            ],
-        ]
-
-        const texture = new THREE.TextureLoader().load('textures/newspaper.jpg');
-        texture.rotation = Math.PI / 2;
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        const newspaperMaterial = new THREE.MeshLambertMaterial({
-            map: texture,
-            side: THREE.DoubleSide
-        })
-
-        const surface = this.nurbsBuilder.build(controlPoints, 1, 2, 8, 8, newspaperMaterial);
-
-        const mesh = new THREE.Mesh(surface, newspaperMaterial);
-        mesh.position.set(-2, 2.75, -0.5)
-        this.app.scene.add(mesh);
-    }
-
-    buildJar() {
-        const controlPoints = [// U = 0
-            [// V = 0..4
-                [0, 0, 0.25, 1],
-                [0.25, 0, 0.25, Math.sqrt(2) / 2],
-                [0.25, 0, 0, 1],
-                [0.25, 0, -0.25, Math.sqrt(2) / 2],
-                [0, 0, -0.25, 1]
-            ],
-            // U = 1
-            [// V = 0..4
-                [0, 0.75, 0.75, 1],
-                [0.75, 0.75, 0.75, Math.sqrt(2) / 2],
-                [0.75, 0.75, 0, 1],
-                [0.75, 0.75, -0.75, Math.sqrt(2) / 2],
-                [0, 0.75, -0.75, 1]
-            ],
-            // U = 2
-            [// V = 0..4
-                [0, 1.25, 0.25, 1],
-                [0.25, 1.25, 0.25, Math.sqrt(2) / 2],
-                [0.25, 1.25, 0, 1],
-                [0.25, 1.25, -0.25, Math.sqrt(2) / 2],
-                [0, 1.25, -0.25, 1]
-            ],
-            // U = 3
-            [// V = 0..4
-                [0, 1.5, 0.6, 1],
-                [0.6, 1.5, 0.6, Math.sqrt(2) / 2],
-                [0.6, 1.5, 0, 1],
-                [0.6, 1.5, -0.6, Math.sqrt(2) / 2],
-                [0, 1.5, -0.6, 1]
-            ]
-        ]
-
-        const jarMaterial = new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('textures/uv_grid_opengl.jpg'),
-            side: THREE.DoubleSide
-        });
-
-        const surface = this.nurbsBuilder.build(controlPoints, 3, 4, 8, 8, jarMaterial);
-
-        const mesh1 = new THREE.Mesh(surface, jarMaterial);
-        mesh1.position.set(0, 0, 3)
-        this.app.scene.add(mesh1);
-
-        const mesh2 = new THREE.Mesh(surface, jarMaterial);
-        mesh2.position.set(0, 0, 3)
-        mesh2.rotation.y = Math.PI;
-        this.app.scene.add(mesh2);
-    }
-
-    buildFlower() {
-        const curve = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, 0, 0),
-            new THREE.Vector3(0.3, 0.5, 0),
-            new THREE.Vector3(0, 1, 0),
-            new THREE.Vector3(0, 1.25, 0)
-        ])
-        const tube = new THREE.TubeGeometry(curve, 20, 0.1);
-
-        const mesh = new THREE.Mesh(tube, this.planeMaterial);
-        mesh.position.set(0, 0, -3);
-        this.app.scene.add(mesh);
-
-        const receptacle = new THREE.SphereGeometry(0.2);
-        const receptacleMesh = new THREE.Mesh(receptacle, this.planeMaterial);
-        receptacleMesh.position.set(0, 1.25, -3);
-        this.app.scene.add(receptacleMesh);
-
-        const petalControlPoints = [// U = 0
-            [// V = 0..1
-                [0, 0, 0, 1],
-                [0.25, 0, 0, 1]
-            ],
-            // U = 1
-            [// V = 0..1
-                [-0.1, 0.5, 0, 1],
-                [0.35, 0.5, 0, 1]
-            ],
-            // U = 2
-            [// V = 0..1
-                [0.125, 0.75, 0, 1],
-                [0.125, 0.75, 0, 1]
-            ]
-        ]
-        const petalSurface = this.nurbsBuilder.build(petalControlPoints, 2, 1, 8, 8, this.planeMaterial);
-        const petalMaterial = this.planeMaterial;
-        petalMaterial.side = THREE.DoubleSide;
-
-        for (let i = 0; i < Math.PI * 2; i += Math.PI / 4) {
-            const petalMesh = new THREE.Mesh(petalSurface, petalMaterial);
-            petalMesh.scale.set(0.5, 0.5, 0.5);
-            petalMesh.position.set(-Math.sin(i)/10, 1.25 + Math.cos(i)/10, -3);
-            petalMesh.rotation.z = i;
-            this.app.scene.add(petalMesh);
-        }
-
-    }
-
     /**
      * initializes the contents
      */
@@ -320,6 +85,36 @@ class MyContents  {
         const beetlePainting = new MyPainting(this.app, horizontalBeetleInfo, verticalBeetleInfo, [-4.95, 5.7, 0], "beetle_background.webp", [0, Math.PI / 2, 0]);
         const beetle = new MyBeetle(this.app, 100, 0.01, [0, Math.PI / 2, 0], this.planeMaterial);
         const spring = new MySpring(this.app, 30, 0.01, [1, 2.85, 1], [0, 0, -Math.PI / 2]);
+        const flower = new MyFlower(this.app, [0, 0, -3], 20, 0.1, this.planeMaterial, this.planeMaterial, this.planeMaterial,);
+        const jar = new MyJar(this.app, this.planeMaterial, [0, 0, 3], [0, 0, 0], [1, 1, 1]);
+        const newspaper = new MyNewspaper(this.app, [-2, 2.75, -0.5])
+        const plate = new MyPlate(this.app, 0.75, 0.125, [0, 2.75 + 0.125/2, 0], this.planeMaterial)
+
+        const wallMaterial = new THREE.MeshPhongMaterial({
+            color: "#cac8be",
+            specular: "#000000",
+            emissive: "#000000",
+            shininess: 0
+        })
+        const wall1 = new MyWall(this.app, 10, 10, [0, 5, -5], [0, 0, 0], wallMaterial, [2.5, 7.5, 4, 6]);
+        const wall2 = new MyWall(this.app, 10, 10, [0, 5, 5], [0, Math.PI, 0], wallMaterial);
+        const wall3 = new MyWall(this.app, 10, 10, [-5, 5, 0], [0, Math.PI / 2, 0], wallMaterial);
+        const wall4 = new MyWall(this.app, 10, 10, [5, 5, 0], [0, -Math.PI / 2, 0], wallMaterial);
+
+        const woodTexture = new THREE.TextureLoader().load('textures/wood.jpg');
+        woodTexture.wrapS = THREE.MirroredRepeatWrapping;
+        woodTexture.repeat.set(2, 1);
+        const tableTopMaterial = new THREE.MeshLambertMaterial({
+            map: woodTexture
+        })
+        const legMaterial = new THREE.MeshPhongMaterial({
+            color: "#000000",
+            specular: "#c4c4c4",
+            emissive: "#000000",
+            shininess: 0
+        })
+        
+        const table = new MyTable(this.app, 5, 2.5, 2.625, 0.25, tableTopMaterial, legMaterial, [0, 0, 0]);
 
         // add a point light on top of the model
         const pointLight = new THREE.PointLight( 0xffffff, 300, 0 );
@@ -345,15 +140,18 @@ class MyContents  {
         this.planeMesh.position.y = -0;
         this.app.scene.add( this.planeMesh );
         
-        this.buildWalls();
-        this.buildTable();
-        this.buildPlate();
+        wall1.display();
+        wall2.display();
+        wall3.display();
+        wall4.display();
+        table.display();
+        plate.display();
         cake.display();
         landscape.display();
         window.display();
-        this.buildJar();
-        this.buildNewsPaper();
-        this.buildFlower();
+        jar.display();
+        newspaper.display();
+        flower.display();
 
         // pintura beetle
         beetlePainting.display();

@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { MyAxis } from './MyAxis.js';
 import { NURBSSurface } from 'three/addons/curves/NURBSSurface.js';
 import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
 
@@ -15,7 +14,7 @@ class MyNurbsBuilder  {
         this.app = app
     }
 
-    build(controlPoints, degree1, degree2, samples1, samples2, material) {
+    build(controlPoints, degree1, degree2, samples1, samples2) {
         const knots1 = []
         const knots2 = []
 
