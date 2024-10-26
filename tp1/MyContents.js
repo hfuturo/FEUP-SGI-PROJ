@@ -13,6 +13,7 @@ import { MyNewspaper } from './MyNewspaper.js';
 import { MyPlate } from './MyPlate.js';
 import { MyWall } from './MyWall.js';
 import { MyTable } from './MyTable.js';
+import { MyBarrier } from './MyBarrier.js';
 
 /**
  *  This class contains the contents of out application
@@ -115,6 +116,7 @@ class MyContents  {
         })
         
         const table = new MyTable(this.app, 5, 2.5, 2.625, 0.25, tableTopMaterial, legMaterial, [0, 0, 0]);
+        const barrier = new MyBarrier(this.app, [3, 0, 0], Math.PI/6, true);
 
         // add a point light on top of the model
         const pointLight = new THREE.PointLight( 0xffffff, 300, 0 );
@@ -162,6 +164,7 @@ class MyContents  {
         tPainting.display();
 
         spring.display();
+        barrier.display();
     }
     
     /**

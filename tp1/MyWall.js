@@ -42,26 +42,30 @@ class MyWall {
             mesh.rotation.set(...this.rotation);
             this.app.scene.add(mesh);
         } else {
-            // Only works as intended for 0 and PI y rotation
             const mesh1 = new THREE.Mesh(this.planes[0], this.material);
-            mesh1.position.set(this.position[0] + this.hole[0]/2 - this.length/2, this.position[1], this.position[2]);
-            mesh1.rotation.set(...this.rotation);
-            this.app.scene.add(mesh1);
+            mesh1.position.x = this.hole[0]/2 - this.length/2;
+            mesh1.position.y = this.height/2 - this.height/2;
 
             const mesh2 = new THREE.Mesh(this.planes[1], this.material);
-            mesh2.position.set(this.position[0] - (this.length - this.hole[1])/2 + this.length/2, this.position[1], this.position[2]);
-            mesh2.rotation.set(...this.rotation);
-            this.app.scene.add(mesh2);
+            mesh2.position.x = this.hole[1] + (this.length - this.hole[1]) / 2 - this.length/2;
+            mesh2.position.y = this.height/2 - this.height/2;
 
             const mesh3 = new THREE.Mesh(this.planes[2], this.material);
-            mesh3.position.set(this.hole[1]/2 + this.hole[0]/2 - this.length/2, this.position[1] + this.hole[2]/2 - this.height/2, this.position[2]);
-            mesh3.rotation.set(...this.rotation);
-            this.app.scene.add(mesh3);
+            mesh3.position.x = this.hole[0] + (this.hole[1] - this.hole[0]) / 2 - this.length/2;
+            mesh3.position.y = this.hole[2]/2 - this.height/2;
 
             const mesh4 = new THREE.Mesh(this.planes[3], this.material);
-            mesh4.position.set(this.hole[1]/2 + this.hole[0]/2 - this.length/2, this.position[1] - (this.height - this.hole[3])/2 + this.length/2, this.position[2]);
-            mesh4.rotation.set(...this.rotation);
-            this.app.scene.add(mesh4);
+            mesh4.position.x = this.hole[0] + (this.hole[1] - this.hole[0]) / 2 - this.length/2;
+            mesh4.position.y = this.hole[3] + (this.height - this.hole[3]) / 2 - this.height/2;
+
+            const group = new THREE.Group();
+            group.add(mesh1);
+            group.add(mesh2);
+            group.add(mesh3);
+            group.add(mesh4);
+            group.position.set(...this.position);
+            group.rotation.set(...this.rotation);
+            this.app.scene.add(group);
         }
     }
 }
