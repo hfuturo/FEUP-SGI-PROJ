@@ -17,13 +17,12 @@ class MyWall {
         }
         
         if (this.hole.length == 4) {
-            for (let i = 0; i < 4; i++) {
-                if (i % 2 == 0 && (this.hole[i] < 0 || this.hole[i] > length)) {
-                    throw new Error('Invalid specification of hole');
-                } else if (i % 2 == 1 && (this.hole[i] < 0 || this.hole[i] > height)) {
-                    throw new Error('Invalid specification of hole');
-                }
-            }
+            if (this.hole[0] < 0 || this.hole[0] > length 
+                || this.hole[1] < this.hole[0] || this.hole[1] > length 
+                || this.hole[2] < 0 || this.hole[2] > height 
+                || this.hole[3] < this.hole[2] || this.hole[3] > height)
+                throw new Error('Invalid specification of hole');
+
             this.planes.push(new THREE.PlaneGeometry(this.hole[0], height));
             this.planes.push(new THREE.PlaneGeometry(length - this.hole[1], height));
             this.planes.push(new THREE.PlaneGeometry(this.hole[1] - this.hole[0], this.hole[2]));

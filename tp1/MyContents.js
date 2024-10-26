@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
-import { MyNurbsBuilder } from './MyNurbsBuilder.js'
 import { MySpring } from './MySpring.js';
 import { MyBeetle } from './MyBeetle.js';
 import { MyLandscape } from './MyLandscape.js';
@@ -26,36 +25,6 @@ class MyContents  {
     constructor(app) {
         this.app = app
         this.axis = null
-
-        // box related attributes
-        this.boxMesh = null
-        this.boxMeshSize = 1.0
-        this.boxEnabled = true
-        this.lastBoxEnabled = null
-        this.boxDisplacement = new THREE.Vector3(0,2,0)
-
-        // plane related attributes
-        this.diffusePlaneColor = "#00ffff"
-        this.specularPlaneColor = "#777777"
-        this.planeShininess = 30
-        this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
-            specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
-
-        this.nurbsBuilder = new MyNurbsBuilder(this.app)
-    }
-
-    /**
-     * builds the box mesh with material assigned
-     */
-    buildBox() {    
-        let boxMaterial = new THREE.MeshPhongMaterial({ color: "#ffff77", 
-        specular: "#000000", emissive: "#000000", shininess: 90 })
-
-        // Create a Cube Mesh with basic material
-        let box = new THREE.BoxGeometry(  this.boxMeshSize,  this.boxMeshSize,  this.boxMeshSize );
-        this.boxMesh = new THREE.Mesh( box, boxMaterial );
-        // this.boxMesh.rotation.x = -Math.PI / 2;
-        this.boxMesh.position.y = this.boxDisplacement.y;
     }
 
     /**
@@ -92,8 +61,8 @@ class MyContents  {
             transmission: 1,
         });
 
-        const hPainting = new MyFrame(this.app, 1, 1, 0.1, [2.5, 5.75, -4.99], [0, Math.PI/2, 0], frameMaterial, henrique);
-        const tPainting = new MyFrame(this.app, 1, 1, 0.1, [-2.5, 5.75, -4.99], [0, Math.PI/2, 0], frameMaterial, tomas);
+        const hPainting = new MyFrame(this.app, 1, 1, 0.1, [2.5, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, henrique);
+        const tPainting = new MyFrame(this.app, 1, 1, 0.1, [-2.5, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, tomas);
         const window = new MyFrame(this.app, 5, 4, 0.1, [0, 5, -5], [0, 0, 0], windowMaterial, glass);
 
         const beetleFrame = new MyFrame(this.app, 3, 1.5, 0.1, [0, 5.75, -4.99], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.webp')}));
@@ -103,7 +72,6 @@ class MyContents  {
         const landscape = new MyLandscape(this.app, 24, 13.5, [0, 5, -10]);
         const spring = new MySpring(this.app, 20, 13, 0.1, [1, 2.85, 1], [0, 0, -Math.PI / 2]);
         const flower = new MyFlower(this.app, [0, 0, -3], 20, 0.1, this.planeMaterial, this.planeMaterial, this.planeMaterial,);
-        const jar = new MyJar(this.app, this.planeMaterial, [0, 0, 3], [0, 0, 0], [1, 1, 1]);
         const newspaper = new MyNewspaper(this.app, [-2, 2.75, -0.5])
         const plate = new MyPlate(this.app, 0.75, 0.125, [0, 2.75 + 0.125/2, 0], this.planeMaterial)
 
@@ -113,10 +81,15 @@ class MyContents  {
             emissive: "#000000",
             shininess: 0
         })
-        const wall1 = new MyWall(this.app, 10, 10, [0, 5, -5], [0, 0, 0], wallMaterial, [2.5, 7.5, 3, 7]);
-        const wall2 = new MyWall(this.app, 10, 10, [0, 5, 5], [0, Math.PI, 0], wallMaterial);
-        const wall3 = new MyWall(this.app, 10, 10, [-5, 5, 0], [0, Math.PI / 2, 0], wallMaterial);
-        const wall4 = new MyWall(this.app, 10, 10, [5, 5, 0], [0, -Math.PI / 2, 0], wallMaterial);
+        const wall1 = new MyWall(this.app, 15, 10, [0, 5, -5], [0, 0, 0], wallMaterial, [5, 10, 3, 7]);
+        const wall2 = new MyWall(this.app, 15, 10, [0, 5, 20], [0, Math.PI, 0], wallMaterial);
+        const wall3 = new MyWall(this.app, 25, 10, [-7.5, 5, 7.5], [0, Math.PI / 2, 0], wallMaterial);
+        const wall4 = new MyWall(this.app, 25, 10, [7.5, 5, 7.5], [0, -Math.PI / 2, 0], wallMaterial);
+
+        const floorMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/floor.png')
+        });
+        const floor = new MyWall(this.app, 15, 25, [0, 0, 7.5], [-Math.PI/2, 0, 0], floorMaterial);
 
         const woodTexture = new THREE.TextureLoader().load('textures/wood.jpg');
         woodTexture.wrapS = THREE.MirroredRepeatWrapping;
@@ -132,6 +105,22 @@ class MyContents  {
         })
         
         const table = new MyTable(this.app, 5, 2.5, 2.625, 0.25, tableTopMaterial, legMaterial, [0, 0, 0]);
+
+        const jarTexture = new THREE.TextureLoader().load('textures/pattern.png')
+        jarTexture.wrapS = THREE.RepeatWrapping;
+        jarTexture.wrapT = THREE.RepeatWrapping;
+        jarTexture.repeat.set(5, 5);
+        const jarMaterial = new THREE.MeshLambertMaterial({
+            map: jarTexture
+        })
+        const dirtTexture = new THREE.TextureLoader().load('textures/dirt.jpg')
+        const dirtMaterial = new THREE.MeshLambertMaterial({
+            map: dirtTexture
+        })
+        
+        jarMaterial.side = THREE.DoubleSide;
+        const jar = new MyJar(this.app, jarMaterial, dirtMaterial, [0, 0, 3], [0, 0, 0], [1, 1, 1]);
+
         const barrier = new MyBarrier(this.app, [3, 0, 0], Math.PI/6, true);
 
         // add a point light on top of the model
@@ -147,21 +136,12 @@ class MyContents  {
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555 );
         this.app.scene.add( ambientLight );
-
-        this.buildBox()
-        
-        // Create a Plane Mesh with basic material
-        
-        let plane = new THREE.PlaneGeometry( 10, 10 );
-        this.planeMesh = new THREE.Mesh( plane, this.planeMaterial );
-        this.planeMesh.rotation.x = -Math.PI / 2;
-        this.planeMesh.position.y = -0;
-        this.app.scene.add( this.planeMesh );
         
         wall1.display();
         wall2.display();
         wall3.display();
         wall4.display();
+        floor.display();
         table.display();
         plate.display();
         cake.display();
@@ -179,61 +159,6 @@ class MyContents  {
         spring.display();
         barrier.display();
     }
-    
-    /**
-     * updates the diffuse plane color and the material
-     * @param {THREE.Color} value 
-     */
-    updateDiffusePlaneColor(value) {
-        this.diffusePlaneColor = value
-        this.planeMaterial.color.set(this.diffusePlaneColor)
-    }
-    /**
-     * updates the specular plane color and the material
-     * @param {THREE.Color} value 
-     */
-    updateSpecularPlaneColor(value) {
-        this.specularPlaneColor = value
-        this.planeMaterial.specular.set(this.specularPlaneColor)
-    }
-    /**
-     * updates the plane shininess and the material
-     * @param {number} value 
-     */
-    updatePlaneShininess(value) {
-        this.planeShininess = value
-        this.planeMaterial.shininess = this.planeShininess
-    }
-    
-    /**
-     * rebuilds the box mesh if required
-     * this method is called from the gui interface
-     */
-    rebuildBox() {
-        // remove boxMesh if exists
-        if (this.boxMesh !== undefined && this.boxMesh !== null) {  
-            this.app.scene.remove(this.boxMesh)
-        }
-        this.buildBox();
-        this.lastBoxEnabled = null
-    }
-    
-    /**
-     * updates the box mesh if required
-     * this method is called from the render method of the app
-     * updates are trigered by boxEnabled property changes
-     */
-    updateBoxIfRequired() {
-        if (this.boxEnabled !== this.lastBoxEnabled) {
-            this.lastBoxEnabled = this.boxEnabled
-            if (this.boxEnabled) {
-                // this.app.scene.add(this.boxMesh)
-            }
-            else {
-                this.app.scene.remove(this.boxMesh)
-            }
-        }
-    }
 
     /**
      * updates the contents
@@ -241,13 +166,6 @@ class MyContents  {
      * 
      */
     update() {
-        // check if box mesh needs to be updated
-        this.updateBoxIfRequired()
-
-        // sets the box mesh position based on the displacement vector
-        this.boxMesh.position.x = this.boxDisplacement.x
-        this.boxMesh.position.y = this.boxDisplacement.y
-        this.boxMesh.position.z = this.boxDisplacement.z
     }
 
 }
