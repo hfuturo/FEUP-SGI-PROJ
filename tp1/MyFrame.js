@@ -2,49 +2,48 @@ import * as THREE from 'three';
 
 class MyFrame {
 
-    constructor(app, horizontalInfo, verticalInfo, position, textureName='frame.jpg') {
+    constructor(app, width, height, depth, position, rotation, materialOut, materialIn) {
         this.app = app;
-        this.horizontalInfo = horizontalInfo;
-        this.verticalInfo = verticalInfo;
+        this.width = width;
+        this.height = height;
+        this.depth = depth;
         this.position = position;
+        this.rotation = rotation;
+        this.materialOut = materialOut;
+        this.materialIn = materialIn;
 
-        const texture = new THREE.TextureLoader().load('textures/' + textureName);
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        this.material = new THREE.MeshLambertMaterial({
-            map: texture
-        });
+        this.horizontalPiece = new THREE.BoxGeometry(this.width - this.depth, this.depth, this.depth);
+        this.verticalPiece = new THREE.BoxGeometry(this.depth, this.height + 2*this.depth, this.depth);
+        this.inside = new THREE.PlaneGeometry(this.width, this.height);
     }
 
     display() {
-        const horizontalPiece = new THREE.BoxGeometry(this.horizontalInfo.width, this.horizontalInfo.height, this.horizontalInfo.depth);
-        const verticalPiece = new THREE.BoxGeometry(this.verticalInfo.width, this.verticalInfo.height, this.verticalInfo.depth);
+        const horizontalPieceMesh1 = new THREE.Mesh(this.horizontalPiece, this.materialOut);
+        const verticalPieceMesh1 = new THREE.Mesh(this.verticalPiece, this.materialOut);
 
-        const posX = this.position[0];
-        const posY = this.position[1];
-        const posZ = this.position[2];
+        horizontalPieceMesh1.position.set(this.position[0], this.position[1] + this.depth/2 + this.height/2, this.position[2]);
+        verticalPieceMesh1.position.set(this.position[0] + this.width / 2, this.position[1], this.position[2]);
 
-        // roda em torno do eixo Y => pedaços da frame mexem-se no eixo do X
-        if (this.horizontalInfo.rotation[1] !== 0) {
-            this.#buildFrame(horizontalPiece, [posX, posY - this.verticalInfo.depth / 2, posZ], this.horizontalInfo.rotation); // bottom
-            this.#buildFrame(verticalPiece, [posX - this.horizontalInfo.depth / 2, posY, posZ], this.verticalInfo.rotation); // left
-            this.#buildFrame(horizontalPiece, [posX, posY + this.verticalInfo.depth / 2, posZ], this.horizontalInfo.rotation); // top
-            this.#buildFrame(verticalPiece, [posX + this.horizontalInfo.depth / 2, posY, posZ], this.verticalInfo.rotation); // right
-        }
-        // roda em torno do eixo X => pedaços da frame mexem-se no eixo Z
-        else {
-            this.#buildFrame(horizontalPiece, [posX, posY - this.verticalInfo.depth / 2, posZ], this.horizontalInfo.rotation); // bottom
-            this.#buildFrame(verticalPiece, [posX, posY, posZ + this.horizontalInfo.depth / 2], this.verticalInfo.rotation); // left
-            this.#buildFrame(horizontalPiece, [posX, posY + this.verticalInfo.depth / 2, posZ], this.horizontalInfo.rotation); // top
-            this.#buildFrame(verticalPiece, [posX, posY, posZ - this.horizontalInfo.depth / 2], this.verticalInfo.rotation); // right
-        }
-    }
+        const horizontalPieceMesh2 = horizontalPieceMesh1.clone();
+        horizontalPieceMesh2.position.y -= this.height + this.depth;
 
-    #buildFrame(piece, position, rotation) {
-        const mesh = new THREE.Mesh(piece, this.material);
-        mesh.position.set(...position);
-        mesh.rotation.set(...rotation);
-        this.app.scene.add(mesh);
+
+        const verticalPieceMesh2 = verticalPieceMesh1.clone();
+        verticalPieceMesh2.position.x -= this.width;
+
+        const insideMesh = new THREE.Mesh(this.inside, this.materialIn);
+        insideMesh.position.set(this.position[0], this.position[1], this.position[2]);
+
+        const group = new THREE.Group();
+        group.add(horizontalPieceMesh1);
+        group.add(horizontalPieceMesh2);
+        group.add(verticalPieceMesh1);
+        group.add(verticalPieceMesh2);
+        group.add(insideMesh);
+
+        group.rotation.set(...this.rotation);
+
+        this.app.scene.add(group);
     }
 }
 

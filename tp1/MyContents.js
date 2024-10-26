@@ -2,11 +2,9 @@ import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js'
 import { MySpring } from './MySpring.js';
-import { MyPainting } from './MyPainting.js';
 import { MyBeetle } from './MyBeetle.js';
 import { MyLandscape } from './MyLandscape.js';
 import { MyCake } from './MyCake.js';
-import { MyWindow } from './MyWindow.js';
 import { MyFlower } from './MyFlower.js';
 import { MyJar } from './MyJar.js';
 import { MyNewspaper } from './MyNewspaper.js';
@@ -14,6 +12,7 @@ import { MyPlate } from './MyPlate.js';
 import { MyWall } from './MyWall.js';
 import { MyTable } from './MyTable.js';
 import { MyBarrier } from './MyBarrier.js';
+import { MyFrame } from './MyFrame.js';
 
 /**
  *  This class contains the contents of out application
@@ -71,20 +70,37 @@ class MyContents  {
             this.app.scene.add(this.axis)
         }
 
-        const horizontalFaceFrameInfo = {width: 0.1, height: 0.1, depth: 1, rotation: [0, 0, 0]};
-        const verticalFaceFrameInfo = {width: 0.1, height: 0.1, depth: 1.5, rotation: [Math.PI / 2, 0, 0]};
-        const horizontalBeetleInfo = {width: 0.1, height: 0.1, depth: 3, rotation: [0, 0, 0]};
-        const verticalBeetleInfo = {width: 0.1, height: 0.1, depth: 1.5, rotation: [Math.PI / 2, 0, 0]};
-        const horizontalWindowInfo = {width: 0.1, height: 0.1, depth: 5.1, rotation: [0, Math.PI / 2, 0]};
-        const verticalWindowInfo = {width: 0.1, height: 0.1, depth: 2, rotation: [Math.PI / 2, 0, 0]};
+        const frameMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/frame.jpg')
+        })
+
+        const windowMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/window_frame.jpg')
+        })
+
+        const henrique = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/henrique.jpg')
+        })
+
+        const tomas = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/tomas.jpg')
+        })
+
+        const glass = new THREE.MeshPhysicalMaterial({  
+            map: new THREE.TextureLoader().load('textures/window.jpg'),
+            roughness: 0,  
+            transmission: 1,
+        });
+
+        const hPainting = new MyFrame(this.app, 1, 1, 0.1, [2.5, 5.75, -4.99], [0, Math.PI/2, 0], frameMaterial, henrique);
+        const tPainting = new MyFrame(this.app, 1, 1, 0.1, [-2.5, 5.75, -4.99], [0, Math.PI/2, 0], frameMaterial, tomas);
+        const window = new MyFrame(this.app, 5, 4, 0.1, [0, 5, -5], [0, 0, 0], windowMaterial, glass);
+
+        const beetleFrame = new MyFrame(this.app, 3, 1.5, 0.1, [0, 5.75, -4.99], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.webp')}));
+        const beetle = new MyBeetle(this.app, 100, 0.01, [0, Math.PI / 2, 0], this.planeMaterial);
         
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0]);
         const landscape = new MyLandscape(this.app, 24, 13.5, [0, 5, -10]);
-        const window = new MyWindow(this.app, horizontalWindowInfo, verticalWindowInfo, [0, 5, -5]);
-        const hPainting = new MyPainting(this.app, horizontalFaceFrameInfo, verticalFaceFrameInfo, [-4.95, 5.7, 2.5], "henrique.jpg", [0, Math.PI / 2, 0]);
-        const tPainting = new MyPainting(this.app, horizontalFaceFrameInfo, verticalFaceFrameInfo, [-4.95, 5.7, -2.5], "tomas.jpg", [0, Math.PI / 2, 0]);
-        const beetlePainting = new MyPainting(this.app, horizontalBeetleInfo, verticalBeetleInfo, [-4.95, 5.7, 0], "beetle_background.webp", [0, Math.PI / 2, 0]);
-        const beetle = new MyBeetle(this.app, 100, 0.01, [0, Math.PI / 2, 0], this.planeMaterial);
         const spring = new MySpring(this.app, 20, 13, 0.1, [1, 2.85, 1], [0, 0, -Math.PI / 2]);
         const flower = new MyFlower(this.app, [0, 0, -3], 20, 0.1, this.planeMaterial, this.planeMaterial, this.planeMaterial,);
         const jar = new MyJar(this.app, this.planeMaterial, [0, 0, 3], [0, 0, 0], [1, 1, 1]);
@@ -97,7 +113,7 @@ class MyContents  {
             emissive: "#000000",
             shininess: 0
         })
-        const wall1 = new MyWall(this.app, 10, 10, [0, 5, -5], [0, 0, 0], wallMaterial, [2.5, 7.5, 4, 6]);
+        const wall1 = new MyWall(this.app, 10, 10, [0, 5, -5], [0, 0, 0], wallMaterial, [2.5, 7.5, 3, 7]);
         const wall2 = new MyWall(this.app, 10, 10, [0, 5, 5], [0, Math.PI, 0], wallMaterial);
         const wall3 = new MyWall(this.app, 10, 10, [-5, 5, 0], [0, Math.PI / 2, 0], wallMaterial);
         const wall4 = new MyWall(this.app, 10, 10, [5, 5, 0], [0, -Math.PI / 2, 0], wallMaterial);
@@ -150,18 +166,15 @@ class MyContents  {
         plate.display();
         cake.display();
         landscape.display();
-        window.display();
         jar.display();
         newspaper.display();
         flower.display();
 
-        // pintura beetle
-        beetlePainting.display();
-        beetle.display();
-
-        // pinturas das caras
         hPainting.display();
         tPainting.display();
+        window.display();
+        beetleFrame.display();
+        beetle.display();
 
         spring.display();
         barrier.display();
