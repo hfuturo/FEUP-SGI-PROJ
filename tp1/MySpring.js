@@ -2,9 +2,10 @@ import * as THREE from 'three';
 
 class MySpring {
 
-    constructor(app, turns, radius, position, rotation=[0,0,0], scale=[1,1,1]) {
+    constructor(app, segments, height, radius, position, rotation=[0,0,0], scale=[1,1,1]) {
         this.app = app;
-        this.turns = turns;
+        this.segments = segments;
+        this.height = height;
         this.radius = radius;
         this.position = position;
         this.rotation = rotation;
@@ -12,25 +13,19 @@ class MySpring {
     }
 
     display() {
-        const points = (() => {
-            const points = [];
-            let signal = 1;
-
-            for (let i = 0; i < this.turns; i++) {
+        const points = [];
+        for (let i = 0; i < this.height; i++) {
+            for (let j = 0; j < Math.PI*2; j += 2*Math.PI/this.segments) {
                 points.push(new THREE.Vector3(
-                    0.1 * +(i % 2 === 0) * signal,
-                    i / 20,
-                    0.1 * +(i % 2 !== 0) * signal
+                    Math.cos(j) * this.radius,
+                    0.1*(i + j/(2*Math.PI)),
+                    Math.sin(j) * this.radius
                 ));
-
-                signal = i % 2 === 0 ? -signal : signal;
             }
-
-            return points;
-        })();
+        }
 
         const curve = new THREE.CatmullRomCurve3(points);
-        const spring = new THREE.TubeGeometry(curve, this.turns * 2.5, this.radius);
+        const spring = new THREE.TubeGeometry(curve, points.length, 0.01);
         const texture = new THREE.TextureLoader().load('textures/spring.webp');
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;

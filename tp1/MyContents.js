@@ -84,7 +84,7 @@ class MyContents  {
         const tPainting = new MyPainting(this.app, horizontalFaceFrameInfo, verticalFaceFrameInfo, [-4.95, 5.7, -2.5], "tomas.jpg", [0, Math.PI / 2, 0]);
         const beetlePainting = new MyPainting(this.app, horizontalBeetleInfo, verticalBeetleInfo, [-4.95, 5.7, 0], "beetle_background.webp", [0, Math.PI / 2, 0]);
         const beetle = new MyBeetle(this.app, 100, 0.01, [0, Math.PI / 2, 0], this.planeMaterial);
-        const spring = new MySpring(this.app, 30, 0.01, [1, 2.85, 1], [0, 0, -Math.PI / 2]);
+        const spring = new MySpring(this.app, 20, 13, 0.1, [1, 2.85, 1], [0, 0, -Math.PI / 2]);
         const flower = new MyFlower(this.app, [0, 0, -3], 20, 0.1, this.planeMaterial, this.planeMaterial, this.planeMaterial,);
         const jar = new MyJar(this.app, this.planeMaterial, [0, 0, 3], [0, 0, 0], [1, 1, 1]);
         const newspaper = new MyNewspaper(this.app, [-2, 2.75, -0.5])
