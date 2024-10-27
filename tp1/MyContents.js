@@ -12,6 +12,7 @@ import { MyWall } from './MyWall.js';
 import { MyTable } from './MyTable.js';
 import { MyBarrier } from './MyBarrier.js';
 import { MyFrame } from './MyFrame.js';
+import { MyCarpet } from './MyCarpet.js';
 
 /**
  *  This class contains the contents of out application
@@ -65,13 +66,31 @@ class MyContents  {
         const tPainting = new MyFrame(this.app, 1, 1, 0.1, [-2.5, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, tomas);
         const window = new MyFrame(this.app, 5, 4, 0.1, [0, 5, -5], [0, 0, 0], windowMaterial, glass);
 
+        const stemMaterial = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('textures/stem.jpg') });
+
+        const recptacleTexture = new THREE.TextureLoader().load('textures/receptacle.jpg');
+        recptacleTexture.wrapS = THREE.RepeatWrapping;
+        recptacleTexture.wrapT = THREE.RepeatWrapping;
+        recptacleTexture.repeat.set(2, 2);
+        const receptacleMaterial = new THREE.MeshLambertMaterial({ map:  recptacleTexture});
+
+        const petalTexture = new THREE.TextureLoader().load('textures/petal.png');
+        petalTexture.repeat.set(0.5, 0.5);
+        petalTexture.offset.set(0, 0.25);
+        const petalMaterial = new THREE.MeshLambertMaterial({ 
+            color: "#38f5ff",
+            map: petalTexture
+        });
+        petalMaterial.side = THREE.DoubleSide;
+
+        const flower = new MyFlower(this.app, [-0.1, 0.9, 3], 20, 0.1, stemMaterial, receptacleMaterial, petalMaterial);
+
         const beetleFrame = new MyFrame(this.app, 3, 1.5, 0.1, [0, 5.75, -4.99], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.webp')}));
         const beetle = new MyBeetle(this.app, 100, 0.01, [0, Math.PI / 2, 0], this.planeMaterial);
         
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0]);
         const landscape = new MyLandscape(this.app, 24, 13.5, [0, 5, -10]);
         const spring = new MySpring(this.app, 20, 13, 0.1, [1, 2.85, 1], [0, 0, -Math.PI / 2]);
-        const flower = new MyFlower(this.app, [0, 0, -3], 20, 0.1, this.planeMaterial, this.planeMaterial, this.planeMaterial,);
         const newspaper = new MyNewspaper(this.app, [-2, 2.75, -0.5])
         const plate = new MyPlate(this.app, 0.75, 0.125, [0, 2.75 + 0.125/2, 0], this.planeMaterial)
 
@@ -90,6 +109,8 @@ class MyContents  {
             map: new THREE.TextureLoader().load('textures/floor.png')
         });
         const floor = new MyWall(this.app, 15, 25, [0, 0, 7.5], [-Math.PI/2, 0, 0], floorMaterial);
+
+        const carpet = new MyCarpet(this.app, 20, 8, [0, 0.01, 10], Math.PI/2);
 
         const woodTexture = new THREE.TextureLoader().load('textures/wood.jpg');
         woodTexture.wrapS = THREE.MirroredRepeatWrapping;
@@ -142,6 +163,7 @@ class MyContents  {
         wall3.display();
         wall4.display();
         floor.display();
+        carpet.display();
         table.display();
         plate.display();
         cake.display();

@@ -21,6 +21,8 @@ class MyFlower {
 
         this.petals = []
         for (let i = 0; i < Math.PI * 2; i += (Math.PI * 2 / numPetals)) {
+            if (i == Math.PI) continue;
+            
             this.petals.push(new MyPetal(
                 this.app,
                 petalMaterial,
