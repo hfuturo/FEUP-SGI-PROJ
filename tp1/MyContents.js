@@ -85,8 +85,8 @@ class MyContents  {
 
         const flower = new MyFlower(this.app, [-0.1, 0.9, 3], 20, 0.1, stemMaterial, receptacleMaterial, petalMaterial);
 
-        const beetleFrame = new MyFrame(this.app, 3, 1.5, 0.1, [0, 5.75, -4.99], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.webp')}));
-        const beetle = new MyBeetle(this.app, 100, 0.01, [0, Math.PI / 2, 0], this.planeMaterial);
+        const beetleFrame = new MyFrame(this.app, 3, 1.5, 0.1, [0, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.webp')}));
+        const beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 0], [0, Math.PI / 2, 0], this.planeMaterial);
         
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0]);
         const landscape = new MyLandscape(this.app, 24, 13.5, [0, 5, -10]);

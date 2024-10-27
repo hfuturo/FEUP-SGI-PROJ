@@ -2,12 +2,13 @@ import * as THREE from 'three';
 
 class MyBeetle {
 
-    constructor(app, numberSegments, radius, rotation, planeMaterial) {
+    constructor(app, numberSegments, radius, position, rotation, planeMaterial) {
         this.app = app;
         this.numberSegments = numberSegments;
         this.radius = radius;
-        this.planeMaterial = planeMaterial;
+        this.position = position;
         this.rotation = rotation;
+        this.planeMaterial = planeMaterial;
     }
 
     display() {
@@ -30,24 +31,31 @@ class MyBeetle {
             new THREE.Vector3(0.8, 1, 0)
         ];
 
-        this.#buildcurve(smallQuadraticPoints, [-4.95, 5.2, -0.4]);
-        this.#buildcurve(smallQuadraticPoints, [-4.95, 5.7, 0]);
-        this.#buildcurve(bigQuadraticPoints, [-4.95, 5.2, 0.8]);
-        this.#buildcurve(cubicPoints, [-4.95, 5.2, 0.8], false);
-        this.#buildcurve(cubicPoints, [-4.95, 5.2, -0.2], false);
+        const qMesh1 = this.#buildcurve(new THREE.QuadraticBezierCurve3(...smallQuadraticPoints), [0.4, 0, 0]);
+        const qMesh2 = this.#buildcurve(new THREE.QuadraticBezierCurve3(...smallQuadraticPoints), [0, 0.5, 0]);
+        const qMesh3 = this.#buildcurve(new THREE.QuadraticBezierCurve3(...bigQuadraticPoints), [-0.8, 0, 0]);
+        const cMesh1 = this.#buildcurve(new THREE.CubicBezierCurve3(...cubicPoints), [-0.8, 0, 0]);
+        const cMesh2 = this.#buildcurve(new THREE.CubicBezierCurve3(...cubicPoints), [0.2, 0, 0]);
+
+        const group = new THREE.Group();
+        group.add(qMesh1);
+        group.add(qMesh2);
+        group.add(qMesh3);
+        group.add(cMesh1);
+        group.add(cMesh2);
+
+        group.position.set(...this.position);
+        group.rotation.set(...this.rotation);
+
+        this.app.scene.add(group);
     }
 
-    #buildcurve(points, position, isQuadratic=true) {
-        const curve =  isQuadratic ? 
-                        new THREE.QuadraticBezierCurve3(...points) :
-                        new THREE.CubicBezierCurve3(...points);
+    #buildcurve(curve, position) {
         const tube = new THREE.TubeGeometry(curve, this.numberSegments, this.radius);
         const mesh = new THREE.Mesh(tube, this.planeMaterial);
         mesh.position.set(...position);
-        mesh.rotation.set(...this.rotation);
-        this.app.scene.add(mesh);
+        return mesh;
     }
-
 }
 
 export { MyBeetle };
