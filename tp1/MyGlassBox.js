@@ -6,8 +6,6 @@ class MyGlassBox {
         this.app = app;
         this.info = info;
         this.position = position;
-
-        console.log(this.position);
     }
 
     createMesh() {

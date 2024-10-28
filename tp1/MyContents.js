@@ -100,8 +100,6 @@ class MyContents  {
         const starryNight = new MyFrame(this.app, 3, 3, 0.1, [12, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, starryNightMaterial);
         const girl = new MyFrame(this.app, 3, 3, 0.1, [8, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, girlMaterial);
         const kiss = new MyFrame(this.app, 3, 3, 0.1, [4, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, kissMaterial);
-        
-        const window = new MyFrame(this.app, 5, 4, 0.1, [0, 5, -5], [0, 0, 0], windowMaterial, glass);
 
         const stemMaterial = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('textures/stem.jpg') });
 
@@ -126,7 +124,7 @@ class MyContents  {
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0], cakeGlassInfo);
 
-        const landscape = new MyLandscape(this.app, 24, 13.5, [0, 5, -10]);
+        const landscape = new MyLandscape(this.app, 24, 13.5, [0, 5, 25], [0, Math.PI, 0]);
 
         const springGlassInfo = {width: 1.6, height: 0.7, depth: 1, material: clean_glass};
         const spring = new MySpring(this.app, 20, 13, 0.1, [2, 2.85, 0], springGlassInfo, [0, 0, -Math.PI / 2]);
@@ -141,10 +139,25 @@ class MyContents  {
             emissive: "#000000",
             shininess: 0
         })
-        const wall1 = new MyWall(this.app, 15, 10, [0, 5, -5], [0, 0, 0], wallMaterial, [5, 10, 3, 7]);
-        const wall2 = new MyWall(this.app, 15, 10, [0, 5, 20], [0, Math.PI, 0], wallMaterial);
-        const wall3 = new MyWall(this.app, 25, 10, [-7.5, 5, 7.5], [0, Math.PI / 2, 0], wallMaterial);
-        const wall4 = new MyWall(this.app, 25, 10, [7.5, 5, 7.5], [0, -Math.PI / 2, 0], wallMaterial);
+        const wall1 = new MyWall(this.app, 15, 10, [0, 5, -5], [0, 0, 0], wallMaterial);
+        const wall2 = new MyWall(this.app, 25, 10, [-7.5, 5, 7.5], [0, Math.PI / 2, 0], wallMaterial);
+        const wall3 = new MyWall(this.app, 25, 10, [7.5, 5, 7.5], [0, -Math.PI / 2, 0], wallMaterial);
+
+        const doorTexture = new THREE.TextureLoader().load('textures/door.jpg');
+
+        const door1 = new MyWall(this.app, 3.5, 7, [1.75, 3.5, 20], [0, Math.PI, 0], new THREE.MeshLambertMaterial({ map: doorTexture }));
+
+        const doorTexture2 = doorTexture.clone();
+        doorTexture2.wrapS = THREE.RepeatWrapping;
+        doorTexture2.repeat.set(-1, 1);
+
+        const door2 = new MyWall(this.app, 3.5, 7, [-1.75, 3.5, 20], [0, Math.PI, 0], new THREE.MeshLambertMaterial({ map: doorTexture2 }));
+        const doorTop = new MyWall(this.app, 7, 3, [0, 8.5, 20], [0, Math.PI, 0], wallMaterial);
+        const doorLeft = new MyWall(this.app, 4, 10, [5.5, 5, 20], [0, Math.PI, 0], wallMaterial, [1, 3, 2, 7]);
+        const doorRight = new MyWall(this.app, 4, 10, [-5.5, 5, 20], [0, Math.PI, 0], wallMaterial, [1, 3, 2, 7]);
+
+        const window1 = new MyFrame(this.app, 2, 5, 0.1, [5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass);
+        const window2 = new MyFrame(this.app, 2, 5, 0.1, [-5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass);
 
         const floorMaterial = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/floor.png')
@@ -213,7 +226,15 @@ class MyContents  {
         wall1.display();
         wall2.display();
         wall3.display();
-        wall4.display();
+
+        door1.display();
+        door2.display();
+        doorTop.display();
+        doorLeft.display();
+        doorRight.display();
+        window1.display();
+        window2.display();
+
         floor.display();
         carpet.display();
         table.display();
@@ -234,8 +255,6 @@ class MyContents  {
         starryNight.display();
         girl.display();
         kiss.display();
-
-        window.display();
 
         spring.display();
         barriers.forEach((barrier) => barrier.display())
