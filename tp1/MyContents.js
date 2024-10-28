@@ -13,6 +13,7 @@ import { MyTable } from './MyTable.js';
 import { MyBarrier } from './MyBarrier.js';
 import { MyFrame } from './MyFrame.js';
 import { MyCarpet } from './MyCarpet.js';
+import { MyLightsSupport } from './MyLightsSupport.js';
 
 /**
  *  This class contains the contents of out application
@@ -88,6 +89,11 @@ class MyContents  {
             map: new THREE.TextureLoader().load('textures/kiss.jpg')
         });
 
+        const supportMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/support.jpg')
+        });
+
+
         // left paintings
         const tPainting = new MyFrame(this.app, 3, 3, 0.1, [-16, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, tomas);
         const monaLisa = new MyFrame(this.app, 3, 3, 0.1, [-12, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, monaLisaMaterial);
@@ -162,7 +168,11 @@ class MyContents  {
         const floorMaterial = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/floor.png')
         });
+
         const floor = new MyWall(this.app, 15, 25, [0, 0, 7.5], [-Math.PI/2, 0, 0], floorMaterial);
+        const ceiling = new MyWall(this.app, 15, 25, [0, 10, 7.5], [Math.PI/2, 0, 0], floorMaterial);
+        const lightsSupport = new MyLightsSupport(this.app, supportMaterial);
+
 
         const carpet = new MyCarpet(this.app, 20, 8, [0, 0.01, 10], Math.PI/2);
 
@@ -236,6 +246,8 @@ class MyContents  {
         window2.display();
 
         floor.display();
+        ceiling.display();
+        lightsSupport.display();
         carpet.display();
         table.display();
         plate.display();
