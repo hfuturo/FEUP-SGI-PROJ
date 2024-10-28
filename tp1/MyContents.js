@@ -36,25 +36,25 @@ class MyContents  {
         // create once 
         if (this.axis === null) {
             // create and attach the axis to the scene
-            this.axis = new MyAxis(this)
-            this.app.scene.add(this.axis)
+            this.axis = new MyAxis(this);
+            this.app.scene.add(this.axis);
         }
 
         const frameMaterial = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/frame.jpg')
-        })
+        });
 
         const windowMaterial = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/window_frame.jpg')
-        })
+        });
 
         const henrique = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/henrique.jpg')
-        })
+        });
 
         const tomas = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/tomas.jpg')
-        })
+        });
 
         const glass = new THREE.MeshPhysicalMaterial({  
             map: new THREE.TextureLoader().load('textures/window.jpg'),
@@ -68,8 +68,39 @@ class MyContents  {
             transmission: 1,
         });
 
-        const hPainting = new MyFrame(this.app, 1, 1, 0.1, [2.5, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, henrique);
-        const tPainting = new MyFrame(this.app, 1, 1, 0.1, [-2.5, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, tomas);
+        const monaLisaMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/mona_lisa.jpg')
+        });
+
+        const starryNightMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/starry_night.webp')
+        });
+
+        const screamMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/scream.jpg')
+        });
+
+        const girlMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/girl.jpg')
+        });
+
+        const kissMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/kiss.jpg')
+        });
+
+        // left paintings
+        const tPainting = new MyFrame(this.app, 3, 3, 0.1, [-16, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, tomas);
+        const monaLisa = new MyFrame(this.app, 3, 3, 0.1, [-12, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, monaLisaMaterial);
+        const scream = new MyFrame(this.app, 3, 3, 0.1, [-8, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, screamMaterial);
+        const beetleFrame = new MyFrame(this.app, 4, 2, 0.1, [-4, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.jpg')}));
+        const beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 4], [0, Math.PI / 2, 0], this.planeMaterial);
+        
+        // right paintings
+        const hPainting = new MyFrame(this.app, 3, 3, 0.1, [16, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, henrique);
+        const starryNight = new MyFrame(this.app, 3, 3, 0.1, [12, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, starryNightMaterial);
+        const girl = new MyFrame(this.app, 3, 3, 0.1, [8, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, girlMaterial);
+        const kiss = new MyFrame(this.app, 3, 3, 0.1, [4, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, kissMaterial);
+        
         const window = new MyFrame(this.app, 5, 4, 0.1, [0, 5, -5], [0, 0, 0], windowMaterial, glass);
 
         const stemMaterial = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('textures/stem.jpg') });
@@ -91,8 +122,6 @@ class MyContents  {
 
         const flower = new MyFlower(this.app, [-0.1, 0.9, 3], 20, 0.1, stemMaterial, receptacleMaterial, petalMaterial);
 
-        const beetleFrame = new MyFrame(this.app, 3, 1.5, 0.1, [0, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.webp')}));
-        const beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 0], [0, Math.PI / 2, 0], this.planeMaterial);
         
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0], cakeGlassInfo);
@@ -195,11 +224,18 @@ class MyContents  {
         newspaper.display();
         flower.display();
 
-        hPainting.display();
         tPainting.display();
-        window.display();
+        monaLisa.display();
+        scream.display();
         beetleFrame.display();
         beetle.display();
+
+        hPainting.display();
+        starryNight.display();
+        girl.display();
+        kiss.display();
+
+        window.display();
 
         spring.display();
         barriers.forEach((barrier) => barrier.display())
