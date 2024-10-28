@@ -1,13 +1,15 @@
 import * as THREE from 'three';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
+import { MyGlassBox } from './MyGlassBox.js';
 
 class MyNewspaper {
-    constructor(app, position, rotation=[0, 0, 0], scale=[1, 1, 1]) {
+    constructor(app, position, glassBoxInfo, rotation=[0, 0, 0], scale=[1, 1, 1]) {
         this.app = app;
         this.nurbsBuilder = new MyNurbsBuilder();
         this.position = position;
         this.rotation = rotation;
         this.scale = scale;
+        this.glassBox = new MyGlassBox(this.app, glassBoxInfo, [this.position[0], this.position[1], this.position[2] + 0.7]);
 
         const controlPoints = [// U = 0
             [// V = 0..3
@@ -42,13 +44,17 @@ class MyNewspaper {
         mesh.position.set(...this.position);
         mesh.rotation.set(this.rotation[0], this.rotation[1], this.rotation[2] - 0.07);
         mesh.scale.set(...this.scale);
-        this.app.scene.add(mesh);
 
         const mesh2 = mesh.clone();
         mesh.scale.x *= -1;
         mesh.rotation.z *= -1;
-        this.app.scene.add(mesh2);
 
+        const group = new THREE.Group();
+        group.add(mesh);
+        group.add(mesh2);
+        group.add(this.glassBox.createMesh());
+
+        this.app.scene.add(group);
     }
 }
 

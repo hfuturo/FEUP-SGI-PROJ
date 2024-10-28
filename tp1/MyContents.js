@@ -62,6 +62,12 @@ class MyContents  {
             transmission: 1,
         });
 
+        const clean_glass = new THREE.MeshPhysicalMaterial({
+            map: new THREE.TextureLoader().load('textures/clean_glass.webp'),
+            roughness: 0,
+            transmission: 1,
+        });
+
         const hPainting = new MyFrame(this.app, 1, 1, 0.1, [2.5, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, henrique);
         const tPainting = new MyFrame(this.app, 1, 1, 0.1, [-2.5, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, tomas);
         const window = new MyFrame(this.app, 5, 4, 0.1, [0, 5, -5], [0, 0, 0], windowMaterial, glass);
@@ -88,10 +94,16 @@ class MyContents  {
         const beetleFrame = new MyFrame(this.app, 3, 1.5, 0.1, [0, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.webp')}));
         const beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 0], [0, Math.PI / 2, 0], this.planeMaterial);
         
-        const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0]);
+        const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
+        const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0], cakeGlassInfo);
+
         const landscape = new MyLandscape(this.app, 24, 13.5, [0, 5, -10]);
-        const spring = new MySpring(this.app, 20, 13, 0.1, [1, 2.85, 1], [0, 0, -Math.PI / 2]);
-        const newspaper = new MyNewspaper(this.app, [-2, 2.75, -0.5])
+
+        const springGlassInfo = {width: 1.6, height: 0.7, depth: 1, material: clean_glass};
+        const spring = new MySpring(this.app, 20, 13, 0.1, [2, 2.85, 0], springGlassInfo, [0, 0, -Math.PI / 2]);
+
+        const newsPaperGlassInfo = {width: 2.6, height: 0.6, depth: 1.5, material: clean_glass};
+        const newspaper = new MyNewspaper(this.app, [-2.5, 2.75, -0.65], newsPaperGlassInfo)
         const plate = new MyPlate(this.app, 0.75, 0.125, [0, 2.75 + 0.125/2, 0], this.planeMaterial)
 
         const wallMaterial = new THREE.MeshPhongMaterial({
@@ -125,7 +137,7 @@ class MyContents  {
             shininess: 0
         })
         
-        const table = new MyTable(this.app, 5, 2.5, 2.625, 0.25, tableTopMaterial, legMaterial, [0, 0, 0]);
+        const table = new MyTable(this.app, 8, 2.5, 2.625, 0.25, tableTopMaterial, legMaterial, [0, 0, 0]);
 
         const jarTexture = new THREE.TextureLoader().load('textures/pattern.png')
         jarTexture.wrapS = THREE.RepeatWrapping;

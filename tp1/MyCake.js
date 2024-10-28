@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import { MyCandle } from './MyCandle.js';
+import { MyGlassBox } from './MyGlassBox.js';
 
 class MyCake {
 
-    constructor(app, radius, number, segments, heightSegments, angle, material, position) {
+    constructor(app, radius, number, segments, heightSegments, angle, material, position, glassBoxInfo) {
         this.app = app;
         this.radius = radius;
         this.number = number;
@@ -18,11 +19,12 @@ class MyCake {
 
             for (let i = 0; i < 2; i++) {
                 candles.push(new MyCandle(this.app, 0.025, 0.2, [-0.1 + 0.2 * i, 3.4, 0]));
-
             }
 
             return candles;
         })();
+
+        this.glassBox = new MyGlassBox(this.app, glassBoxInfo, [this.position[0], this.position[1]-0.5, this.position[2]]);
     }
 
     display() {
@@ -49,7 +51,6 @@ class MyCake {
 
         const mesh = new THREE.Mesh(cake, icingMaterial);
         mesh.position.set(...this.position);
-        this.app.scene.add(mesh);
 
         // fill inside of cake
         const inside = new THREE.PlaneGeometry(this.radius, this.radius);
@@ -58,7 +59,6 @@ class MyCake {
         // nao testei a posicao do Z, vai na fé 
         blueAxisSliceInside.position.set(0, this.position[1], this.radius / 2);
         blueAxisSliceInside.rotation.set(0, -Math.PI / 2, 0);
-        this.app.scene.add(blueAxisSliceInside);
 
         const angledInsideMesh = new THREE.Mesh(inside, cakeMaterial);
         angledInsideMesh.position.set(
@@ -67,9 +67,16 @@ class MyCake {
             Math.cos(this.angle) * this.radius / 2
         );
         angledInsideMesh.rotation.y = Math.PI * 2 - (this.angle - 0.1 * Math.PI)
-        this.app.scene.add(angledInsideMesh);
 
         this.candles.forEach(candle => candle.display());
+
+        const group = new THREE.Group();
+        group.add(mesh);
+        group.add(blueAxisSliceInside);
+        group.add(angledInsideMesh);
+        group.add(this.glassBox.createMesh());
+
+        this.app.scene.add(group);
         this.#addSpotLight();
     }
 
