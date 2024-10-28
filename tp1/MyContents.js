@@ -142,7 +142,18 @@ class MyContents  {
         jarMaterial.side = THREE.DoubleSide;
         const jar = new MyJar(this.app, jarMaterial, dirtMaterial, [0, 0, 3], [0, 0, 0], [1, 1, 1]);
 
-        const barrier = new MyBarrier(this.app, [3, 0, 0], Math.PI/6, true);
+        const barriers = [
+            //right
+            new MyBarrier(this.app, [4, 0, 6], Math.PI/2, true),
+            new MyBarrier(this.app, [4, 0, 10], Math.PI/2, false),
+            new MyBarrier(this.app, [4, 0, 14], Math.PI/2, false),
+            new MyBarrier(this.app, [4, 0, 18], Math.PI/2, false),
+            //left
+            new MyBarrier(this.app, [-4, 0, 6], Math.PI/2, true),
+            new MyBarrier(this.app, [-4, 0, 10], Math.PI/2, false),
+            new MyBarrier(this.app, [-4, 0, 14], Math.PI/2, false),
+            new MyBarrier(this.app, [-4.6, 0, 18 - 0.05], Math.PI/2 - Math.PI/20, false),
+        ];
 
         // add a point light on top of the model
         const pointLight = new THREE.PointLight( 0xffffff, 300, 0 );
@@ -179,7 +190,7 @@ class MyContents  {
         beetle.display();
 
         spring.display();
-        barrier.display();
+        barriers.forEach((barrier) => barrier.display())
     }
 
     /**
