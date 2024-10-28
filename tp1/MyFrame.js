@@ -1,8 +1,9 @@
 import * as THREE from 'three';
+import { MyLight } from './MyLight.js';
 
 class MyFrame {
 
-    constructor(app, width, height, depth, position, rotation, materialOut, materialIn) {
+    constructor(app, width, height, depth, position, rotation, materialOut, materialIn, buildSpotLight=true) {
         this.app = app;
         this.width = width;
         this.height = height;
@@ -11,10 +12,15 @@ class MyFrame {
         this.rotation = rotation;
         this.materialOut = materialOut;
         this.materialIn = materialIn;
+        this.buildSpotLight = buildSpotLight;
 
         this.horizontalPiece = new THREE.BoxGeometry(this.width - this.depth, this.depth, this.depth);
         this.verticalPiece = new THREE.BoxGeometry(this.depth, this.height + 2*this.depth, this.depth);
         this.inside = new THREE.PlaneGeometry(this.width, this.height);
+
+        if (this.buildSpotLight) {
+            this.spotLight = new MyLight(this.app, this.position, 100, 0, Math.PI / 7, 1, 3, true);
+        }
     }
 
     display() {
@@ -42,6 +48,11 @@ class MyFrame {
         group.add(insideMesh);
 
         group.rotation.set(...this.rotation);
+
+
+        if (this.buildSpotLight) {
+            this.app.scene.add(this.spotLight.display());
+        }
 
         this.app.scene.add(group);
     }

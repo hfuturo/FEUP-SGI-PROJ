@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MyCandle } from './MyCandle.js';
 import { MyGlassBox } from './MyGlassBox.js';
+import { MyLight } from './MyLight.js';
 
 class MyCake {
 
@@ -25,6 +26,7 @@ class MyCake {
         })();
 
         this.glassBox = new MyGlassBox(this.app, glassBoxInfo, [this.position[0], this.position[1]-0.5, this.position[2]]);
+        this.spotLight = new MyLight(this.app, this.position, 500, 0, Math.PI / 7, 1, 3, false);
     }
 
     display() {
@@ -77,17 +79,8 @@ class MyCake {
         group.add(this.glassBox.createMesh());
 
         this.app.scene.add(group);
-        this.#addSpotLight();
+        this.app.scene.add(this.spotLight.display());
     }
-
-    #addSpotLight() {
-        const spotLight = new THREE.SpotLight(0xFFFFFF, 100, 0);
-        spotLight.position.set(0, 10, 0);
-        spotLight.penumbra = 0.9;
-        spotLight.angle = Math.PI / 15;
-        this.app.scene.add(spotLight);
-    }
-
 }
 
 export { MyCake };

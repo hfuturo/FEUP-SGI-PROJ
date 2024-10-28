@@ -33,24 +33,19 @@ class MyLightsSupport {
                 new THREE.Vector3(4, 10, 15 - 5 * i)
             );
 
-            connections.add(this.#buildConnection(line1));
-            connections.add(this.#buildConnection(line2));
+            connections.add(this.#constructSupportCurves(line1, 2));
+            connections.add(this.#constructSupportCurves(line2, 2));
         }
 
         // frontal line connection
-        connections.add(this.#buildConnection(
+        connections.add(this.#constructSupportCurves(
             new THREE.LineCurve3(
                 new THREE.Vector3(0, 9.5, 0),
                 new THREE.Vector3(0, 10, 0)
-            ))
+            ), 2)
         );
 
         return connections;
-    }
-
-    #buildConnection(line) {
-        const mesh = this.#constructSupportCurves(line, 2);
-        return mesh;
     }
 
     #buildSupport() {
@@ -102,7 +97,6 @@ class MyLightsSupport {
         const mesh = new THREE.Mesh(support, this.material);
         return mesh;
     }
-
 
 }
 

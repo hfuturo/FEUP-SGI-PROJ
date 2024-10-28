@@ -162,8 +162,8 @@ class MyContents  {
         const doorLeft = new MyWall(this.app, 4, 10, [5.5, 5, 20], [0, Math.PI, 0], wallMaterial, [1, 3, 2, 7]);
         const doorRight = new MyWall(this.app, 4, 10, [-5.5, 5, 20], [0, Math.PI, 0], wallMaterial, [1, 3, 2, 7]);
 
-        const window1 = new MyFrame(this.app, 2, 5, 0.1, [5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass);
-        const window2 = new MyFrame(this.app, 2, 5, 0.1, [-5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass);
+        const window1 = new MyFrame(this.app, 2, 5, 0.1, [5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, false);
+        const window2 = new MyFrame(this.app, 2, 5, 0.1, [-5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, false);
 
         const floorMaterial = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/floor.png')
