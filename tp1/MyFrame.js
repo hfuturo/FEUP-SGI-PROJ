@@ -3,7 +3,7 @@ import { MyLight } from './MyLight.js';
 
 class MyFrame {
 
-    constructor(app, width, height, depth, position, rotation, materialOut, materialIn, buildSpotLight=true) {
+    constructor(app, width, height, depth, position, rotation, materialOut, materialIn, receiveShadow=false, buildSpotLight=true) {
         this.app = app;
         this.width = width;
         this.height = height;
@@ -13,6 +13,7 @@ class MyFrame {
         this.materialOut = materialOut;
         this.materialIn = materialIn;
         this.buildSpotLight = buildSpotLight;
+        this.receiveShadow = receiveShadow;
 
         this.horizontalPiece = new THREE.BoxGeometry(this.width - this.depth, this.depth, this.depth);
         this.verticalPiece = new THREE.BoxGeometry(this.depth, this.height + 2*this.depth, this.depth);
@@ -26,6 +27,8 @@ class MyFrame {
     display() {
         const horizontalPieceMesh1 = new THREE.Mesh(this.horizontalPiece, this.materialOut);
         const verticalPieceMesh1 = new THREE.Mesh(this.verticalPiece, this.materialOut);
+        horizontalPieceMesh1.receiveShadow = this.receiveShadow;
+        verticalPieceMesh1.receiveShadow = this.receiveShadow;
 
         horizontalPieceMesh1.position.set(this.position[0], this.position[1] + this.depth/2 + this.height/2, this.position[2]);
         verticalPieceMesh1.position.set(this.position[0] + this.width / 2, this.position[1], this.position[2]);
@@ -39,7 +42,8 @@ class MyFrame {
 
         const insideMesh = new THREE.Mesh(this.inside, this.materialIn);
         insideMesh.position.set(this.position[0], this.position[1], this.position[2]);
-
+        insideMesh.receiveShadow = this.receiveShadow;
+        
         const group = new THREE.Group();
         group.add(horizontalPieceMesh1);
         group.add(horizontalPieceMesh2);

@@ -14,6 +14,7 @@ import { MyBarrier } from './MyBarrier.js';
 import { MyFrame } from './MyFrame.js';
 import { MyCarpet } from './MyCarpet.js';
 import { MyLightsSupport } from './MyLightsSupport.js';
+import { MyLamp } from './MyLamp.js';
 
 /**
  *  This class contains the contents of out application
@@ -93,6 +94,16 @@ class MyContents  {
             map: new THREE.TextureLoader().load('textures/support.jpg')
         });
 
+        const napoleanMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/napolean.jpg')
+        });
+
+        const lampMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/lamp.jpeg')
+        });
+
+
+        const napolean = new MyFrame(this.app, 10, 5, 0.1, [0, 6, -4.9], [0, 0, 0], frameMaterial, napoleanMaterial, true, false);
 
         // left paintings
         const tPainting = new MyFrame(this.app, 3, 3, 0.1, [-16, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, tomas);
@@ -107,6 +118,9 @@ class MyContents  {
         const girl = new MyFrame(this.app, 3, 3, 0.1, [8, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, girlMaterial);
         const kiss = new MyFrame(this.app, 3, 3, 0.1, [4, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, kissMaterial);
 
+        const lamp = new MyLamp(this.app, [0, 9.93, 7], 50, lampMaterial);
+        const lamp2 = new MyLamp(this.app, [0, 9.93, 17], 50, lampMaterial);
+        const lamp3 = new MyLamp(this.app, [0, 9.93, -3], 50, lampMaterial);
         
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0], cakeGlassInfo);
@@ -148,8 +162,8 @@ class MyContents  {
         const doorLeft = new MyWall(this.app, 4, 10, [5.5, 5, 20], [0, Math.PI, 0], wallMaterialDouble, [1, 3, 2, 7], false, true);
         const doorRight = new MyWall(this.app, 4, 10, [-5.5, 5, 20], [0, Math.PI, 0], wallMaterialDouble, [1, 3, 2, 7], false, true);
 
-        const window1 = new MyFrame(this.app, 2, 5, 0.1, [5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, false);
-        const window2 = new MyFrame(this.app, 2, 5, 0.1, [-5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, false);
+        const window1 = new MyFrame(this.app, 2, 5, 0.1, [5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, true, false);
+        const window2 = new MyFrame(this.app, 2, 5, 0.1, [-5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, true, false);
 
         const floorMaterial = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/floor.png'),
@@ -264,6 +278,8 @@ class MyContents  {
         flower1.display();
         flower2.display();
 
+        napolean.display();
+
         tPainting.display();
         monaLisa.display();
         scream.display();
@@ -277,6 +293,10 @@ class MyContents  {
 
         spring.display();
         barriers.forEach((barrier) => barrier.display())
+
+        lamp.display();
+        lamp2.display()
+        lamp3.display();
     }
 
     /**
