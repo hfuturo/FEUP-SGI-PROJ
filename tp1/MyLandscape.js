@@ -35,7 +35,7 @@ class MyLandscape {
         light.castShadow = true;
         light.shadow.camera.right = -15;
         light.shadow.camera.left = 15;
-        light.shadow.camera.top = 15;
+        light.shadow.camera.top = 25;
         light.shadow.camera.far = 30;
         this.app.scene.add(light);
 

@@ -126,7 +126,7 @@ class MyContents  {
             emissive: "#000000",
             shininess: 0
         })
-        const wall1 = new MyWall(this.app, 15, 10, [0, 5, -5], [0, 0, 0], wallMaterial);
+        const wall1 = new MyWall(this.app, 15, 10, [0, 5, -5], [0, 0, 0], wallMaterial, [], true);
         const wall2 = new MyWall(this.app, 25, 10, [-7.5, 5, 7.5], [0, Math.PI / 2, 0], wallMaterial);
         const wall3 = new MyWall(this.app, 25, 10, [7.5, 5, 7.5], [0, -Math.PI / 2, 0], wallMaterial);
 
