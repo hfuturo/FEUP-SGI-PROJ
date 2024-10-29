@@ -7,6 +7,11 @@ class MyLamp {
         this.position = position;
         this.intensity = intensity;
         this.material = material;
+
+        this.endingMaterial = new THREE.MeshPhongMaterial({
+            color: 0xFFFFFF,
+            emissive: 0xFFFFFF
+        });
     }
 
     display() {
@@ -22,7 +27,7 @@ class MyLamp {
 
     #buildLamp() {
         const lamp = new THREE.CylinderGeometry(1.2, 1.2, 0.13);
-        const mesh = new THREE.Mesh(lamp, this.material);
+        const mesh = new THREE.Mesh(lamp, [this.material, this.material, this.endingMaterial]);
         mesh.position.set(...this.position);
 
         return mesh;
@@ -31,9 +36,6 @@ class MyLamp {
     #buildLight() {
         const light = new THREE.PointLight(0xFFFFFF, this.intensity, 0);
         light.position.set(this.position[0], this.position[1] - 0.1, this.position[2]);
-
-        const helper = new THREE.PointLightHelper(light, 0.5);
-        this.app.scene.add(helper);
 
         return light;
     }

@@ -20,6 +20,11 @@ class MyLight {
         this.material = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/support.jpg')
         });
+
+        this.endingMaterial = new THREE.MeshPhongMaterial({
+            color: 0xFFFFFF,
+            emissive: 0xFFFFFF
+        });
     }
 
     display() {
@@ -54,18 +59,44 @@ class MyLight {
         const spotLight = new THREE.SpotLight(0xFFFFFF, this.intensity, this.distance, this.angle, this.penumbra, this.decay);
         spotLight.castShadow = this.castShadow;
 
+        const ending = new THREE.CylinderGeometry(0.1, 0.1, 0.01, 24);
+        const endingMesh = new THREE.Mesh(ending, this.endingMaterial);
+        const begginingMesh = new THREE.Mesh(ending, this.material);
+
         if (this.hasAngle) {
+            endingMesh.material.side = THREE.DoubleSide;
+
             spotLight.position.set(positionX, this.spotLightHeight - this.padding, posZ);
             spotLight.target.position.set(targetPosX, this.targetPosition[1] + 0.5, Math.abs(this.targetPosition[0]));
+
+            if (posX > 0) {
+                endingMesh.position.set(positionX + 0.11, this.spotLightHeight - this.padding - 0.11, posZ);
+                begginingMesh.position.set(positionX - 0.6, this.spotLightHeight + this.padding, posZ);
+                endingMesh.rotation.z = Math.PI / 4;
+                begginingMesh.rotation.z = Math.PI / 4;
+            }
+            else {
+                endingMesh.position.set(positionX - 0.11, this.spotLightHeight - this.padding - 0.11, posZ);
+                begginingMesh.position.set(positionX + 0.6, this.spotLightHeight + this.padding, posZ);
+                endingMesh.rotation.z = -Math.PI / 4;
+                begginingMesh.rotation.z = -Math.PI / 4;
+            }
         }
         else {
             spotLight.position.set(this.targetPosition[0], this.spotLightHeight - this.padding, posZ);
+            endingMesh.position.set(this.targetPosition[0], this.spotLightHeight - this.padding - 0.4, posZ);
             spotLight.target.position.set(...this.targetPosition);
         }
 
         spotLight.target.updateMatrixWorld();
 
-        return spotLight;
+
+        const group = new THREE.Group();
+        group.add(spotLight);
+        group.add(endingMesh);
+        group.add(begginingMesh);
+
+        return group;
     }
 
     #buildLight(posX, posZ) {
@@ -100,7 +131,7 @@ class MyLight {
     }
 
     #buildTube(curve) {
-        const tube = new THREE.TubeGeometry(curve, 2, 0.1, 8, true);
+        const tube = new THREE.TubeGeometry(curve, 2, 0.1, 24, true);
         const mesh = new THREE.Mesh(tube, this.material);
         return mesh;
     }

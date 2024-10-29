@@ -12,7 +12,7 @@ class MyLandscape {
 
     display() {
         const landscape = new THREE.PlaneGeometry(this.width, this.height);
-        const texture = new THREE.TextureLoader().load('textures/landscape.webp');
+        const texture = new THREE.TextureLoader().load('textures/landscape.jpg');
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
         const material = new THREE.MeshLambertMaterial({

@@ -103,6 +103,11 @@ class MyContents  {
         });
 
 
+        const plateMaterial = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('textures/plate.jpg')
+        });
+
+
         const napolean = new MyFrame(this.app, 10, 5, 0.1, [0, 6, -4.9], [0, 0, 0], frameMaterial, napoleanMaterial, true, false);
 
         // left paintings
@@ -125,14 +130,14 @@ class MyContents  {
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0], cakeGlassInfo);
 
-        const landscape = new MyLandscape(this.app, 24, 13.5, [0, 5, 25], [0, Math.PI, 0]);
+        const landscape = new MyLandscape(this.app, 24, 16, [0, 5, 25], [0, Math.PI, 0]);
 
         const springGlassInfo = {width: 1.6, height: 0.7, depth: 1, material: clean_glass};
         const spring = new MySpring(this.app, 20, 13, 0.1, [2, 2.85, 0], springGlassInfo, [0, 0, -Math.PI / 2]);
 
         const newsPaperGlassInfo = {width: 2.6, height: 0.6, depth: 1.5, material: clean_glass};
         const newspaper = new MyNewspaper(this.app, [-2.5, 2.75, -0.65], newsPaperGlassInfo)
-        const plate = new MyPlate(this.app, 0.75, 0.125, [0, 2.75 + 0.125/2, 0], this.planeMaterial)
+        const plate = new MyPlate(this.app, 0.75, 0.125, [0, 2.75 + 0.125/2, 0], plateMaterial)
 
         const wallMaterial = new THREE.MeshPhongMaterial({
             color: "#cac8be",
@@ -162,8 +167,8 @@ class MyContents  {
         const doorLeft = new MyWall(this.app, 4, 10, [5.5, 5, 20], [0, Math.PI, 0], wallMaterialDouble, [1, 3, 2, 7], false, true);
         const doorRight = new MyWall(this.app, 4, 10, [-5.5, 5, 20], [0, Math.PI, 0], wallMaterialDouble, [1, 3, 2, 7], false, true);
 
-        const window1 = new MyFrame(this.app, 2, 5, 0.1, [5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, true, false);
-        const window2 = new MyFrame(this.app, 2, 5, 0.1, [-5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, true, false);
+        const window1 = new MyFrame(this.app, 2, 5, 0.1, [5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, clean_glass, true, false);
+        const window2 = new MyFrame(this.app, 2, 5, 0.1, [-5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, clean_glass, true, false);
 
         const floorMaterial = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/floor.png'),
