@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 class MyLight {
 
-    constructor(app, targetPosition, intensity, distance, angle, penumbra, decay, hasAngle=true) {
+    constructor(app, targetPosition, intensity, distance, angle, penumbra, decay, castShadow=false, hasAngle=true) {
         this.app = app;
         this.targetPosition = targetPosition;
         this.intensity = intensity;
@@ -10,6 +10,7 @@ class MyLight {
         this.angle = angle;
         this.penumbra = penumbra;
         this.decay = decay;
+        this.castShadow = castShadow;
         this.hasAngle = hasAngle;
         
         this.barrierX = 4;
@@ -51,6 +52,7 @@ class MyLight {
         const positionX = posX < 0 ? posX - this.padding : posX + this.padding;
         const targetPosX = posX < 0 ? this.targetPosition[2] : -this.targetPosition[2];
         const spotLight = new THREE.SpotLight(0xFFFFFF, this.intensity, this.distance, this.angle, this.penumbra, this.decay);
+        spotLight.castShadow = this.castShadow;
 
         if (this.hasAngle) {
             spotLight.position.set(positionX, this.spotLightHeight - this.padding, posZ);

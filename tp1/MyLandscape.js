@@ -30,10 +30,17 @@ class MyLandscape {
         const light = new THREE.DirectionalLight(0xFFFFFF, 2, 0);
         light.position.set(...this.position);
         light.rotation.set(...this.rotation);
-        light.target.position.set(0, 5, -5);
+        light.target.position.set(0, 0, 17);
+        light.target.updateMatrixWorld();
+        light.castShadow = true;
+        light.shadow.camera.right = -15;
+        light.shadow.camera.left = 15;
+        light.shadow.camera.top = 15;
+        light.shadow.camera.far = 30;
         this.app.scene.add(light);
-        // const lightHelper = new THREE.DirectionalLightHelper(light, 0.5);
-        // this.app.scene.add(lightHelper);
+
+        // const shadowHelper = new THREE.CameraHelper(light.shadow.camera);
+        // this.app.scene.add(shadowHelper);
     }
 }
 

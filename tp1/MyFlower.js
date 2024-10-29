@@ -26,7 +26,7 @@ class MyFlower {
             this.petals.push(new MyPetal(
                 this.app,
                 petalMaterial,
-                [this.position[0], (this.position[1] + 1.25)*this.scale[1], this.position[2]],
+                [this.position[0], this.position[1] + 1.25*this.scale[1], this.position[2]],
                 [0, this.rotationY, i],
                 this.scale
             ));
@@ -41,7 +41,7 @@ class MyFlower {
         this.app.scene.add(tubeMesh);
 
         const receptacleMesh = new THREE.Mesh(this.receptacle, this.receptacleMaterial);
-        receptacleMesh.position.set(this.position[0], (this.position[1] + 1.25)*this.scale[1], this.position[2]);
+        receptacleMesh.position.set(this.position[0], this.position[1] + 1.25*this.scale[1], this.position[2]);
         receptacleMesh.rotation.y = this.rotationY;
         receptacleMesh.scale.set(...this.scale);
         this.app.scene.add(receptacleMesh);

@@ -26,7 +26,7 @@ class MyCake {
         })();
 
         this.glassBox = new MyGlassBox(this.app, glassBoxInfo, [this.position[0], this.position[1]-0.5, this.position[2]]);
-        this.spotLight = new MyLight(this.app, this.position, 500, 0, Math.PI / 7, 1, 3, false);
+        this.spotLight = new MyLight(this.app, this.position, 4, 10, Math.PI / 10, 0.3, 0, true, false);
     }
 
     display() {

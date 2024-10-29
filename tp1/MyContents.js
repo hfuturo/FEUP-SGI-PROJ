@@ -107,25 +107,6 @@ class MyContents  {
         const girl = new MyFrame(this.app, 3, 3, 0.1, [8, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, girlMaterial);
         const kiss = new MyFrame(this.app, 3, 3, 0.1, [4, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, kissMaterial);
 
-        const stemMaterial = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('textures/stem.jpg') });
-
-        const recptacleTexture = new THREE.TextureLoader().load('textures/receptacle.jpg');
-        recptacleTexture.wrapS = THREE.RepeatWrapping;
-        recptacleTexture.wrapT = THREE.RepeatWrapping;
-        recptacleTexture.repeat.set(2, 2);
-        const receptacleMaterial = new THREE.MeshLambertMaterial({ map:  recptacleTexture});
-
-        const petalTexture = new THREE.TextureLoader().load('textures/petal.png');
-        petalTexture.repeat.set(0.5, 0.5);
-        petalTexture.offset.set(0, 0.25);
-        const petalMaterial = new THREE.MeshLambertMaterial({ 
-            color: "#38f5ff",
-            map: petalTexture
-        });
-        petalMaterial.side = THREE.DoubleSide;
-
-        const flower = new MyFlower(this.app, [-0.1, 0.9, 3], 20, 0.1, stemMaterial, receptacleMaterial, petalMaterial);
-
         
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0], cakeGlassInfo);
@@ -150,27 +131,36 @@ class MyContents  {
         const wall3 = new MyWall(this.app, 25, 10, [7.5, 5, 7.5], [0, -Math.PI / 2, 0], wallMaterial);
 
         const doorTexture = new THREE.TextureLoader().load('textures/door.jpg');
+        const doorMaterial = new THREE.MeshLambertMaterial({ map: doorTexture, side: THREE.DoubleSide });
 
-        const door1 = new MyWall(this.app, 3.5, 7, [1.75, 3.5, 20], [0, Math.PI, 0], new THREE.MeshLambertMaterial({ map: doorTexture }));
+        const door1 = new MyWall(this.app, 3.5, 7, [1.75, 3.5, 20], [0, Math.PI, 0], doorMaterial, [], false, true);
 
         const doorTexture2 = doorTexture.clone();
         doorTexture2.wrapS = THREE.RepeatWrapping;
         doorTexture2.repeat.set(-1, 1);
+        const doorMaterial2 = new THREE.MeshLambertMaterial({ map: doorTexture2, side: THREE.DoubleSide });
 
-        const door2 = new MyWall(this.app, 3.5, 7, [-1.75, 3.5, 20], [0, Math.PI, 0], new THREE.MeshLambertMaterial({ map: doorTexture2 }));
-        const doorTop = new MyWall(this.app, 7, 3, [0, 8.5, 20], [0, Math.PI, 0], wallMaterial);
-        const doorLeft = new MyWall(this.app, 4, 10, [5.5, 5, 20], [0, Math.PI, 0], wallMaterial, [1, 3, 2, 7]);
-        const doorRight = new MyWall(this.app, 4, 10, [-5.5, 5, 20], [0, Math.PI, 0], wallMaterial, [1, 3, 2, 7]);
+        const wallMaterialDouble = wallMaterial.clone();
+        wallMaterialDouble.side = THREE.DoubleSide;
+
+        const door2 = new MyWall(this.app, 3.5, 7, [-1.75, 3.5, 20], [0, Math.PI, 0], doorMaterial2, [], false, true);
+        const doorTop = new MyWall(this.app, 7, 3, [0, 8.5, 20], [0, Math.PI, 0], wallMaterialDouble, [], false, true);
+        const doorLeft = new MyWall(this.app, 4, 10, [5.5, 5, 20], [0, Math.PI, 0], wallMaterialDouble, [1, 3, 2, 7], false, true);
+        const doorRight = new MyWall(this.app, 4, 10, [-5.5, 5, 20], [0, Math.PI, 0], wallMaterialDouble, [1, 3, 2, 7], false, true);
 
         const window1 = new MyFrame(this.app, 2, 5, 0.1, [5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, false);
         const window2 = new MyFrame(this.app, 2, 5, 0.1, [-5.5, 4.5, -20], [0, Math.PI, 0], windowMaterial, glass, false);
 
         const floorMaterial = new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('textures/floor.png')
+            map: new THREE.TextureLoader().load('textures/floor.png'),
         });
 
-        const floor = new MyWall(this.app, 15, 25, [0, 0, 7.5], [-Math.PI/2, 0, 0], floorMaterial);
-        const ceiling = new MyWall(this.app, 15, 25, [0, 10, 7.5], [Math.PI/2, 0, 0], floorMaterial);
+        const floor = new MyWall(this.app, 15, 25, [0, 0, 7.5], [-Math.PI/2, 0, 0], floorMaterial, [], true);
+
+        const ceilingMaterial = floorMaterial.clone();
+        ceilingMaterial.side = THREE.DoubleSide;
+        const ceiling = new MyWall(this.app, 15, 25, [0, 10, 7.5], [Math.PI/2, 0, 0], ceilingMaterial, [], false, true);
+        
         const lightsSupport = new MyLightsSupport(this.app, supportMaterial);
 
 
@@ -204,7 +194,31 @@ class MyContents  {
         })
         
         jarMaterial.side = THREE.DoubleSide;
-        const jar = new MyJar(this.app, jarMaterial, dirtMaterial, [0, 0, 3], [0, 0, 0], [1, 1, 1]);
+        const jar1 = new MyJar(this.app, jarMaterial, dirtMaterial, [-6, 0, -3.5], [0, 0, 0], [2, 2, 2]);
+        const jar2 = new MyJar(this.app, jarMaterial, dirtMaterial, [6, 0, -3.5], [0, 0, 0], [2, 2, 2]);
+
+        const stemMaterial = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('textures/stem.jpg') });
+
+        const recptacleTexture = new THREE.TextureLoader().load('textures/receptacle.jpg');
+        recptacleTexture.wrapS = THREE.RepeatWrapping;
+        recptacleTexture.wrapT = THREE.RepeatWrapping;
+        recptacleTexture.repeat.set(2, 2);
+        const receptacleMaterial = new THREE.MeshLambertMaterial({ map:  recptacleTexture});
+
+        const petalTexture = new THREE.TextureLoader().load('textures/petal.png');
+        petalTexture.repeat.set(0.5, 0.5);
+        petalTexture.offset.set(0, 0.25);
+        const petalMaterial = new THREE.MeshLambertMaterial({ 
+            color: "#38f5ff",
+            map: petalTexture
+        });
+        petalMaterial.side = THREE.DoubleSide;
+
+        const flower1 = new MyFlower(this.app, [-6.1, 1.8, -3.5], 20, 0.1, stemMaterial, receptacleMaterial, petalMaterial, 0, [2, 2, 2]);
+
+        const petalMaterial2 = petalMaterial.clone();
+        petalMaterial2.color = new THREE.Color("#ff38f5");
+        const flower2 = new MyFlower(this.app, [6.1, 1.8, -3.5], 20, 0.1, stemMaterial, receptacleMaterial, petalMaterial2, Math.PI, [2, 2, 2]);
 
         const barriers = [
             //right
@@ -218,16 +232,6 @@ class MyContents  {
             new MyBarrier(this.app, [-4, 0, 14], Math.PI/2, false),
             new MyBarrier(this.app, [-4.6, 0, 18 - 0.05], Math.PI/2 - Math.PI/20, false),
         ];
-
-        // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0xffffff, 300, 0 );
-        pointLight.position.set( 0, 20, 0 );
-        this.app.scene.add( pointLight );
-
-        // add a point light helper for the previous point light
-        const sphereSize = 0.5;
-        const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
-        this.app.scene.add( pointLightHelper );
 
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555 );
@@ -253,9 +257,12 @@ class MyContents  {
         plate.display();
         cake.display();
         landscape.display();
-        jar.display();
         newspaper.display();
-        flower.display();
+        
+        jar1.display();
+        jar2.display();
+        flower1.display();
+        flower2.display();
 
         tPainting.display();
         monaLisa.display();

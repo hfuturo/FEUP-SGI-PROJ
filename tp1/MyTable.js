@@ -19,6 +19,7 @@ class MyTable {
     display() {
         const topMesh = new THREE.Mesh(this.top, this.topMaterial);
         topMesh.position.set(this.position[0], this.position[1] + this.height, this.position[2]);
+        topMesh.castShadow = true;
         this.app.scene.add(topMesh);
 
         const leg1 = new THREE.Mesh(this.leg, this.legMaterial);

@@ -51,6 +51,7 @@ class MyCarpet {
         const mesh = new THREE.Mesh(this.surface, this.material);
         mesh.position.set(...this.position);
         mesh.rotation.y = this.rotationY;
+        mesh.receiveShadow = true;
         this.app.scene.add(mesh);
         
     }

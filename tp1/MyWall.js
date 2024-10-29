@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 class MyWall {
     // hole: [x start (0 <= x <= length), x end (x_start <= x <= length), y start (0 <= y <= height), y end (y_start <= y <= height)]
-    constructor(app, length, height, position, rotation, material, hole=[]) {
+    constructor(app, length, height, position, rotation, material, hole=[], receiveShadow=false, castShadow=false) {
         this.app = app;
         this.length = length;
         this.height = height;
@@ -11,6 +11,8 @@ class MyWall {
         this.rotation = rotation;
         this.hole = hole;
         this.planes = [];
+        this.receiveShadow = receiveShadow;
+        this.castShadow = castShadow;
 
         if (this.hole.length != 0 && this.hole.length != 4) {
             throw new Error('Invalid specification of hole');
@@ -39,23 +41,33 @@ class MyWall {
             const mesh = new THREE.Mesh(this.planes[0], this.material);
             mesh.position.set(...this.position);
             mesh.rotation.set(...this.rotation);
+            mesh.receiveShadow = this.receiveShadow;
+            mesh.castShadow = this.castShadow;
             this.app.scene.add(mesh);
         } else {
             const mesh1 = new THREE.Mesh(this.planes[0], this.material);
             mesh1.position.x = this.hole[0]/2 - this.length/2;
             mesh1.position.y = this.height/2 - this.height/2;
+            mesh1.receiveShadow = this.receiveShadow;
+            mesh1.castShadow = this.castShadow;
 
             const mesh2 = new THREE.Mesh(this.planes[1], this.material);
             mesh2.position.x = this.hole[1] + (this.length - this.hole[1]) / 2 - this.length/2;
             mesh2.position.y = this.height/2 - this.height/2;
+            mesh2.receiveShadow = this.receiveShadow;
+            mesh2.castShadow = this.castShadow;
 
             const mesh3 = new THREE.Mesh(this.planes[2], this.material);
             mesh3.position.x = this.hole[0] + (this.hole[1] - this.hole[0]) / 2 - this.length/2;
             mesh3.position.y = this.hole[2]/2 - this.height/2;
+            mesh3.receiveShadow = this.receiveShadow;
+            mesh3.castShadow = this.castShadow;
 
             const mesh4 = new THREE.Mesh(this.planes[3], this.material);
             mesh4.position.x = this.hole[0] + (this.hole[1] - this.hole[0]) / 2 - this.length/2;
             mesh4.position.y = this.hole[3] + (this.height - this.hole[3]) / 2 - this.height/2;
+            mesh4.receiveShadow = this.receiveShadow;
+            mesh4.castShadow = this.castShadow;
 
             const group = new THREE.Group();
             group.add(mesh1);

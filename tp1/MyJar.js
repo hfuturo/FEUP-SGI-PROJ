@@ -110,8 +110,9 @@ class MyJar {
         this.app.scene.add(mesh4);
 
         const meshCircle = new THREE.Mesh(this.circle, this.materialInside);
-        meshCircle.position.set(this.position[0], this.position[1] + 1, this.position[2]);
+        meshCircle.position.set(this.position[0], this.position[1] + 1*this.scale[1], this.position[2]);
         meshCircle.rotation.set(-Math.PI / 2, 0, 0);
+        meshCircle.scale.set(...this.scale);
         this.app.scene.add(meshCircle);
     }
 }

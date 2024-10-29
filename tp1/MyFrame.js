@@ -19,7 +19,7 @@ class MyFrame {
         this.inside = new THREE.PlaneGeometry(this.width, this.height);
 
         if (this.buildSpotLight) {
-            this.spotLight = new MyLight(this.app, this.position, 100, 0, Math.PI / 7, 1, 3, true);
+            this.spotLight = new MyLight(this.app, this.position, 2, 0, Math.PI / 7, 1, 0, false, true);
         }
     }
 
