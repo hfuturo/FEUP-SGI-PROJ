@@ -30,7 +30,8 @@ class MyCake {
         this.candle = new MyCandle(this.app, 0.025, 0.2, [0.01, 3.4, -0.1]);
 
         this.glassBox = new MyGlassBox(this.app, glassBoxInfo, [this.position[0], this.position[1]-0.5, this.position[2]]);
-        this.spotLight = new MyLight(this.app, this.position, 4, 10, Math.PI / 10, 0.3, 0, true, false);
+        this.spotLightObject = new MyLight(this.app, this.position, 4, 10, Math.PI / 10, 0.3, 0, true, false);
+        this.spotLight = this.spotLightObject.spotLight;
     }
 
     display() {
@@ -81,7 +82,7 @@ class MyCake {
         group.add(this.glassBox.createMesh());
 
         this.app.scene.add(group);
-        this.app.scene.add(this.spotLight.display());
+        this.app.scene.add(this.spotLightObject.display());
     }
 }
 

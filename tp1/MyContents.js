@@ -58,12 +58,6 @@ class MyContents  {
             map: new THREE.TextureLoader().load('textures/tomas.jpg')
         });
 
-        const glass = new THREE.MeshPhysicalMaterial({  
-            map: new THREE.TextureLoader().load('textures/window.jpg'),
-            roughness: 0,  
-            transmission: 1,
-        });
-
         const clean_glass = new THREE.MeshPhysicalMaterial({
             map: new THREE.TextureLoader().load('textures/clean_glass.webp'),
             roughness: 0,
@@ -129,6 +123,8 @@ class MyContents  {
         
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, [0, 3.1, 0], cakeGlassInfo);
+        this.spotLight = cake.spotLight;
+        cake.spotLight = this.spotLight;
 
         const landscape = new MyLandscape(this.app, 24, 16, [0, 5, 25], [0, Math.PI, 0]);
 

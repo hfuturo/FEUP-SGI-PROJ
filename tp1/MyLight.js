@@ -19,11 +19,6 @@ class MyLight {
     constructor(app, targetPosition, intensity, distance, angle, penumbra, decay, castShadow=false, hasAngle=true) {
         this.app = app;
         this.targetPosition = targetPosition;
-        this.intensity = intensity;
-        this.distance = distance;
-        this.angle = angle;
-        this.penumbra = penumbra;
-        this.decay = decay;
         this.castShadow = castShadow;
         this.hasAngle = hasAngle;
         
@@ -39,6 +34,8 @@ class MyLight {
             color: 0xFFFFFF,
             emissive: 0xFFFFFF
         });
+
+        this.spotLight = new THREE.SpotLight(0xFFFFFF, intensity, distance, angle, penumbra, decay);
     }
 
     display() {
@@ -70,8 +67,7 @@ class MyLight {
     #buildSpotLight(posX, posZ) {
         const positionX = posX < 0 ? posX - this.padding : posX + this.padding;
         const targetPosX = posX < 0 ? this.targetPosition[2] : -this.targetPosition[2];
-        const spotLight = new THREE.SpotLight(0xFFFFFF, this.intensity, this.distance, this.angle, this.penumbra, this.decay);
-        spotLight.castShadow = this.castShadow;
+        this.spotLight.castShadow = this.castShadow;
 
         const ending = new THREE.CylinderGeometry(0.1, 0.1, 0.01, 24);
         const endingMesh = new THREE.Mesh(ending, this.endingMaterial);
@@ -80,8 +76,8 @@ class MyLight {
         if (this.hasAngle) {
             endingMesh.material.side = THREE.DoubleSide;
 
-            spotLight.position.set(positionX, this.spotLightHeight - this.padding, posZ);
-            spotLight.target.position.set(targetPosX, this.targetPosition[1] + 0.5, Math.abs(this.targetPosition[0]));
+            this.spotLight.position.set(positionX, this.spotLightHeight - this.padding, posZ);
+            this.spotLight.target.position.set(targetPosX, this.targetPosition[1] + 0.5, Math.abs(this.targetPosition[0]));
 
             if (posX > 0) {
                 endingMesh.position.set(positionX + 0.11, this.spotLightHeight - this.padding - 0.11, posZ);
@@ -97,17 +93,17 @@ class MyLight {
             }
         }
         else {
-            spotLight.position.set(this.targetPosition[0], this.spotLightHeight - this.padding, posZ);
+            this.spotLight.position.set(this.targetPosition[0], this.spotLightHeight - this.padding, posZ);
             endingMesh.position.set(this.targetPosition[0], this.spotLightHeight - this.padding - 0.4, posZ);
             begginingMesh.position.set(this.targetPosition[0] ,this.spotLightHeight, posZ);
-            spotLight.target.position.set(...this.targetPosition);
+            this.spotLight.target.position.set(...this.targetPosition);
         }
 
-        spotLight.target.updateMatrixWorld();
+        this.spotLight.target.updateMatrixWorld();
 
 
         const group = new THREE.Group();
-        group.add(spotLight);
+        group.add(this.spotLight);
         group.add(endingMesh);
         group.add(begginingMesh);
 
