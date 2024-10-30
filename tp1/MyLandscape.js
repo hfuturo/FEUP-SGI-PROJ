@@ -2,6 +2,16 @@ import * as THREE from "three";
 
 class MyLandscape {
 
+    /**
+     * Creates an instance of MyLandscape.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application instance.
+     * @param {number} width - The width of the landscape.
+     * @param {number} height - The height of the landscape.
+     * @param {Array<number>} position - The position of the landscape [x, y, z].
+     * @param {Array<number>} [rotation=[0,0,0]] - The rotation of the landscape, default is [0, 0, 0].
+     */
     constructor(app, width, height, position, rotation=[0,0,0]) {
         this.app = app;
         this.width = width;
@@ -26,6 +36,10 @@ class MyLandscape {
         this.#displayLight();
     }
 
+
+    /**
+     * Sets up and displays a directional light in the scene, to emulate light coming from the outside.
+     */
     #displayLight() {
         const light = new THREE.DirectionalLight(0xFFFFFF, 2, 0);
         light.position.set(...this.position);

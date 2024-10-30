@@ -3,6 +3,19 @@ import { MyGlassBox } from './MyGlassBox.js';
 
 class MySpring {
 
+    /**
+     * Creates an instance of MySpring.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application context.
+     * @param {number} segments - The number of segments in each loop of the spring.
+     * @param {number} height - Number of loops of the spring.
+     * @param {number} radius - The radius of the spring.
+     * @param {Array<number>} position - The position of the spring as [x, y, z].
+     * @param {Object} glassBoxInfo - Information for creating the glass box - {width:number, depth:number, height:number, material:THREE.Material}.
+     * @param {Array<number>} [rotation=[0,0,0]] - The rotation of the spring as [x, y, z].
+     * @param {Array<number>} [scale=[1,1,1]] - The scale of the spring as [x, y, z].
+     */
     constructor(app, segments, height, radius, position, glassBoxInfo, rotation=[0,0,0], scale=[1,1,1]) {
         this.app = app;
         this.segments = segments;

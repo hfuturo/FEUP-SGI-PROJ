@@ -2,6 +2,14 @@ import * as THREE from 'three';
 
 class MyGlassBox {
 
+    /**
+     * Creates an instance of MyGlassBox.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application instance.
+     * @param {Object} info - Information related to the glass box - {width:number, height:number, depth:number, material:THREE.Material}.
+     * @param {Aarray<number>} position - The position of the glass box [x,y,z].
+     */
     constructor(app, info, position) {
         this.app = app;
         this.info = info;

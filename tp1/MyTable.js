@@ -1,6 +1,19 @@
 import * as THREE from 'three';
 
 class MyTable {
+    /**
+     * Creates an instance of MyTable.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application context.
+     * @param {number} width - The width of the table.
+     * @param {number} length - The length of the table.
+     * @param {number} height - The height of the table.
+     * @param {number} legRadius - The radius of the table legs.
+     * @param {THREE.Material} topMaterial - The material for the table top.
+     * @param {THREE.Material} legMaterial - The material for the table legs.
+     * @param {Array<number>} position - The position of the table [x, y, z].
+     */
     constructor(app, width, length, height, legRadius, topMaterial, legMaterial, position) {
         this.app = app;
 

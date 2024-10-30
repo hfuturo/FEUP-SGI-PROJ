@@ -1,12 +1,25 @@
 import * as THREE from 'three';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
+/**
+ * Class representing a carpet.
+ */
 class MyCarpet {
+    /**
+     * Creates an instance of MyCarpet.
+     * 
+     * @param {Object} app - The application context.
+     * @param {number} length - The length of the carpet.
+     * @param {number} width - The width of the carpet.
+     * @param {Array<number>} position - The position of the carpet in the format [x, y, z].
+     * @param {number} [rotationY=0] - The rotation of the carpet around the Y-axis in radians.
+     */ 
     constructor(app, length, width, position, rotationY=0) {
         this.app = app;
         this.position = position;
         this.rotationY = rotationY;
 
+        // NURBS control points for creating the carpet with a curl in one of the corners
         const points = [
             [
                 [-length/2 + 0.5, 0, -width/2, 1],

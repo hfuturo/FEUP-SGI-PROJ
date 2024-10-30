@@ -2,6 +2,16 @@ import * as THREE from "three";
 import { MyNurbsBuilder } from "./MyNurbsBuilder.js"
 
 class MyPetal {
+    /**
+     * Creates an instance of MyPetal.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application context.
+     * @param {THREE.Material} material - The material to be used for the petal.
+     * @param {Array<number>} position - The position of the petal in the format [x, y, z].
+     * @param {Array<number>} rotation - The rotation of the petal in the format [x, y, z].
+     * @param {Array<number>} [scale=[1, 1, 1]] - The scale of the petal in the format [x, y, z].
+     */
     constructor(app, material, position, rotation, scale=[1, 1, 1]) {
         this.app = app;
         this.nurbsBuilder = new MyNurbsBuilder();
@@ -23,6 +33,7 @@ class MyPetal {
             // U = 2
             [// V = 0..1
                 [0, 0.75, 0, 1],
+                // slightly different position as to not create visual artifacts
                 [0.001, 0.75, 0, 1]
             ]
         ]

@@ -2,13 +2,21 @@ import * as THREE from 'three';
 
 class MyBeetle {
 
-    constructor(app, numberSegments, radius, position, rotation, planeMaterial) {
+    /**
+     * Creates an instance of MyBeetle.
+     * 
+     * @param {MyApp} app - The application context.
+     * @param {number} numberSegments - The number of segments for each tube.
+     * @param {number} radius - The radius of the beetle tubes.
+     * @param {Array<number>} position - The position of the beetle [x, y, z].
+     * @param {Array<number>} rotation - The rotation of the beetle [x, y, z].
+     */
+    constructor(app, numberSegments, radius, position, rotation) {
         this.app = app;
         this.numberSegments = numberSegments;
         this.radius = radius;
         this.position = position;
         this.rotation = rotation;
-        this.planeMaterial = planeMaterial;
     }
 
     display() {
@@ -52,7 +60,7 @@ class MyBeetle {
 
     #buildcurve(curve, position) {
         const tube = new THREE.TubeGeometry(curve, this.numberSegments, this.radius);
-        const mesh = new THREE.Mesh(tube, this.planeMaterial);
+        const mesh = new THREE.Mesh(tube);
         mesh.position.set(...position);
         return mesh;
     }

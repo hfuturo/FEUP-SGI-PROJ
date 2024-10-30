@@ -3,6 +3,16 @@ import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 import { MyGlassBox } from './MyGlassBox.js';
 
 class MyNewspaper {
+    /**
+     * Creates an instance of MyNewspaper.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application context.
+     * @param {Array<number>} position - The position of the newspaper [x, y, z].
+     * @param {Object} glassBoxInfo - Information for creating the glass box - {width:number, depth:number, height:number, material:THREE.Material}.
+     * @param {Array<number>} [rotation=[0, 0, 0]] - The rotation of the newspaper [x, y, z].
+     * @param {Array<number>} [scale=[1, 1, 1]] - The scale of the newspaper [x, y, z].
+     */
     constructor(app, position, glassBoxInfo, rotation=[0, 0, 0], scale=[1, 1, 1]) {
         this.app = app;
         this.nurbsBuilder = new MyNurbsBuilder();
@@ -29,6 +39,7 @@ class MyNewspaper {
 
         this.surface = this.nurbsBuilder.build(controlPoints, 1, 3, 8, 8);
 
+        // Right Page
         const texture1 = new THREE.TextureLoader().load('textures/newspaper.jpg');
         texture1.rotation = Math.PI / 2;
         texture1.wrapS = THREE.RepeatWrapping;
@@ -40,6 +51,7 @@ class MyNewspaper {
             side: THREE.DoubleSide
         })
 
+        // Left Page
         const texture2 = texture1.clone();
         texture2.offset.set(0.5, 0);
         texture2.repeat.set(-0.5, 1);

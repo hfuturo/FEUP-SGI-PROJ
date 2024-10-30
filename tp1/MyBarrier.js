@@ -1,6 +1,16 @@
 import * as THREE from 'three';
 
+/**
+ * Builds a rope supported by either one or two poles.
+ */
 class MyBarrier {
+    /**
+     * Create a MyBarrier instance.
+     * @param {MyApp} app - The application context containing the scene.
+     * @param {Array<number>} position - The position of the barrier in the format [x, y, z].
+     * @param {number} [rotationY=0] - The rotation around the Y-axis.
+     * @param {boolean} [double=true] - Whether the barrier has two poles, or the rope is left hanging.
+     */
     constructor(app, position, rotationY=0, double=true) {
         this.app = app;
         this.position = position;

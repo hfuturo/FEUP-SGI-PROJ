@@ -2,6 +2,16 @@ import * as THREE from 'three';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 class MyJar {
+    /**
+     * Constructs an instance of MyJar.
+     * 
+     * @param {MyApp} app - The application context.
+     * @param {THREE.Material} material - The material for the outer surface.
+     * @param {THREE.Material} materialInside - The material for the inside, most likely dirt.
+     * @param {Array<number>} position - The position of the jar [x, y, z].
+     * @param {Array<number>} [rotation=[0, 0, 0]] - The rotation of the jar [x, y, z].
+     * @param {Array<number>} [scale=[1, 1, 1]] - The scale of the jar [x, y, z].
+     */
     constructor(app, material, materialInside, position, rotation=[0, 0, 0], scale=[1, 1, 1]) {
         this.app = app;
         this.nurbsBuilder = new MyNurbsBuilder();
@@ -11,6 +21,7 @@ class MyJar {
         this.rotation = rotation;
         this.scale = scale;
 
+        // NURBS Control Points for inner surface of the jar
         const controlPoints1 = [// U = 0
             [// V = 0..4
                 [0, 0, 0.25, 1],
@@ -46,6 +57,7 @@ class MyJar {
         ]
         this.surface1 = this.nurbsBuilder.build(controlPoints1, 3, 4, 8, 8);
 
+        // NURBS Control Points for outer surface of the jar
         const controlPoints2 = [// U = 0
             [// V = 0..4
                 [0, 0, 0.25, 1],
@@ -85,6 +97,7 @@ class MyJar {
     }
 
     display() {
+        // Inner surfaces
         const mesh1 = new THREE.Mesh(this.surface1, this.material);
         mesh1.position.set(...this.position);
         mesh1.rotation.set(...this.rotation);
@@ -97,6 +110,7 @@ class MyJar {
         mesh2.scale.set(...this.scale);
         this.app.scene.add(mesh2);
 
+        // Outer surfaces
         const mesh3 = new THREE.Mesh(this.surface2, this.material);
         mesh3.position.set(...this.position);
         mesh3.rotation.set(...this.rotation);
@@ -109,6 +123,7 @@ class MyJar {
         mesh4.scale.set(...this.scale);
         this.app.scene.add(mesh4);
 
+        // Fill on the inside
         const meshCircle = new THREE.Mesh(this.circle, this.materialInside);
         meshCircle.position.set(this.position[0], this.position[1] + 1*this.scale[1], this.position[2]);
         meshCircle.rotation.set(-Math.PI / 2, 0, 0);

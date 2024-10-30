@@ -5,14 +5,26 @@ import { MyLight } from './MyLight.js';
 
 class MyCake {
 
-    constructor(app, radius, number, segments, heightSegments, angle, material, position, glassBoxInfo) {
+    /**
+     * Creates an instance of MyCake.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application context.
+     * @param {number} radius - The radius of the cake.
+     * @param {number} height - The height of the cake.
+     * @param {number} segments - The number of segments for the cake.
+     * @param {number} heightSegments - The number of height segments for the cake.
+     * @param {number} angle - The angle of the cake, to remove a slice.
+     * @param {Array<number>} position - The position of the cake in [x, y, z] coordinates.
+     * @param {Object} glassBoxInfo - Information for creating the glass box - {width:number, height:number, depth:number, material:THREE.Material}
+     */
+    constructor(app, radius, height, segments, heightSegments, angle, position, glassBoxInfo) {
         this.app = app;
         this.radius = radius;
-        this.number = number;
+        this.height = height;
         this.segments = segments;
         this.heightSegments = heightSegments;
         this.angle = angle;
-        this.material = material;
         this.position = position;
 
         this.candle = new MyCandle(this.app, 0.025, 0.2, [0.01, 3.4, -0.1]);
@@ -49,8 +61,6 @@ class MyCake {
         // fill inside of cake
         const inside = new THREE.PlaneGeometry(this.radius, this.radius);
         const blueAxisSliceInside = new THREE.Mesh(inside, cakeMaterial);
-
-        // nao testei a posicao do Z, vai na fé 
         blueAxisSliceInside.position.set(0, this.position[1], this.radius / 2);
         blueAxisSliceInside.rotation.set(0, -Math.PI / 2, 0);
 

@@ -2,6 +2,22 @@ import * as THREE from 'three';
 import { MyPetal } from './MyPetal.js';
 
 class MyFlower {
+
+    /**
+     * Creates an instance of a flower with a stem, receptacle, and petals.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application context.
+     * @param {Array<number>} position - The position of the flower [x, y, z].
+     * @param {number} tubularSegments - The number of segments for the tube geometry.
+     * @param {number} radius - The radius of the stem and receptacle.
+     * @param {THREE.Material} stemMaterial - The material for the stem.
+     * @param {THREE.Material} receptacleMaterial - The material for the receptacle.
+     * @param {THREE.Material} petalMaterial - The material for the petals.
+     * @param {number} [rotationY=0] - The rotation around the Y-axis.
+     * @param {Array<number>} [scale=[1, 1, 1]] - The scale of the flower [x, y, z].
+     * @param {number} [numPetals=8] - The number of petals.
+     */
     constructor(app, position, tubularSegments, radius, stemMaterial, receptacleMaterial, petalMaterial, rotationY=0, scale=[1, 1, 1], numPetals=8) {
         this.app = app;
         const curve = new THREE.CatmullRomCurve3([
@@ -19,6 +35,7 @@ class MyFlower {
 
         this.receptacle = new THREE.SphereGeometry(radius*2);
 
+        // Create petals around receptacle, leaving a gap at the stem as to not intersect
         this.petals = []
         for (let i = 0; i < Math.PI * 2; i += (Math.PI * 2 / numPetals)) {
             if (i == Math.PI) continue;

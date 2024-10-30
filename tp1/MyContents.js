@@ -115,7 +115,7 @@ class MyContents  {
         const monaLisa = new MyFrame(this.app, 3, 3, 0.1, [-12, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, monaLisaMaterial);
         const scream = new MyFrame(this.app, 3, 3, 0.1, [-8, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, screamMaterial);
         const beetleFrame = new MyFrame(this.app, 4, 2, 0.1, [-4, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.jpg')}));
-        const beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 4], [0, Math.PI / 2, 0], this.planeMaterial);
+        const beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 4], [0, Math.PI / 2, 0]);
         
         // right paintings
         const hPainting = new MyFrame(this.app, 3, 3, 0.1, [16, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, henrique);
@@ -128,7 +128,7 @@ class MyContents  {
         const lamp3 = new MyLamp(this.app, [0, 9.93, -3], 50, lampMaterial);
         
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
-        const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, this.planeMaterial, [0, 3.1, 0], cakeGlassInfo);
+        const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, [0, 3.1, 0], cakeGlassInfo);
 
         const landscape = new MyLandscape(this.app, 24, 16, [0, 5, 25], [0, Math.PI, 0]);
 

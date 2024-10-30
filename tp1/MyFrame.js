@@ -3,6 +3,20 @@ import { MyLight } from './MyLight.js';
 
 class MyFrame {
 
+    /**
+     * Creates an instance of MyFrame.
+     * 
+     * @param {MyApp} app - The application context.
+     * @param {number} width - The width of the frame.
+     * @param {number} height - The height of the frame.
+     * @param {number} depth - The depth of the frame.
+     * @param {Array<number>} position - The position of the frame.
+     * @param {Array<number>} rotation - The rotation of the frame.
+     * @param {THREE.Material} materialOut - The material of the frame.
+     * @param {THREE.Material} materialIn - The material inside the fraim, e.g. painting, window, etc.
+     * @param {boolean} [receiveShadow=false] - Whether the frame receives shadows.
+     * @param {boolean} [buildSpotLight=true] - Whether to build a spotlight for the frame.
+     */
     constructor(app, width, height, depth, position, rotation, materialOut, materialIn, receiveShadow=false, buildSpotLight=true) {
         this.app = app;
         this.width = width;

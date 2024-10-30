@@ -1,7 +1,21 @@
 import * as THREE from 'three';
 
 class MyWall {
-    // hole: [x start (0 <= x <= length), x end (x_start <= x <= length), y start (0 <= y <= height), y end (y_start <= y <= height)]
+    /**
+     * Creates an instance of MyWall.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application context.
+     * @param {number} length - The length of the wall.
+     * @param {number} height - The height of the wall.
+     * @param {Array<number>} position - The position of the wall.
+     * @param {Array<number>} rotation - The rotation of the wall.
+     * @param {THREE.Material} material - The material of the wall.
+     * @param {Array<number>} [hole=[]] - The specifications of the hole in the wall. Should be an array of 4 numbers [x1, x2, y1, y2].
+     * @param {boolean} [receiveShadow=false] - Whether the wall receives shadows.
+     * @param {boolean} [castShadow=false] - Whether the wall casts shadows.
+     * @throws {Error} If the hole specification is invalid. 0 <= x1 <= x2 <= length, 0 <= y1 <= y2 <= height.
+     */
     constructor(app, length, height, position, rotation, material, hole=[], receiveShadow=false, castShadow=false) {
         this.app = app;
         this.length = length;
@@ -25,6 +39,7 @@ class MyWall {
                 || this.hole[3] < this.hole[2] || this.hole[3] > height)
                 throw new Error('Invalid specification of hole');
 
+            // Create 4 planes to form the wall with a hole
             this.planes.push(new THREE.PlaneGeometry(this.hole[0], height));
             this.planes.push(new THREE.PlaneGeometry(length - this.hole[1], height));
             this.planes.push(new THREE.PlaneGeometry(this.hole[1] - this.hole[0], this.hole[2]));
