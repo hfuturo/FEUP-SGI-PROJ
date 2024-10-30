@@ -37,7 +37,7 @@ class MyCake {
         const cake = new THREE.CylinderGeometry(
             this.radius,
             this.radius,
-            this.number,
+            this.height,
             this.segments,
             this.heightSegments,
             false,
