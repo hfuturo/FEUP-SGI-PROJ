@@ -85,6 +85,7 @@ class MyLight {
         else {
             spotLight.position.set(this.targetPosition[0], this.spotLightHeight - this.padding, posZ);
             endingMesh.position.set(this.targetPosition[0], this.spotLightHeight - this.padding - 0.4, posZ);
+            begginingMesh.position.set(this.targetPosition[0] ,this.spotLightHeight, posZ);
             spotLight.target.position.set(...this.targetPosition);
         }
 
