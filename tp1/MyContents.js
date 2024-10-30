@@ -117,9 +117,12 @@ class MyContents  {
         const girl = new MyFrame(this.app, 3, 3, 0.1, [8, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, girlMaterial);
         const kiss = new MyFrame(this.app, 3, 3, 0.1, [4, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, kissMaterial);
 
-        const lamp = new MyLamp(this.app, [0, 9.93, 7], 50, lampMaterial);
+        const lamp1 = new MyLamp(this.app, [0, 9.93, 7], 50, lampMaterial);
         const lamp2 = new MyLamp(this.app, [0, 9.93, 17], 50, lampMaterial);
         const lamp3 = new MyLamp(this.app, [0, 9.93, -3], 50, lampMaterial);
+        this.lamp1 = lamp1;
+        this.lamp2 = lamp2;
+        this.lamp3 = lamp3;
         
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, [0, 3.1, 0], cakeGlassInfo);
@@ -295,7 +298,7 @@ class MyContents  {
         spring.display();
         barriers.forEach((barrier) => barrier.display())
 
-        lamp.display();
+        lamp1.display();
         lamp2.display()
         lamp3.display();
     }

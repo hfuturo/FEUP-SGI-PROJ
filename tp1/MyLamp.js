@@ -24,15 +24,16 @@ class MyLamp {
             color: 0xFFFFFF,
             emissive: 0xFFFFFF
         });
+
+        this.light = this.#buildLight();
     }
 
     display() {
         const lamp = this.#buildLamp();
-        const light = this.#buildLight();
 
         const group = new THREE.Group();
         group.add(lamp);
-        group.add(light);
+        group.add(this.light);
 
         this.app.scene.add(group);
     }
@@ -49,7 +50,7 @@ class MyLamp {
     // Builds the lamp's light.
     #buildLight() {
         const light = new THREE.PointLight(0xFFFFFF, this.intensity, 0);
-        light.position.set(this.position[0], this.position[1] - 0.1, this.position[2]);
+        light.position.set(this.position[0], this.position[1], this.position[2]);
 
         return light;
     }
