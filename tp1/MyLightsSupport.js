@@ -2,6 +2,13 @@ import * as THREE from 'three';
 
 class MyLightsSupport {
 
+    /**
+     * Creates an instance of MyLightsSupport.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application context.
+     * @param {THREE.Material} material - The material of the MyLightsSupport.
+     */
     constructor(app, material) {
         this.app = app;
         this.material = material;

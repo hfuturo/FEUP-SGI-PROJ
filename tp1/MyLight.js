@@ -2,6 +2,20 @@ import * as THREE from 'three';
 
 class MyLight {
 
+    /**
+     * Creates an instance of MyLight.
+     * 
+     * @constructor
+     * @param {MyApp} app - The application context.
+     * @param {Array<number>} targetPosition - The position of the target that will be illuminated.
+     * @param {number} intensity - The intensity of the light.
+     * @param {number} distance - The maximum range of the light.
+     * @param {number} angle - The angle of light dispersion from its direction.
+     * @param {number} penumbra - The Percent of the SpotLight cone that is attenuated due to penumbra.
+     * @param {number} decay - The amount the light dims along the distance of the light.
+     * @param {boolean} [castShadow=false] - Whether the light casts shadows.
+     * @param {boolean} [hasAngle=true] - Whether the light has an angle.
+     */
     constructor(app, targetPosition, intensity, distance, angle, penumbra, decay, castShadow=false, hasAngle=true) {
         this.app = app;
         this.targetPosition = targetPosition;
@@ -100,6 +114,7 @@ class MyLight {
         return group;
     }
 
+    // builds the MyLight object
     #buildLight(posX, posZ) {
         const line = new THREE.LineCurve3(
             new THREE.Vector3(0, -1, 0),
@@ -121,6 +136,7 @@ class MyLight {
         return mesh;
     }
 
+    // builds connection to the MyLightsSupport object
     #buildSupport(posX, posZ) {
         const line = new THREE.LineCurve3(
             new THREE.Vector3(posX, 9, posZ),
