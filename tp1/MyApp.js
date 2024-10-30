@@ -72,11 +72,12 @@ class MyApp  {
 
         // Create a basic perspective camera
         const perspective1 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
-        perspective1.position.set(10,10,3)
+        perspective1.position.set(0,5,19)
         this.cameras['Perspective'] = perspective1
 
         const perspective2 = new THREE.PerspectiveCamera(30, aspect, 0.1, 500)
-        perspective2.position.set(0, 10, 3)
+        perspective2.position.set(0, 5, 3)
+        perspective2.lookAt(new THREE.Vector3(0, 6, 0));
         this.cameras['Perspective2'] = perspective2
 
         // defines the frustum size for the orthographic cameras
