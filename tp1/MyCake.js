@@ -15,15 +15,7 @@ class MyCake {
         this.material = material;
         this.position = position;
 
-        this.candles = (() => {
-            const candles = [];
-
-            for (let i = 0; i < 2; i++) {
-                candles.push(new MyCandle(this.app, 0.025, 0.2, [-0.1 + 0.2 * i, 3.4, 0]));
-            }
-
-            return candles;
-        })();
+        this.candle = new MyCandle(this.app, 0.025, 0.2, [0.01, 3.4, -0.1]);
 
         this.glassBox = new MyGlassBox(this.app, glassBoxInfo, [this.position[0], this.position[1]-0.5, this.position[2]]);
         this.spotLight = new MyLight(this.app, this.position, 4, 10, Math.PI / 10, 0.3, 0, true, false);
@@ -70,7 +62,7 @@ class MyCake {
         );
         angledInsideMesh.rotation.y = Math.PI * 2 - (this.angle - 0.1 * Math.PI)
 
-        this.candles.forEach(candle => candle.display());
+        this.candle.display();
 
         const group = new THREE.Group();
         group.add(mesh);

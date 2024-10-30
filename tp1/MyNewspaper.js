@@ -29,25 +29,36 @@ class MyNewspaper {
 
         this.surface = this.nurbsBuilder.build(controlPoints, 1, 3, 8, 8);
 
-        const texture = new THREE.TextureLoader().load('textures/newspaper.jpg');
-        texture.rotation = Math.PI / 2;
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        this.material = new THREE.MeshLambertMaterial({
-            map: texture,
+        const texture1 = new THREE.TextureLoader().load('textures/newspaper.jpg');
+        texture1.rotation = Math.PI / 2;
+        texture1.wrapS = THREE.RepeatWrapping;
+        texture1.wrapT = THREE.RepeatWrapping;
+        texture1.repeat.set(0.5, 1);
+        texture1.offset.set(0.5, 0);
+        this.material1 = new THREE.MeshLambertMaterial({
+            map: texture1,
+            side: THREE.DoubleSide
+        })
+
+        const texture2 = texture1.clone();
+        texture2.offset.set(0.5, 0);
+        texture2.repeat.set(-0.5, 1);
+        this.material2 = new THREE.MeshLambertMaterial({
+            map: texture2,
             side: THREE.DoubleSide
         })
     }
 
     display() {
-        const mesh = new THREE.Mesh(this.surface, this.material);
+        const mesh = new THREE.Mesh(this.surface, this.material1);
         mesh.position.set(...this.position);
         mesh.rotation.set(this.rotation[0], this.rotation[1], this.rotation[2] - 0.07);
         mesh.scale.set(...this.scale);
 
         const mesh2 = mesh.clone();
-        mesh.scale.x *= -1;
-        mesh.rotation.z *= -1;
+        mesh2.material = this.material2;
+        mesh2.scale.x *= -1;
+        mesh2.rotation.z *= -1;
 
         const group = new THREE.Group();
         group.add(mesh);
