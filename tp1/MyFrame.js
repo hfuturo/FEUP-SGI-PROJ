@@ -61,21 +61,21 @@ class MyFrame {
         insideMesh.position.set(this.position[0], this.position[1], this.position[2]);
         insideMesh.receiveShadow = this.receiveShadow;
         
-        const group = new THREE.Group();
-        group.add(horizontalPieceMesh1);
-        group.add(horizontalPieceMesh2);
-        group.add(verticalPieceMesh1);
-        group.add(verticalPieceMesh2);
-        group.add(insideMesh);
+        this.group = new THREE.Group();
+        this.group.add(horizontalPieceMesh1);
+        this.group.add(horizontalPieceMesh2);
+        this.group.add(verticalPieceMesh1);
+        this.group.add(verticalPieceMesh2);
+        this.group.add(insideMesh);
 
-        group.rotation.set(...this.rotation);
+        this.group.rotation.set(...this.rotation);
 
 
         if (this.buildSpotLight) {
             this.app.scene.add(this.spotLight.display());
         }
 
-        this.app.scene.add(group);
+        this.app.scene.add(this.group);
     }
 }
 

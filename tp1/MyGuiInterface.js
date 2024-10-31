@@ -17,6 +17,7 @@ class MyGuiInterface  {
         this.contents = null
         this.cameraControllers = []
         this.textureControllers = []
+        this.positionControllers = []
     }
 
     /**
@@ -101,6 +102,11 @@ class MyGuiInterface  {
                 this.textureControllers[6].object = this.contents.paintings[value].materialIn.map;
 
                 this.textureControllers.forEach((controller) => controller.updateDisplay());
+
+                this.positionControllers.forEach((controller) => {
+                    controller.object = this.contents.paintings[value].group.position;
+                    controller.updateDisplay();
+                });
             });
         
 
@@ -130,6 +136,15 @@ class MyGuiInterface  {
             .onChange((value) => this.contents.paintings[this.contents.activePainting].materialIn.map.offset.y = value));
         this.textureControllers.push(paintingsFolder.add(this.contents.paintings[this.contents.activePainting].materialIn.map, 'rotationD', 0, 360).name("rotation")
             .onChange((value) => this.contents.paintings[this.contents.activePainting].materialIn.map.rotation = value *  Math.PI / 180));
+
+        const positionsFolder = paintingsFolder.addFolder('Position');
+        this.positionControllers.push(positionsFolder.add(this.contents.paintings[this.contents.activePainting].group.position, 'x', -2.5, 2.5).name("x coord")
+            .onChange((value) => this.contents.paintings[this.contents.activePainting].group.position.x = value));
+        this.positionControllers.push(positionsFolder.add(this.contents.paintings[this.contents.activePainting].group.position, 'y', -4.2, 2.65).name("y coord")
+            .onChange((value) => this.contents.paintings[this.contents.activePainting].group.position.y = value));
+        this.positionControllers.push(positionsFolder.add(this.contents.paintings[this.contents.activePainting].group.position, 'z', -20, 20).name("z coord")
+            .onChange((value) => this.contents.paintings[this.contents.activePainting].group.position.z = value));
+               
     }
 }
 
