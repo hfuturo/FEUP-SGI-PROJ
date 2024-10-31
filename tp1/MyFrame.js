@@ -29,6 +29,9 @@ class MyFrame {
         this.buildSpotLight = buildSpotLight;
         this.receiveShadow = receiveShadow;
 
+        // Also store rotation in degrees to be used in the GUI
+        this.materialIn.map.rotationD = this.materialIn.map.rotation * 180 / Math.PI;
+
         this.horizontalPiece = new THREE.BoxGeometry(this.width - this.depth, this.depth, this.depth);
         this.verticalPiece = new THREE.BoxGeometry(this.depth, this.height + 2*this.depth, this.depth);
         this.inside = new THREE.PlaneGeometry(this.width, this.height);
