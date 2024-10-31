@@ -101,28 +101,27 @@ class MyContents  {
             map: new THREE.TextureLoader().load('textures/plate.jpg')
         });
 
-
-        const napolean = new MyFrame(this.app, 10, 5, 0.1, [0, 6, -4.9], [0, 0, 0], frameMaterial, napoleanMaterial, true, false);
-
+        
+        this.paintings = [];
+        this.paintings['The Coronation of Napoleon'] = new MyFrame(this.app, 10, 5, 0.1, [0, 6, -4.9], [0, 0, 0], frameMaterial, napoleanMaterial, true, false);
         // left paintings
-        const tPainting = new MyFrame(this.app, 3, 3, 0.1, [-16, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, tomas);
-        const monaLisa = new MyFrame(this.app, 3, 3, 0.1, [-12, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, monaLisaMaterial);
-        const scream = new MyFrame(this.app, 3, 3, 0.1, [-8, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, screamMaterial);
-        const beetleFrame = new MyFrame(this.app, 4, 2, 0.1, [-4, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.jpg')}));
+        this.paintings['Tomás'] = new MyFrame(this.app, 3, 3, 0.1, [-16, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, tomas);
+        this.paintings['Mona Lisa'] = new MyFrame(this.app, 3, 3, 0.1, [-12, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, monaLisaMaterial);
+        this.paintings['The Scream'] = new MyFrame(this.app, 3, 3, 0.1, [-8, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, screamMaterial);
+        this.paintings['Beetle'] = new MyFrame(this.app, 4, 2, 0.1, [-4, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.jpg')}));
         const beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 4], [0, Math.PI / 2, 0]);
         
         // right paintings
-        const hPainting = new MyFrame(this.app, 3, 3, 0.1, [16, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, henrique);
-        const starryNight = new MyFrame(this.app, 3, 3, 0.1, [12, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, starryNightMaterial);
-        const girl = new MyFrame(this.app, 3, 3, 0.1, [8, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, girlMaterial);
-        const kiss = new MyFrame(this.app, 3, 3, 0.1, [4, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, kissMaterial);
+        this.paintings['The Kiss']  = new MyFrame(this.app, 3, 3, 0.1, [4, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, kissMaterial);
+        this.paintings['Girl with a Pearl Earring'] = new MyFrame(this.app, 3, 3, 0.1, [8, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, girlMaterial);
+        this.paintings['The Starry Night'] = new MyFrame(this.app, 3, 3, 0.1, [12, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, starryNightMaterial);
+        this.paintings['Henrique'] = new MyFrame(this.app, 3, 3, 0.1, [16, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, henrique);
 
-        const lamp1 = new MyLamp(this.app, [0, 9.93, 7], 50, lampMaterial);
-        const lamp2 = new MyLamp(this.app, [0, 9.93, 17], 50, lampMaterial);
-        const lamp3 = new MyLamp(this.app, [0, 9.93, -3], 50, lampMaterial);
-        this.lamp1 = lamp1;
-        this.lamp2 = lamp2;
-        this.lamp3 = lamp3;
+        this.activePainting = 'The Coronation of Napoleon';
+
+        this.lamp1 = new MyLamp(this.app, [0, 9.93, 7], 50, lampMaterial);
+        this.lamp2 = new MyLamp(this.app, [0, 9.93, 17], 50, lampMaterial);
+        this.lamp3 = new MyLamp(this.app, [0, 9.93, -3], 50, lampMaterial);
         
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, [0, 3.1, 0], cakeGlassInfo);
@@ -282,25 +281,25 @@ class MyContents  {
         flower1.display();
         flower2.display();
 
-        napolean.display();
+        this.paintings['The Coronation of Napoleon'].display();
 
-        tPainting.display();
-        monaLisa.display();
-        scream.display();
-        beetleFrame.display();
+        this.paintings['Tomás'].display();
+        this.paintings['Mona Lisa'].display();
+        this.paintings['The Scream'].display();
+        this.paintings['Beetle'].display();
         beetle.display();
-
-        hPainting.display();
-        starryNight.display();
-        girl.display();
-        kiss.display();
+        
+        this.paintings['The Kiss'].display();
+        this.paintings['Girl with a Pearl Earring'].display();
+        this.paintings['The Starry Night'].display();
+        this.paintings['Henrique'].display();
 
         spring.display();
         barriers.forEach((barrier) => barrier.display())
 
-        lamp1.display();
-        lamp2.display()
-        lamp3.display();
+        this.lamp1.display();
+        this.lamp2.display()
+        this.lamp3.display();
     }
 
     /**

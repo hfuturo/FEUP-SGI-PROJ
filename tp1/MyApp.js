@@ -21,6 +21,7 @@ class MyApp  {
         this.activeCameraName = null
         this.lastCameraName = null
         this.cameras = []
+        this.lookAt = []
         this.frustumSize = 20
 
         // other attributes
@@ -72,13 +73,14 @@ class MyApp  {
 
         // Create a basic perspective camera
         const perspective1 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
-        perspective1.position.set(0,5,19)
+        perspective1.position.set(0,5,15)
         this.cameras['Perspective'] = perspective1
+        this.lookAt['Perspective'] = new THREE.Vector3(0,5,10)
 
-        const perspective2 = new THREE.PerspectiveCamera(30, aspect, 0.1, 500)
-        perspective2.position.set(0, 5, 3)
-        perspective2.lookAt(new THREE.Vector3(0, 6, 0));
+        const perspective2 = new THREE.PerspectiveCamera(40, aspect, 0.1, 500)
+        perspective2.position.set(-5, 9, -2.5)
         this.cameras['Perspective2'] = perspective2
+        this.lookAt['Perspective2'] = new THREE.Vector3(0,4,0)
 
         // defines the frustum size for the orthographic cameras
         const left = -this.frustumSize / 2 * aspect
@@ -91,37 +93,37 @@ class MyApp  {
         // create a left view orthographic camera
         const orthoLeft = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
         orthoLeft.up = new THREE.Vector3(0,1,0);
-        orthoLeft.position.set(-this.frustumSize /4,0,0) 
-        orthoLeft.lookAt( new THREE.Vector3(0,0,0) );
+        orthoLeft.position.set(-this.frustumSize /4, 2.5, 7.5) 
         this.cameras['Left'] = orthoLeft
+        this.lookAt['Left'] = new THREE.Vector3(0, 2.5, 7.5)
 
         // create a right view orthographic camera
         const orthoRight = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
         orthoRight.up = new THREE.Vector3(0,1,0);
-        orthoRight.position.set(this.frustumSize /4,0,0) 
-        orthoRight.lookAt( new THREE.Vector3(0,0,0) );
+        orthoRight.position.set(this.frustumSize /4, 2.5, 7.7) 
         this.cameras['Right'] = orthoRight
+        this.lookAt['Right'] = new THREE.Vector3(0, 2.5, 7.5)
 
         // create a top view orthographic camera
         const orthoTop = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
         orthoTop.up = new THREE.Vector3(0,0,1);
-        orthoTop.position.set(0, this.frustumSize /4, 0) 
-        orthoTop.lookAt( new THREE.Vector3(0,0,0) );
+        orthoTop.position.set(0, this.frustumSize /4, 7.5) 
         this.cameras['Top'] = orthoTop
+        this.lookAt['Top'] = new THREE.Vector3(0,0,7.5)
 
         // create a front view orthographic camera
-        const orthoFront = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
+        const orthoFront = new THREE.OrthographicCamera( left, right, top, bottom, near - 10, far);
         orthoFront.up = new THREE.Vector3(0,1,0);
-        orthoFront.position.set(0,0, this.frustumSize /4) 
-        orthoFront.lookAt( new THREE.Vector3(0,0,0) );
+        orthoFront.position.set(0, 2.5, this.frustumSize /4) 
         this.cameras['Front'] = orthoFront
+        this.lookAt['Front'] = new THREE.Vector3(0,2.5,0)
 
         // create a back view orthographic camera
-        const orthoBack = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
+        const orthoBack = new THREE.OrthographicCamera( left, right, top, bottom, near, far + 15);
         orthoBack.up = new THREE.Vector3(0,1,0);
-        orthoBack.position.set(0,0, -this.frustumSize /4) 
-        orthoBack.lookAt( new THREE.Vector3(0,0,0) );
+        orthoBack.position.set(0, 2.5, -this.frustumSize /4) 
         this.cameras['Back'] = orthoBack
+        this.lookAt['Back'] = new THREE.Vector3(0,2.5,0)
     }
 
     /**
@@ -156,10 +158,12 @@ class MyApp  {
                 // Orbit controls allow the camera to orbit around a target.
                 this.controls = new OrbitControls( this.activeCamera, this.renderer.domElement );
                 this.controls.enableZoom = true;
+                this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
                 this.controls.update();
             }
             else {
                 this.controls.object = this.activeCamera
+                this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
             }
         }
     }

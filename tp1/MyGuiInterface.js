@@ -35,9 +35,17 @@ class MyGuiInterface  {
 
         // adds a folder to the gui interface for the camera
         const cameraFolder = this.datgui.addFolder('Camera')
-        cameraFolder.add(this.app, 'activeCameraName', [ 'Perspective', 'Perspective2', 'Left', 'Right', 'Top', 'Front', 'Back' ] ).name("active camera");
+        cameraFolder.add(this.app, 'activeCameraName', [ 'Perspective', 'Perspective2', 'Left', 'Right', 'Top', 'Front', 'Back' ] ).name("active camera")
         // note that we are using a property from the app 
-        cameraFolder.add(this.app.activeCamera.position, 'x', 0, 10).name("x coord")
+        cameraFolder.add(this.app.activeCamera.position, 'x', -7, 7).name("x coord").onChange((value) => { 
+            this.app.activeCamera.position.x = value; 
+        });
+        cameraFolder.add(this.app.activeCamera.position, 'y', 0, 10).name("y coord").onChange((value) => {
+            this.app.activeCamera.position.y = value;
+        });
+        cameraFolder.add(this.app.activeCamera.position, 'z', -7, 25).name("z coord").onChange((value) => {
+            this.app.activeCamera.position.z = value;
+        });
         cameraFolder.open()
 
         const cakeSpotLightFolder = this.datgui.addFolder('Cake Spotlight');
@@ -49,6 +57,8 @@ class MyGuiInterface  {
         cakeSpotLightFolder.add(this.contents.spotLight, 'decay', 0, 2).name("decay");
 
         this.#roomPointLights();
+
+        this.#paintings();
     }
 
     #roomPointLights() {
@@ -61,12 +71,58 @@ class MyGuiInterface  {
 
     #pointLight(lamp, name, folder) {
         const entry = folder.addFolder(name);
+        entry.close();
         entry.addColor(lamp.light, 'color').name("color").onChange((value) => { lamp.light.color.set(value); lamp.endingMaterial.color.set(value); lamp.endingMaterial.emissive.set(value); });
         entry.add(lamp.light,'intensity', 0, 100).name("intensity (cd)");        
         entry.add(lamp.light, 'distance', 0, 20).name("distance");
         entry.add(lamp.light, 'decay', 0, 10).name("decay");
 
         return entry;
+    }
+
+    #paintings() {
+        const data = {
+            repeatU: this.contents.paintings[this.contents.activePainting].materialIn.map.repeat.x,
+            repeatV: this.contents.paintings[this.contents.activePainting].materialIn.map.repeat.y,
+            offsetU: this.contents.paintings[this.contents.activePainting].materialIn.map.offset.x,
+            offsetV: this.contents.paintings[this.contents.activePainting].materialIn.map.offset.y,
+            paintingRotation: this.contents.paintings[this.contents.activePainting].materialIn.map.rotation * 180 / Math.PI
+        }
+
+        const paintingsFolder = this.datgui.addFolder('Paintings');
+        
+        paintingsFolder.add(this.contents, 'activePainting', ['Tomás', 'Mona Lisa', 'The Scream', 'Beetle', 
+            'The Coronation of Napoleon', 'The Kiss', 'Girl with a Pearl Earring', 'The Starry Night', 'Henrique'])
+            .name("Selected Painting");
+        
+
+        paintingsFolder.add(this.contents.paintings[this.contents.activePainting].materialIn.map, 'wrapS', {
+            'Repeat': 1000,
+            'Clamp to Edge': 1001,
+            'Mirrored Repeat': 1002
+        }).name("wrapModeU").onChange((value) => {
+            this.contents.paintings[this.contents.activePainting].materialIn.map.wrapS = value;
+            this.contents.paintings[this.contents.activePainting].materialIn.map.needsUpdate = true;
+        });
+        paintingsFolder.add(this.contents.paintings[this.contents.activePainting].materialIn.map, 'wrapT', {
+            'Repeat': 1000,
+            'Clamp to Edge': 1001,
+            'Mirrored Repeat': 1002
+        }).name("wrapModeV").onChange((value) => {
+            this.contents.paintings[this.contents.activePainting].materialIn.map.wrapT = value;
+            this.contents.paintings[this.contents.activePainting].materialIn.map.needsUpdate = true
+        });
+        paintingsFolder.add(data, 'repeatU', 0, 10).name("repeatU")
+            .onChange((value) => this.contents.paintings[this.contents.activePainting].materialIn.map.repeat.x = value);
+        paintingsFolder.add(data, 'repeatV', 0, 10).name("repeatV")
+            .onChange((value) => this.contents.paintings[this.contents.activePainting].materialIn.map.repeat.y = value);
+        paintingsFolder.add(data, 'offsetU', 0, 1).name("offsetU")
+            .onChange((value) => this.contents.paintings[this.contents.activePainting].materialIn.map.offset.x = value);
+        paintingsFolder.add(data, 'offsetV', 0, 1).name("offsetV").listen()
+            .onChange((value) => this.contents.paintings[this.contents.activePainting].materialIn.map.offset.y = value);
+        paintingsFolder.add(data, 'paintingRotation', 0, 360).name("rotation").onChange((value) => {
+            this.contents.paintings[this.contents.activePainting].materialIn.map.rotation = value *  Math.PI / 180;
+        })
     }
 }
 
