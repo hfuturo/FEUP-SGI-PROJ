@@ -27,21 +27,12 @@ class MyContents  {
     */ 
     constructor(app) {
         this.app = app
-        this.axis = null
     }
 
     /**
      * initializes the contents
      */
     init() {
-       
-        // create once 
-        if (this.axis === null) {
-            // create and attach the axis to the scene
-            this.axis = new MyAxis(this);
-            this.app.scene.add(this.axis);
-        }
-
         const frameMaterial = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/frame.jpg')
         });
