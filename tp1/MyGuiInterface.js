@@ -33,8 +33,14 @@ class MyGuiInterface  {
      */
     init() {
         const data = {
+            axis: false,
             cakeSpotLightAngle: this.contents.spotLight.spotLight.angle * 180 / Math.PI,
         }
+
+        //toggle axis
+        this.datgui.add(data, 'axis').name("Axis").onChange((value) => {
+            this.contents.axis.visible = value;
+        });
 
         // adds a folder to the gui interface for the camera
         const cameraFolder = this.datgui.addFolder('Camera')
