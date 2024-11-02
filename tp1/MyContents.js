@@ -27,21 +27,12 @@ class MyContents  {
     */ 
     constructor(app) {
         this.app = app
-        this.axis = null
     }
 
     /**
      * initializes the contents
      */
     init() {
-       
-        // create once 
-        if (this.axis === null) {
-            // create and attach the axis to the scene
-            this.axis = new MyAxis(this);
-            this.app.scene.add(this.axis);
-        }
-
         const frameMaterial = new THREE.MeshLambertMaterial({
             map: new THREE.TextureLoader().load('textures/frame.jpg')
         });
@@ -109,7 +100,7 @@ class MyContents  {
         this.paintings['Mona Lisa'] = new MyFrame(this.app, 3, 3, 0.1, [-12, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, monaLisaMaterial);
         this.paintings['The Scream'] = new MyFrame(this.app, 3, 3, 0.1, [-8, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, screamMaterial);
         this.paintings['Beetle'] = new MyFrame(this.app, 4, 2, 0.1, [-4, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.jpg')}));
-        const beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 4], [0, Math.PI / 2, 0]);
+        this.beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 4], [0, Math.PI / 2, 0]);
         
         // right paintings
         this.paintings['The Kiss']  = new MyFrame(this.app, 3, 3, 0.1, [4, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, kissMaterial);
@@ -289,7 +280,7 @@ class MyContents  {
         this.paintings['Mona Lisa'].display();
         this.paintings['The Scream'].display();
         this.paintings['Beetle'].display();
-        beetle.display();
+        this.beetle.display();
         
         this.paintings['The Kiss'].display();
         this.paintings['Girl with a Pearl Earring'].display();

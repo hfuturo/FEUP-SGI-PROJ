@@ -45,17 +45,17 @@ class MyBeetle {
         const cMesh1 = this.#buildcurve(new THREE.CubicBezierCurve3(...cubicPoints), [-0.8, 0, 0]);
         const cMesh2 = this.#buildcurve(new THREE.CubicBezierCurve3(...cubicPoints), [0.2, 0, 0]);
 
-        const group = new THREE.Group();
-        group.add(qMesh1);
-        group.add(qMesh2);
-        group.add(qMesh3);
-        group.add(cMesh1);
-        group.add(cMesh2);
+        this.group = new THREE.Group();
+        this.group.add(qMesh1);
+        this.group.add(qMesh2);
+        this.group.add(qMesh3);
+        this.group.add(cMesh1);
+        this.group.add(cMesh2);
 
-        group.position.set(...this.position);
-        group.rotation.set(...this.rotation);
+        this.group.position.set(...this.position);
+        this.group.rotation.set(...this.rotation);
 
-        this.app.scene.add(group);
+        this.app.scene.add(this.group);
     }
 
     #buildcurve(curve, position) {
