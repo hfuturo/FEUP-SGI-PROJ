@@ -100,7 +100,7 @@ class MyContents  {
         this.paintings['Mona Lisa'] = new MyFrame(this.app, 3, 3, 0.1, [-12, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, monaLisaMaterial);
         this.paintings['The Scream'] = new MyFrame(this.app, 3, 3, 0.1, [-8, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, screamMaterial);
         this.paintings['Beetle'] = new MyFrame(this.app, 4, 2, 0.1, [-4, 5.75, -7.49], [0, Math.PI/2, 0], frameMaterial, new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load('textures/beetle_background.jpg')}));
-        const beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 4], [0, Math.PI / 2, 0]);
+        this.beetle = new MyBeetle(this.app, 100, 0.01, [-7.49, 5.2, 4], [0, Math.PI / 2, 0]);
         
         // right paintings
         this.paintings['The Kiss']  = new MyFrame(this.app, 3, 3, 0.1, [4, 5.75, -7.49], [0, -Math.PI/2, 0], frameMaterial, kissMaterial);
@@ -110,9 +110,11 @@ class MyContents  {
 
         this.activePainting = 'The Coronation of Napoleon';
 
-        this.lamp1 = new MyLamp(this.app, [0, 9.93, 7], 50, lampMaterial);
-        this.lamp2 = new MyLamp(this.app, [0, 9.93, 17], 50, lampMaterial);
-        this.lamp3 = new MyLamp(this.app, [0, 9.93, -3], 50, lampMaterial);
+        this.lamps = [];
+        this.lamps['Middle'] = new MyLamp(this.app, [0, 9.93, 7], 50, lampMaterial);
+        this.lamps['Door'] = new MyLamp(this.app, [0, 9.93, 17], 50, lampMaterial);
+        this.lamps['Cake'] = new MyLamp(this.app, [0, 9.93, -3], 50, lampMaterial);
+        this.activeLight = 'Middle';
         
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, [0, 3.1, 0], cakeGlassInfo);
@@ -278,7 +280,7 @@ class MyContents  {
         this.paintings['Mona Lisa'].display();
         this.paintings['The Scream'].display();
         this.paintings['Beetle'].display();
-        beetle.display();
+        this.beetle.display();
         
         this.paintings['The Kiss'].display();
         this.paintings['Girl with a Pearl Earring'].display();
@@ -288,9 +290,9 @@ class MyContents  {
         spring.display();
         barriers.forEach((barrier) => barrier.display())
 
-        this.lamp1.display();
-        this.lamp2.display()
-        this.lamp3.display();
+        this.lamps['Door'].display();
+        this.lamps['Middle'].display();
+        this.lamps['Cake'].display();
     }
 
     /**
