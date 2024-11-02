@@ -119,9 +119,11 @@ class MyContents  {
 
         this.activePainting = 'The Coronation of Napoleon';
 
-        this.lamp1 = new MyLamp(this.app, [0, 9.93, 7], 50, lampMaterial);
-        this.lamp2 = new MyLamp(this.app, [0, 9.93, 17], 50, lampMaterial);
-        this.lamp3 = new MyLamp(this.app, [0, 9.93, -3], 50, lampMaterial);
+        this.lamps = [];
+        this.lamps['Middle'] = new MyLamp(this.app, [0, 9.93, 7], 50, lampMaterial);
+        this.lamps['Door'] = new MyLamp(this.app, [0, 9.93, 17], 50, lampMaterial);
+        this.lamps['Cake'] = new MyLamp(this.app, [0, 9.93, -3], 50, lampMaterial);
+        this.activeLight = 'Middle';
         
         const cakeGlassInfo = {width: 1.6, height: 1.3, depth: 1.6, material: clean_glass};
         const cake = new MyCake(this.app, 0.5, 0.5, 32, 1, Math.PI * 1.8, [0, 3.1, 0], cakeGlassInfo);
@@ -297,9 +299,9 @@ class MyContents  {
         spring.display();
         barriers.forEach((barrier) => barrier.display())
 
-        this.lamp1.display();
-        this.lamp2.display()
-        this.lamp3.display();
+        this.lamps['Door'].display();
+        this.lamps['Middle'].display();
+        this.lamps['Cake'].display();
     }
 
     /**

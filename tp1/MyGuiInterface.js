@@ -16,6 +16,7 @@ class MyGuiInterface  {
         this.datgui =  new GUI();
         this.contents = null
         this.cameraControllers = []
+        this.lightControllers = []
         this.textureControllers = []
         this.positionControllers = []
     }
@@ -71,20 +72,22 @@ class MyGuiInterface  {
     #roomPointLights() {
         const folder = this.datgui.addFolder('Ceiling Lights');
 
-        this.#pointLight(this.contents.lamp2, 'Door Light', folder);
-        this.#pointLight(this.contents.lamp1, 'Middle Light', folder);
-        this.#pointLight(this.contents.lamp3, 'Cake Light', folder);
-    }
+        folder.add(this.contents, 'activeLight', ['Door', 'Middle', 'Cake']).name("Selected Light")
+            .onChange((value) => {
+                this.lightControllers.forEach((controller) => controller.object = this.contents.lamps[value].light);
+                this.lightControllers.forEach((controller) => controller.updateDisplay());
+            });
 
-    #pointLight(lamp, name, folder) {
-        const entry = folder.addFolder(name);
-        entry.close();
-        entry.addColor(lamp.light, 'color').name("color").onChange((value) => { lamp.light.color.set(value); lamp.endingMaterial.color.set(value); lamp.endingMaterial.emissive.set(value); });
-        entry.add(lamp.light,'intensity', 0, 100).name("intensity (cd)");        
-        entry.add(lamp.light, 'distance', 0, 20).name("distance");
-        entry.add(lamp.light, 'decay', 0, 10).name("decay");
-
-        return entry;
+        this.lightControllers.push(folder.addColor(this.contents.lamps[this.contents.activeLight].light, 'color').name("color")
+            .onChange((value) => { 
+                this.contents.lamps[this.contents.activeLight].light.color.set(value); 
+                this.contents.lamps[this.contents.activeLight].endingMaterial.color.set(value); 
+                this.contents.lamps[this.contents.activeLight].endingMaterial.emissive.set(value); 
+            }));
+        
+        this.lightControllers.push(folder.add(this.contents.lamps[this.contents.activeLight].light,'intensity', 0, 100).name("intensity (cd)"));
+        this.lightControllers.push(folder.add(this.contents.lamps[this.contents.activeLight].light, 'distance', 0, 20).name("distance"));
+        this.lightControllers.push(folder.add(this.contents.lamps[this.contents.activeLight].light, 'decay', 0, 10).name("decay"));
     }
 
     #paintings() {
