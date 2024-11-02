@@ -12,12 +12,13 @@ class MyGuiInterface  {
      * @param {MyApp} app The application object 
      */
     constructor(app) {
-        this.app = app
+        this.app = app;
         this.datgui =  new GUI();
-        this.contents = null
-        this.cameraControllers = []
-        this.textureControllers = []
-        this.positionControllers = []
+        this.contents = null;
+        this.cameraControllers = [];
+        this.textureControllers = [];
+        this.positionControllers = [];
+        this.lightControllers = [];
     }
 
     /**
@@ -25,7 +26,7 @@ class MyGuiInterface  {
      * @param {MyContents} contents the contents objects 
      */
     setContents(contents) {
-        this.contents = contents
+        this.contents = contents;
     }
 
     /**
@@ -33,7 +34,7 @@ class MyGuiInterface  {
      */
     init() {
         const data = {
-            cakeSpotLightAngle: this.contents.spotLight.angle * 180 / Math.PI,
+            cakeSpotLightAngle: this.contents.spotLight.spotLight.angle * 180 / Math.PI,
         }
 
         // adds a folder to the gui interface for the camera
@@ -56,12 +57,12 @@ class MyGuiInterface  {
         cameraFolder.open()
 
         const cakeSpotLightFolder = this.datgui.addFolder('Cake Spotlight');
-        cakeSpotLightFolder.addColor(this.contents.spotLight, 'color').name("color").onChange((value) => { this.contents.spotLight.color.set(value); });
-        cakeSpotLightFolder.add(this.contents.spotLight,'intensity', 0, 40).name("intensity (cd)");        
-        cakeSpotLightFolder.add(this.contents.spotLight, 'distance', 0, 20).name("distance");
-        cakeSpotLightFolder.add(data, 'cakeSpotLightAngle', 0, 180).name("angle").onChange((value) => { this.contents.spotLight.angle = value * Math.PI / 180; });
-        cakeSpotLightFolder.add(this.contents.spotLight, 'penumbra', 0, 1).name("penumbra");
-        cakeSpotLightFolder.add(this.contents.spotLight, 'decay', 0, 2).name("decay");
+        cakeSpotLightFolder.addColor(this.contents.spotLight.spotLight, 'color').name("color").onChange((value) => { this.contents.spotLight.spotLight.color.set(value); this.contents.spotLight.endingMaterial.color.set(value); this.contents.spotLight.endingMaterial.emissive.set(value); });
+        cakeSpotLightFolder.add(this.contents.spotLight.spotLight,'intensity', 0, 40).name("intensity (cd)");
+        cakeSpotLightFolder.add(this.contents.spotLight.spotLight, 'distance', 0, 20).name("distance");
+        cakeSpotLightFolder.add(data, 'cakeSpotLightAngle', 0, 180).name("angle").onChange((value) => { this.contents.spotLight.spotLight.angle = value * Math.PI / 180; });
+        cakeSpotLightFolder.add(this.contents.spotLight.spotLight, 'penumbra', 0, 1).name("penumbra");
+        cakeSpotLightFolder.add(this.contents.spotLight.spotLight, 'decay', 0, 2).name("decay");
 
         this.#roomPointLights();
 
@@ -89,7 +90,8 @@ class MyGuiInterface  {
 
     #paintings() {
         const paintingsFolder = this.datgui.addFolder('Paintings');
-        
+        this.paintingLightFolder = null;
+
         paintingsFolder.add(this.contents, 'activePainting', ['Tomás', 'Mona Lisa', 'The Scream', 'Beetle', 
             'The Coronation of Napoleon', 'The Kiss', 'Girl with a Pearl Earring', 'The Starry Night', 'Henrique'])
             .name("Selected Painting").onChange((value) => {
@@ -107,6 +109,8 @@ class MyGuiInterface  {
                     controller.object = this.contents.paintings[value].group.position;
                     controller.updateDisplay();
                 });
+
+                this.#updateGUI(paintingsFolder, value);
             });
         
 
@@ -144,7 +148,35 @@ class MyGuiInterface  {
             .onChange((value) => this.contents.paintings[this.contents.activePainting].group.position.y = value));
         this.positionControllers.push(positionsFolder.add(this.contents.paintings[this.contents.activePainting].group.position, 'z', -20, 20).name("z coord")
             .onChange((value) => this.contents.paintings[this.contents.activePainting].group.position.z = value));
-               
+
+    }
+
+    #updateGUI(paitingsFolder, value) {
+        if (this.paintingLightFolder !== null) {
+            this.paintingLightFolder.destroy();
+        }
+
+        if (value === 'The Coronation of Napoleon')
+            return;
+
+        this.paintingLightFolder = paitingsFolder.addFolder('Light');
+        const painting = this.contents.paintings[this.contents.activePainting];
+        const data = {
+            angle: painting.spotLight.spotLight.angle * 180 / Math.PI
+        };
+
+        this.lightControllers.push(this.paintingLightFolder.addColor(painting.spotLight.spotLight, 'color').name("color")
+            .onChange((value) => { painting.spotLight.spotLight.color.set(value); painting.spotLight.endingMaterial.color.set(value); painting.spotLight.endingMaterial.emissive.set(value); }));
+        this.lightControllers.push(this.paintingLightFolder.add(painting.spotLight.spotLight, 'intensity', 0, 40).name("intensity (cd)")
+            .onChange((value) => painting.spotLight.spotLight.intensity = value));
+        this.lightControllers.push(this.paintingLightFolder.add(painting.spotLight.spotLight, 'distance', 0, 20).name("distance")
+            .onChange((value) => painting.spotLight.spotLight.distance = value));
+        this.lightControllers.push(this.paintingLightFolder.add(data, 'angle', 0, 180).name("angle")
+            .onChange((value) => painting.spotLight.spotLight.angle = value * Math.PI / 180 ));
+        this.lightControllers.push(this.paintingLightFolder.add(painting.spotLight.spotLight, 'penumbra', 0, 1).name("penumbra")
+            .onChange((value) => painting.spotLight.spotLight.penumbra = value));
+        this.lightControllers.push(this.paintingLightFolder.add(painting.spotLight.spotLight, 'decay', 0, 2).name("decay")
+            .onChange((value) => painting.spotLight.spotLight.decay = value));
     }
 }
 
