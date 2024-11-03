@@ -12,13 +12,18 @@
 
 In this project we decided to create a museum room with the information we learnt from the TP classes.
 
+<p align="center">
+    <img src="./screenshots/scene.png">
+    <p align="center">Figure 1: Scene</p>
+</p>
+
 ### Painting
 
 A painting can be decomposed in two objects, a frame and the painting itself. To build the frame, we used four `BoxGeometry` while the painting is a `PlaneGeometry`. A texture is then applied to the `PlaneGeometry` to simmulate the painting.
 
 <p align="center">
     <img src="./screenshots/paintings.png">
-    <p align="center">Figure 1: Paintings</p>
+    <p align="center">Figure 2: Paintings</p>
 </p>
 
 ### Painting Spotlight
@@ -28,7 +33,7 @@ These lights are composed by four elements: a connection to the Painting Light's
 
 <p align="center">
     <img src="./screenshots/painting_light.png">
-    <p align="center">Figure 2: Painting Spotlight</p>
+    <p align="center">Figure 3: Painting Spotlight</p>
 </p>
 
 ### Painting Spotlight's Support
@@ -37,7 +42,7 @@ To connect the painting's spotlight to the ceiling, a support was created. To ma
 
 <p align="center">
     <img src="./screenshots/lights_support.png">
-    <p align="center">Figure 3: Painting Spotlight's Support</p>
+    <p align="center">Figure 4: Painting Spotlight's Support</p>
 </p>
 
 ### Room illumination
@@ -46,7 +51,7 @@ To illuminate the room we decided to create three pointlights. To represent thes
 
 <p align="center">
     <img src="./screenshots/room_pointlights.png">
-    <p align="center">Figure 4: Room illumination</p>
+    <p align="center">Figure 5: Room illumination</p>
 </p>
 
 ### Beetle
@@ -55,7 +60,7 @@ The beetle was created using curves. `QuadraticBezierCurve3` were used to make t
 
 <p align="center">
     <img src="./screenshots/beetle.png">
-    <p align="center">Figure 5: Beetle</p>
+    <p align="center">Figure 6: Beetle</p>
 </p>
 
 ### Cake, Candle, Flame, and Plate
@@ -67,7 +72,7 @@ The flame was built using a `ConeGeometry`.
 
 <p align="center">
     <img src="./screenshots/cake.png">
-    <p align="center">Figure 6: Cake, Candle and Flame</p>
+    <p align="center">Figure 7: Cake, Candle and Flame</p>
 </p>
 
 ### Spring
@@ -76,7 +81,7 @@ The format of the spring was created with a `CatmullRomCurve3`. We then used thi
 
 <p align="center">
     <img src="./screenshots/spring.png">
-    <p align="center">Figure 7: Spring</p>
+    <p align="center">Figure 8: Spring</p>
 </p>
 
 ### Newspaper
@@ -85,16 +90,16 @@ The newspaper was created using a NURBS surface, which was duplicated and scaled
 
 <p align="center">
     <img src="./screenshots/newspaper.png">
-    <p align="center">Figure 8: Newspaper</p>
+    <p align="center">Figure 9: Newspaper</p>
 </p>
 
 ### GlassBox
 
-Since this is a museum, we decided that the cake, journal and spring should be considered ancient artificats. Therefore, they should be protected from the public. To meet this requirement, a glass box was constructed. We started by making a box with `BoxGeometry` and then applied a glass texture with `roughness` to 0 so the glass is "smooth" and `transmission` to 1 to make it transparent. A `MeshPhysicalMaterial` was used to make the glass look realistic, otherwise we wouldn't be able to see through it.
+Since this is a museum, we decided that the cake, newspaper and spring should be considered ancient artificats. Therefore, they should be protected from the public. To meet this requirement, a glass box was constructed. We started by making a box with `BoxGeometry` and then applied a glass texture with `roughness` to 0 so the glass is "smooth" and `transmission` to 1 to make it transparent. A `MeshPhysicalMaterial` was used to make the glass look realistic, otherwise we wouldn't be able to see through it.
 
 <p align="center">
     <img src="./screenshots/glass_box.png">
-    <p align="center">Figure 9: Glass Box</p>
+    <p align="center">Figure 10: Glass Box</p>
 </p>
 
 ### Table
@@ -103,7 +108,7 @@ The table top was created using a `BoxGeometry` and a wooden texture was applied
 
 <p align="center">
     <img src="./screenshots/table.png">
-    <p align="center">Figure 10: Table</p>
+    <p align="center">Figure 11: Table</p>
 </p>
 
 ### Landscape
@@ -112,7 +117,7 @@ For the landscape, we used a `PlaneGeometry` outside of the room where we applie
 
 <p align="center">
     <img src="./screenshots/landscape.png">
-    <p align="center">Figure 11: Landscape</p>
+    <p align="center">Figure 12: Landscape</p>
 </p>
 
 ### Jar
@@ -121,7 +126,7 @@ The jar was created using NURBS surfaces. There is an inner and outer surface (s
 
 <p align="center">
     <img src="./screenshots/jar.png">
-    <p align="center">Figure 12: Jar</p>
+    <p align="center">Figure 13: Jar</p>
 </p>
 
 ### Flower
@@ -130,7 +135,7 @@ The flower used a `TubeGeometry` defined by a `CatmullRomCurve3` for the stem. T
 
 <p align="center">
     <img src="./screenshots/flower.png">
-    <p align="center">Figure 13: Flower</p>
+    <p align="center">Figure 14: Flower</p>
 </p>
 
 ### Carpet
@@ -139,7 +144,7 @@ The carpet was created using a NURBS surface to allow for the simulation of a cu
 
 <p align="center">
     <img src="./screenshots/carpet.png">
-    <p align="center">Figure 14: Carpet</p>
+    <p align="center">Figure 15: Carpet</p>
 </p>
 
 ### Barrier
@@ -148,12 +153,12 @@ Barriers are composed of two main elements: the poles and the rope. The poles we
 
 <p align="center">
     <img src="./screenshots/barrier.png">
-    <p align="center">Figure 15: Barrier</p>
+    <p align="center">Figure 16: Barrier</p>
 </p>
 
 ### Wall
 
-The wall was created using a `PlaneGeometry` and a diffuse material. Walls can receive an optional parameter to create a hole of a given size and position (can be seen in [Figure 11](#landscape)).
+The wall was created using a `PlaneGeometry` and a diffuse material. Walls can receive an optional parameter to create a hole of a given size and position (can be seen in [Figure 12](#landscape)).
 
 ### User Interface
 
@@ -165,7 +170,7 @@ Finally there are several options to change the texture parameters of every pain
 
 <p align="center">
     <img src="./screenshots/ui.png">
-    <p align="center">Figure 16: User Interface</p>
+    <p align="center">Figure 17: User Interface</p>
 </p>
 
 
