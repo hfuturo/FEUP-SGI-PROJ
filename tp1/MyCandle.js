@@ -27,7 +27,7 @@ class MyCandle {
         mesh.position.set(...this.position);
         this.app.scene.add(mesh);
 
-        const flame = new THREE.ConeGeometry(this.radius, 0.1);
+        const flame = new THREE.ConeGeometry(this.radius - 0.01, 0.1);
         const flameTexture = new THREE.TextureLoader().load('textures/flame.jpg');
         flameTexture.wrapS = THREE.RepeatWrapping;
         flameTexture.wrapT = THREE.RepeatWrapping;
