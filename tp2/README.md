@@ -1,20 +1,23 @@
-# SGI 2024/2025 - TP2
+# sgi-tp2-base
+The starting point of the second assignment of SGI.
 
-## Group: T0xG0y
+# Getting started
 
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+Considering a code block (for instance class A.js), to load an JSON file (in the defined structure) call:
 
-----
-## Project information
+    let reader = new MyFileReader(app, this, *this.onSceneLoaded*);
+    reader.open("<path to JSON file>");	
 
-- (items describing main strong points)
-- Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
-----
-## Issues/Problems
+The last argument in the MyFileReader object call is the name of the method that is to be called when the JSON file is loaded and parsed.
 
-- (items describing unimplemented features, bugs, problems, etc.)
+Hence, In the same code block (for instance class A.js) add a function method with the following signature: 
+
+    onSceneLoaded(data) {
+        // do something with the data object
+    }
+
+This method is called once the JSON file is loaded and parsed successfully. This method single input argument, *data*, is an object containing the entire scene data object.
+
+# Version
+
+20241105v1
