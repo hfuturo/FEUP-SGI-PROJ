@@ -36,7 +36,8 @@ class MyContents {
      */
     onSceneLoaded(data) {
         console.info("YASF loaded.")
-        this.onAfterSceneLoadedAndBeforeRender(data);
+        this.reader.readJson(data);
+        // this.onAfterSceneLoadedAndBeforeRender(data);
     }
 
     printYASF(data, indent = '') {
