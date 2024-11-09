@@ -50,34 +50,42 @@ class MyFileReader {
 		try {
 			let rootElement = data["yasf"];
 
+			this.checkPrimaryNodes(rootElement);
+
 			this.loadGlobals(rootElement);
 			this.loadFog(rootElement);
-			// this.loadSkyBox(rootElement);
+			this.loadSkyBox(rootElement);
 			this.loadCameras(rootElement);
 			this.loadTextures(rootElement);
 			this.loadMaterials(rootElement);
 			this.loadNodes(rootElement);
-			// this.loadLights(rootElement);
 		}
 		catch (error) {
 			this.errorMessage = error;
+			console.error(error);
 		}
 	}
 
 	/**
-	 * checks if any unknown node is child a given element
-	 * @param {*} parentElem 
-	 * @param {Array} list an array of strings with the valid node names
+	 * Checks if all primary nodes are present in the root element and if no others are present
+	 * @param {*} rootElement 
 	 */
-	checkForUnknownNodes(parentElem, list) {
-		// for each of the elem's children
-		for (let i = 0; i < parentElem.children.length; i++) {
-			let elem = parentElem.children[i]
-			// is element's tag name not present in the list?
-			if (list.includes(elem.tagName) === false) {
-				// unkown element. Report!
-				throw new Error("unknown json element '" + elem.tagName + "' descendent of element '" + parentElem.tagName + "'")
+	checkPrimaryNodes(rootElement) {
+		let list = this.data.primaryNodeIds;
+		let appear = [];
+
+		for (let node in rootElement) {
+			if (list.includes(node) === false) {
+				throw new Error("unknown json element '" + elem.tagName + "' in root element");
 			}
+			if (appear.includes(node)) {
+				throw new Error("duplicate json element '" + elem.tagName + "' in root element");
+			}
+			appear.push(node);
+		}
+		if (appear.length !== list.length) {
+			let diff = list.filter(x => !appear.includes(x));
+			throw new Error("missing primary json element(s) " + diff + " in root element");
 		}
 	}
 
@@ -144,45 +152,6 @@ class MyFileReader {
 		}
 
 		return this.getVectorN(value, ["r", "g", "b"]);
-	}
-
-	/**
-	 * returns a rectangle2D from an element for a particular attribute
-	 * @param {*} element the xml element
-	 * @param {String} attributeName the attribute name 
-	 * @param {boolean} required if the attribte is required or not
-	 * @returns {Array} an array object with 4 elements: x1, y1, x2, y2
-	 */
-	getRectangle2D(element, attributeName, required) {
-
-		if (required == undefined) required = true;
-
-		if (element == null) {
-			throw new Error("element is null.");
-		}
-		if (attributeName == null) {
-			throw new Error("rectangle2D attribute name is null.");
-		}
-
-		let value = element.getAttribute(attributeName);
-		if (value == null) {
-			if (required) {
-				throw new Error("element '" + element.id + ": rectangle2D value is null for attribute " + attributeName + ".");
-			}
-			return null;
-		}
-
-		let temp = value.split(' ');
-		if (temp.length != 4) {
-			throw new Error("element '" + element.id + ": invalid " + temp.length + " number of components for a rectangle2D, in attribute " + attributeName + ".");
-		}
-
-		let rect = {};
-		rect.x1 = parseFloat(temp[0]);
-		rect.y1 = parseFloat(temp[1]);
-		rect.x2 = parseFloat(temp[2]);
-		rect.y2 = parseFloat(temp[3]);
-		return rect;
 	}
 
 	getVectorN(value, keys) {
@@ -552,6 +521,20 @@ class MyFileReader {
 			elem: fog,
 			descriptor: this.data.descriptors["fog"],
 			extras: [["type", "fog"]]
+		}))
+	}
+
+	/**
+	 * Load the skybox element
+	 * @param {*} rootElement 
+	 */
+	loadSkyBox(rootElement) {
+		let skybox = rootElement["skybox"];
+		this.data.setSkybox(this.loadJsonItem({
+			key: "skybox",
+			elem: skybox,
+			descriptor: this.data.descriptors["skybox"],
+			extras: [["type", "skybox"]]
 		}))
 	}
 

@@ -261,6 +261,17 @@ class MySceneData {
     getFog() {
         return this.fog;
     }
+
+    setSkybox(skybox) {
+        this.skybox = skybox;
+        this.createCustomAttributeIfNotExists(skybox)
+        console.debug("added skybox " + JSON.stringify(skybox));
+    }
+
+    getSkybox() {
+        return this.skybox;
+    }
+
     setRootId(rootId) {
         console.debug("set graph root id to '" + rootId + "'");
         this.rootId = rootId;
