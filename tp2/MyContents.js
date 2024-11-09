@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
+import { MyPrimitive } from './MyPrimitive.js';
 /**
  *  This class contains the contents of out application
  */
@@ -19,6 +20,8 @@ class MyContents {
 
         this.textures = [];
         this.materials = [];
+        this.primitives = [];
+        this.lights = [];
     }
 
     /**
@@ -70,6 +73,8 @@ class MyContents {
         this.initTextures(data.textures);
         
         this.initMaterials(data.materials);
+
+        this.initObjects(data.nodes[data.rootId], null);
     }
 
     initCameras(data) {
@@ -146,6 +151,65 @@ class MyContents {
 
             this.materials[materialId] = material;
         }
+    }
+
+    initObjects(node, parentId) {
+        if (node.type === 'node') {
+            node.children.forEach(child => {
+                this.initObjects(child, node.id);
+            });
+        } else if (node.type === 'primitive') {
+            const primitive = MyPrimitive.getPrimitive(node);
+
+            this.primitives[parentId] = primitive;
+        } else {
+            this.initLight(node);
+        }
+    }
+
+    initLight(lightSpec) {
+        
+        let light;
+        if (lightSpec.type === 'pointlight') {
+            light = new THREE.PointLight(
+                lightSpec.color,
+                lightSpec.intensity,
+                lightSpec.distance,
+                lightSpec.decay
+            )
+
+        } else if (light.type === 'spotlight') {
+            light = new THREE.SpotLight(
+                lightSpec.color,
+                lightSpec.intensity,
+                lightSpec.distance,
+                lightSpec.angle,
+                lightSpec.penumbra,
+                lightSpec.decay
+            )
+            light.target.position.set(...lightSpec.target);
+
+        } else if (light.type === 'directionallight') {
+            light = new THREE.DirectionalLight(
+                lightSpec.color,
+                lightSpec.intensity
+            )
+
+            light.shadow.left = lightSpec.shadowleft;
+            light.shadow.right = lightSpec.shadowright;
+            light.shadow.bottom = lightSpec.shadowbottom;
+            light.shadow.top = lightSpec.shadowtop;
+        }
+
+        light.position.set(...lightSpec.position);
+        light.castShadow = lightSpec.castShadow;
+        light.shadow.far = lightSpec.shadowFar;
+        light.shadow.mapSize.width = lightSpec.shadowWidth;
+        light.shadow.mapSize.height = lightSpec.shadowHeight;
+
+        this.lights[lightSpec.id] = light;
+        if (lightSpec.enabled) 
+            this.app.scene.add(light);
     }
 
     update() {
