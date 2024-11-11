@@ -35,31 +35,40 @@
         },
         "textures": {
             "leftWallTex": {
-                "filepath": "scenes/demo/textures/scratchedWall.jpg"
+                "filepath": "scenes/demo/textures/scratchedWall.jpg",
+                "isVideo": false
             },
             "rightWallTex": {
-                "filepath": "scenes/demo/textures/bloodyWall.jpg"
+                "filepath": "scenes/demo/textures/bloodyWall.jpg",
+                "isVideo": false
             },
             "floorTex": {
-                "filepath": "scenes/demo/textures/test1.jpg"
+                "filepath": "scenes/demo/textures/test1.jpg",
+                "isVideo": false
             },
             "tableTex": {
-                "filepath": "scenes/demo/textures/table.png"
+                "filepath": "scenes/demo/textures/table.png",
+                "isVideo": false
             },
             "crimeWeaponTex": {
-                "filepath": "scenes/demo/textures/bloodyPrints.jpg"
+                "filepath": "scenes/demo/textures/bloodyPrints.jpg",
+                "isVideo": false
             },
             "tapeTex": {
-                "filepath": "scenes/demo/textures/pTape.jpg"
+                "filepath": "scenes/demo/textures/pTape.jpg",
+                "isVideo": false
             },
             "tapeSupportTex": {
-                "filepath": "scenes/demo/textures/lamp.png"
+                "filepath": "scenes/demo/textures/lamp.png",
+                "isVideo": false
             },
             "pineTex": {
-                "filepath": "scenes/demo/textures/pine.png"
+                "filepath": "scenes/demo/textures/pine.png",
+                "isVideo": false
             },
             "vaseTex": {
-                "filepath": "scenes/demo/textures/vase.png"
+                "filepath": "scenes/demo/textures/vase.png",
+                "isVideo": false
             }
         },
         "materials": {
@@ -274,7 +283,7 @@
                 "textureref": "vaseTex",
                 "texlength_s": 1,
                 "texlength_t": 1,
-                "shading": "flat"
+                "shading": true
             }
         },
         "cameras": {
