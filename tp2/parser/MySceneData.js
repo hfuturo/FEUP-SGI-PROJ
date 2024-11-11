@@ -75,6 +75,7 @@ class MySceneData {
         this.descriptors["texture"] = [
             { name: "id", type: "string" },
             { name: "filepath", type: "string" },
+            { name: "isVideo", type: "boolean" },
             { name: "mipmap0", type: "string", required: false, default: null },
             { name: "mipmap1", type: "string", required: false, default: null },
             { name: "mipmap2", type: "string", required: false, default: null },
@@ -98,7 +99,7 @@ class MySceneData {
             { name: "transparent", type: "boolean"},
             { name: "opacity", type: "float" },
             { name: "wireframe", type: "boolean", required: false, default: false },
-            { name: "shading", type: "item", required: false, choices: ["none", "flat", "smooth"], default: "smooth" },
+            { name: "shading", type: "boolean", required: false, default: false },
             { name: "textureref", type: "string", required: false, default: null }, // The color map. May optionally include an alpha channel. The texture map color is modulated by the diffuse color. Default null.
             { name: "texlength_s", type: "float", required: false, default: 1.0 },
             { name: "texlength_t", type: "float", required: false, default: 1.0 },

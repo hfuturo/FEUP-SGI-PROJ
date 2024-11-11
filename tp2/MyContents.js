@@ -134,7 +134,7 @@ class MyContents {
                 transparent: m.transparent,
                 opacity: m.opacity,
                 wireframe: m.wireframe,
-                flatShading: m.shading === 'flat', // What about "none"
+                flatShading: m.shading
             })
 
             if (m.textureref) {
