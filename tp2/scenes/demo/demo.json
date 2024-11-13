@@ -750,6 +750,15 @@
                         }
                     }
                 }
+            },
+            "leg": {
+                "type": "node",
+                "children": {
+                    "unitCube": {
+                        "type": "noderef",
+                        "nodeId": "unitCube"
+                    }
+                }
             }
         }
     }

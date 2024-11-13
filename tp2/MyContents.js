@@ -74,7 +74,10 @@ class MyContents {
         
         this.initMaterials(data.materials);
 
-        this.initObjects(data.nodes[data.rootId], null);
+        this.initPrimitives(data.nodes[data.rootId]);
+
+        const objects = this.initObjects(data.nodes[data.rootId]);
+        this.app.scene.add(objects);
     }
 
     initCameras(data) {
@@ -153,10 +156,20 @@ class MyContents {
         }
     }
 
-    initObjects(node, parentId) {
+    initPrimitives(node, parentId) {
         if (node.type === 'node') {
+            if (node.children.length === 0) {
+                throw new Error(`Node "${node.id}" has no children.`);
+            }
+            let prim = false;
             node.children.forEach(child => {
-                this.initObjects(child, node.id);
+                if (prim)
+                    throw new Error(`Node "${node.id}" has more than 1 child primitive.`);
+
+                if (child.type === 'primitive') 
+                    prim = true;
+
+                this.initPrimitives(child, node.id);
             });
         } else if (node.type === 'primitive') {
             const primitive = MyPrimitive.getPrimitive(node);
@@ -210,6 +223,28 @@ class MyContents {
         this.lights[lightSpec.id] = light;
         if (lightSpec.enabled) 
             this.app.scene.add(light);
+    }
+
+    initObjects(node, parentId, material) {
+        if (node.type === 'node') {
+            const group = new THREE.Group();
+            node.children.forEach(child => {
+                let obj;
+                if (node.materialIds.length > 0) {
+                    obj = this.initObjects(child, node.id, node.materialIds[0]);
+                } else {
+                    obj = this.initObjects(child, node.id, material);
+                }
+                
+                if (obj !== undefined) {
+                    group.add(obj);
+                }
+            });
+
+            return group;
+        } else if (node.type === 'primitive') {
+            return new THREE.Mesh(this.primitives[parentId], this.materials[material]);
+        }
     }
 
     update() {
