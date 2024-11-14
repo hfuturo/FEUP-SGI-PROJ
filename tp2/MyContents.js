@@ -60,7 +60,9 @@ class MyContents {
     onAfterSceneLoadedAndBeforeRender(data) {
         // this.printYASF(data)
 
-        this.app.scene.background = new THREE.Color(data.options.background);
+        this.app.scene.background.r = data.options.background[0];
+        this.app.scene.background.g = data.options.background[1];
+        this.app.scene.background.b = data.options.background[2];
         
         const ambientLight = new THREE.AmbientLight(data.options.ambientLight);
         this.app.scene.add(ambientLight);
@@ -240,6 +242,16 @@ class MyContents {
                     group.add(obj);
                 }
             });
+
+            for (let t of node.transformations) {
+                if (t.type == "T") {
+                    group.position.set(...t.translate);
+                } else if (t.type == "R") {
+                    group.rotation.set(...t.rotation.map(x => x * Math.PI / 180));
+                } else if (t.type == "S") {
+                    group.scale.set(...t.scale);
+                }
+            }
 
             return group;
         } else if (node.type === 'primitive') {
