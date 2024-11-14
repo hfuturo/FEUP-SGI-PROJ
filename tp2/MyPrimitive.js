@@ -62,8 +62,8 @@ class MyPrimitive {
             representation.slices,
             representation.stacks,
             representation.capsclose,
-            representation.thetaStart,
-            representation.thetaLength
+            representation.thetaStart * Math.PI / 180,
+            representation.thetaLength * Math.PI / 180
         );
 
         return cylinder;
@@ -74,10 +74,10 @@ class MyPrimitive {
             representation.radius,
             representation.slices,
             representation.stacks,
-            representation.phistart,
-            representation.philength,
-            representation.thetastart,
-            representation.thetalength
+            representation.phistart * Math.PI / 180,
+            representation.philength * Math.PI / 180,
+            representation.thetastart * Math.PI / 180,
+            representation.thetalength * Math.PI / 180
         );
 
         return sphere;

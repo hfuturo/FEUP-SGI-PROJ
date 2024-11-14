@@ -16,7 +16,7 @@ class MyContents {
         this.axis = null
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/demo/demo.json");
+        this.reader.open("scenes/demo/stadium.json");
 
         this.textures = [];
         this.materials = [];

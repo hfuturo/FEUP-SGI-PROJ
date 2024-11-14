@@ -1,0 +1,80 @@
+{
+    "yasf": {
+        "globals": {
+            "background": {
+                "r": 0.39,
+                "g": 0.76,
+                "b": 0.96
+            },
+            "ambient": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
+            }
+        },
+        "fog": {
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "near": 1.0,
+            "far": 100.0
+        },
+        "skybox": {
+            "size": {"x": 10.0, "y": 10.0, "z": 10.0},
+            "center": {"x": 0.0, "y": 0.0, "z": 0.0},
+            "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+            "intensity": 1.0,
+            "front": "ss",
+            "back": "ss",
+            "up": "ss",
+            "down": "ss",
+            "left": "ss",
+            "right": "ss"
+        },
+        "textures": {
+
+        },
+        "materials": {
+            
+        },
+        "cameras": {
+            "initial": "cam1",
+            "cam1": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 15,
+                    "y": 15,
+                    "z": 15
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        },
+        "graph": {
+            "rootid": "scene",
+            "scene": {
+                "type": "node",
+                "children" : {
+                    "box": {
+                        "type": "sphere",
+                        "radius": 5,
+                        "slices": 30,
+                        "stacks": 30,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "phistart": 0,
+                        "philength": 360
+                    }
+                }
+            }
+        }
+    }
+}
