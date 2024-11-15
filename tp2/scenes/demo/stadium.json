@@ -63,15 +63,221 @@
             "scene": {
                 "type": "node",
                 "children" : {
-                    "box": {
-                        "type": "sphere",
-                        "radius": 5,
-                        "slices": 30,
-                        "stacks": 30,
-                        "thetastart": 0,
-                        "thetalength": 360,
-                        "phistart": 0,
-                        "philength": 360
+                    "stadium": {
+                        "type": "noderef",
+                        "nodeId": "stadium"
+                    }
+                }
+            },
+            "stadium": {
+                "type": "node",
+                "children": {
+                    "stand": {
+                        "type": "noderef",
+                        "nodeId": "stand"
+                    }
+                }
+            },
+            "stand": {
+                "type": "node",
+                "children": {
+                    "layer": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer"
+                    },
+                    "layer1": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer1"
+                    },
+                    "layer2": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer2"
+                    },
+                    "layer3": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer3"
+                    },
+                    "back": {
+                        "type": "noderef",
+                        "nodeId": "stand_back"
+                    }
+                }
+            },
+            "stand_back": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -6}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
+                    {"type": "scale", "amount": {"x": 1, "y": 4, "z": 1}}
+                ],
+                "children": {
+                    "rectangle2": {
+                        "type": "noderef",
+                        "nodeId": "rectangle2"
+                    }
+                }
+            },
+            "stand_layer3": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
+                ],
+                "children": {
+                    "stand_layer": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer2"
+                    },
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover3"
+                    }
+                }
+            },
+            "stand_layer2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
+                ],
+                "children": {
+                    "stand_layer": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer1"
+                    },
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover2"
+                    }
+                }
+            },
+            "stand_layer1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
+                ],
+                "children": {
+                    "stand_layer": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer"
+                    },
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover1"
+                    }
+                }
+            },
+            "stand_layer": {
+                "type": "node",
+                "children": {
+                    "rectangle1": {
+                        "type": "noderef",
+                        "nodeId": "rectangle1"
+                    },
+                    "rectangle2": {
+                        "type": "noderef",
+                        "nodeId": "rectangle2"
+                    },
+                    "rectangle3": {
+                        "type": "noderef",
+                        "nodeId": "rectangle3"
+                    },
+                    "rectangle4": {
+                        "type": "noderef",
+                        "nodeId": "rectangle4"
+                    }
+                }
+            }, 
+            "rectangle1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -0.75}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}}
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {"x": -5, "y": -0.75},
+                        "xy2": {"x": 5, "y": 0.75}
+                    }
+                }
+            },
+            "rectangle2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0.5, "z": 0}}
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {"x": -5, "y": -0.5},
+                        "xy2": {"x": 5, "y": 0.5}
+                    }
+                }
+            },
+            "rectangle3": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -5, "y": 0.5, "z": -0.75}},
+                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}}
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {"x": -0.75, "y": -0.5},
+                        "xy2": {"x": 0.75, "y": 0.5}
+                    }
+                }
+            },
+            "rectangle4": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 5, "y": 0.5, "z": -0.75}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {"x": -0.75, "y": -0.5},
+                        "xy2": {"x": 0.75, "y": 0.5}
+                    }
+                }
+            },
+            "stand_cover1": {
+                "type":"node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": -1, "z": 0}}
+                ],
+                "children": {
+                    "rectangle3": {
+                        "type": "noderef",
+                        "nodeId": "rectangle3"
+                    },
+                    "rectangle4": {
+                        "type": "noderef",
+                        "nodeId": "rectangle4"
+                    }
+                }
+            },
+            "stand_cover2": {
+                "type":"node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -1.5}}
+                ],
+                "children": {
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover1"
+                    }
+                }
+            },
+            "stand_cover3": {
+                "type":"node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -1.5}}
+                ],
+                "children": {
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover2"
                     }
                 }
             }
