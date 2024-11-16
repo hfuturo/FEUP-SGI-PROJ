@@ -128,7 +128,8 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "flagTex"
+                "textureref": "flagTex",
+                "twosided": true
             },
             "goalApp": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
