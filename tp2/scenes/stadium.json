@@ -46,6 +46,10 @@
             "metalTex": {
                 "filepath": "scenes/textures/metal.png",
                 "isVideo": false
+            },
+            "footballTex": {
+                "filepath": "scenes/textures/football.webp",
+                "isVideo": false
             }
         },
         "materials": {
@@ -91,6 +95,15 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1
+            },
+            "footballApp": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "footballTex"
             }
         },
         "cameras": {
@@ -161,6 +174,26 @@
                     "floodlight4": {
                         "type": "noderef",
                         "nodeId": "floodlight4"
+                    },
+                    "football": {
+                        "type": "noderef",
+                        "nodeId": "football"
+                    }
+                }
+            },
+            "football": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0.35, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.3, "y": 0.3, "z": 0.3}}
+                ],
+                "materialref": {
+                    "materialId": "footballApp"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "noderef",
+                        "nodeId": "sphere"
                     }
                 }
             },
@@ -528,6 +561,10 @@
                         "type": "noderef",
                         "nodeId": "left_rgoalkeeper_line"
                     },
+                    "right_penalty_spot": {
+                        "type": "noderef",
+                        "nodeId": "right_penalty_spot"
+                    },
                     "top_rgoalkeeper_area_line": {
                         "type": "noderef",
                         "nodeId": "top_rgoalkeeper_area_line"
@@ -598,6 +635,19 @@
                     }
                 }
             },
+            "right_penalty_spot": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 23, "y": 0.05, "z" : 0}},
+                    {"type": "scale", "amount": {"x": 0.2, "y": 1, "z": 0.2}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
             "bottom_rgoalkeeper_line": {
                 "type": "node",
                 "transforms": [
@@ -640,6 +690,10 @@
                     "bottom_lgoalkeeper_line": {
                         "type": "noderef",
                         "nodeId": "bottom_lgoalkeeper_line"
+                    },
+                    "left_penalty_spot": {
+                        "type": "noderef",
+                        "nodeId": "left_penalty_spot"
                     },
                     "top_lgoalkeeper_area_line": {
                         "type": "noderef",
@@ -711,6 +765,19 @@
                     }
                 }
             },
+            "left_penalty_spot": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -23, "y": 0.05, "z" : 0}},
+                    {"type": "scale", "amount": {"x": 0.2, "y": 1, "z": 0.2}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
             "right_lgoalkeeper_line": {
                 "type": "node",
                 "transforms": [
@@ -745,6 +812,10 @@
                     "middle_line": {
                         "type": "noderef",
                         "nodeId": "middle_line"
+                    },
+                    "kick_off_spot": {
+                        "type": "noderef",
+                        "nodeId": "kick_off_spot"
                     }
                 }
             },
@@ -759,6 +830,19 @@
                     "rectangle": {
                         "type": "noderef",
                         "nodeId": "rectangle"
+                    }
+                }
+            },
+            "kick_off_spot": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0.05, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.3, "y": 1, "z": 0.3}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
                     }
                 }
             },
@@ -846,6 +930,34 @@
                         "type": "rectangle",
                         "xy1": {"x": -1, "y": -1},
                         "xy2": {"x": 1, "y": 1}
+                    }
+                }
+            },
+            "cylinder": {
+                "type": "node",
+                "children": {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "base": 1,
+                        "top": 1,
+                        "height": 0.05,
+                        "slices": 20,
+                        "stacks": 5
+                    }
+                }
+            },
+            "sphere": {
+                "type": "node",
+                "children": {
+                    "spherePrim": {
+                        "type": "sphere",
+                        "radius": 1,
+                        "slices": 32,
+                        "stacks": 32,
+                        "phistart": 0,
+                        "philength": 360,
+                        "thetastart": 0,
+                        "thetalength": 360
                     }
                 }
             },
