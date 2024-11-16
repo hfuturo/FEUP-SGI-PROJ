@@ -232,7 +232,7 @@ class MySceneData {
             { name: "shadowmapsize", type: "integer", required: false, default: 512 },
         ]
 
-        this.primaryNodeIds = ["globals", "fog", "skybox", "cameras", "textures", "materials", "graph"]
+        this.primaryNodeIds = ["globals", "cameras", "textures", "materials", "graph"]
 
         this.primitiveIds = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs", "polygon"]
 

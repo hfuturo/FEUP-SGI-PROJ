@@ -53,8 +53,6 @@ class MyFileReader {
 			this.checkPrimaryNodes(rootElement);
 
 			this.loadGlobals(rootElement);
-			this.loadFog(rootElement);
-			this.loadSkyBox(rootElement);
 			this.loadCameras(rootElement);
 			this.loadTextures(rootElement);
 			this.loadMaterials(rootElement);
@@ -417,8 +415,6 @@ class MyFileReader {
 			}
 		}
 
-		this.checkForUnknownAttributes(options.elem, this.toArrayOfNames(options.descriptor))
-
 		// for each descriptor, get the value
 		for (let i = 0; i < options.descriptor.length; i++) {
 			let value = null;
@@ -507,38 +503,23 @@ class MyFileReader {
 		let globals = rootElement["globals"];
 		this.data.setOptions(this.loadJsonItem({
 			key: "globals",
-			elem: globals,
+			elem: {ambient: globals["ambient"], background: globals["background"]},
 			descriptor: this.data.descriptors["globals"],
 			extras: [["type", "globals"]]
 		}));
-	}
-
-	/*
-	 * Load fog element
-	 * 
-	 */
-	loadFog(rootElement) {
-		let fog = rootElement["fog"];
 		this.data.setFog(this.loadJsonItem({
 			key: "fog",
-			elem: fog,
+			elem: globals["fog"],
 			descriptor: this.data.descriptors["fog"],
 			extras: [["type", "fog"]]
-		}))
-	}
-
-	/**
-	 * Load the skybox element
-	 * @param {*} rootElement 
-	 */
-	loadSkyBox(rootElement) {
-		let skybox = rootElement["skybox"];
+		}));
 		this.data.setSkybox(this.loadJsonItem({
 			key: "skybox",
-			elem: skybox,
+			elem: globals["skybox"],
 			descriptor: this.data.descriptors["skybox"],
 			extras: [["type", "skybox"]]
 		}))
+
 	}
 
 	/**

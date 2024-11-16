@@ -11,28 +11,28 @@
                 "g": 1.0,
                 "b": 1.0,
                 "intensity": 0.5
-            }
-        },
-        "fog": {
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
             },
-            "near": 1.0,
-            "far": 100.0
-        },
-        "skybox": {
-            "size": {"x": 10.0, "y": 10.0, "z": 10.0},
-            "center": {"x": 0.0, "y": 0.0, "z": 0.0},
-            "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
-            "intensity": 1.0,
-            "front": "ss",
-            "back": "ss",
-            "up": "ss",
-            "down": "ss",
-            "left": "ss",
-            "right": "ss"
+            "fog": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "near": 1.0,
+                "far": 100.0
+            },
+            "skybox": {
+                "size": {"x": 10.0, "y": 10.0, "z": 10.0},
+                "center": {"x": 0.0, "y": 0.0, "z": 0.0},
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "intensity": 1.0,
+                "front": "ss",
+                "back": "ss",
+                "up": "ss",
+                "down": "ss",
+                "left": "ss",
+                "right": "ss"
+            }
         },
         "textures": {
             "grassTex": {
