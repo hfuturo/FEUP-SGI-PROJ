@@ -1,0 +1,712 @@
+{
+    "yasf": {
+        "globals": {
+            "background": {
+                "r": 0.39,
+                "g": 0.76,
+                "b": 0.96
+            },
+            "ambient": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
+            }
+        },
+        "fog": {
+            "color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "near": 1.0,
+            "far": 100.0
+        },
+        "skybox": {
+            "size": {"x": 10.0, "y": 10.0, "z": 10.0},
+            "center": {"x": 0.0, "y": 0.0, "z": 0.0},
+            "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+            "intensity": 1.0,
+            "front": "ss",
+            "back": "ss",
+            "up": "ss",
+            "down": "ss",
+            "left": "ss",
+            "right": "ss"
+        },
+        "textures": {
+            "grassTex": {
+                "filepath": "scenes/textures/grass.jpg",
+                "isVideo": false
+            }
+        },
+        "materials": {
+            "grassApp": {
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "color": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "grassTex"
+            }
+        },
+        "cameras": {
+            "initial": "cam1",
+            "cam1": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 15,
+                    "y": 15,
+                    "z": 15
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        },
+        "graph": {
+            "rootid": "scene",
+            "scene": {
+                "type": "node",
+                "children" : {
+                    "stadium": {
+                        "type": "noderef",
+                        "nodeId": "stadium"
+                    }
+                }
+            },
+            "stadium": {
+                "type": "node",
+                "children": {
+                    "stand": {
+                        "type": "noderef",
+                        "nodeId": "stand"
+                    },
+                    "pitch": {
+                        "type": "noderef",
+                        "nodeId": "pitch"
+                    }
+                }
+            },
+            "stand": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -30}},
+                    {"type": "scale", "amount": {"x": 8, "y": 1, "z": 1}}
+                ],
+                "children": {
+                    "layer": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer"
+                    },
+                    "layer1": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer1"
+                    },
+                    "layer2": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer2"
+                    },
+                    "layer3": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer3"
+                    },
+                    "back": {
+                        "type": "noderef",
+                        "nodeId": "stand_back"
+                    }
+                }
+            },
+            "stand_back": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -6}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
+                    {"type": "scale", "amount": {"x": 1, "y": 4, "z": 1}}
+                ],
+                "children": {
+                    "rectangle2": {
+                        "type": "noderef",
+                        "nodeId": "rectangle2"
+                    }
+                }
+            },
+            "stand_layer3": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
+                ],
+                "children": {
+                    "stand_layer": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer2"
+                    },
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover3"
+                    }
+                }
+            },
+            "stand_layer2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
+                ],
+                "children": {
+                    "stand_layer": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer1"
+                    },
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover2"
+                    }
+                }
+            },
+            "stand_layer1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
+                ],
+                "children": {
+                    "stand_layer": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer"
+                    },
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover1"
+                    }
+                }
+            },
+            "stand_layer": {
+                "type": "node",
+                "children": {
+                    "rectangle1": {
+                        "type": "noderef",
+                        "nodeId": "rectangle1"
+                    },
+                    "rectangle2": {
+                        "type": "noderef",
+                        "nodeId": "rectangle2"
+                    },
+                    "rectangle3": {
+                        "type": "noderef",
+                        "nodeId": "rectangle3"
+                    },
+                    "rectangle4": {
+                        "type": "noderef",
+                        "nodeId": "rectangle4"
+                    }
+                }
+            }, 
+            "rectangle1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -0.75}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}}
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {"x": -5, "y": -0.75},
+                        "xy2": {"x": 5, "y": 0.75}
+                    }
+                }
+            },
+            "rectangle2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0.5, "z": 0}}
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {"x": -5, "y": -0.5},
+                        "xy2": {"x": 5, "y": 0.5}
+                    }
+                }
+            },
+            "rectangle3": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -5, "y": 0.5, "z": -0.75}},
+                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}}
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {"x": -0.75, "y": -0.5},
+                        "xy2": {"x": 0.75, "y": 0.5}
+                    }
+                }
+            },
+            "rectangle4": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 5, "y": 0.5, "z": -0.75}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {"x": -0.75, "y": -0.5},
+                        "xy2": {"x": 0.75, "y": 0.5}
+                    }
+                }
+            },
+            "stand_cover1": {
+                "type":"node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": -1, "z": 0}}
+                ],
+                "children": {
+                    "rectangle3": {
+                        "type": "noderef",
+                        "nodeId": "rectangle3"
+                    },
+                    "rectangle4": {
+                        "type": "noderef",
+                        "nodeId": "rectangle4"
+                    }
+                }
+            },
+            "stand_cover2": {
+                "type":"node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -1.5}}
+                ],
+                "children": {
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover1"
+                    }
+                }
+            },
+            "stand_cover3": {
+                "type":"node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -1.5}}
+                ],
+                "children": {
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover2"
+                    }
+                }
+            },
+            "pitch": {
+                "type": "node",
+                "children": {
+                    "grass": {
+                        "type": "noderef",
+                        "nodeId": "grass"
+                    },
+                    "field_markers": {
+                        "type": "noderef",
+                        "nodeId": "field_markers"
+                    }
+                }
+            },
+            "grass": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 40, "y": 25, "z": 1}}
+                ],
+                "materialref": {
+                    "materialId": "grassApp"
+                },
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "field_markers": {
+                "type": "node",
+                "children": {
+                    "delimiter_lines": {
+                        "type": "noderef",
+                        "nodeId": "delimiter_lines"
+                    },
+                    "middle_lines": {
+                        "type": "noderef",
+                        "nodeId": "middle_lines"
+                    },
+                    "goal_lines": {
+                        "type": "noderef",
+                        "nodeId": "goal_lines"
+                    }
+                }
+            },
+            "goal_lines": {
+                "type": "node",
+                "children": {
+                    "left_goal_lines": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_lines"
+                    },
+                    "right_goal_lines": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_lines"
+                    }
+                }
+            },
+            "right_goal_lines": {
+                "type": "node",
+                "children": {
+                    "top_rgoalkeeper_line": {
+                        "type": "noderef",
+                        "nodeId": "top_rgoalkeeper_line"
+                    },
+                    "bottom_rgoalkeeper_line": {
+                        "type": "noderef",
+                        "nodeId": "bottom_rgoalkeeper_line"
+                    },
+                    "left_rgoalkeeper_line": {
+                        "type": "noderef",
+                        "nodeId": "left_rgoalkeeper_line"
+                    },
+                    "top_rgoalkeeper_area_line": {
+                        "type": "noderef",
+                        "nodeId": "top_rgoalkeeper_area_line"
+                    },
+                    "bottom_rgoalkeeper_area_line": {
+                        "type": "noderef",
+                        "nodeId": "bottom_rgoalkeeper_area_line"
+                    },
+                    "left_rgoalkeeper_area_line": {
+                        "type": "noderef",
+                        "nodeId": "left_rgoalkeeper_area_line"
+                    }
+                }
+            },
+            "left_rgoalkeeper_area_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 21, "y": 0.01, "z" : 0}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 8.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "bottom_rgoalkeeper_area_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 25.5, "y": 0.01, "z" : 8}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "top_rgoalkeeper_area_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 25.5, "y": 0.01, "z" : -8}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "left_rgoalkeeper_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 25, "y": 0.01, "z" : 0}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 5.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "bottom_rgoalkeeper_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 27.5, "y": 0.01, "z" : 5}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "top_rgoalkeeper_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 27.5, "y": 0.01, "z" : -5}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "left_goal_lines": {
+                "type": "node",
+                "children": {
+                    "top_lgoalkeeper_line": {
+                        "type": "noderef",
+                        "nodeId": "top_lgoalkeeper_line"
+                    },
+                    "right_lgoalkeeper_line": {
+                        "type": "noderef",
+                        "nodeId": "right_lgoalkeeper_line"
+                    },
+                    "bottom_lgoalkeeper_line": {
+                        "type": "noderef",
+                        "nodeId": "bottom_lgoalkeeper_line"
+                    },
+                    "top_lgoalkeeper_area_line": {
+                        "type": "noderef",
+                        "nodeId": "top_lgoalkeeper_area_line"
+                    },
+                    "right_lgoalkeeper_area_line": {
+                        "type": "noderef",
+                        "nodeId": "right_lgoalkeeper_area_line"
+                    },
+                    "bottom_lgoalkeeper_area_line": {
+                        "type": "noderef",
+                        "nodeId": "bottom_lgoalkeeper_area_line"
+                    }
+                }
+            },
+            "right_lgoalkeeper_area_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -21, "y": 0.01, "z" : 0}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 8.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "bottom_lgoalkeeper_area_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -25.5, "y": 0.01, "z" : 8}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "top_lgoalkeeper_area_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -25.5, "y": 0.01, "z" : -8}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "bottom_lgoalkeeper_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -27.5, "y": 0.01, "z" : 5}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "right_lgoalkeeper_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -25, "y": 0.01, "z" : 0}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 5.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "top_lgoalkeeper_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -27.5, "y": 0.01, "z" : -5}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "middle_lines": {
+                "type": "node",
+                "children": {
+                    "middle_line": {
+                        "type": "noderef",
+                        "nodeId": "middle_line"
+                    }
+                }
+            },
+            "middle_line": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0.01, "z" : 0}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 20, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "delimiter_lines": {
+                "type": "node",
+                "children": {
+                    "delimiter_line_left": {
+                        "type": "noderef",
+                        "nodeId": "delimiter_line_left"
+                    },
+                    "delimiter_line_right": {
+                        "type": "noderef",
+                        "nodeId": "delimiter_line_right"
+                    },
+                    "delimiter_line_top": {
+                        "type": "noderef",
+                        "nodeId": "delimiter_line_top"
+                    },
+                    "delimiter_line_bottom": {
+                        "type": "noderef",
+                        "nodeId": "delimiter_line_bottom"
+                    }
+                }
+            },
+            "delimiter_line_left": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -30, "y": 0.01, "z" : 0}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 20, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "delimiter_line_right": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 30, "y": 0.01, "z" : 0}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 20, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "delimiter_line_top": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0.01, "z" : -20}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 30.1, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "delimiter_line_bottom": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0.01, "z" : 20}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 30.1, "y": 0.1, "z" : 1}}
+                ],
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "rectangle": {
+                "type": "node",
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {"x": -1, "y": -1},
+                        "xy2": {"x": 1, "y": 1}
+                    }
+                }
+            }
+        }
+    }
+}
