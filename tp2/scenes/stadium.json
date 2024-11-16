@@ -54,6 +54,10 @@
             "flagTex": {
                 "filepath": "scenes/textures/flag.png",
                 "isVideo": false
+            },
+            "goalTex": {
+                "filepath": "scenes/textures/goal.avif",
+                "isVideo": false
             }
         },
         "materials": {
@@ -125,6 +129,15 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "flagTex"
+            },
+            "goalApp": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "goalTex"
             }
         },
         "cameras": {
@@ -203,6 +216,491 @@
                     "corner_flags": {
                         "type": "noderef",
                         "nodeId": "corner_flags"
+                    },
+                    "goals": {
+                        "type": "noderef",
+                        "nodeId": "goals"
+                    }
+                }
+            },
+            "goals": {
+                "type": "node",
+                "children": {
+                    "left_goal": {
+                        "type": "noderef",
+                        "nodeId": "left_goal"
+                    },
+                    "right_goal": {
+                        "type": "noderef",
+                        "nodeId": "right_goal"
+                    }
+                }
+            },
+            "right_goal": {
+                "type": "node",
+                "children": {
+                    "right_goal_left_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_left_post"
+                    },
+                    "right_goal_right_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_right_post"
+                    },
+                    "right_goal_top_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_top_post"
+                    },
+                    "right_goal_back_top_left_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_back_top_left_post"
+                    },
+                    "right_goal_back_top_right_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_back_top_right_post"
+                    },
+                    "right_goal_back_bottom_right_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_back_bottom_right_post"
+                    },
+                    "right_goal_back_bottom_left_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_back_bottom_left_post"
+                    },
+                    "right_goal_back_top_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_back_top_post"
+                    },
+                    "right_goal_back_bottom_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_back_bottom_post"
+                    },
+                    "right_goal_left_diagonal_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_left_diagonal_post"
+                    },
+                    "right_goal_right_diagonal_post": {
+                        "type": "noderef",
+                        "nodeId": "right_goal_right_diagonal_post"
+                    }
+                }
+            },
+            "right_goal_right_diagonal_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": 31.5, "y": 1.62, "z": -3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 19}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "right_goal_left_diagonal_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": 31.5, "y": 1.62, "z": 3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 19}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "right_goal_back_bottom_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": 32, "y": 0.1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "right_goal_back_top_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": 31, "y": 3.1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "right_goal_back_bottom_left_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": 31, "y": 0.1, "z": 3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "right_goal_back_bottom_right_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": 31, "y": 0.1, "z": -3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "right_goal_back_top_right_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": 30.45, "y": 3.1, "z": -3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "right_goal_back_top_left_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": 30.45, "y": 3.1, "z": 3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "right_goal_top_post": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 30, "y": 3.1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }       
+            },
+            "right_goal_left_post": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 30, "y": 1.54, "z": 3.5}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "right_goal_right_post": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 30, "y": 1.54, "z": -3.5}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal": {
+                "type": "node",
+                "children": {
+                    "left_goal_left_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_left_post"
+                    },
+                    "left_goal_right_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_right_post"
+                    },
+                    "left_goal_top_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_top_post"
+                    },
+                    "left_goal_back_top_left_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_back_top_left_post"
+                    },
+                    "left_goal_back_top_right_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_back_top_right_post"
+                    },
+                    "left_goal_back_bottom_right_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_back_bottom_right_post"
+                    },
+                    "left_goal_back_bottom_left_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_back_bottom_left_post"
+                    },
+                    "left_goal_back_top_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_back_top_post"
+                    },
+                    "left_goal_back_bottom_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_back_bottom_post"
+                    },
+                    "left_goal_left_diagonal_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_left_diagonal_post"
+                    },
+                    "left_goal_right_diagonal_post": {
+                        "type": "noderef",
+                        "nodeId": "left_goal_right_diagonal_post"
+                    }
+                }
+            },
+            "left_goal_right_diagonal_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": -31.5, "y": 1.62, "z": -3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": -19}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal_left_diagonal_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": -31.5, "y": 1.62, "z": 3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": -19}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal_back_bottom_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": -32, "y": 0.1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal_back_top_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": -31, "y": 3.1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal_back_bottom_left_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": -31, "y": 0.1, "z": 3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal_back_bottom_right_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": -31, "y": 0.1, "z": -3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal_back_top_right_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": -30.45, "y": 3.1, "z": -3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal_back_top_left_post": {
+                "type": "node",
+                "transforms": [ 
+                    {"type": "translate", "amount": {"x": -30.45, "y": 3.1, "z": 3.5}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal_top_post": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -30, "y": 3.1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }       
+            },
+            "left_goal_left_post": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -30, "y": 1.54, "z": 3.5}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
+                    }
+                }
+            },
+            "left_goal_right_post": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -30, "y": 1.54, "z": -3.5}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
+                ],
+                "materialref": {
+                    "materialId": "goalApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
                     }
                 }
             },
