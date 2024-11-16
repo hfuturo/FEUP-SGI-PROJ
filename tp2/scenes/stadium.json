@@ -840,6 +840,9 @@
                     {"type": "translate", "amount": {"x": 0, "y": 0, "z": -25}},
                     {"type": "scale", "amount": {"x": 8, "y": 1, "z": 1}}
                 ],
+                "materialref": {
+                    "materialId": "concrete"
+                },
                 "children": {
                     "stand": {
                         "type": "noderef",
@@ -854,6 +857,9 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
                     {"type": "scale", "amount": {"x": 8, "y": 1, "z": 1}}
                 ],
+                "materialref": {
+                    "materialId": "concrete"
+                },
                 "children": {
                     "stand": {
                         "type": "noderef",
@@ -868,6 +874,9 @@
                     {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}},
                     {"type": "scale", "amount": {"x": 5, "y": 1, "z": 1}}
                 ],
+                "materialref": {
+                    "materialId": "concrete"
+                },
                 "children": {
                     "stand": {
                         "type": "noderef",
@@ -882,6 +891,9 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}},
                     {"type": "scale", "amount": {"x": 5, "y": 1, "z": 1}}
                 ],
+                "materialref": {
+                    "materialId": "concrete"
+                },
                 "children": {
                     "stand": {
                         "type": "noderef",
