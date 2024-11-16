@@ -50,6 +50,10 @@
             "footballTex": {
                 "filepath": "scenes/textures/football.webp",
                 "isVideo": false
+            },
+            "flagTex": {
+                "filepath": "scenes/textures/flag.png",
+                "isVideo": false
             }
         },
         "materials": {
@@ -104,6 +108,23 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "footballTex"
+            },
+            "yellow": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 0.85, "b": 0.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1
+            },
+            "flagApp": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "flagTex"
             }
         },
         "cameras": {
@@ -178,6 +199,124 @@
                     "football": {
                         "type": "noderef",
                         "nodeId": "football"
+                    },
+                    "corner_flags": {
+                        "type": "noderef",
+                        "nodeId": "corner_flags"
+                    }
+                }
+            },
+            "corner_flags": {
+                "type": "node",
+                "children": {
+                    "cornerNE": {
+                        "type": "noderef",
+                        "nodeId": "cornerNE"
+                    },
+                    "cornerNW": {
+                        "type": "noderef",
+                        "nodeId": "cornerNW"
+                    },
+                    "cornerSE": {
+                        "type": "noderef",
+                        "nodeId": "cornerSE"
+                    },
+                    "cornerSW": {
+                        "type": "noderef",
+                        "nodeId": "cornerSW"
+                    }
+                }
+            },
+            "cornerSW": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -30, "y": 0, "z": 20}}
+                ],
+                "children": {
+                    "corner": {
+                        "type": "noderef",
+                        "nodeId": "corner"
+                    }
+                }
+            },
+            "cornerSE": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 30, "y": 0, "z": 20}}
+                ],
+                "children": {
+                    "corner": {
+                        "type": "noderef",
+                        "nodeId": "corner"
+                    }
+                }
+            },
+            "cornerNW": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -30, "y": 0, "z": -20}}
+                ],
+                "children": {
+                    "corner": {
+                        "type": "noderef",
+                        "nodeId": "corner"
+                    }
+                }
+            },
+            "cornerNE": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 30, "y": 0, "z": -20}}
+                ],
+                "children": {
+                    "corner": {
+                        "type": "noderef",
+                        "nodeId": "corner"
+                    }
+                }
+            },
+            "corner": {
+                "type": "node",
+                "children": {
+                    "corner_stick": {
+                        "type": "noderef",
+                        "nodeId": "corner_stick"
+                    },
+                    "flag": {
+                        "type": "noderef",
+                        "nodeId": "corner_flag"
+                    }
+                }
+            },
+            "corner_flag": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -1.15, "y": 2.5, "z": 0}},
+                    {"type": "scale", "amount": {"x": 1, "y": 0.5, "z": 1}}
+                ],
+                "materialref": {
+                    "materialId": "flagApp"
+                },
+                "children": {
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
+                    }
+                }
+            },
+            "corner_stick": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1.5, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.15, "y": 3, "z": 0.15}}
+                ],
+                "materialref": {
+                    "materialId": "yellow"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "noderef",
+                        "nodeId": "cylinder"
                     }
                 }
             },
@@ -639,7 +778,7 @@
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 23, "y": 0.05, "z" : 0}},
-                    {"type": "scale", "amount": {"x": 0.2, "y": 1, "z": 0.2}}
+                    {"type": "scale", "amount": {"x": 0.2, "y": 0.05, "z": 0.2}}
                 ],
                 "children": {
                     "rectangle": {
@@ -769,7 +908,7 @@
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": -23, "y": 0.05, "z" : 0}},
-                    {"type": "scale", "amount": {"x": 0.2, "y": 1, "z": 0.2}}
+                    {"type": "scale", "amount": {"x": 0.2, "y": 0.05, "z": 0.2}}
                 ],
                 "children": {
                     "rectangle": {
@@ -837,7 +976,7 @@
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 0, "y": 0.05, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.3, "y": 1, "z": 0.3}}
+                    {"type": "scale", "amount": {"x": 0.3, "y": 0.05, "z": 0.3}}
                 ],
                 "children": {
                     "rectangle": {
@@ -940,7 +1079,7 @@
                         "type": "cylinder",
                         "base": 1,
                         "top": 1,
-                        "height": 0.05,
+                        "height": 1,
                         "slices": 20,
                         "stacks": 5
                     }

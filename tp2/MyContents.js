@@ -250,7 +250,9 @@ class MyContents {
 
             return group;
         } else if (node.type === 'primitive') {
-            return new THREE.Mesh(this.primitives[parentId], this.materials[material]);
+            const mesh = new THREE.Mesh(this.primitives[parentId], this.materials[material]);
+            mesh.material.side = THREE.DoubleSide;
+            return mesh;
         }
     }
 
