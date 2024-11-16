@@ -837,7 +837,7 @@
             "standN": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -24.9}},
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -25}},
                     {"type": "scale", "amount": {"x": 8, "y": 1, "z": 1}}
                 ],
                 "materialref": {
@@ -853,7 +853,7 @@
             "standS": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 24.9}},
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 25}},
                     {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
                     {"type": "scale", "amount": {"x": 8, "y": 1, "z": 1}}
                 ],
@@ -870,7 +870,7 @@
             "standE": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 39.5, "y": 0, "z": 0}},
+                    {"type": "translate", "amount": {"x": 40, "y": 0, "z": 0}},
                     {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}},
                     {"type": "scale", "amount": {"x": 5, "y": 1, "z": 1}}
                 ],
@@ -887,7 +887,7 @@
             "standW": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -39.5, "y": 0, "z": 0}},
+                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": 0}},
                     {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}},
                     {"type": "scale", "amount": {"x": 5, "y": 1, "z": 1}}
                 ],
@@ -947,7 +947,7 @@
             "stand_layer4": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.49}}
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
                 ],
                 "children": {
                     "stand_layer": {
@@ -963,7 +963,7 @@
             "stand_layer3": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.49}}
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
                 ],
                 "children": {
                     "stand_layer": {
@@ -979,7 +979,7 @@
             "stand_layer2": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.49}}
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
                 ],
                 "children": {
                     "stand_layer": {
@@ -995,7 +995,7 @@
             "stand_layer1": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.49}}
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
                 ],
                 "children": {
                     "stand_layer": {
@@ -1153,7 +1153,7 @@
                 "type": "node",
                 "transforms": [
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 40, "y": 25, "z": 1}}
+                    {"type": "scale", "amount": {"x": 40.5, "y": 25.5, "z": 1}}
                 ],
                 "materialref": {
                     "materialId": "grassApp"
