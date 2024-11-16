@@ -789,8 +789,8 @@
             "corner_flag": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -1.15, "y": 2.5, "z": 0}},
-                    {"type": "scale", "amount": {"x": 1, "y": 0.5, "z": 1}}
+                    {"type": "translate", "amount": {"x": -0.6, "y": 1.7, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.5, "y": 0.3, "z": 0.5}}
                 ],
                 "materialref": {
                     "materialId": "flagApp"
@@ -805,8 +805,8 @@
             "corner_stick": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 1.5, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.15, "y": 3, "z": 0.15}}
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.1, "y": 2, "z": 0.1}}
                 ],
                 "materialref": {
                     "materialId": "yellow"
