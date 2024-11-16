@@ -134,10 +134,10 @@ class MyContents {
             const m = materials[materialId];
 
             const material = new THREE.MeshPhongMaterial({
-                color: m.color,
-                specular: m.specular,
+                color: new THREE.Color(...m.color),
+                specular: new THREE.Color(...m.specular),
                 shininess: m.shininess,
-                emissive: m.emissive,
+                emissive: new THREE.Color(...m.emissive),
                 transparent: m.transparent,
                 opacity: m.opacity,
                 wireframe: m.wireframe,
@@ -165,14 +165,7 @@ class MyContents {
             if (node.children.length === 0) {
                 throw new Error(`Node "${node.id}" has no children.`);
             }
-            let prim = false;
             node.children.forEach(child => {
-                if (prim)
-                    throw new Error(`Node "${node.id}" has more than 1 child primitive.`);
-
-                if (child.type === 'primitive') 
-                    prim = true;
-
                 this.initPrimitives(child, node.id);
             });
         } else if (node.type === 'primitive') {
