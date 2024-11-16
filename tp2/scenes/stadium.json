@@ -7,9 +7,10 @@
                 "b": 0.96
             },
             "ambient": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "intensity": 0.5
             }
         },
         "fog": {
@@ -95,9 +96,21 @@
             "stadium": {
                 "type": "node",
                 "children": {
-                    "stand": {
+                    "standN": {
                         "type": "noderef",
-                        "nodeId": "stand"
+                        "nodeId": "standN"
+                    },
+                    "standS": {
+                        "type": "noderef",
+                        "nodeId": "standS"
+                    },
+                    "standE": {
+                        "type": "noderef",
+                        "nodeId": "standE"
+                    },
+                    "standW": {
+                        "type": "noderef",
+                        "nodeId": "standW"
                     },
                     "pitch": {
                         "type": "noderef",
@@ -105,12 +118,66 @@
                     }
                 }
             },
-            "stand": {
+            "standN": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -30}},
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -25}},
                     {"type": "scale", "amount": {"x": 8, "y": 1, "z": 1}}
                 ],
+                "children": {
+                    "stand": {
+                        "type": "noderef",
+                        "nodeId": "stand"
+                    }
+                }
+            },
+            "standS": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 25}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
+                    {"type": "scale", "amount": {"x": 8, "y": 1, "z": 1}}
+                ],
+                "children": {
+                    "stand": {
+                        "type": "noderef",
+                        "nodeId": "stand"
+                    }
+                }
+            },
+            "standE": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 40, "y": 0, "z": 0}},
+                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}},
+                    {"type": "scale", "amount": {"x": 5, "y": 1, "z": 1}}
+                ],
+                "children": {
+                    "stand": {
+                        "type": "noderef",
+                        "nodeId": "stand"
+                    }
+                }
+            },
+            "standW": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": 0}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}},
+                    {"type": "scale", "amount": {"x": 5, "y": 1, "z": 1}}
+                ],
+                "children": {
+                    "stand": {
+                        "type": "noderef",
+                        "nodeId": "stand"
+                    }
+                }
+            },
+            "stand": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "concrete"
+                },
                 "children": {
                     "layer": {
                         "type": "noderef",
@@ -128,6 +195,10 @@
                         "type": "noderef",
                         "nodeId": "stand_layer3"
                     },
+                    "layer4": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer4"
+                    },
                     "back": {
                         "type": "noderef",
                         "nodeId": "stand_back"
@@ -137,14 +208,30 @@
             "stand_back": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -6}},
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -7.5}},
                     {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
-                    {"type": "scale", "amount": {"x": 1, "y": 4, "z": 1}}
+                    {"type": "scale", "amount": {"x": 1, "y": 5, "z": 1}}
                 ],
                 "children": {
                     "rectangle2": {
                         "type": "noderef",
                         "nodeId": "rectangle2"
+                    }
+                }
+            },
+            "stand_layer4": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
+                ],
+                "children": {
+                    "stand_layer": {
+                        "type": "noderef",
+                        "nodeId": "stand_layer3"
+                    },
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover4"
                     }
                 }
             },
@@ -221,26 +308,26 @@
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 0, "y": 1, "z": -0.75}},
-                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}}
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 5, "y": 0.75, "z": 1}}
                 ],
                 "children": {
-                    "rectanglePrim": {
-                        "type": "rectangle",
-                        "xy1": {"x": -5, "y": -0.75},
-                        "xy2": {"x": 5, "y": 0.75}
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
                     }
                 }
             },
             "rectangle2": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0.5, "z": 0}}
+                    {"type": "translate", "amount": {"x": 0, "y": 0.5, "z": 0}},
+                    {"type": "scale", "amount": {"x": 5, "y": 0.5, "z": 1}}
                 ],
                 "children": {
-                    "rectanglePrim": {
-                        "type": "rectangle",
-                        "xy1": {"x": -5, "y": -0.5},
-                        "xy2": {"x": 5, "y": 0.5}
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
                     }
                 }
             },
@@ -248,13 +335,13 @@
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": -5, "y": 0.5, "z": -0.75}},
-                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}}
+                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.75, "y": 0.5, "z": 1}}
                 ],
                 "children": {
                     "rectanglePrim": {
-                        "type": "rectangle",
-                        "xy1": {"x": -0.75, "y": -0.5},
-                        "xy2": {"x": 0.75, "y": 0.5}
+                        "type": "noderef",
+                        "nodeId": "rectangle"
                     }
                 }
             },
@@ -262,13 +349,13 @@
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 5, "y": 0.5, "z": -0.75}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.75, "y": 0.5, "z": 1}}
                 ],
                 "children": {
-                    "rectanglePrim": {
-                        "type": "rectangle",
-                        "xy1": {"x": -0.75, "y": -0.5},
-                        "xy2": {"x": 0.75, "y": 0.5}
+                    "rectangle": {
+                        "type": "noderef",
+                        "nodeId": "rectangle"
                     }
                 }
             },
@@ -309,6 +396,18 @@
                     "cover": {
                         "type": "noderef",
                         "nodeId": "stand_cover2"
+                    }
+                }
+            },
+            "stand_cover4": {
+                "type":"node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -1.5}}
+                ],
+                "children": {
+                    "cover": {
+                        "type": "noderef",
+                        "nodeId": "stand_cover3"
                     }
                 }
             },

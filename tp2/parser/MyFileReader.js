@@ -133,7 +133,7 @@ class MyFileReader {
 	 * @param {Boolean} required if the attribte is required or not
 	 * @returns {THREE.Color} the color encoded in a THREE.Color object
 	 */
-	getRGB(element, attributeName, required) {
+	getRGB(element, attributeName, required, intensity) {
 		if (required == undefined) required = true;
 
 		if (element == null) {
@@ -151,7 +151,7 @@ class MyFileReader {
 			return null;
 		}
 
-		return this.getVectorN(value, ["r", "g", "b"]);
+		return this.getVectorN(value, intensity ? ["r", "g", "b", "intensity"] : ["r", "g", "b"]);
 	}
 
 	getVectorN(value, keys) {
@@ -443,6 +443,9 @@ class MyFileReader {
 			}
 			else if (descriptor.type === "rgb") {
 				value = this.getRGB(options.elem, descriptor.name, descriptor.required);
+			}
+			else if (descriptor.type === "rgbi") {
+				value = this.getRGB(options.elem, descriptor.name, descriptor.required, true);
 			}
 			else if (descriptor.type === "rectangle2D") {
 				value = this.getRectangle2D(options.elem, descriptor.name, descriptor.required);

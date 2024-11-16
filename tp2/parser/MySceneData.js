@@ -20,7 +20,7 @@ class MySceneData {
 
         this.descriptors["globals"] = [
             { name: "background", type: "rgb" },
-            { name: "ambient", type: "rgb" },
+            { name: "ambient", type: "rgbi" },
         ]
 
         this.descriptors["fog"] = [

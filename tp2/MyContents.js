@@ -64,10 +64,10 @@ class MyContents {
         this.app.scene.background.g = data.options.background[1];
         this.app.scene.background.b = data.options.background[2];
         
-        const ambientLight = new THREE.AmbientLight(data.options.ambientLight);
+        const ambientLight = new THREE.AmbientLight(new THREE.Color(...data.options.ambient.slice(0, 3)), data.options.ambient[3]);
         this.app.scene.add(ambientLight);
 
-        const fog = new THREE.Fog(data.fog.color, data.fog.near, data.fog.far);
+        const fog = new THREE.Fog(new THREE.Color(...data.fog.color), data.fog.near, data.fog.far);
         this.app.scene.fog = fog;
 
         this.initCameras(data);
@@ -123,6 +123,8 @@ class MyContents {
 
         for (let textureId in textures) {
             const texture = loader.load(textures[textureId].filepath);
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
             this.textures[textureId] = texture
         }
     }
