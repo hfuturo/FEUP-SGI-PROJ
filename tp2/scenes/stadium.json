@@ -545,7 +545,7 @@
             "left_rgoalkeeper_area_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 21, "y": 0.01, "z" : 0}},
+                    {"type": "translate", "amount": {"x": 21, "y": 0.05, "z" : 0}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.1, "y": 8.1, "z" : 1}}
                 ],
@@ -559,7 +559,7 @@
             "bottom_rgoalkeeper_area_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 25.5, "y": 0.01, "z" : 8}},
+                    {"type": "translate", "amount": {"x": 25.5, "y": 0.05, "z" : 8}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
                 ],
@@ -573,7 +573,7 @@
             "top_rgoalkeeper_area_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 25.5, "y": 0.01, "z" : -8}},
+                    {"type": "translate", "amount": {"x": 25.5, "y": 0.05, "z" : -8}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
                 ],
@@ -587,7 +587,7 @@
             "left_rgoalkeeper_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 25, "y": 0.01, "z" : 0}},
+                    {"type": "translate", "amount": {"x": 25, "y": 0.05, "z" : 0}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.1, "y": 5.1, "z" : 1}}
                 ],
@@ -601,7 +601,7 @@
             "bottom_rgoalkeeper_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 27.5, "y": 0.01, "z" : 5}},
+                    {"type": "translate", "amount": {"x": 27.5, "y": 0.05, "z" : 5}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
                 ],
@@ -615,7 +615,7 @@
             "top_rgoalkeeper_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 27.5, "y": 0.01, "z" : -5}},
+                    {"type": "translate", "amount": {"x": 27.5, "y": 0.05, "z" : -5}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
                 ],
@@ -658,7 +658,7 @@
             "right_lgoalkeeper_area_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -21, "y": 0.01, "z" : 0}},
+                    {"type": "translate", "amount": {"x": -21, "y": 0.05, "z" : 0}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.1, "y": 8.1, "z" : 1}}
                 ],
@@ -672,7 +672,7 @@
             "bottom_lgoalkeeper_area_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -25.5, "y": 0.01, "z" : 8}},
+                    {"type": "translate", "amount": {"x": -25.5, "y": 0.05, "z" : 8}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
                 ],
@@ -686,7 +686,7 @@
             "top_lgoalkeeper_area_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -25.5, "y": 0.01, "z" : -8}},
+                    {"type": "translate", "amount": {"x": -25.5, "y": 0.05, "z" : -8}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
                 ],
@@ -700,7 +700,7 @@
             "bottom_lgoalkeeper_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -27.5, "y": 0.01, "z" : 5}},
+                    {"type": "translate", "amount": {"x": -27.5, "y": 0.05, "z" : 5}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
                 ],
@@ -714,7 +714,7 @@
             "right_lgoalkeeper_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -25, "y": 0.01, "z" : 0}},
+                    {"type": "translate", "amount": {"x": -25, "y": 0.05, "z" : 0}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.1, "y": 5.1, "z" : 1}}
                 ],
@@ -728,7 +728,7 @@
             "top_lgoalkeeper_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -27.5, "y": 0.01, "z" : -5}},
+                    {"type": "translate", "amount": {"x": -27.5, "y": 0.05, "z" : -5}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
                 ],
@@ -751,7 +751,7 @@
             "middle_line": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0.01, "z" : 0}},
+                    {"type": "translate", "amount": {"x": 0, "y": 0.05, "z" : 0}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.1, "y": 20, "z" : 1}}
                 ],
@@ -786,7 +786,7 @@
             "delimiter_line_left": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -30, "y": 0.01, "z" : 0}},
+                    {"type": "translate", "amount": {"x": -30, "y": 0.05, "z" : 0}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.1, "y": 20, "z" : 1}}
                 ],
@@ -800,7 +800,7 @@
             "delimiter_line_right": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 30, "y": 0.01, "z" : 0}},
+                    {"type": "translate", "amount": {"x": 30, "y": 0.05, "z" : 0}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.1, "y": 20, "z" : 1}}
                 ],
@@ -814,7 +814,7 @@
             "delimiter_line_top": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0.01, "z" : -20}},
+                    {"type": "translate", "amount": {"x": 0, "y": 0.05, "z" : -20}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 30.1, "y": 0.1, "z" : 1}}
                 ],
@@ -828,7 +828,7 @@
             "delimiter_line_bottom": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0.01, "z" : 20}},
+                    {"type": "translate", "amount": {"x": 0, "y": 0.02, "z" : 20}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 30.1, "y": 0.1, "z" : 1}}
                 ],
