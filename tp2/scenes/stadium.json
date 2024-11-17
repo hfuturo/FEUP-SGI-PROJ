@@ -168,6 +168,46 @@
                     "stadium": {
                         "type": "noderef",
                         "nodeId": "stadium"
+                    },
+                    "spotlight1": {
+                        "type": "spotlight",
+                        "color": {"r": 1, "g": 1, "b": 1},
+                        "intensity": 5,
+                        "distance": 55,
+                        "angle": 40,
+                        "decay": 0,
+                        "position": {"x": 40, "y": 17.5, "z": 25.5},
+                        "target": {"x": -20, "y": -20, "z": -15}
+                    },
+                    "spotlight2": {
+                        "type": "spotlight",
+                        "color": {"r": 1, "g": 1, "b": 1},
+                        "intensity": 5,
+                        "distance": 55,
+                        "angle": 40,
+                        "decay": 0,
+                        "position": {"x": -40, "y": 17.5, "z": 25.5},
+                        "target": {"x": 20, "y": -20, "z": -15}
+                    },
+                    "spotlight3": {
+                        "type": "spotlight",
+                        "color": {"r": 1, "g": 1, "b": 1},
+                        "intensity": 5,
+                        "distance": 55,
+                        "angle": 40,
+                        "decay": 0,
+                        "position": {"x": 40, "y": 17.5, "z": -25.5},
+                        "target": {"x": -20, "y": -20, "z": 15}
+                    },
+                    "spotlight4": {
+                        "type": "spotlight",
+                        "color": {"r": 1, "g": 1, "b": 1},
+                        "intensity": 5,
+                        "distance": 55,
+                        "angle": 40,
+                        "decay": 0,
+                        "position": {"x": -40, "y": 17.5, "z": -25.5},
+                        "target": {"x": 20, "y": -20, "z": 15}
                     }
                 }
             },

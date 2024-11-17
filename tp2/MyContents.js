@@ -188,18 +188,18 @@ class MyContents {
                 lightSpec.decay
             )
 
-        } else if (light.type === 'spotlight') {
+        } else if (lightSpec.type === 'spotlight') {
             light = new THREE.SpotLight(
                 lightSpec.color,
                 lightSpec.intensity,
                 lightSpec.distance,
-                lightSpec.angle,
+                lightSpec.angle * Math.PI / 180,
                 lightSpec.penumbra,
                 lightSpec.decay
             )
             light.target.position.set(...lightSpec.target);
 
-        } else if (light.type === 'directionallight') {
+        } else if (lightSpec.type === 'directionallight') {
             light = new THREE.DirectionalLight(
                 lightSpec.color,
                 lightSpec.intensity
