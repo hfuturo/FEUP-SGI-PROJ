@@ -678,17 +678,16 @@ class MyFileReader {
 			let childElement = childrenElement[child];
 			const nodeType = childElement["type"];
 
-			if (nodeType == "noderef") {
-				let id = this.getString(childElement, "nodeId");
-				// add a node ref: if the node does not exist
-				// create an empty one and reference it.
-				let reference = this.data.getNode(id);
-				if (reference === null) {
-					// does not exist, yet. create it!
-					reference = this.data.createEmptyNode(id);
+			if (child === 'nodesList') {
+				for (const node of childElement) {
+					let reference = this.data.getNode(node);
+					if (reference === null) {
+						// does not exist, yet. create it!
+						reference = this.data.createEmptyNode(node);
+					}
+					// reference it.
+					this.data.addChildToNode(nodeObj, reference)
 				}
-				// reference it.
-				this.data.addChildToNode(nodeObj, reference)
 			}
 			else if (this.data.primitiveIds.includes(nodeType)) {
 				let primitiveObj = this.data.createEmptyPrimitive();

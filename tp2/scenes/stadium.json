@@ -165,10 +165,9 @@
             "scene": {
                 "type": "node",
                 "children" : {
-                    "stadium": {
-                        "type": "noderef",
-                        "nodeId": "stadium"
-                    },
+                    "nodesList": [
+                        "stadium"
+                    ],
                     "spotlight1": {
                         "type": "spotlight",
                         "color": {"r": 1, "g": 1, "b": 1},
@@ -214,116 +213,58 @@
             "stadium": {
                 "type": "node",
                 "children": {
-                    "standN": {
-                        "type": "noderef",
-                        "nodeId": "standN"
-                    },
-                    "standS": {
-                        "type": "noderef",
-                        "nodeId": "standS"
-                    },
-                    "standE": {
-                        "type": "noderef",
-                        "nodeId": "standE"
-                    },
-                    "standW": {
-                        "type": "noderef",
-                        "nodeId": "standW"
-                    },
-                    "pitch": {
-                        "type": "noderef",
-                        "nodeId": "pitch"
-                    },
-                    "floodlight1": {
-                        "type": "noderef",
-                        "nodeId": "floodlight1"
-                    },
-                    "floodlight2": {
-                        "type": "noderef",
-                        "nodeId": "floodlight2"
-                    },
-                    "floodlight3": {
-                        "type": "noderef",
-                        "nodeId": "floodlight3"
-                    },
-                    "floodlight4": {
-                        "type": "noderef",
-                        "nodeId": "floodlight4"
-                    },
-                    "football": {
-                        "type": "noderef",
-                        "nodeId": "football"
-                    },
-                    "corner_flags": {
-                        "type": "noderef",
-                        "nodeId": "corner_flags"
-                    },
-                    "goals": {
-                        "type": "noderef",
-                        "nodeId": "goals"
-                    }
+                    "nodesList":[
+                        "standN",
+                        "standS",
+                        "standE",
+                        "standW",
+                        "pitch",
+                        "floodlight1",
+                        "floodlight2",
+                        "floodlight3",
+                        "floodlight4",
+                        "football",
+                        "corner_flags",
+                        "goals"
+                    ]
                 }
             },
             "goals": {
                 "type": "node",
                 "children": {
-                    "left_goal": {
-                        "type": "noderef",
-                        "nodeId": "left_goal"
-                    },
-                    "right_goal": {
-                        "type": "noderef",
-                        "nodeId": "right_goal"
-                    }
+                    "nodesList": [
+                        "left_goal",
+                        "right_goal"
+                    ]
+                }
+            },
+            "left_goal": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}}
+                ],
+                "children": {
+                    "nodesList":[
+                        "right_goal"
+                    ]
                 }
             },
             "right_goal": {
                 "type": "node",
                 "children": {
-                    "right_goal_left_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_left_post"
-                    },
-                    "right_goal_right_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_right_post"
-                    },
-                    "right_goal_top_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_top_post"
-                    },
-                    "right_goal_back_top_left_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_back_top_left_post"
-                    },
-                    "right_goal_back_top_right_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_back_top_right_post"
-                    },
-                    "right_goal_back_bottom_right_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_back_bottom_right_post"
-                    },
-                    "right_goal_back_bottom_left_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_back_bottom_left_post"
-                    },
-                    "right_goal_back_top_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_back_top_post"
-                    },
-                    "right_goal_back_bottom_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_back_bottom_post"
-                    },
-                    "right_goal_left_diagonal_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_left_diagonal_post"
-                    },
-                    "right_goal_right_diagonal_post": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_right_diagonal_post"
-                    }
+                    "nodesList":[
+                        "right_goal_left_post",
+                        "right_goal_right_post",
+                        "right_goal_top_post",
+                        "right_goal_back_top_left_post",
+                        "right_goal_back_top_right_post",
+                        "right_goal_back_bottom_right_post",
+                        "right_goal_back_bottom_left_post",
+                        "right_goal_back_top_post",
+                        "right_goal_back_bottom_post",
+                        "right_goal_left_diagonal_post",
+                        "right_goal_right_diagonal_post"
+                    ]
                 }
             },
             "right_goal_right_diagonal_post": {
@@ -337,10 +278,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "right_goal_left_diagonal_post": {
@@ -354,10 +294,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "right_goal_back_bottom_post": {
@@ -371,10 +310,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "right_goal_back_top_post": {
@@ -388,10 +326,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "right_goal_back_bottom_left_post": {
@@ -405,10 +342,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "right_goal_back_bottom_right_post": {
@@ -422,10 +358,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "right_goal_back_top_right_post": {
@@ -439,10 +374,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "right_goal_back_top_left_post": {
@@ -456,10 +390,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "right_goal_top_post": {
@@ -473,10 +406,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }       
             },
             "right_goal_left_post": {
@@ -489,10 +421,9 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "right_goal_right_post": {
@@ -505,265 +436,20 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal": {
-                "type": "node",
-                "children": {
-                    "left_goal_left_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_left_post"
-                    },
-                    "left_goal_right_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_right_post"
-                    },
-                    "left_goal_top_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_top_post"
-                    },
-                    "left_goal_back_top_left_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_back_top_left_post"
-                    },
-                    "left_goal_back_top_right_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_back_top_right_post"
-                    },
-                    "left_goal_back_bottom_right_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_back_bottom_right_post"
-                    },
-                    "left_goal_back_bottom_left_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_back_bottom_left_post"
-                    },
-                    "left_goal_back_top_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_back_top_post"
-                    },
-                    "left_goal_back_bottom_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_back_bottom_post"
-                    },
-                    "left_goal_left_diagonal_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_left_diagonal_post"
-                    },
-                    "left_goal_right_diagonal_post": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_right_diagonal_post"
-                    }
-                }
-            },
-            "left_goal_right_diagonal_post": {
-                "type": "node",
-                "transforms": [ 
-                    {"type": "translate", "amount": {"x": -31.5, "y": 1.62, "z": -3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": -19}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal_left_diagonal_post": {
-                "type": "node",
-                "transforms": [ 
-                    {"type": "translate", "amount": {"x": -31.5, "y": 1.62, "z": 3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": -19}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal_back_bottom_post": {
-                "type": "node",
-                "transforms": [ 
-                    {"type": "translate", "amount": {"x": -32, "y": 0.1, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal_back_top_post": {
-                "type": "node",
-                "transforms": [ 
-                    {"type": "translate", "amount": {"x": -31, "y": 3.1, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal_back_bottom_left_post": {
-                "type": "node",
-                "transforms": [ 
-                    {"type": "translate", "amount": {"x": -31, "y": 0.1, "z": 3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal_back_bottom_right_post": {
-                "type": "node",
-                "transforms": [ 
-                    {"type": "translate", "amount": {"x": -31, "y": 0.1, "z": -3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal_back_top_right_post": {
-                "type": "node",
-                "transforms": [ 
-                    {"type": "translate", "amount": {"x": -30.45, "y": 3.1, "z": -3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal_back_top_left_post": {
-                "type": "node",
-                "transforms": [ 
-                    {"type": "translate", "amount": {"x": -30.45, "y": 3.1, "z": 3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal_top_post": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -30, "y": 3.1, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }       
-            },
-            "left_goal_left_post": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -30, "y": 1.54, "z": 3.5}},
-                    {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "left_goal_right_post": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -30, "y": 1.54, "z": -3.5}},
-                    {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
-                ],
-                "materialref": {
-                    "materialId": "goalApp"
-                },
-                "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "corner_flags": {
                 "type": "node",
                 "children": {
-                    "cornerNE": {
-                        "type": "noderef",
-                        "nodeId": "cornerNE"
-                    },
-                    "cornerNW": {
-                        "type": "noderef",
-                        "nodeId": "cornerNW"
-                    },
-                    "cornerSE": {
-                        "type": "noderef",
-                        "nodeId": "cornerSE"
-                    },
-                    "cornerSW": {
-                        "type": "noderef",
-                        "nodeId": "cornerSW"
-                    }
+                    "nodesList": [
+                        "cornerNE",
+                        "cornerNW",
+                        "cornerSE",
+                        "cornerSW"
+                    ]
                 }
             },
             "cornerSW": {
@@ -772,10 +458,9 @@
                     {"type": "translate", "amount": {"x": -30, "y": 0, "z": 20}}
                 ],
                 "children": {
-                    "corner": {
-                        "type": "noderef",
-                        "nodeId": "corner"
-                    }
+                    "nodesList": [
+                        "corner"
+                    ]
                 }
             },
             "cornerSE": {
@@ -784,10 +469,9 @@
                     {"type": "translate", "amount": {"x": 30, "y": 0, "z": 20}}
                 ],
                 "children": {
-                    "corner": {
-                        "type": "noderef",
-                        "nodeId": "corner"
-                    }
+                    "nodesList": [
+                        "corner"
+                    ]
                 }
             },
             "cornerNW": {
@@ -796,10 +480,9 @@
                     {"type": "translate", "amount": {"x": -30, "y": 0, "z": -20}}
                 ],
                 "children": {
-                    "corner": {
-                        "type": "noderef",
-                        "nodeId": "corner"
-                    }
+                    "nodesList": [
+                        "corner"
+                    ]
                 }
             },
             "cornerNE": {
@@ -808,23 +491,18 @@
                     {"type": "translate", "amount": {"x": 30, "y": 0, "z": -20}}
                 ],
                 "children": {
-                    "corner": {
-                        "type": "noderef",
-                        "nodeId": "corner"
-                    }
+                    "nodesList": [
+                        "corner"
+                    ]
                 }
             },
             "corner": {
                 "type": "node",
                 "children": {
-                    "corner_stick": {
-                        "type": "noderef",
-                        "nodeId": "corner_stick"
-                    },
-                    "flag": {
-                        "type": "noderef",
-                        "nodeId": "corner_flag"
-                    }
+                    "nodesList": [
+                        "corner_stick",
+                        "corner_flag"
+                    ]
                 }
             },
             "corner_flag": {
@@ -837,10 +515,9 @@
                     "materialId": "flagApp"
                 },
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "corner_stick": {
@@ -853,10 +530,9 @@
                     "materialId": "yellow"
                 },
                 "children": {
-                    "cylinder": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "football": {
@@ -869,10 +545,9 @@
                     "materialId": "footballApp"
                 },
                 "children": {
-                    "sphere": {
-                        "type": "noderef",
-                        "nodeId": "sphere"
-                    }
+                    "nodesList": [
+                        "sphere"
+                    ]
                 }
             },
             "standN": {
@@ -885,10 +560,9 @@
                     "materialId": "concrete"
                 },
                 "children": {
-                    "stand": {
-                        "type": "noderef",
-                        "nodeId": "stand"
-                    }
+                    "nodesList": [
+                        "stand"
+                    ]
                 }
             },
             "standS": {
@@ -902,10 +576,9 @@
                     "materialId": "concrete"
                 },
                 "children": {
-                    "stand": {
-                        "type": "noderef",
-                        "nodeId": "stand"
-                    }
+                    "nodesList": [
+                        "stand"
+                    ]
                 }
             },
             "standE": {
@@ -919,10 +592,9 @@
                     "materialId": "concrete"
                 },
                 "children": {
-                    "stand": {
-                        "type": "noderef",
-                        "nodeId": "stand"
-                    }
+                    "nodesList": [
+                        "stand"
+                    ]
                 }
             },
             "standW": {
@@ -936,39 +608,22 @@
                     "materialId": "concrete"
                 },
                 "children": {
-                    "stand": {
-                        "type": "noderef",
-                        "nodeId": "stand"
-                    }
+                    "nodesList": [
+                        "stand"
+                    ]
                 }
             },
             "stand": {
                 "type": "node",
                 "children": {
-                    "layer": {
-                        "type": "noderef",
-                        "nodeId": "stand_layer"
-                    },
-                    "layer1": {
-                        "type": "noderef",
-                        "nodeId": "stand_layer1"
-                    },
-                    "layer2": {
-                        "type": "noderef",
-                        "nodeId": "stand_layer2"
-                    },
-                    "layer3": {
-                        "type": "noderef",
-                        "nodeId": "stand_layer3"
-                    },
-                    "layer4": {
-                        "type": "noderef",
-                        "nodeId": "stand_layer4"
-                    },
-                    "back": {
-                        "type": "noderef",
-                        "nodeId": "stand_back"
-                    }
+                    "nodesList": [
+                        "stand_layer",
+                        "stand_layer1",
+                        "stand_layer2",
+                        "stand_layer3",
+                        "stand_layer4",
+                        "stand_back"
+                    ]
                 }
             },
             "stand_back": {
@@ -979,10 +634,9 @@
                     {"type": "scale", "amount": {"x": 1, "y": 5, "z": 1}}
                 ],
                 "children": {
-                    "rectangle2": {
-                        "type": "noderef",
-                        "nodeId": "rectangle2"
-                    }
+                    "nodesList": [
+                        "rectangle2"
+                    ]
                 }
             },
             "stand_layer4": {
@@ -991,14 +645,10 @@
                     {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
                 ],
                 "children": {
-                    "stand_layer": {
-                        "type": "noderef",
-                        "nodeId": "stand_layer3"
-                    },
-                    "cover": {
-                        "type": "noderef",
-                        "nodeId": "stand_cover4"
-                    }
+                    "nodesList": [
+                        "stand_layer3",
+                        "stand_cover4"
+                    ]
                 }
             },
             "stand_layer3": {
@@ -1007,14 +657,10 @@
                     {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
                 ],
                 "children": {
-                    "stand_layer": {
-                        "type": "noderef",
-                        "nodeId": "stand_layer2"
-                    },
-                    "cover": {
-                        "type": "noderef",
-                        "nodeId": "stand_cover3"
-                    }
+                    "nodesList": [
+                        "stand_layer2",
+                        "stand_cover3"
+                    ]
                 }
             },
             "stand_layer2": {
@@ -1023,14 +669,10 @@
                     {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
                 ],
                 "children": {
-                    "stand_layer": {
-                        "type": "noderef",
-                        "nodeId": "stand_layer1"
-                    },
-                    "cover": {
-                        "type": "noderef",
-                        "nodeId": "stand_cover2"
-                    }
+                    "nodesList": [
+                        "stand_layer1",
+                        "stand_cover2"
+                    ]
                 }
             },
             "stand_layer1": {
@@ -1039,35 +681,21 @@
                     {"type": "translate", "amount": {"x": 0, "y": 1, "z": -1.5}}
                 ],
                 "children": {
-                    "stand_layer": {
-                        "type": "noderef",
-                        "nodeId": "stand_layer"
-                    },
-                    "cover": {
-                        "type": "noderef",
-                        "nodeId": "stand_cover1"
-                    }
+                    "nodesList": [
+                        "stand_layer",
+                        "stand_cover1"
+                    ]
                 }
             },
             "stand_layer": {
                 "type": "node",
                 "children": {
-                    "rectangle1": {
-                        "type": "noderef",
-                        "nodeId": "rectangle1"
-                    },
-                    "rectangle2": {
-                        "type": "noderef",
-                        "nodeId": "rectangle2"
-                    },
-                    "rectangle3": {
-                        "type": "noderef",
-                        "nodeId": "rectangle3"
-                    },
-                    "rectangle4": {
-                        "type": "noderef",
-                        "nodeId": "rectangle4"
-                    }
+                    "nodesList": [
+                        "rectangle1",
+                        "rectangle2",
+                        "rectangle3",
+                        "rectangle4"
+                    ]
                 }
             }, 
             "rectangle1": {
@@ -1078,10 +706,9 @@
                     {"type": "scale", "amount": {"x": 5, "y": 0.75, "z": 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "rectangle2": {
@@ -1091,10 +718,9 @@
                     {"type": "scale", "amount": {"x": 5, "y": 0.5, "z": 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "rectangle3": {
@@ -1105,10 +731,9 @@
                     {"type": "scale", "amount": {"x": 0.75, "y": 0.5, "z": 1}}
                 ],
                 "children": {
-                    "rectanglePrim": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "rectangle4": {
@@ -1119,10 +744,9 @@
                     {"type": "scale", "amount": {"x": 0.75, "y": 0.5, "z": 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "stand_cover1": {
@@ -1131,14 +755,10 @@
                     {"type": "translate", "amount": {"x": 0, "y": -1, "z": 0}}
                 ],
                 "children": {
-                    "rectangle3": {
-                        "type": "noderef",
-                        "nodeId": "rectangle3"
-                    },
-                    "rectangle4": {
-                        "type": "noderef",
-                        "nodeId": "rectangle4"
-                    }
+                    "nodesList": [
+                        "rectangle3",
+                        "rectangle4"
+                    ]
                 }
             },
             "stand_cover2": {
@@ -1147,10 +767,9 @@
                     {"type": "translate", "amount": {"x": 0, "y": 0, "z": -1.5}}
                 ],
                 "children": {
-                    "cover": {
-                        "type": "noderef",
-                        "nodeId": "stand_cover1"
-                    }
+                    "nodesList": [
+                        "stand_cover1"
+                    ]
                 }
             },
             "stand_cover3": {
@@ -1159,10 +778,9 @@
                     {"type": "translate", "amount": {"x": 0, "y": 0, "z": -1.5}}
                 ],
                 "children": {
-                    "cover": {
-                        "type": "noderef",
-                        "nodeId": "stand_cover2"
-                    }
+                    "nodesList": [
+                        "stand_cover2"
+                    ]
                 }
             },
             "stand_cover4": {
@@ -1171,23 +789,18 @@
                     {"type": "translate", "amount": {"x": 0, "y": 0, "z": -1.5}}
                 ],
                 "children": {
-                    "cover": {
-                        "type": "noderef",
-                        "nodeId": "stand_cover3"
-                    }
+                    "nodesList": [
+                        "stand_cover3"
+                    ]
                 }
             },
             "pitch": {
                 "type": "node",
                 "children": {
-                    "grass": {
-                        "type": "noderef",
-                        "nodeId": "grass"
-                    },
-                    "field_markers": {
-                        "type": "noderef",
-                        "nodeId": "field_markers"
-                    }
+                    "nodesList": [
+                        "grass",
+                        "field_markers"
+                    ]
                 }
             },
             "grass": {
@@ -1200,73 +813,53 @@
                     "materialId": "grassApp"
                 },
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "field_markers": {
                 "type": "node",
                 "children": {
-                    "delimiter_lines": {
-                        "type": "noderef",
-                        "nodeId": "delimiter_lines"
-                    },
-                    "middle_lines": {
-                        "type": "noderef",
-                        "nodeId": "middle_lines"
-                    },
-                    "goal_lines": {
-                        "type": "noderef",
-                        "nodeId": "goal_lines"
-                    }
+                    "nodesList":[
+                        "delimiter_lines",
+                        "middle_lines",
+                        "goal_lines"
+                    ]
                 }
             },
             "goal_lines": {
                 "type": "node",
                 "children": {
-                    "left_goal_lines": {
-                        "type": "noderef",
-                        "nodeId": "left_goal_lines"
-                    },
-                    "right_goal_lines": {
-                        "type": "noderef",
-                        "nodeId": "right_goal_lines"
-                    }
+                    "nodesList": [
+                        "left_goal_lines",
+                        "right_goal_lines"
+                    ]
+                }
+            },
+            "left_goal_lines": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z" : 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "right_goal_lines"
+                    ]
                 }
             },
             "right_goal_lines": {
                 "type": "node",
                 "children": {
-                    "top_rgoalkeeper_line": {
-                        "type": "noderef",
-                        "nodeId": "top_rgoalkeeper_line"
-                    },
-                    "bottom_rgoalkeeper_line": {
-                        "type": "noderef",
-                        "nodeId": "bottom_rgoalkeeper_line"
-                    },
-                    "left_rgoalkeeper_line": {
-                        "type": "noderef",
-                        "nodeId": "left_rgoalkeeper_line"
-                    },
-                    "right_penalty_spot": {
-                        "type": "noderef",
-                        "nodeId": "right_penalty_spot"
-                    },
-                    "top_rgoalkeeper_area_line": {
-                        "type": "noderef",
-                        "nodeId": "top_rgoalkeeper_area_line"
-                    },
-                    "bottom_rgoalkeeper_area_line": {
-                        "type": "noderef",
-                        "nodeId": "bottom_rgoalkeeper_area_line"
-                    },
-                    "left_rgoalkeeper_area_line": {
-                        "type": "noderef",
-                        "nodeId": "left_rgoalkeeper_area_line"
-                    }
+                    "nodesList": [
+                        "top_rgoalkeeper_line",
+                        "bottom_rgoalkeeper_line",
+                        "left_rgoalkeeper_line",
+                        "right_penalty_spot",
+                        "top_rgoalkeeper_area_line",
+                        "bottom_rgoalkeeper_area_line",
+                        "left_rgoalkeeper_area_line"
+                    ]
                 }
             },
             "left_rgoalkeeper_area_line": {
@@ -1277,10 +870,9 @@
                     {"type": "scale", "amount": {"x": 0.1, "y": 8.1, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "bottom_rgoalkeeper_area_line": {
@@ -1291,10 +883,9 @@
                     {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "top_rgoalkeeper_area_line": {
@@ -1305,10 +896,9 @@
                     {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "left_rgoalkeeper_line": {
@@ -1319,10 +909,9 @@
                     {"type": "scale", "amount": {"x": 0.1, "y": 5.1, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "right_penalty_spot": {
@@ -1332,10 +921,9 @@
                     {"type": "scale", "amount": {"x": 0.2, "y": 0.05, "z": 0.2}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "bottom_rgoalkeeper_line": {
@@ -1346,10 +934,9 @@
                     {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "top_rgoalkeeper_line": {
@@ -1360,153 +947,18 @@
                     {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
-                }
-            },
-            "left_goal_lines": {
-                "type": "node",
-                "children": {
-                    "top_lgoalkeeper_line": {
-                        "type": "noderef",
-                        "nodeId": "top_lgoalkeeper_line"
-                    },
-                    "right_lgoalkeeper_line": {
-                        "type": "noderef",
-                        "nodeId": "right_lgoalkeeper_line"
-                    },
-                    "bottom_lgoalkeeper_line": {
-                        "type": "noderef",
-                        "nodeId": "bottom_lgoalkeeper_line"
-                    },
-                    "left_penalty_spot": {
-                        "type": "noderef",
-                        "nodeId": "left_penalty_spot"
-                    },
-                    "top_lgoalkeeper_area_line": {
-                        "type": "noderef",
-                        "nodeId": "top_lgoalkeeper_area_line"
-                    },
-                    "right_lgoalkeeper_area_line": {
-                        "type": "noderef",
-                        "nodeId": "right_lgoalkeeper_area_line"
-                    },
-                    "bottom_lgoalkeeper_area_line": {
-                        "type": "noderef",
-                        "nodeId": "bottom_lgoalkeeper_area_line"
-                    }
-                }
-            },
-            "right_lgoalkeeper_area_line": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -21, "y": 0.05, "z" : 0}},
-                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.1, "y": 8.1, "z" : 1}}
-                ],
-                "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
-                }
-            },
-            "bottom_lgoalkeeper_area_line": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -25.5, "y": 0.05, "z" : 8}},
-                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
-                ],
-                "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
-                }
-            },
-            "top_lgoalkeeper_area_line": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -25.5, "y": 0.05, "z" : -8}},
-                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 4.5, "y": 0.1, "z" : 1}}
-                ],
-                "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
-                }
-            },
-            "bottom_lgoalkeeper_line": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -27.5, "y": 0.05, "z" : 5}},
-                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
-                ],
-                "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
-                }
-            },
-            "left_penalty_spot": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -23, "y": 0.05, "z" : 0}},
-                    {"type": "scale", "amount": {"x": 0.2, "y": 0.05, "z": 0.2}}
-                ],
-                "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
-                }
-            },
-            "right_lgoalkeeper_line": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -25, "y": 0.05, "z" : 0}},
-                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.1, "y": 5.1, "z" : 1}}
-                ],
-                "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
-                }
-            },
-            "top_lgoalkeeper_line": {
-                "type": "node",
-                "transforms": [
-                    {"type": "translate", "amount": {"x": -27.5, "y": 0.05, "z" : -5}},
-                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 2.5, "y": 0.1, "z" : 1}}
-                ],
-                "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "middle_lines": {
                 "type": "node",
                 "children": {
-                    "middle_line": {
-                        "type": "noderef",
-                        "nodeId": "middle_line"
-                    },
-                    "kick_off_spot": {
-                        "type": "noderef",
-                        "nodeId": "kick_off_spot"
-                    }
+                    "nodesList": [
+                        "middle_line",
+                        "kick_off_spot"
+                    ]
                 }
             },
             "middle_line": {
@@ -1517,10 +969,9 @@
                     {"type": "scale", "amount": {"x": 0.1, "y": 20, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "kick_off_spot": {
@@ -1530,31 +981,20 @@
                     {"type": "scale", "amount": {"x": 0.3, "y": 0.05, "z": 0.3}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "cylinder"
-                    }
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "delimiter_lines": {
                 "type": "node",
                 "children": {
-                    "delimiter_line_left": {
-                        "type": "noderef",
-                        "nodeId": "delimiter_line_left"
-                    },
-                    "delimiter_line_right": {
-                        "type": "noderef",
-                        "nodeId": "delimiter_line_right"
-                    },
-                    "delimiter_line_top": {
-                        "type": "noderef",
-                        "nodeId": "delimiter_line_top"
-                    },
-                    "delimiter_line_bottom": {
-                        "type": "noderef",
-                        "nodeId": "delimiter_line_bottom"
-                    }
+                    "nodesList": [
+                        "delimiter_line_left",
+                        "delimiter_line_right",
+                        "delimiter_line_top",
+                        "delimiter_line_bottom"
+                    ]
                 }
             },
             "delimiter_line_left": {
@@ -1565,10 +1005,9 @@
                     {"type": "scale", "amount": {"x": 0.1, "y": 20, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "delimiter_line_right": {
@@ -1579,10 +1018,9 @@
                     {"type": "scale", "amount": {"x": 0.1, "y": 20, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "delimiter_line_top": {
@@ -1593,10 +1031,9 @@
                     {"type": "scale", "amount": {"x": 30.1, "y": 0.1, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "delimiter_line_bottom": {
@@ -1607,10 +1044,9 @@
                     {"type": "scale", "amount": {"x": 30.1, "y": 0.1, "z" : 1}}
                 ],
                 "children": {
-                    "rectangle": {
-                        "type": "noderef",
-                        "nodeId": "rectangle"
-                    }
+                    "nodesList": [
+                        "rectangle"
+                    ]
                 }
             },
             "rectangle": {
@@ -1658,10 +1094,9 @@
                     {"type": "rotate", "amount": {"x": 0, "y": -120, "z": 0}}
                 ],
                 "children": {
-                    "floodlight": {
-                        "type": "noderef",
-                        "nodeId": "floodlight"
-                    }
+                    "nodesList": [
+                        "floodlight"
+                    ]
                 }
             },
             "floodlight2": {
@@ -1671,10 +1106,9 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 120, "z": 0}}
                 ],
                 "children": {
-                    "floodlight": {
-                        "type": "noderef",
-                        "nodeId": "floodlight"
-                    }
+                    "nodesList": [
+                        "floodlight"
+                    ]
                 }
             },
             "floodlight3": {
@@ -1684,10 +1118,9 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 60, "z": 0}}
                 ],
                 "children": {
-                    "floodlight": {
-                        "type": "noderef",
-                        "nodeId": "floodlight"
-                    }
+                    "nodesList": [
+                        "floodlight"
+                    ]
                 }
             },
             "floodlight4": {
@@ -1697,35 +1130,21 @@
                     {"type": "rotate", "amount": {"x": 0, "y": -60, "z": 0}}
                 ],
                 "children": {
-                    "floodlight": {
-                        "type": "noderef",
-                        "nodeId": "floodlight"
-                    }
+                    "nodesList": [
+                        "floodlight"
+                    ]
                 }
             },
             "floodlight": {
                 "type": "node",
                 "children": {
-                    "floodlight_base": {
-                        "type": "noderef",
-                        "nodeId": "floodlight_base"
-                    },
-                    "floodlight_pole": {
-                        "type": "noderef",
-                        "nodeId": "floodlight_pole"
-                    },
-                    "floodlight_head": {
-                        "type": "noderef",
-                        "nodeId": "floodlight_head"
-                    },
-                    "floodlight_support1": {
-                        "type": "noderef",
-                        "nodeId": "floodlight_support1"
-                    },
-                    "floodlight_support2": {
-                        "type": "noderef",
-                        "nodeId": "floodlight_support2"
-                    }
+                    "nodesList": [
+                        "floodlight_base",
+                        "floodlight_pole",
+                        "floodlight_head",
+                        "floodlight_support1",
+                        "floodlight_support2"
+                    ]
                 }
             },
             "floodlight_base": {
@@ -1781,10 +1200,9 @@
                         "xyz1": {"x": -2, "y": -2, "z": -0.25},
                         "xyz2": {"x": 2, "y": 2, "z": 0.25}
                     },
-                    "lamp": {
-                        "type": "noderef",
-                        "nodeId": "lamp_group"
-                    }
+                    "nodesList": [
+                        "lamp_group"
+                    ]
                 }
             },
             "floodlight_support1": {
@@ -1827,18 +1245,11 @@
                     {"type": "translate", "amount": {"x": -1, "y": -1, "z": 0}}
                 ],
                 "children": {
-                    "lamp_row1": {
-                        "type": "noderef",
-                        "nodeId": "lamp_row1"
-                    },
-                    "lamp_row2": {
-                        "type": "noderef",
-                        "nodeId": "lamp_row2"
-                    },
-                    "lamp_row3": {
-                        "type": "noderef",
-                        "nodeId": "lamp_row3"
-                    }
+                    "nodesList":[
+                        "lamp_row1",
+                        "lamp_row2",
+                        "lamp_row3"
+                    ]
                 }
             },
             "lamp_row3": {
@@ -1847,10 +1258,9 @@
                     {"type": "translate", "amount": {"x": 0, "y": 1, "z": 0}}
                 ],
                 "children": {
-                    "lamp_row2": {
-                        "type": "noderef",
-                        "nodeId": "lamp_row2"
-                    }
+                    "nodesList": [
+                        "lamp_row2"
+                    ]
                 }
             },
             "lamp_row2": {
@@ -1859,27 +1269,19 @@
                     {"type": "translate", "amount": {"x": 0, "y": 1, "z": 0}}
                 ],
                 "children": {
-                    "lamp_row1": {
-                        "type": "noderef",
-                        "nodeId": "lamp_row1"
-                    }
+                    "nodesList": [
+                        "lamp_row1"
+                    ]
                 }
             },
             "lamp_row1": {
                 "type": "node",
                 "children": {
-                    "lamp": {
-                        "type": "noderef",
-                        "nodeId": "lamp1"
-                    },
-                    "lamp1": {
-                        "type": "noderef",
-                        "nodeId": "lamp2"
-                    },
-                    "lamp2": {
-                        "type": "noderef",
-                        "nodeId": "lamp3"
-                    }
+                    "nodesList": [
+                        "lamp3",
+                        "lamp2",
+                        "lamp1"
+                    ]
                 }
             },
             "lamp3": {
@@ -1888,10 +1290,9 @@
                     {"type": "translate", "amount": {"x": 1, "y": 0, "z": 0}}
                 ],
                 "children": {
-                    "lamp": {
-                        "type": "noderef",
-                        "nodeId": "lamp2"
-                    }
+                    "nodesList": [
+                        "lamp2"
+                    ]
                 }
             },
             "lamp2": {
@@ -1900,10 +1301,9 @@
                     {"type": "translate", "amount": {"x": 1, "y": 0, "z": 0}}
                 ],
                 "children": {
-                    "lamp": {
-                        "type": "noderef",
-                        "nodeId": "lamp1"
-                    }
+                    "nodesList": [
+                        "lamp1"
+                    ]
                 }
             },
             "lamp1": {

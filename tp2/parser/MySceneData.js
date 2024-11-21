@@ -144,8 +144,8 @@ class MySceneData {
             { name: "slices", type: "integer" },
             { name: "stacks", type: "integer" },
             { name: "capsclose", type: "boolean", required: false, default: false },
-            { name: "thetaStart", type: "float", required: false, default: 0.0 },
-            { name: "thetaLength", type: "float", required: false, default: 360.0 },
+            { name: "thetastart", type: "float", required: false, default: 0.0 },
+            { name: "thetalength", type: "float", required: false, default: 360.0 },
         ]
 
         this.descriptors["sphere"] = [

@@ -163,6 +163,7 @@ class MyContents {
     initPrimitives(node, parentId) {
         if (node.type === 'node') {
             if (node.children.length === 0) {
+                console.log(node);
                 throw new Error(`Node "${node.id}" has no children.`);
             }
             node.children.forEach(child => {

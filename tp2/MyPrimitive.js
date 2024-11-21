@@ -62,8 +62,8 @@ class MyPrimitive {
             representation.slices,
             representation.stacks,
             representation.capsclose,
-            representation.thetaStart * Math.PI / 180,
-            representation.thetaLength * Math.PI / 180
+            representation.thetastart * Math.PI / 180,
+            representation.thetalength * Math.PI / 180
         );
 
         return cylinder;
