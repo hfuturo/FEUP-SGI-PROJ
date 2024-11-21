@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { MyTriangle } from './MyTriangle.js';
+import { MyNurbsBuilder } from '../tp1/MyNurbsBuilder.js';
 
 class MyPrimitive {
 
@@ -37,7 +39,7 @@ class MyPrimitive {
     }
 
     static #getTriangle(representation) {
-        const triangle = new THREE.Triangle(representation.xyz1, representation.xyz2, representation.xyz3);
+        const triangle = new MyTriangle(...representation.xyz1, ...representation.xyz2, ...representation.xyz3);
         return triangle;
     }
 
@@ -84,6 +86,19 @@ class MyPrimitive {
     }
 
     static #getNurbs(representation) {
+        if ((representation.degree_u + 1) * (representation.degree_v + 1) !== representation.controlpoints.length)
+            throw new Error(`Invalid number of control points for degree_u = ${representation.degree_u} and degree_v = ${representation.degree_v}`);
+
+        const controlPoints = [];
+        for (let i = 0; i <= representation.degree_u; i++) {
+            controlPoints.push([]);
+            for (let j = 0; j <= representation.degree_v; j++) {
+                const point = representation.controlpoints[i * (representation.degree_v + 1) + j];
+                controlPoints[i].push([point.x, point.y, point.z, 1]);
+            }
+        }
+
+        return new MyNurbsBuilder().build(controlPoints, representation.degree_u, representation.degree_v, representation.parts_u, representation.parts_v);
     }
 
     static #getPolygon(representation) {

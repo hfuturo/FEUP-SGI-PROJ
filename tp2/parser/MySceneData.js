@@ -166,11 +166,7 @@ class MySceneData {
             { name: "degree_v", type: "integer" },
             { name: "parts_u", type: "integer" },
             { name: "parts_v", type: "integer" },
-            { name: "controlpoints", type: "list", listOf: "controlpoint" },
-        ]
-
-        this.descriptors["controlpoint"] = [
-            { name: "position", type: "vector3" }
+            { name: "controlpoints", type: "list" },
         ]
 
         this.descriptors["polygon"] = [

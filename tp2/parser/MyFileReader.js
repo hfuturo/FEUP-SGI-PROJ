@@ -450,15 +450,9 @@ class MyFileReader {
 				value = this.getItem(options.elem, descriptor.name, descriptor.choices, descriptor.required);
 			}
 			else if (descriptor.type === "list") {
-				let newDescriptor = this.data.descriptors[descriptor.listOf];
 				value = [];
 				for (let key in options.elem[descriptor.name]) {
-					let newObj = this.loadJsonItem({
-						elem: options.elem[descriptor.name][key],
-						descriptor: newDescriptor,
-						extras: []
-					});
-					value.push(newObj);
+					value.push(options.elem[descriptor.name][key]);
 				}
 			}
 			else {
