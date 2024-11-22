@@ -578,6 +578,7 @@ class MyFileReader {
 	loadNodes(rootElement) {
 		let graphElem = rootElement["graph"];
 
+		const keys = new Set();
 		for (let key in graphElem) {
 			let elem = graphElem[key];
 
@@ -585,6 +586,16 @@ class MyFileReader {
 				this.data.setRootId(elem);
 				continue;
 			}
+
+			if (keys.has(key)) {
+				throw new Error("duplicate node id '" + key + "' in graph element");
+			}
+			for (const c of key) {
+				if (!((c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9'))) {
+					throw new Error("invalid node id '" + key + "' in graph element");
+				}
+			}
+			keys.add(key);
 
 			this.loadNode(key, elem);
 		}
@@ -603,6 +614,9 @@ class MyFileReader {
 			// otherwise add a new node
 			obj = this.data.createEmptyNode(id);
 		}
+
+		obj.castshadows = this.getBoolean(nodeElement, "castshadows", false) || false;
+		obj.receiveshadows = this.getBoolean(nodeElement, "receiveshadows", false) || false;
 
 		// load transformations
 		let transforms = nodeElement["transforms"];

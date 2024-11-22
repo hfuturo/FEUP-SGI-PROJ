@@ -223,15 +223,19 @@ class MyContents {
             this.app.scene.add(light);
     }
 
-    initObjects(node, parentId, material) {
+    initObjects(node, parentId, material, receiveshadows=false, castshadows=false) {
         if (node.type === 'node') {
             const group = new THREE.Group();
             node.children.forEach(child => {
                 let obj;
                 if (node.materialIds.length > 0) {
-                    obj = this.initObjects(child, node.id, node.materialIds[0]);
+                    obj = this.initObjects(child, node.id, node.materialIds[0],
+                        node.receiveshadows || receiveshadows, node.castshadows || castshadows
+                    );
                 } else {
-                    obj = this.initObjects(child, node.id, material);
+                    obj = this.initObjects(child, node.id, material,
+                        node.receiveshadows || receiveshadows, node.castshadows || castshadows
+                    );
                 }
                 
                 if (obj !== undefined) {
@@ -251,7 +255,10 @@ class MyContents {
 
             return group;
         } else if (node.type === 'primitive') {
-            return new THREE.Mesh(this.primitives[parentId], this.materials[material]);
+            const mesh = new THREE.Mesh(this.primitives[parentId], this.materials[material]);
+            mesh.castShadow = castshadows;
+            mesh.receiveShadow = receiveshadows;
+            return mesh;
         }
     }
 
