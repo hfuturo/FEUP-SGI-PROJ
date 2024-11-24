@@ -125,6 +125,33 @@ class MyContents {
             const texture = loader.load(textures[textureId].filepath);
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
+
+            for (const key in textures[textureId]) {
+                if (key.startsWith('mipmap') && textures[textureId][key] !== undefined) {
+
+                    loader.load(textures[textureId][key], 
+                        function(mipmapTexture)
+                        {
+                            const canvas = document.createElement('canvas')
+                            const ctx = canvas.getContext('2d')
+                            ctx.scale(1, 1);
+                            
+                            const img = mipmapTexture.image         
+                            canvas.width = img.width;
+                            canvas.height = img.height
+            
+                            ctx.drawImage(img, 0, 0 )
+                                        
+                            texture.mipmaps[parseInt(key[6])] = canvas
+                        },
+                        undefined,
+                        function(err) {
+                            console.error('Unable to load the image ' + path + ' as mipmap level ' + level + ".", err)
+                        }
+                    )
+                }
+            }
+
             this.textures[textureId] = texture
         }
     }
@@ -154,7 +181,14 @@ class MyContents {
                     material.side = THREE.DoubleSide;
             }
 
-            // TODO: bumpref, bumpscale, specularref
+            if (m.bumpref) {
+                material.bumpMap = this.textures[m.bumpref];
+                material.bumpScale = m.bumpscale;
+            }
+
+            if (m.specularref) {
+                material.specularMap = this.textures[m.specularref];
+            }
 
             this.materials[materialId] = material;
         }
