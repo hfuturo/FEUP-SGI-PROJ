@@ -152,6 +152,7 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "pubTex",
+                "texlength_s": 0.2,
                 "twosided": true
             }
         },
