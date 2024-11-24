@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { MyTriangle } from './MyTriangle.js';
-import { MyNurbsBuilder } from '../tp1/MyNurbsBuilder.js';
+import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 class MyPrimitive {
 
