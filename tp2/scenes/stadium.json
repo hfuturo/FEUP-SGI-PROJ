@@ -214,10 +214,10 @@
                 "type": "node",
                 "children": {
                     "nodesList":[
-                        "standN",
-                        "standS",
-                        "standE",
-                        "standW",
+                        "stand_n",
+                        "stand_s",
+                        "stand_e",
+                        "stand_w",
                         "pitch",
                         "floodlight1",
                         "floodlight2",
@@ -445,14 +445,14 @@
                 "type": "node",
                 "children": {
                     "nodesList": [
-                        "cornerNE",
-                        "cornerNW",
-                        "cornerSE",
-                        "cornerSW"
+                        "corner_ne",
+                        "corner_nw",
+                        "corner_se",
+                        "corner_sw"
                     ]
                 }
             },
-            "cornerSW": {
+            "corner_sw": {
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": -30, "y": 0, "z": 20}}
@@ -463,7 +463,7 @@
                     ]
                 }
             },
-            "cornerSE": {
+            "corner_se": {
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 30, "y": 0, "z": 20}}
@@ -474,7 +474,7 @@
                     ]
                 }
             },
-            "cornerNW": {
+            "corner_nw": {
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": -30, "y": 0, "z": -20}}
@@ -485,7 +485,7 @@
                     ]
                 }
             },
-            "cornerNE": {
+            "corner_ne": {
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 30, "y": 0, "z": -20}}
@@ -550,7 +550,7 @@
                     ]
                 }
             },
-            "standN": {
+            "stand_n": {
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 0, "y": 0, "z": -25}},
@@ -565,7 +565,7 @@
                     ]
                 }
             },
-            "standS": {
+            "stand_s": {
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 0, "y": 0, "z": 25}},
@@ -581,7 +581,7 @@
                     ]
                 }
             },
-            "standE": {
+            "stand_e": {
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 40, "y": 0, "z": 0}},
@@ -597,7 +597,7 @@
                     ]
                 }
             },
-            "standW": {
+            "stand_w": {
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": -40, "y": 0, "z": 0}},

@@ -295,6 +295,20 @@ class MySceneData {
         if (obj !== null && obj !== undefined) {
             throw new Error("inconsistency: a texture with id " + texture.id + " already exists!");
         }
+
+        const mipmaps = []
+        for (const key in texture) {
+            if (key.startsWith("mipmap") && texture[key]  !== undefined) {
+                mipmaps.push(key.substring(6))
+            }
+        }
+        mipmaps.sort();
+        for (let i = 0; i < mipmaps.length; i++) {
+            if (mipmaps[i] !== i.toString()) {
+                throw new Error("inconsistency: a texture with id " + texture.id + " has missing mipmaps!");
+            }
+        }
+
         this.textures[texture.id] = texture;
         this.createCustomAttributeIfNotExists(texture)
         console.debug("added texture" + JSON.stringify(texture))
