@@ -58,6 +58,10 @@
             "goalTex": {
                 "filepath": "scenes/textures/goal.avif",
                 "isVideo": false
+            },
+            "pubTex": {
+                "filepath": "scenes/videos/oceans.mp4",
+                "isVideo": true
             }
         },
         "materials": {
@@ -139,6 +143,16 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "goalTex"
+            },
+            "pubApp": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "pubTex",
+                "twosided": true
             }
         },
         "cameras": {
@@ -225,7 +239,72 @@
                         "floodlight4",
                         "football",
                         "corner_flags",
-                        "goals"
+                        "goals",
+                        "pub_barriers"
+                    ]
+                }
+            },
+            "pub_barriers": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "pubApp"
+                },
+                "children": {
+                    "nodesList": [
+                        "pub_barrier_n",
+                        "pub_barrier_s",
+                        "pub_barrier_e",
+                        "pub_barrier_w"
+                    ]
+                }
+            },
+            "pub_barrier_w": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}},
+                    {"type": "translate", "amount": {"x": 35, "y": 1, "z": 0}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "pub_barrier_e": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}},
+                    {"type": "translate", "amount": {"x": -35, "y": 1, "z": 0}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "pub_barrier_s": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}},
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": 22}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "pub_barrier_n": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}},
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -22}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "rectangle"
                     ]
                 }
             },

@@ -49,10 +49,10 @@ class MyContents {
     printYASF(data, indent = '') {
         for (let key in data) {
             if (typeof data[key] === 'object' && data[key] !== null) {
-                console.log(`${indent}${key}:`);
-                this.printYASF(data[key], indent + '\t');
+                // console.log(`${indent}${key}:`);
+                // this.printYASF(data[key], indent + '\t');
             } else {
-                console.log(`${indent}${key}: ${data[key]}`);
+                // console.log(`${indent}${key}: ${data[key]}`);
             }
         }
     }
@@ -119,10 +119,21 @@ class MyContents {
     }
 
     initTextures(textures) {
-        const loader = new THREE.TextureLoader();
+        for (const textureId in textures) {
+            const rawTexture = textures[textureId];
+            const path = rawTexture.filepath;
 
-        for (let textureId in textures) {
-            const texture = loader.load(textures[textureId].filepath);
+            let texture;
+
+            if (rawTexture.isVideo) {
+                const video = document.getElementById("/" + path);
+                texture = new THREE.VideoTexture(video);
+                texture.colorSpace = THREE.SRGBColorSpace;
+            }
+            else {
+                texture = ((new THREE.TextureLoader()).load(path));
+            }
+
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
 
