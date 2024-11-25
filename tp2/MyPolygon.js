@@ -2,13 +2,13 @@ import * as THREE from 'three';
 
 class MyPolygon extends THREE.BufferGeometry {
 
-    constructor(radius, stacks, slices, color_c=0, color_p=0) {
+    constructor(radius, stacks, slices, color_c, color_p) {
         super();
         this.radius = radius;
         this.stacks = stacks;
         this.slices = slices;
-        this.color_c = color_c;
-        this.color_p = color_p;
+        this.color_c = new THREE.Color(...color_c);
+        this.color_p = new THREE.Color(...color_p);
 
         this.initBuffers();
     }

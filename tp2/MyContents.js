@@ -325,7 +325,12 @@ class MyContents {
 
             return group;
         } else if (node.type === 'primitive') {
-            const mesh = new THREE.Mesh(this.primitives[parentId], this.materials[material]);
+            let mesh;
+            if (node.subtype === 'polygon') {
+                mesh = new THREE.Mesh(this.primitives[parentId], new THREE.MeshBasicMaterial({ vertexColors: true }));
+            } else {
+                mesh = new THREE.Mesh(this.primitives[parentId], this.materials[material]);
+            }
             mesh.castShadow = castshadows;
             mesh.receiveShadow = receiveshadows;
             return mesh;
