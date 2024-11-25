@@ -241,16 +241,12 @@
                         "football",
                         "corner_flags",
                         "goals",
-                        "pub_barriers",
-                        "pentagon"
+                        "pub_barriers"
                     ]
                 }
             },
             "pub_barriers": {
                 "type": "node",
-                "materialref": {
-                    "materialId": "pubApp"
-                },
                 "children": {
                     "nodesList": [
                         "pub_barrier_n",
@@ -264,12 +260,12 @@
                 "type": "node",
                 "transforms": [
                     {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}},
-                    {"type": "translate", "amount": {"x": 35, "y": 1, "z": 0}},
+                    {"type": "translate", "amount": {"x": -35, "y": 0, "z": 0}},
                     {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [
-                        "rectangle"
+                        "pub_barrier"
                     ]
                 }
             },
@@ -277,12 +273,12 @@
                 "type": "node",
                 "transforms": [
                     {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}},
-                    {"type": "translate", "amount": {"x": -35, "y": 1, "z": 0}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
+                    {"type": "translate", "amount": {"x": 35, "y": 0, "z": 0}},
+                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [
-                        "rectangle"
+                        "pub_barrier"
                     ]
                 }
             },
@@ -290,11 +286,12 @@
                 "type": "node",
                 "transforms": [
                     {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}},
-                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": 22}}
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 22}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [
-                        "rectangle"
+                        "pub_barrier"
                     ]
                 }
             },
@@ -302,11 +299,49 @@
                 "type": "node",
                 "transforms": [
                     {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}},
-                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": -22}}
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -22}}
                 ],
                 "children": {
                     "nodesList": [
+                        "pub_barrier"
+                    ]
+                }
+            },
+            "pub_barrier": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 1, "y": 1, "z": 0.1}},
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "ad_box",
+                        "ad"
+                    ]
+                }
+            },
+            "ad": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 1.1}}
+                ],
+                "materialref":{
+                    "materialId":"pubApp"
+                },
+                "children": {
+                    "nodesList": [
                         "rectangle"
+                    ]
+                }
+            },
+            "ad_box": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "dark_gray"
+                },
+                "children": {
+                    "nodesList": [
+                        "box"
                     ]
                 }
             },
@@ -1178,6 +1213,19 @@
                         "philength": 360,
                         "thetastart": 0,
                         "thetalength": 360
+                    }
+                }
+            },
+            "box": {
+                "type": "node",
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {"x": 1, "y": 1, "z": 1},
+                        "xyz2": {"x": -1, "y": -1, "z": -1},
+                        "parts_x": 1,
+                        "parts_y": 1,
+                        "parts_z": 1
                     }
                 }
             },
