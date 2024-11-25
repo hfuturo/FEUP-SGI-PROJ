@@ -100,6 +100,14 @@
                 "transparent": false,
                 "opacity": 1
             },
+            "white": {
+                "emissive": {"r": 0.5, "g": 0.5, "b": 0.5},
+                "color": {"r": 1, "g": 1, "b": 1},
+                "specular": {"r": 0.5, "g": 0.5, "b": 0.5},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1
+            },
             "lamp": {
                 "emissive": {"r": 1.0, "g": 0.97, "b": 0.65},
                 "color": {"r": 1.0, "g": 0.97, "b": 0.65},
@@ -152,6 +160,16 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "pubTex",
+                "texlength_s": 0.2,
+                "twosided": true
+            },
+            "black": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
                 "texlength_s": 0.2,
                 "twosided": true
             }
@@ -241,7 +259,173 @@
                         "football",
                         "corner_flags",
                         "goals",
-                        "pub_barriers"
+                        "pub_barriers",
+                        "score_board"
+                    ]
+                }
+            },
+            "score_board": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 5, "z": -31.8}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "left_score_board_leg",
+                        "right_score_board_leg",
+                        "score_board_screen"
+                    ]
+                }
+            },
+            "score_board_screen": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"white"
+                },
+                "children":{
+                    "nodesList":[
+                        "score_board_structure",
+                        "score_board_display",
+                        "score_board_left_logo",
+                        "score_board_right_logo",
+                        "score_board_score"
+                    ]
+                }
+            },
+            "score_board_score": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "score_board_left_score",
+                        "score_board_right_score",
+                        "score_board_score_separator"
+                    ]
+                }
+            },
+            "score_board_score_separator": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"black"
+                },
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 1.02}},
+                    {"type": "scale", "amount": {"x": 0.3, "y": 1, "z": 1}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "score_board_right_score": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"black"
+                },
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 2.25, "y": 9, "z": 1.02}},
+                    {"type": "scale", "amount": {"x": 0.3, "y": 1.5, "z": 1}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "score_board_left_score": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"black"
+                },
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -2.25, "y": 9, "z": 1.02}},
+                    {"type": "scale", "amount": {"x": 0.3, "y": 1.5, "z": 1}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "score_board_right_logo": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 1}},
+                    {"type": "translate", "amount": {"x": 5.25, "y": 9, "z": 1.02}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "octogon"
+                    ]
+                } 
+            },
+            "score_board_left_logo": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 1}},
+                    {"type": "translate", "amount": {"x": -5.25, "y": 9, "z": 1.02}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "pentagon"
+                    ]
+                }
+            },
+            "score_board_structure": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"black"
+                },
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 8, "y": 4, "z": 1}},
+                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "box"
+                    ]
+                }
+            },
+            "score_board_display": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 8, "y": 4, "z": 1}},
+                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 1.01}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "rectangle"                        
+                    ]
+                }
+            },
+            "right_score_board_leg": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"black"
+                },
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -5, "y": 2.5, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.5, "y": 5, "z": 0.5}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder"
+                    ]
+                }
+            },
+            "left_score_board_leg": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"black"
+                },
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 5, "y": 2.5, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.5, "y": 5, "z": 0.5}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder"
                     ]
                 }
             },
@@ -1183,8 +1367,21 @@
                         "radius": 1,
                         "stacks": 3,
                         "slices": 5,
-                        "color_c": {"r": 1, "g": 0, "b": 0},
-                        "color_p": {"r": 0, "g": 1, "b": 0}
+                        "color_c": {"r": 0.92, "g": 0.51, "b": 0.71},
+                        "color_p": {"r": 0.52, "g": 0.89, "b": 0.32}
+                    }
+                }
+            },
+            "octogon": {
+                "type": "node",
+                "children": {
+                    "polygonPrim": {
+                        "type": "polygon",
+                        "radius": 1,
+                        "stacks": 3,
+                        "slices": 8,
+                        "color_c": {"r": 0.79, "g": 0.81, "b": 0.2},
+                        "color_p": {"r": 0.15, "g": 0.40, "b": 0.82}
                     }
                 }
             },
