@@ -241,7 +241,8 @@
                         "football",
                         "corner_flags",
                         "goals",
-                        "pub_barriers"
+                        "pub_barriers",
+                        "pentagon"
                     ]
                 }
             },
@@ -1136,6 +1137,19 @@
                         "type": "rectangle",
                         "xy1": {"x": -1, "y": -1},
                         "xy2": {"x": 1, "y": 1}
+                    }
+                }
+            },
+            "pentagon": {
+                "type": "node",
+                "children": {
+                    "polygonPrim": {
+                        "type": "polygon",
+                        "radius": 1,
+                        "stacks": 3,
+                        "slices": 5,
+                        "color_c": {"r": 1, "g": 0, "b": 0},
+                        "color_p": {"r": 0, "g": 1, "b": 0}
                     }
                 }
             },

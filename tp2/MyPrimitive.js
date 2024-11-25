@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MyTriangle } from './MyTriangle.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
+import { MyPolygon } from './MyPolygon.js';
 
 class MyPrimitive {
 
@@ -102,6 +103,8 @@ class MyPrimitive {
     }
 
     static #getPolygon(representation) {
+        const polygon = new MyPolygon(representation.radius, representation.stacks, representation.slices, representation.color_c, representation.color_p)
+        return polygon;
     }
 
 }
