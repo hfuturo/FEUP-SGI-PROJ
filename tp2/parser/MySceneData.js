@@ -12,6 +12,7 @@ class MySceneData {
         this.activeCameraId = null;
 
         this.nodes = [];
+        this.lods = [];
         this.rootId = null;
 
         this.descriptors = [];
@@ -228,6 +229,11 @@ class MySceneData {
             { name: "shadowmapsize", type: "integer", required: false, default: 512 },
         ]
 
+        this.descriptors["lod"] = [
+            { name: "nodeId", type: "string" },
+            { name: "mindist", type: "float" },
+        ]
+
         this.primaryNodeIds = ["globals", "cameras", "textures", "materials", "graph"]
 
         this.primitiveIds = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs", "polygon"]
@@ -377,7 +383,7 @@ class MySceneData {
             throw new Error("inconsistency: a node with id " + id + " already exists!");
         }
 
-        obj = { id: id, transformations: [], materialIds: [], children: [], loaded: false, type: "node" };
+        obj = { id: id, transformations: [], materialIds: [], children: [], lods: [], loaded: false, type: "node" };
         this.addNode(obj);
         return obj;
     }
@@ -404,6 +410,46 @@ class MySceneData {
         }
         node.children.push(child)
         this.createCustomAttributeIfNotExists(child)
+        // console.debug("added node child" + JSON.stringify(child));
+    }
+
+    getLod(id) {
+        let value = this.lods[id]
+        if (value === undefined) return null
+        return value
+    }
+
+    createEmptyLod(id) {
+        let obj = this.getLod(id)
+        if (obj !== null && obj !== undefined) {
+            throw new Error("inconsistency: a lod with id " + id + " already exists!");
+        }
+
+        obj = { id: id, lodNodes: [], type: "lod" };
+        this.addLod(obj);
+        return obj;
+    }
+
+    addLod(lod) {
+        let obj = this.getLod(lod.id)
+        if (obj !== null && obj !== undefined) {
+            throw new Error("inconsistency: a lod with id " + lod.id + " already exists!");
+        }
+        this.lods[lod.id] = lod;
+        this.createCustomAttributeIfNotExists(lod)
+        // console.debug("added lod " + JSON.stringify(lod));
+    }
+
+    addLodToNode(node, lod) {
+        if (lod === undefined) {
+            throw new Error("inconsistency: undefined lod add to node!");
+        }
+
+        if (node.lods === undefined) {
+            throw new Error("inconsistency: a node has an undefined array of lods!");
+        }
+        node.lods.push(lod)
+        this.createCustomAttributeIfNotExists(lod)
         // console.debug("added node child" + JSON.stringify(child));
     }
 

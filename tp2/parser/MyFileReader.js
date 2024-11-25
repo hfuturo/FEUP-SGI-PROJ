@@ -597,7 +597,13 @@ class MyFileReader {
 			}
 			keys.add(key);
 
-			this.loadNode(key, elem);
+			if (elem["type"] === "node") {
+				this.loadNode(key, elem);
+			} else if (elem["type"] === "lod") {
+				this.loadLod(key, elem);
+			} else {
+				throw new Error("unrecognized node type '" + elem["type"] + "' in node '" + key + "'");
+			}
 		}
 	}
 
@@ -641,6 +647,41 @@ class MyFileReader {
 			throw new Error("in node " + id + ", a children node is required");
 		}
 		this.loadChildren(obj, children);
+		obj.loaded = true;
+	}
+
+	loadLod(id, nodeElement) {
+		let lodNodes = nodeElement["lodNodes"]
+		const nodes = [];
+		if (lodNodes != null) {
+			for (const node of lodNodes) {
+				const lod = this.loadJsonItem({
+					key: id,
+					elem: node,
+					descriptor: this.data.descriptors["lod"],
+					extras: []
+				});
+
+				let reference = this.data.getNode(lod.nodeId);
+				if (reference === null) {
+					// does not exist, yet. create it!
+					reference = this.data.createEmptyNode(lod.nodeId);
+				}
+
+				node.node = reference;
+				nodes.push(node);
+			}
+		} else {
+			throw new Error("in node " + id + ", a lodNodes node is required");
+		}
+
+		let obj = this.data.getLod(id);
+		if (obj == null) {
+			// otherwise add a new lod
+			obj = this.data.createEmptyLod(id);
+		}
+
+		obj["lodNodes"] = nodes;
 		obj.loaded = true;
 	}
 
@@ -695,6 +736,17 @@ class MyFileReader {
 					}
 					// reference it.
 					this.data.addChildToNode(nodeObj, reference)
+				}
+			}
+			else if (child === 'lodsList') {
+				for (const lod of childElement) {
+					let reference = this.data.getLod(lod);
+					if (reference === null) {
+						// does not exist, yet. create it!
+						reference = this.data.createEmptyLod(lod);
+					}
+					// reference it.
+					this.data.addLodToNode(nodeObj, reference)
 				}
 			}
 			else if (this.data.primitiveIds.includes(nodeType)) {

@@ -207,12 +207,17 @@ class MyContents {
 
     initPrimitives(node, parentId) {
         if (node.type === 'node') {
-            if (node.children.length === 0) {
+            if (node.children.length === 0 && node.lods.length === 0) {
                 console.log(node);
                 throw new Error(`Node "${node.id}" has no children.`);
             }
             node.children.forEach(child => {
                 this.initPrimitives(child, node.id);
+            });
+            node.lods.forEach(lod => {
+                for (const lodNode of lod.lodNodes) {
+                    this.initPrimitives(lodNode.node, node.id);
+                }
             });
         } else if (node.type === 'primitive') {
             const primitive = MyPrimitive.getPrimitive(node);
@@ -286,6 +291,26 @@ class MyContents {
                 if (obj !== undefined) {
                     group.add(obj);
                 }
+            });
+            
+            node.lods.forEach(lod => {
+                const LOD = new THREE.LOD();
+                for (const lodNode of lod.lodNodes) {
+                    let obj;
+                    if (node.materialIds.length > 0) {
+                        obj = this.initObjects(lodNode.node, node.id, node.materialIds[0],
+                            node.receiveshadows || receiveshadows, node.castshadows || castshadows
+                        );
+                    } else {
+                        obj = this.initObjects(lodNode.node, node.id, material, 
+                            node.receiveshadows || receiveshadows, node.castshadows || castshadows
+                        );
+                    }
+                        
+
+                    LOD.addLevel(obj, lodNode.mindist);
+                }
+                group.add(LOD);
             });
 
             for (let t of node.transformations) {

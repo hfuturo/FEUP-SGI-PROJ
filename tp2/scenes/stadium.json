@@ -1410,6 +1410,14 @@
                     "materialId": "lamp"
                 },
                 "children": {
+                    "lodsList": [
+                        "lamp_lod"
+                    ]
+                }
+            },
+            "lamp_lod0": {
+                "type": "node",
+                "children": {
                     "lampPrim": {
                         "type": "cylinder",
                         "base": 0.4,
@@ -1419,6 +1427,32 @@
                         "stacks": 1
                     }
                 }
+            },
+            "lamp_lod1": {
+                "type": "node",
+                "children": {
+                    "lampPrim": {
+                        "type": "cylinder",
+                        "base": 0.4,
+                        "top": 0.4,
+                        "height": 0.1,
+                        "slices": 5,
+                        "stacks": 1
+                    }
+                }
+            },
+            "lamp_lod": {
+                "type": "lod",
+                "lodNodes": [
+                    {
+                        "nodeId": "lamp_lod0",
+                        "mindist": 0
+                    },
+                    {
+                        "nodeId": "lamp_lod1",
+                        "mindist": 50
+                    }
+                ]
             }
         }
     }
