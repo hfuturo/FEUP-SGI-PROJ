@@ -22,6 +22,7 @@ class MyContents {
         this.materials = [];
         this.primitives = [];
         this.lights = [];
+        this.wireframe = [];
     }
 
     /**
@@ -80,6 +81,12 @@ class MyContents {
 
         const objects = this.initObjects(data.nodes[data.rootId]);
         this.app.scene.add(objects);
+        
+        for (const mat in this.materials) {
+            if (this.materials[mat].wireframe) {
+                this.wireframe.push(mat);
+            }
+        }
     }
 
     initCameras(data) {
@@ -327,7 +334,10 @@ class MyContents {
         } else if (node.type === 'primitive') {
             let mesh;
             if (node.subtype === 'polygon') {
-                mesh = new THREE.Mesh(this.primitives[parentId], new THREE.MeshBasicMaterial({ vertexColors: true }));
+                const mat = this.materials[material];
+                mat.vertexColors = true;
+
+                mesh = new THREE.Mesh(this.primitives[parentId], mat);
             } else {
                 mesh = new THREE.Mesh(this.primitives[parentId], this.materials[material]);
             }

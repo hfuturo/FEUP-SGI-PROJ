@@ -160,8 +160,7 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "pubTex",
-                "texlength_s": 0.2,
-                "twosided": true
+                "texlength_s": 0.2
             },
             "black": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -170,8 +169,16 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "texlength_s": 0.2,
-                "twosided": true
+                "texlength_s": 0.2
+            },
+            "logo": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "wireframe": true
             }
         },
         "cameras": {
@@ -1120,6 +1127,9 @@
             },
             "field_markers": {
                 "type": "node",
+                "materialref": {
+                    "materialId": "white"
+                },
                 "children": {
                     "nodesList":[
                         "delimiter_lines",
@@ -1361,6 +1371,9 @@
             },
             "pentagon": {
                 "type": "node",
+                "materialref": {
+                    "materialId": "logo"
+                },
                 "children": {
                     "polygonPrim": {
                         "type": "polygon",
@@ -1374,6 +1387,9 @@
             },
             "octogon": {
                 "type": "node",
+                "materialref": {
+                    "materialId": "logo"
+                },
                 "children": {
                     "polygonPrim": {
                         "type": "polygon",

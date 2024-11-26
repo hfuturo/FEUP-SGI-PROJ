@@ -29,6 +29,17 @@ class MyGuiInterface  {
      * Initialize the gui interface
      */
     init() {
+        const data = {
+            wireframe: false
+        }
+
+        this.datgui.add(data, 'wireframe').name('Wireframe').onChange((value) => {
+            for (const mat in this.contents.materials) {
+                if (this.contents.wireframe.includes(mat)) continue;
+                
+                this.contents.materials[mat].wireframe = value
+            }
+        });
     }
 }
 
