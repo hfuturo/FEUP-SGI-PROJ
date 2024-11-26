@@ -62,6 +62,10 @@
             "pubTex": {
                 "filepath": "scenes/videos/oceans.mp4",
                 "isVideo": true
+            },
+            "grassIrregularityTex": {
+                "filepath": "scenes/textures/irregularity.avif",
+                "isVideo": false
             }
         },
         "materials": {
@@ -72,7 +76,8 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "grassTex"
+                "textureref": "grassTex",
+                "bumpref": "grassIrregularityTex"
             },
             "concrete": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
