@@ -386,7 +386,7 @@
                 },
                 "transforms": [
                     {"type": "translate", "amount": {"x": 0, "y": 9, "z": 0}},
-                    {"type": "scale", "amount": {"x": 8, "y": 4, "z": 1}}
+                    {"type": "scale", "amount": {"x": 16, "y": 8, "z": 2}}
                 ],
                 "children": {
                     "nodesList": [
@@ -416,8 +416,8 @@
                     {"type": "scale", "amount": {"x": 0.5, "y": 5, "z": 0.5}}
                 ],
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -431,8 +431,8 @@
                     {"type": "scale", "amount": {"x": 0.5, "y": 5, "z": 0.5}}
                 ],
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -530,6 +530,9 @@
                 "materialref": {
                     "materialId": "dark_gray"
                 },
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 2}}
+                ],
                 "children": {
                     "nodesList": [
                         "box"
@@ -585,8 +588,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -601,8 +604,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -617,8 +620,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -633,8 +636,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -649,8 +652,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -665,8 +668,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -681,8 +684,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -697,8 +700,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -713,8 +716,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }       
             },
@@ -728,8 +731,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -743,8 +746,8 @@
                     "materialId": "goalApp"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -837,8 +840,8 @@
                     "materialId": "yellow"
                 },
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -1231,8 +1234,8 @@
                     {"type": "scale", "amount": {"x": 0.2, "y": 0.05, "z": 0.2}}
                 ],
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -1291,8 +1294,8 @@
                     {"type": "scale", "amount": {"x": 0.3, "y": 0.05, "z": 0.3}}
                 ],
                 "children": {
-                    "nodesList": [
-                        "cylinder"
+                    "lodsList": [
+                        "cylinder_lod"
                     ]
                 }
             },
@@ -1414,6 +1417,19 @@
                     }
                 }
             },
+            "cylinder_simple": {
+                "type": "node",
+                "children": {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "base": 1,
+                        "top": 1,
+                        "height": 1,
+                        "slices": 5,
+                        "stacks": 5
+                    }
+                }
+            },
             "sphere": {
                 "type": "node",
                 "children": {
@@ -1434,8 +1450,8 @@
                 "children": {
                     "boxPrim": {
                         "type": "box",
-                        "xyz1": {"x": 1, "y": 1, "z": 1},
-                        "xyz2": {"x": -1, "y": -1, "z": -1},
+                        "xyz1": {"x": 0.5, "y": 0.5, "z": 0.5},
+                        "xyz2": {"x": -0.5, "y": -0.5, "z": -0.5},
                         "parts_x": 1,
                         "parts_y": 1,
                         "parts_z": 1
@@ -1712,6 +1728,23 @@
                     {
                         "nodeId": "lamp_lod1",
                         "mindist": 50
+                    }
+                ]
+            },
+            "cylinder_lod": {
+                "type": "lod",
+                "lodNodes": [
+                    {
+                        "nodeId": "cylinder",
+                        "mindist": 0
+                    },
+                    {
+                        "nodeId": "cylinder_simple",
+                        "mindist": 15
+                    },
+                    {
+                        "nodeId": "box",
+                        "mindist": 30
                     }
                 ]
             }
