@@ -77,6 +77,8 @@ class MyContents {
         
         this.initMaterials(data.materials);
 
+        this.initSkybox(data.skybox);
+
         this.initPrimitives(data.nodes[data.rootId]);
 
         const objects = this.initObjects(data.nodes[data.rootId]);
@@ -210,6 +212,26 @@ class MyContents {
 
             this.materials[materialId] = material;
         }
+    }
+
+    initSkybox(skybox) {
+        const loader = new THREE.TextureLoader();
+
+        const textures = [
+            loader.load(skybox.front),
+            loader.load(skybox.back),
+            loader.load(skybox.up),
+            loader.load(skybox.down),
+            loader.load(skybox.right),
+            loader.load(skybox.left)
+        ]
+        const emissive = new THREE.Color(...skybox.emissive);
+
+        const box = new THREE.BoxGeometry(...skybox.size);
+        const mesh = new THREE.Mesh(box, textures.map(t => new THREE.MeshLambertMaterial({ map: t, side: THREE.BackSide, emissive: emissive })));
+        mesh.position.set(...skybox.center);
+
+        this.app.scene.add(mesh);
     }
 
     initPrimitives(node, parentId) {
