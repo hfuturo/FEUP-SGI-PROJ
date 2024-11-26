@@ -316,8 +316,8 @@
                 },
                 "transforms": [
                     {"type": "translate", "amount": {"x": 0, "y": 9, "z": 1.02}},
-                    {"type": "scale", "amount": {"x": 0.3, "y": 1, "z": 1}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
+                    {"type": "scale", "amount": {"x": 0.3, "y": 1, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -358,8 +358,8 @@
             "score_board_right_logo": {
                 "type": "node",
                 "transforms": [
-                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 1}},
-                    {"type": "translate", "amount": {"x": 5.25, "y": 9, "z": 1.02}}
+                    {"type": "translate", "amount": {"x": 5.25, "y": 9, "z": 1.02}},
+                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -370,8 +370,8 @@
             "score_board_left_logo": {
                 "type": "node",
                 "transforms": [
-                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 1}},
-                    {"type": "translate", "amount": {"x": -5.25, "y": 9, "z": 1.02}}
+                    {"type": "translate", "amount": {"x": -5.25, "y": 9, "z": 1.02}},
+                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -385,8 +385,8 @@
                     "materialId":"black"
                 },
                 "transforms": [
-                    {"type": "scale", "amount": {"x": 8, "y": 4, "z": 1}},
-                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 0}}
+                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 0}},
+                    {"type": "scale", "amount": {"x": 8, "y": 4, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -397,8 +397,8 @@
             "score_board_display": {
                 "type": "node",
                 "transforms": [
-                    {"type": "scale", "amount": {"x": 8, "y": 4, "z": 1}},
-                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 1.01}}
+                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 1.01}},
+                    {"type": "scale", "amount": {"x": 8, "y": 4, "z": 1}}
                 ],
                 "children":{
                     "nodesList":[
@@ -450,9 +450,9 @@
             "pub_barrier_w": {
                 "type": "node",
                 "transforms": [
-                    {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}},
                     {"type": "translate", "amount": {"x": -35, "y": 0, "z": 0}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}},
+                    {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -463,9 +463,9 @@
             "pub_barrier_e": {
                 "type": "node",
                 "transforms": [
-                    {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}},
                     {"type": "translate", "amount": {"x": 35, "y": 0, "z": 0}},
-                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}}
+                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}},
+                    {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -476,9 +476,9 @@
             "pub_barrier_s": {
                 "type": "node",
                 "transforms": [
-                    {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}},
                     {"type": "translate", "amount": {"x": 0, "y": 0, "z": 22}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
+                    {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -489,8 +489,8 @@
             "pub_barrier_n": {
                 "type": "node",
                 "transforms": [
-                    {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}},
-                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -22}}
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -22}},
+                    {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -501,8 +501,8 @@
             "pub_barrier": {
                 "type": "node",
                 "transforms": [
-                    {"type": "scale", "amount": {"x": 1, "y": 1, "z": 0.1}},
-                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": 0}}
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 1, "y": 1, "z": 0.1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -578,8 +578,8 @@
                 "type": "node",
                 "transforms": [ 
                     {"type": "translate", "amount": {"x": 31.5, "y": 1.62, "z": -3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 19}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 19}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}}
                 ],
                 "materialref": {
                     "materialId": "goalApp"
@@ -594,8 +594,8 @@
                 "type": "node",
                 "transforms": [ 
                     {"type": "translate", "amount": {"x": 31.5, "y": 1.62, "z": 3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 19}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 19}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}}
                 ],
                 "materialref": {
                     "materialId": "goalApp"
@@ -610,8 +610,8 @@
                 "type": "node",
                 "transforms": [ 
                     {"type": "translate", "amount": {"x": 32, "y": 0.1, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}}
                 ],
                 "materialref": {
                     "materialId": "goalApp"
@@ -626,8 +626,8 @@
                 "type": "node",
                 "transforms": [ 
                     {"type": "translate", "amount": {"x": 31, "y": 3.1, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}}
                 ],
                 "materialref": {
                     "materialId": "goalApp"
@@ -642,8 +642,8 @@
                 "type": "node",
                 "transforms": [ 
                     {"type": "translate", "amount": {"x": 31, "y": 0.1, "z": 3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}}
                 ],
                 "materialref": {
                     "materialId": "goalApp"
@@ -658,8 +658,8 @@
                 "type": "node",
                 "transforms": [ 
                     {"type": "translate", "amount": {"x": 31, "y": 0.1, "z": -3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}}
                 ],
                 "materialref": {
                     "materialId": "goalApp"
@@ -674,8 +674,8 @@
                 "type": "node",
                 "transforms": [ 
                     {"type": "translate", "amount": {"x": 30.45, "y": 3.1, "z": -3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}}
                 ],
                 "materialref": {
                     "materialId": "goalApp"
@@ -690,8 +690,8 @@
                 "type": "node",
                 "transforms": [ 
                     {"type": "translate", "amount": {"x": 30.45, "y": 3.1, "z": 3.5}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}}
                 ],
                 "materialref": {
                     "materialId": "goalApp"
@@ -706,8 +706,8 @@
                 "type": "node",
                 "transforms": [
                     {"type": "translate", "amount": {"x": 30, "y": 3.1, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}},
-                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}}
                 ],
                 "materialref": {
                     "materialId": "goalApp"

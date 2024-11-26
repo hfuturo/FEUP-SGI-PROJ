@@ -692,12 +692,21 @@ class MyFileReader {
 	 * @returns 
 	 */
 	loadTransforms(obj, transformsElement) {
+		let order = ["translate", "rotate", "scale"];
+		let providedOrder = transformsElement.map(transform => transform["type"]);
+
+		for (let i = 0; i < providedOrder.length; i++) {
+			if (!order.includes(providedOrder[i])) {
+				throw new Error("Node " + obj.id + ": unrecognized transformation " + providedOrder[i] + ".");
+			}
+			if (order.indexOf(providedOrder[i]) < order.indexOf(providedOrder[i - 1])) {
+				throw new Error("Node " + obj.id + ": transformations must be in the order: translate, rotate, scale.");
+			}
+		}
+
 		for (let i in transformsElement) {
 			const transform = transformsElement[i];
 			const transformType = transform["type"];
-			if (!["translate", "rotate", "scale"].includes(transformType)) {
-				return "unrecognized transformation " + transformType + ".";
-			}
 			if (transformType == "translate") {
 				let translate = this.getVector3(transform, "amount");
 				// add a translation
