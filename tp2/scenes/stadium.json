@@ -52,7 +52,7 @@
                 "isVideo": false
             },
             "flagTex": {
-                "filepath": "scenes/textures/flag.png",
+                "filepath": "scenes/textures/flag.avif",
                 "isVideo": false
             },
             "goalTex": {
@@ -65,6 +65,10 @@
             },
             "grassIrregularityTex": {
                 "filepath": "scenes/textures/grass_bump.png",
+                "isVideo": false
+            },
+            "flagIrregularityTex": {
+                "filepath": "scenes/textures/flag_bump.jpg",
                 "isVideo": false
             }
         },
@@ -149,6 +153,8 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "flagTex",
+                "bumpref": "flagIrregularityTex",
+                "bumpscale": 0.2,
                 "twosided": true
             },
             "goalApp": {
@@ -835,15 +841,16 @@
             "corner_flag": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -0.6, "y": 1.7, "z": 0}},
-                    {"type": "scale", "amount": {"x": 0.5, "y": 0.3, "z": 0.5}}
+                    {"type": "translate", "amount": {"x": -0.1, "y": 1.6, "z": 0}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
+                    {"type": "scale", "amount": {"x": 0.7, "y": 1.5, "z": 1}}
                 ],
                 "materialref": {
                     "materialId": "flagApp"
                 },
                 "children": {
                     "nodesList": [
-                        "rectangle"
+                        "triangle"
                     ]
                 }
             },
@@ -1472,6 +1479,17 @@
                         "parts_x": 1,
                         "parts_y": 1,
                         "parts_z": 1
+                    }
+                }
+            },
+            "triangle": {
+                "type": "node",
+                "children": {
+                    "trianglePrim": {
+                        "type": "triangle",
+                        "xyz1": {"x": -0.5, "y": 0, "z": 0},
+                        "xyz2": {"x": 0, "y": 1, "z": 0},
+                        "xyz3": {"x": 0.5, "y": 0, "z": 0}
                     }
                 }
             },
