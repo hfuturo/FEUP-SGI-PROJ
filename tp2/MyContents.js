@@ -204,6 +204,10 @@ class MyContents {
             if (m.bumpref) {
                 material.bumpMap = this.textures[m.bumpref];
                 material.bumpScale = m.bumpscale;
+                material.bumpMap.repeat.set(
+                    1 / m.texlength_s,
+                    1 / m.texlength_t
+                );
             }
 
             if (m.specularref) {
@@ -228,7 +232,13 @@ class MyContents {
         const emissive = new THREE.Color(...skybox.emissive);
 
         const box = new THREE.BoxGeometry(...skybox.size);
-        const mesh = new THREE.Mesh(box, textures.map(t => new THREE.MeshLambertMaterial({ map: t, side: THREE.BackSide, emissive: emissive })));
+        const mesh = new THREE.Mesh(box, textures.map(t => new THREE.MeshLambertMaterial({ 
+            map: t, 
+            side: THREE.BackSide, 
+            emissive: emissive, 
+            emissiveIntensity: skybox.intensity 
+        })));
+        console.log(skybox.intensity)
         mesh.position.set(...skybox.center);
 
         this.app.scene.add(mesh);

@@ -10,7 +10,7 @@
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0,
-                "intensity": 0.5
+                "intensity": 0.1
             },
             "fog": {
                 "color": {
@@ -22,21 +22,21 @@
                 "far": 1000.0
             },
             "skybox": {
-                "size": {"x": 100.0, "y": 100.0, "z": 100.0},
-                "center": {"x": 0.0, "y": 49.9, "z": 0.0},
-                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
-                "intensity": 1.0,
-                "front": "ss",
-                "back": "ss",
-                "up": "ss",
-                "down": "ss",
-                "left": "ss",
-                "right": "ss"
+                "size": {"x": 425.0, "y": 344.5, "z": 425.0},
+                "center": {"x": 0.0, "y": 100.0, "z": 0.0},
+                "emissive": {"r": 0.0, "g": 0.0, "b": 1.0},
+                "intensity": 0.01,
+                "front": "scenes/textures/front.jpg",
+                "back": "scenes/textures/back.jpg",
+                "up": "scenes/textures/up.jpg",
+                "down": "scenes/textures/down.jpg",
+                "left": "scenes/textures/left.jpg",
+                "right": "scenes/textures/right.jpg"
             }
         },
         "textures": {
             "grassTex": {
-                "filepath": "scenes/textures/grass.jpg",
+                "filepath": "scenes/textures/grass.png",
                 "isVideo": false
             },
             "concreteTex": {
@@ -64,20 +64,23 @@
                 "isVideo": true
             },
             "grassIrregularityTex": {
-                "filepath": "scenes/textures/irregularity.avif",
+                "filepath": "scenes/textures/grass_bump.png",
                 "isVideo": false
             }
         },
         "materials": {
             "grassApp": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
-                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "color": {"r": 0.5, "g": 1.0, "b": 0.5},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "grassTex",
-                "bumpref": "grassIrregularityTex"
+                "bumpref": "grassIrregularityTex",
+                "bumpscale": 0.2,
+                "texlength_s": 0.1,
+                "texlength_t": 0.15
             },
             "concrete": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -182,8 +185,7 @@
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
-                "opacity": 1,
-                "wireframe": true
+                "opacity": 1
             }
         },
         "cameras": {
@@ -1388,8 +1390,8 @@
                         "radius": 1,
                         "stacks": 3,
                         "slices": 5,
-                        "color_c": {"r": 0.92, "g": 0.51, "b": 0.71},
-                        "color_p": {"r": 0.52, "g": 0.89, "b": 0.32}
+                        "color_c": {"r": 1.0, "g": 0.0, "b": 0.0},
+                        "color_p": {"r": 0.0, "g": 1.0, "b": 0.0}
                     }
                 }
             },
@@ -1404,8 +1406,8 @@
                         "radius": 1,
                         "stacks": 3,
                         "slices": 8,
-                        "color_c": {"r": 0.79, "g": 0.81, "b": 0.2},
-                        "color_p": {"r": 0.15, "g": 0.40, "b": 0.82}
+                        "color_c": {"r": 0.0, "g": 0.0, "b": 1.0},
+                        "color_p": {"r": 1.0, "g": 0.0, "b": 0.0}
                     }
                 }
             },
