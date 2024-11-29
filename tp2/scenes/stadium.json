@@ -35,49 +35,49 @@
             }
         },
         "textures": {
-            "grassTex": {
+            "grass": {
                 "filepath": "scenes/textures/grass.png",
                 "isVideo": false
             },
-            "concreteTex": {
+            "concrete": {
                 "filepath": "scenes/textures/concrete.png",
                 "isVideo": false
             },
-            "metalTex": {
+            "metal": {
                 "filepath": "scenes/textures/metal.png",
                 "isVideo": false
             },
-            "footballTex": {
+            "football": {
                 "filepath": "scenes/textures/football.webp",
                 "isVideo": false
             },
-            "goalTex": {
+            "goal": {
                 "filepath": "scenes/textures/goal.avif",
                 "isVideo": false
             },
-            "pubTex": {
+            "pub": {
                 "filepath": "scenes/videos/ad.mp4",
                 "isVideo": true
             },
-            "grassIrregularityTex": {
+            "grass_bump": {
                 "filepath": "scenes/textures/grass_bump.png",
                 "isVideo": false
             },
-            "flagIrregularityTex": {
+            "flag_bump": {
                 "filepath": "scenes/textures/flag_bump.jpg",
                 "isVideo": false
             }
         },
         "materials": {
-            "grassApp": {
+            "grass": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 0.5, "g": 1.0, "b": 0.5},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "grassTex",
-                "bumpref": "grassIrregularityTex",
+                "textureref": "grass",
+                "bumpref": "grass_bump",
                 "bumpscale": 0.2,
                 "texlength_s": 0.1,
                 "texlength_t": 0.15
@@ -89,7 +89,7 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "concreteTex"
+                "textureref": "concrete"
             },
             "metal": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -98,7 +98,7 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "metalTex"
+                "textureref": "metal"
             },
             "dark_gray": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -124,14 +124,14 @@
                 "transparent": false,
                 "opacity": 1
             },
-            "footballApp": {
+            "football": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 1.0, "g": 1.0, "b": 1.0},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "footballTex"
+                "textureref": "football"
             },
             "yellow": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -141,34 +141,34 @@
                 "transparent": false,
                 "opacity": 1
             },
-            "flagApp": {
+            "flag": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 1.0, "g": 1.0, "b": 1.0},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "bumpref": "flagIrregularityTex",
+                "bumpref": "flag_bump",
                 "bumpscale": 0.2,
                 "twosided": true
             },
-            "goalApp": {
+            "goal": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 1.0, "g": 1.0, "b": 1.0},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "goalTex"
+                "textureref": "goal"
             },
-            "pubApp": {
+            "pub": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 1.0, "g": 1.0, "b": 1.0},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "pubTex",
+                "textureref": "pub",
                 "texlength_s": 0.2
             },
             "black": {
@@ -571,7 +571,7 @@
                     {"type": "translate", "amount": {"x": 0, "y": 0, "z": 1.1}}
                 ],
                 "materialref":{
-                    "materialId":"pubApp"
+                    "materialId":"pub"
                 },
                 "children": {
                     "nodesList": [
@@ -640,7 +640,7 @@
                     {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -656,7 +656,7 @@
                     {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -672,7 +672,7 @@
                     {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -688,7 +688,7 @@
                     {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -704,7 +704,7 @@
                     {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -720,7 +720,7 @@
                     {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -736,7 +736,7 @@
                     {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -752,7 +752,7 @@
                     {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -768,7 +768,7 @@
                     {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -783,7 +783,7 @@
                     {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -798,7 +798,7 @@
                     {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
                 ],
                 "materialref": {
-                    "materialId": "goalApp"
+                    "materialId": "goal"
                 },
                 "children": {
                     "lodsList": [
@@ -878,7 +878,7 @@
                     {"type": "scale", "amount": {"x": 0.7, "y": 1.5, "z": 1}}
                 ],
                 "materialref": {
-                    "materialId": "flagApp"
+                    "materialId": "flag"
                 },
                 "children": {
                     "nodesList": [
@@ -908,7 +908,7 @@
                     {"type": "scale", "amount": {"x": 0.3, "y": 0.3, "z": 0.3}}
                 ],
                 "materialref": {
-                    "materialId": "footballApp"
+                    "materialId": "football"
                 },
                 "children": {
                     "nodesList": [
@@ -1177,7 +1177,7 @@
                     {"type": "scale", "amount": {"x": 40.5, "y": 25.5, "z": 1}}
                 ],
                 "materialref": {
-                    "materialId": "grassApp"
+                    "materialId": "grass"
                 },
                 "children": {
                     "nodesList": [

@@ -291,6 +291,13 @@ class MySceneData {
         if (obj !== null && obj !== undefined) {
             throw new Error("inconsistency: a material with id " + material.id + " already exists!");
         }
+
+        for (const c of material.id) {
+            if (!((c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9'))) {
+                throw new Error("invalid material id '" + material.id + "' in graph element");
+            }
+        }
+
         this.materials[material.id] = material;
         this.createCustomAttributeIfNotExists(material)
         // console.debug("added material " + JSON.stringify(material));
@@ -302,16 +309,9 @@ class MySceneData {
             throw new Error("inconsistency: a texture with id " + texture.id + " already exists!");
         }
 
-        const mipmaps = []
-        for (const key in texture) {
-            if (key.startsWith("mipmap") && texture[key]  !== undefined) {
-                mipmaps.push(key.substring(6))
-            }
-        }
-        mipmaps.sort();
-        for (let i = 0; i < mipmaps.length; i++) {
-            if (mipmaps[i] !== i.toString()) {
-                throw new Error("inconsistency: a texture with id " + texture.id + " has missing mipmaps!");
+        for (const c of texture.id) {
+            if (!((c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9'))) {
+                throw new Error("invalid texture id '" + texture.id + "' in graph element");
             }
         }
 
