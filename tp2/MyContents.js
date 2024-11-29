@@ -295,17 +295,16 @@ class MyContents {
                 lightSpec.intensity
             )
 
-            light.shadow.left = lightSpec.shadowleft;
-            light.shadow.right = lightSpec.shadowright;
-            light.shadow.bottom = lightSpec.shadowbottom;
-            light.shadow.top = lightSpec.shadowtop;
+            light.shadow.camera.left = lightSpec.shadowleft;
+            light.shadow.camera.right = lightSpec.shadowright;
+            light.shadow.camera.bottom = lightSpec.shadowbottom;
+            light.shadow.camera.top = lightSpec.shadowtop;
         }
 
         light.position.set(...lightSpec.position);
-        light.castShadow = lightSpec.castShadow;
-        light.shadow.far = lightSpec.shadowFar;
-        light.shadow.mapSize.width = lightSpec.shadowWidth;
-        light.shadow.mapSize.height = lightSpec.shadowHeight;
+        light.castShadow = lightSpec.castshadow;
+        light.shadow.camera.far = lightSpec.shadowfar;
+        light.shadow.mapSize.set(lightSpec.shadowmapsize, lightSpec.shadowmapsize);
 
         this.lights[lightSpec.id] = light;
         if (lightSpec.enabled) 
