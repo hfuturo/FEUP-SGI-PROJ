@@ -15,6 +15,8 @@ class MyGuiInterface  {
         this.app = app
         this.datgui =  new GUI();
         this.contents = null
+
+        this.lightControllers = []
     }
 
     /**
@@ -33,6 +35,8 @@ class MyGuiInterface  {
             wireframe: false
         }
 
+        this.datgui.add(this.contents.axis, 'visible').name("Axis");
+
         this.datgui.add(data, 'wireframe').name('Wireframe').onChange((value) => {
             for (const mat in this.contents.materials) {
                 if (this.contents.wireframe.includes(mat)) continue;
@@ -40,6 +44,29 @@ class MyGuiInterface  {
                 this.contents.materials[mat].wireframe = value
             }
         });
+    }
+
+    finish() {
+        this.#cameras();
+        this.#lights();
+    }
+
+    #cameras() {
+        const folder = this.datgui.addFolder('Camera')
+
+        folder.add(this.app, 'activeCameraName', Object.keys(this.app.cameras) ).name("active camera")
+    }
+
+    #lights() {
+        const folder = this.datgui.addFolder('Lights');
+
+        folder.add(this.contents, 'activeLight', Object.keys(this.contents.lights)).name("Selected Light")
+            .onChange((value) => {
+                this.lightControllers.forEach((controller) => controller.object = this.contents.lights[value]);
+                this.lightControllers.forEach((controller) => controller.updateDisplay());
+            });
+        
+        this.lightControllers.push(folder.add(this.contents.lights[this.contents.activeLight], 'visible').name('on/off'));
     }
 }
 

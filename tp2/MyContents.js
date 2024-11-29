@@ -89,6 +89,9 @@ class MyContents {
                 this.wireframe.push(mat);
             }
         }
+        this.activeLight = Object.keys(this.lights)[0];
+
+        this.app.gui.finish();
     }
 
     initCameras(data) {
@@ -108,7 +111,7 @@ class MyContents {
 
                 this.app.cameras[camId] = camera;
 
-            } else if (camera.type === 'orthogonal') {
+            } else if (c.type === 'orthogonal') {
                 const camera = new THREE.OrthographicCamera(
                     c.left,
                     c.right,
@@ -306,9 +309,9 @@ class MyContents {
         light.shadow.camera.far = lightSpec.shadowfar;
         light.shadow.mapSize.set(lightSpec.shadowmapsize, lightSpec.shadowmapsize);
 
+        light.visible = lightSpec.enabled;
         this.lights[lightSpec.id] = light;
-        if (lightSpec.enabled) 
-            this.app.scene.add(light);
+        this.app.scene.add(light);
     }
 
     initObjects(node, parentId, material, receiveshadows=false, castshadows=false) {

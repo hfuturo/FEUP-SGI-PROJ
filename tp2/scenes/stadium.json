@@ -190,8 +190,8 @@
             }
         },
         "cameras": {
-            "initial": "cam1",
-            "cam1": {
+            "initial": "perspective",
+            "perspective": {
                 "type": "perspective",
                 "angle": 60,
                 "near": 0.1,
@@ -206,6 +206,39 @@
                     "y": 0,
                     "z": 0
                 }
+            },
+            "side": {
+                "type": "orthogonal",
+                "near": 1,
+                "far": 1000,
+                "location": {"x": -20, "y": 0, "z": 0},
+                "target": {"x": 0, "y": 0, "z": 0},
+                "left": -10,
+                "right": 10,
+                "bottom": -10,
+                "top": 10
+            },
+            "top": {
+                "type": "orthogonal",
+                "near": 1,
+                "far": 1000,
+                "location": {"x": 0, "y": 20, "z": 0},
+                "target": {"x": 0, "y": 0, "z": 0},
+                "left": -10,
+                "right": 10,
+                "bottom": -10,
+                "top": 10
+            },
+            "front": {
+                "type": "orthogonal",
+                "near": 1,
+                "far": 1000,
+                "location": {"x": 0, "y": 0, "z": 20},
+                "target": {"x": 0, "y": 0, "z": 0},
+                "left": -10,
+                "right": 10,
+                "bottom": -10,
+                "top": 10
             }
         },
         "graph": {
