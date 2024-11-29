@@ -73,6 +73,18 @@
             "flag_bump": {
                 "filepath": "scenes/textures/flag_bump.jpg",
                 "isVideo": false
+            },
+            "steel": {
+                "filepath": "scenes/textures/steel.avif",
+                "isVideo": false
+            },
+            "blue_metal": {
+                "filepath": "scenes/textures/blue_metal.jpg",
+                "isVideo": false
+            },
+            "black_cloth": {
+                "filepath": "scenes/textures/black_cloth.avif",
+                "isVideo": false
             }
         },
         "materials": {
@@ -205,6 +217,34 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1
+            },
+            "steel": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "steel"
+            },
+            "blue_metal": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "blue_metal"
+            },
+            "black_cloth": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "black_cloth",
+                "twosided": true
             }
         },
         "cameras": {
@@ -265,8 +305,7 @@
                 "type": "node",
                 "children" : {
                     "nodesList": [
-                        "stadium",
-                        "substitute_bench"
+                        "stadium"
                     ],
                     "spotlight1": {
                         "type": "spotlight",
@@ -339,7 +378,8 @@
                         "corner_flags",
                         "goals",
                         "pub_barriers",
-                        "score_board"
+                        "score_board",
+                        "benches"
                     ]
                 }
             },
@@ -525,7 +565,7 @@
                 "transforms": [
                     {"type": "translate", "amount": {"x": -35, "y": 0, "z": 0}},
                     {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}},
-                    {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}}
+                    {"type": "scale", "amount": {"x": 24, "y": 1, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -538,7 +578,7 @@
                 "transforms": [
                     {"type": "translate", "amount": {"x": 35, "y": 0, "z": 0}},
                     {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}},
-                    {"type": "scale", "amount": {"x": 22, "y": 1, "z": 1}}
+                    {"type": "scale", "amount": {"x": 24, "y": 1, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -549,7 +589,7 @@
             "pub_barrier_s": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 22}},
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 24}},
                     {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
                     {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}}
                 ],
@@ -562,7 +602,7 @@
             "pub_barrier_n": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -22}},
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -24}},
                     {"type": "scale", "amount": {"x": 35, "y": 1, "z": 1}}
                 ],
                 "children": {
@@ -1807,16 +1847,106 @@
                     }
                 ]
             },
+            "benches": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 1.5, "y": 1, "z": 1}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "left_bench",
+                        "right_bench"
+                    ]
+                }
+            },
+            "right_bench": {
+                "type": "node",
+                "transforms":[
+                    {"type": "translate", "amount": {"x": -10, "y": 0, "z": -23}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "substitute_bench"
+                    ]
+                }
+            },
+            "left_bench": {
+                "type": "node",
+                "transforms":[
+                    {"type": "translate", "amount": {"x": 10, "y": 0, "z": -23}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "substitute_bench"
+                    ]
+                }
+            },
             "substitute_bench": {
                 "type": "node",
                 "materialref": {
-                    "materialId": "flag"
+                    "materialId": "black_cloth"
                 },
                 "children": {
                     "nodesList": [
                         "substitute_bench_cover",
                         "substitute_bench_side1",
-                        "substitute_bench_side2"
+                        "substitute_bench_side2",
+                        "bench"
+                    ]
+                }
+            },
+            "bench": {
+                "type": "node",
+                "children": {
+                    "nodesList":[
+                        "bench_left_support",
+                        "bench_right_support",
+                        "bench_top_support"
+                    ]
+                }
+            },
+            "bench_top_support": {
+                "type": "node",
+                "materialref":{
+                    "materialId": "blue_metal"
+                },
+                "transforms":[
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": 1.25}},
+                    {"type": "scale", "amount": {"x": 4.99, "y": 0.2, "z": 1}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "box"
+                    ]
+                }
+            },
+            "bench_right_support": {
+                "type": "node",
+                "materialref":{
+                    "materialId": "steel"
+                },
+                "transforms":[
+                    {"type": "translate", "amount": {"x": 1, "y": 0.5, "z": 1.25}},
+                    {"type": "scale", "amount": {"x": 0.25, "y": 1, "z": 0.4}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "box"
+                    ]
+                }
+            },
+            "bench_left_support": {
+                "type": "node",
+                "materialref":{
+                    "materialId": "steel"
+                },
+                "transforms":[
+                    {"type": "translate", "amount": {"x": -1, "y": 0.5, "z": 1.25}},
+                    {"type": "scale", "amount": {"x": 0.25, "y": 1, "z": 0.4}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "box"
                     ]
                 }
             },

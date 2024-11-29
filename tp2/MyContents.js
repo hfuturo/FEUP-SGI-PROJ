@@ -306,6 +306,9 @@ class MyContents {
                 lightSpec.intensity
             )
 
+            const helper = new THREE.DirectionalLightHelper(light, 0.5);
+            this.app.scene.add(helper);
+
             light.shadow.camera.left = lightSpec.shadowleft;
             light.shadow.camera.right = lightSpec.shadowright;
             light.shadow.camera.bottom = lightSpec.shadowbottom;
