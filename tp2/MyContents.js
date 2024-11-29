@@ -220,6 +220,10 @@ class MyContents {
 
             if (m.specularref) {
                 material.specularMap = this.textures[m.specularref];
+                material.specularMap.repeat.set(
+                    1 / m.texlength_s,
+                    1 / m.texlength_t
+                );
             }
 
             this.materials[materialId] = material;

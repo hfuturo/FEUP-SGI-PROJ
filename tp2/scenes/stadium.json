@@ -59,7 +59,7 @@
                 "isVideo": false
             },
             "goal": {
-                "filepath": "scenes/textures/goal.avif",
+                "filepath": "scenes/textures/goal.jpg",
                 "isVideo": false
             },
             "pub": {
@@ -97,6 +97,17 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "concrete"
+            },
+            "concrete_big": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "concrete",
+                "texlength_s": 0.1,
+                "texlength_t": 2
             },
             "metal": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -162,11 +173,11 @@
             "goal": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 1.0, "g": 1.0, "b": 1.0},
-                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
-                "shininess": 0.0,
+                "specular": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "shininess": 1.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "goal"
+                "specularref": "goal"
             },
             "pub": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -254,7 +265,8 @@
                 "type": "node",
                 "children" : {
                     "nodesList": [
-                        "stadium"
+                        "stadium",
+                        "substitute_bench"
                     ],
                     "spotlight1": {
                         "type": "spotlight",
@@ -603,6 +615,9 @@
             "goals": {
                 "type": "node",
                 "castshadows": true,
+                "materialref": {
+                    "materialId": "goal"
+                },
                 "children": {
                     "nodesList": [
                         "left_goal",
@@ -646,9 +661,6 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 19}},
                     {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -662,9 +674,6 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 19}},
                     {"type": "scale", "amount": {"x": 0.095, "y": 3.24, "z": 0.095}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -678,9 +687,6 @@
                     {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -694,9 +700,6 @@
                     {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -710,9 +713,6 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
                     {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -726,9 +726,6 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
                     {"type": "scale", "amount": {"x": 0.095, "y": 2, "z": 0.095}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -742,9 +739,6 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
                     {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -758,9 +752,6 @@
                     {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}},
                     {"type": "scale", "amount": {"x": 0.095, "y": 1, "z": 0.095}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -774,9 +765,6 @@
                     {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 0.095, "y": 7.1, "z": 0.095}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -789,9 +777,6 @@
                     {"type": "translate", "amount": {"x": 30, "y": 1.54, "z": 3.5}},
                     {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -804,9 +789,6 @@
                     {"type": "translate", "amount": {"x": 30, "y": 1.54, "z": -3.5}},
                     {"type": "scale", "amount": {"x": 0.1, "y": 3.1, "z": 0.1}}
                 ],
-                "materialref": {
-                    "materialId": "goal"
-                },
                 "children": {
                     "lodsList": [
                         "cylinder_lod"
@@ -931,7 +913,7 @@
                     {"type": "scale", "amount": {"x": 8, "y": 1, "z": 1}}
                 ],
                 "materialref": {
-                    "materialId": "concrete"
+                    "materialId": "concrete_big"
                 },
                 "children": {
                     "nodesList": [
@@ -947,7 +929,7 @@
                     {"type": "scale", "amount": {"x": 8, "y": 1, "z": 1}}
                 ],
                 "materialref": {
-                    "materialId": "concrete"
+                    "materialId": "concrete_big"
                 },
                 "children": {
                     "nodesList": [
@@ -963,7 +945,7 @@
                     {"type": "scale", "amount": {"x": 5, "y": 1, "z": 1}}
                 ],
                 "materialref": {
-                    "materialId": "concrete"
+                    "materialId": "concrete_big"
                 },
                 "children": {
                     "nodesList": [
@@ -979,7 +961,7 @@
                     {"type": "scale", "amount": {"x": 5, "y": 1, "z": 1}}
                 ],
                 "materialref": {
-                    "materialId": "concrete"
+                    "materialId": "concrete_big"
                 },
                 "children": {
                     "nodesList": [
@@ -1824,6 +1806,74 @@
                         "mindist": 30
                     }
                 ]
+            },
+            "substitute_bench": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "flag"
+                },
+                "children": {
+                    "nodesList": [
+                        "substitute_bench_cover",
+                        "substitute_bench_side1",
+                        "substitute_bench_side2"
+                    ]
+                }
+            },
+            "substitute_bench_cover": {
+                "type": "node",
+                "children":{
+                    "cover": {
+                        "type": "nurbs",
+                        "degree_u": 1,
+                        "degree_v": 3,
+                        "parts_u": 8,
+                        "parts_v": 8,
+                        "controlpoints": [
+                            {"x": -2.5, "y": 0, "z": 0},
+                            {"x": -2.5, "y": 3, "z": 0},
+                            {"x": -2.5, "y": 4, "z": 1},
+                            {"x": -2.5, "y": 4.5, "z": 2.5},
+                            {"x": 2.5, "y": 0, "z": 0},
+                            {"x": 2.5, "y": 3, "z": 0},
+                            {"x": 2.5, "y": 4, "z": 1},
+                            {"x": 2.5, "y": 4.5, "z": 2.5}
+                        ]
+                    }
+                }
+            },
+            "substitute_bench_side1": {
+                "type": "node",
+                "children": {
+                    "side": {
+                        "type": "nurbs",
+                        "degree_u": 1,
+                        "degree_v": 3,
+                        "parts_u": 8,
+                        "parts_v": 8,
+                        "controlpoints": [
+                            {"x": -2.5, "y": 0, "z": 0},
+                            {"x": -2.5, "y": 3, "z": 0},
+                            {"x": -2.5, "y": 4, "z": 1},
+                            {"x": -2.5, "y": 4.5, "z": 2.5},
+                            {"x": -2.5, "y": 0, "z": 2.5},
+                            {"x": -2.5, "y": 3, "z": 2.5},
+                            {"x": -2.5, "y": 4, "z": 2.5},
+                            {"x": -2.5, "y": 4.5, "z": 2.51}
+                        ]
+                    }
+                }
+            },
+            "substitute_bench_side2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 5, "y": 0, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "substitute_bench_side1"
+                    ]
+                }
             }
         }
     }
