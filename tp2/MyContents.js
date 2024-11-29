@@ -158,18 +158,17 @@ class MyContents {
                     loader.load(textures[textureId][key], 
                         function(mipmapTexture)
                         {
-                            // const canvas = document.createElement('canvas')
-                            // const ctx = canvas.getContext('2d')
-                            // ctx.scale(1, 1);
+                            const canvas = document.createElement('canvas')
+                            const ctx = canvas.getContext('2d')
+                            ctx.scale(1, 1);
                             
-                            // const img = mipmapTexture.image         
-                            // canvas.width = img.width;
-                            // canvas.height = img.height
+                            const img = mipmapTexture.image         
+                            canvas.width = img.width;
+                            canvas.height = img.height
             
-                            // ctx.drawImage(img, 0, 0 )
+                            ctx.drawImage(img, 0, 0 )
                                         
-                            // texture.mipmaps[parseInt(key[6])] = canvas
-                            texture.mipmaps[parseInt(key[6])] = mipmapTexture.image;
+                            texture.mipmaps[parseInt(key[6])] = canvas
                         },
                         undefined,
                         function(err) {
