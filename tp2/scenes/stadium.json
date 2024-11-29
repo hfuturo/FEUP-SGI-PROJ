@@ -51,10 +51,6 @@
                 "filepath": "scenes/textures/football.webp",
                 "isVideo": false
             },
-            "flagTex": {
-                "filepath": "scenes/textures/flag.avif",
-                "isVideo": false
-            },
             "goalTex": {
                 "filepath": "scenes/textures/goal.avif",
                 "isVideo": false
@@ -152,7 +148,6 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "flagTex",
                 "bumpref": "flagIrregularityTex",
                 "bumpscale": 0.2,
                 "twosided": true

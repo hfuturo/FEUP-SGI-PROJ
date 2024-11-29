@@ -191,14 +191,15 @@ class MyContents {
                 flatShading: m.shading
             })
 
+            if (m.twosided)
+                material.side = THREE.DoubleSide;
+
             if (m.textureref) {
                 material.map = this.textures[m.textureref];
                 material.map.repeat.set(
                     1 / m.texlength_s,
                     1 / m.texlength_t
-                )
-                if (m.twosided)
-                    material.side = THREE.DoubleSide;
+                );
             }
 
             if (m.bumpref) {
@@ -238,7 +239,6 @@ class MyContents {
             emissive: emissive, 
             emissiveIntensity: skybox.intensity 
         })));
-        console.log(skybox.intensity)
         mesh.position.set(...skybox.center);
 
         this.app.scene.add(mesh);
