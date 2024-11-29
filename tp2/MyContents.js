@@ -131,6 +131,8 @@ class MyContents {
     }
 
     initTextures(textures) {
+        const loader = new THREE.TextureLoader();
+
         for (const textureId in textures) {
             const rawTexture = textures[textureId];
             const path = rawTexture.filepath;
@@ -143,7 +145,7 @@ class MyContents {
                 texture.colorSpace = THREE.SRGBColorSpace;
             }
             else {
-                texture = ((new THREE.TextureLoader()).load(path));
+                texture = loader.load(path);
             }
 
             texture.wrapS = THREE.RepeatWrapping;
@@ -151,27 +153,30 @@ class MyContents {
 
             for (const key in textures[textureId]) {
                 if (key.startsWith('mipmap') && textures[textureId][key] !== undefined) {
+                    texture.generateMipmaps = false;
 
                     loader.load(textures[textureId][key], 
                         function(mipmapTexture)
                         {
-                            const canvas = document.createElement('canvas')
-                            const ctx = canvas.getContext('2d')
-                            ctx.scale(1, 1);
+                            // const canvas = document.createElement('canvas')
+                            // const ctx = canvas.getContext('2d')
+                            // ctx.scale(1, 1);
                             
-                            const img = mipmapTexture.image         
-                            canvas.width = img.width;
-                            canvas.height = img.height
+                            // const img = mipmapTexture.image         
+                            // canvas.width = img.width;
+                            // canvas.height = img.height
             
-                            ctx.drawImage(img, 0, 0 )
+                            // ctx.drawImage(img, 0, 0 )
                                         
-                            texture.mipmaps[parseInt(key[6])] = canvas
+                            // texture.mipmaps[parseInt(key[6])] = canvas
+                            texture.mipmaps[parseInt(key[6])] = mipmapTexture.image;
                         },
                         undefined,
                         function(err) {
-                            console.error('Unable to load the image ' + path + ' as mipmap level ' + level + ".", err)
+                            console.error('Unable to load the image ' + path + ' as mipmap level ' + parseInt(key[6]) + ".", err)
                         }
                     )
+
                 }
             }
 

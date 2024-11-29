@@ -37,7 +37,14 @@
         "textures": {
             "grass": {
                 "filepath": "scenes/textures/grass.png",
-                "isVideo": false
+                "isVideo": false,
+                "mipmap0": "scenes/textures/grass.512.png",
+                "mipmap1": "scenes/textures/grass.256.png",
+                "mipmap2": "scenes/textures/grass.128.png",
+                "mipmap3": "scenes/textures/grass.64.png",
+                "mipmap4": "scenes/textures/grass.32.png",
+                "mipmap5": "scenes/textures/grass.16.png",
+                "mipmap6": "scenes/textures/grass.8.png"
             },
             "concrete": {
                 "filepath": "scenes/textures/concrete.png",
@@ -295,7 +302,6 @@
                     },
                     "pointlight1": {
                         "type": "pointlight",
-                        "enabled": true,
                         "color": {"r": 1, "g": 1, "b": 1},
                         "intensity": 20,
                         "distance": 20,
@@ -492,6 +498,7 @@
             },
             "pub_barriers": {
                 "type": "node",
+                "castshadows": true,
                 "children": {
                     "nodesList": [
                         "pub_barrier_n",
@@ -808,6 +815,7 @@
             },
             "corner_flags": {
                 "type": "node",
+                "castshadows": true,
                 "children": {
                     "nodesList": [
                         "corner_ne",
@@ -981,6 +989,7 @@
             },
             "stand": {
                 "type": "node",
+                "receiveshadows": true,
                 "children": {
                     "nodesList": [
                         "stand_layer",
@@ -1162,6 +1171,7 @@
             },
             "pitch": {
                 "type": "node",
+                "receiveshadows": true,
                 "children": {
                     "nodesList": [
                         "grass",
@@ -1171,7 +1181,6 @@
             },
             "grass": {
                 "type": "node",
-                "receiveshadows": true,
                 "transforms": [
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
                     {"type": "scale", "amount": {"x": 40.5, "y": 25.5, "z": 1}}
