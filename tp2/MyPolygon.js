@@ -1,7 +1,18 @@
 import * as THREE from 'three';
 
+/**
+ * This class is responsible for building a polygon.
+ */
 class MyPolygon extends THREE.BufferGeometry {
 
+    /**
+     * 
+     * @param radius - The radius of the polygon.
+     * @param stacks - The number of layers between the center and the periphery.
+     * @param slices - The number of sides the polygon has.
+     * @param color_c - The color of the center of the polygon.
+     * @param color_p - The color of the periphery of the polygon.
+     */
     constructor(radius, stacks, slices, color_c, color_p) {
         super();
         this.radius = radius;
@@ -19,15 +30,16 @@ class MyPolygon extends THREE.BufferGeometry {
         const indices = [];
         const colors = [];
     
+        // angle of each slice
         const sliceAngle = 2 * Math.PI / this.slices;
         const radiusStep = this.radius / this.stacks;
     
-        for (let j = 0; j <= this.slices; ++j) {
+        for (let j = 0; j <= this.slices; j++) {
             const angle = j * sliceAngle;
             const cosAngle = Math.cos(angle);
             const sinAngle = Math.sin(angle);
     
-            for (let i = 0; i <= this.stacks; ++i) {
+            for (let i = 0; i <= this.stacks; i++) {
                 const currentRadius = i * radiusStep;
     
                 const x = currentRadius * cosAngle;
@@ -41,10 +53,10 @@ class MyPolygon extends THREE.BufferGeometry {
             }
         }
     
-        for (let j = 0; j < this.slices; ++j) {
-            for (let i = 0; i < this.stacks; ++i) {
+        for (let j = 0; j < this.slices; j++) {
+            for (let i = 0; i < this.stacks; i++) {
                 const first = j * (this.stacks + 1) + i;
-                const second = ((j + 1) % (this.slices + 1)) * (this.stacks + 1) + i;
+                const second = ((j + 1) % (this.slices + 1)) * (this.stacks + 1) + i; // get vertice of the same stack of the next slice
     
                 indices.push(first, first + 1, second + 1);
                 indices.push(first, second + 1, second);

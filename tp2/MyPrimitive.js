@@ -3,6 +3,9 @@ import { MyTriangle } from './MyTriangle.js';
 import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 import { MyPolygon } from './MyPolygon.js';
 
+/**
+ * This class is responsible for building primitives.
+ */
 class MyPrimitive {
 
     static getPrimitive(prim) {
