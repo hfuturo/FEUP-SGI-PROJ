@@ -1817,6 +1817,19 @@
                     }
                 }
             },
+            "lamp_lod2": {
+                "type": "node",
+                "children": {
+                    "lampPrim": {
+                        "type": "box",
+                        "xyz1": {"x": 0.3, "y": 0.3, "z": 0.3},
+                        "xyz2": {"x": -0.3, "y": -0.3, "z": -0.3},
+                        "parts_x": 1,
+                        "parts_y": 1,
+                        "parts_z": 1
+                    }
+                }
+            },
             "lamp_lod": {
                 "type": "lod",
                 "lodNodes": [
@@ -1827,6 +1840,14 @@
                     {
                         "nodeId": "lamp_lod1",
                         "mindist": 50
+                    },
+                    {
+                        "nodeId": "lamp_lod2",
+                        "mindist": 100
+                    },
+                    {
+                        "nodeId": "box",
+                        "mindist": 150
                     }
                 ]
             },
