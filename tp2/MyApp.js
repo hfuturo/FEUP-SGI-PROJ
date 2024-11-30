@@ -21,6 +21,7 @@ class MyApp  {
         this.activeCameraName = null
         this.lastCameraName = null
         this.cameras = []
+        this.lookAt = []
         this.frustumSize = 20
 
         // other attributes
@@ -93,10 +94,12 @@ class MyApp  {
                 // Orbit controls allow the camera to orbit around a target.
                 this.controls = new OrbitControls( this.activeCamera, this.renderer.domElement );
                 this.controls.enableZoom = true;
+                this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
                 this.controls.update();
             }
             else {
                 this.controls.object = this.activeCamera
+                this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
             }
         }
     }

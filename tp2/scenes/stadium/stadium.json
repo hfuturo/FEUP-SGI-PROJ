@@ -14,24 +14,24 @@
             },
             "fog": {
                 "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
+                    "r": 0.03,
+                    "g": 0.0,
+                    "b": 0.47
                 },
-                "near": 1.0,
+                "near": 10.0,
                 "far": 1000.0
             },
             "skybox": {
-                "size": {"x": 425.0, "y": 344.5, "z": 425.0},
-                "center": {"x": 0.0, "y": 100.0, "z": 0.0},
-                "emissive": {"r": 0.0, "g": 0.0, "b": 1.0},
-                "intensity": 0.01,
-                "front": "scenes/stadium/textures/front.jpg",
-                "back": "scenes/stadium/textures/back.jpg",
-                "up": "scenes/stadium/textures/up.jpg",
-                "down": "scenes/stadium/textures/down.jpg",
-                "left": "scenes/stadium/textures/left.jpg",
-                "right": "scenes/stadium/textures/right.jpg"
+                "size": {"x": 512.0, "y": 512.0, "z": 512.0},
+                "center": {"x": 0.0, "y": 0.0, "z": 0.0},
+                "emissive": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "intensity": 0.0,
+                "front": "scenes/stadium/textures/skybox/front.webp",
+                "back": "scenes/stadium/textures/skybox/back.webp",
+                "up": "scenes/stadium/textures/skybox/up.webp",
+                "down": "scenes/stadium/textures/skybox/down.webp",
+                "left": "scenes/stadium/textures/skybox/left.webp",
+                "right": "scenes/stadium/textures/skybox/right.webp"
             }
         },
         "textures": {
@@ -263,6 +263,38 @@
                 "target": {
                     "x": 0,
                     "y": 0,
+                    "z": 0
+                }
+            },
+            "center": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 0,
+                    "y": 5,
+                    "z": 1
+                },
+                "target": {
+                    "x": 0,
+                    "y": 5,
+                    "z": 0
+                }
+            },
+            "spectator": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 44,
+                    "y": 4.5,
+                    "z": 0
+                },
+                "target": {
+                    "x": 43,
+                    "y": 4,
                     "z": 0
                 }
             },

@@ -110,6 +110,7 @@ class MyContents {
                 camera.lookAt(...c.target);
 
                 this.app.cameras[camId] = camera;
+                this.app.lookAt[camId] = new THREE.Vector3(...c.target);
 
             } else if (c.type === 'orthogonal') {
                 const camera = new THREE.OrthographicCamera(
@@ -124,6 +125,7 @@ class MyContents {
                 camera.lookAt(...c.target);
 
                 this.app.cameras[camId] = camera;
+                this.app.lookAt[camId] = new THREE.Vector3(...c.target);
             }
         }
 
