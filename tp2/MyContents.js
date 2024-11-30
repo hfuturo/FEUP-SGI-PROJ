@@ -22,6 +22,7 @@ class MyContents {
         this.materials = [];
         this.primitives = [];
         this.lights = [];
+        this.lightClones = [];
         this.wireframe = [];
     }
 
@@ -388,7 +389,12 @@ class MyContents {
             mesh.receiveShadow = receiveshadows;
             return mesh;
         } else {
-            return this.lights[node.id];
+            const clone = this.lights[node.id].clone();
+            if (this.lightClones[node.id] === undefined) {
+                this.lightClones[node.id] = [];
+            }
+            this.lightClones[node.id].push(clone);
+            return clone;
         }
     }
 

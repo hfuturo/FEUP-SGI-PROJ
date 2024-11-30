@@ -60,13 +60,19 @@ class MyGuiInterface  {
     #lights() {
         const folder = this.datgui.addFolder('Lights');
 
-        folder.add(this.contents, 'activeLight', Object.keys(this.contents.lights)).name("Selected Light")
+        folder.add(this.contents, 'activeLight', Object.keys(this.contents.lightClones)).name("Selected Light")
             .onChange((value) => {
-                this.lightControllers.forEach((controller) => controller.object = this.contents.lights[value]);
-                this.lightControllers.forEach((controller) => controller.updateDisplay());
+                this.lightControllers.forEach((controller) => controller.destroy());
+                this.lightControllers = [];
+
+                this.contents.lightClones[value].forEach((clone, i) => {
+                    this.lightControllers.push(folder.add(clone, 'visible').name(`${i+1}. on/off`));
+                });
             });
         
-        this.lightControllers.push(folder.add(this.contents.lights[this.contents.activeLight], 'visible').name('on/off'));
+        this.contents.lightClones[this.contents.activeLight].forEach((clone, i) => {
+            this.lightControllers.push(folder.add(clone, 'visible').name(`${i+1}. on/off`));
+        });
     }
 }
 
