@@ -16,7 +16,7 @@ class MyContents {
         this.axis = null
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/stadium.json");
+        this.reader.open("scenes/stadium/stadium.json");
 
         this.textures = [];
         this.materials = [];
@@ -306,9 +306,6 @@ class MyContents {
                 lightSpec.intensity
             )
 
-            const helper = new THREE.DirectionalLightHelper(light, 0.5);
-            this.app.scene.add(helper);
-
             light.shadow.camera.left = lightSpec.shadowleft;
             light.shadow.camera.right = lightSpec.shadowright;
             light.shadow.camera.bottom = lightSpec.shadowbottom;
@@ -322,7 +319,6 @@ class MyContents {
 
         light.visible = lightSpec.enabled;
         this.lights[lightSpec.id] = light;
-        this.app.scene.add(light);
     }
 
     initObjects(node, parentId, material, receiveshadows=false, castshadows=false) {
@@ -389,6 +385,8 @@ class MyContents {
             mesh.castShadow = castshadows;
             mesh.receiveShadow = receiveshadows;
             return mesh;
+        } else {
+            return this.lights[node.id];
         }
     }
 

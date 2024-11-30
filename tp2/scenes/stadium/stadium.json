@@ -26,64 +26,64 @@
                 "center": {"x": 0.0, "y": 100.0, "z": 0.0},
                 "emissive": {"r": 0.0, "g": 0.0, "b": 1.0},
                 "intensity": 0.01,
-                "front": "scenes/textures/front.jpg",
-                "back": "scenes/textures/back.jpg",
-                "up": "scenes/textures/up.jpg",
-                "down": "scenes/textures/down.jpg",
-                "left": "scenes/textures/left.jpg",
-                "right": "scenes/textures/right.jpg"
+                "front": "scenes/stadium/textures/front.jpg",
+                "back": "scenes/stadium/textures/back.jpg",
+                "up": "scenes/stadium/textures/up.jpg",
+                "down": "scenes/stadium/textures/down.jpg",
+                "left": "scenes/stadium/textures/left.jpg",
+                "right": "scenes/stadium/textures/right.jpg"
             }
         },
         "textures": {
             "grass": {
-                "filepath": "scenes/textures/grass.png",
+                "filepath": "scenes/stadium/textures/grass/grass.png",
                 "isVideo": false,
-                "mipmap0": "scenes/textures/grass.512.png",
-                "mipmap1": "scenes/textures/grass.256.png",
-                "mipmap2": "scenes/textures/grass.128.png",
-                "mipmap3": "scenes/textures/grass.64.png",
-                "mipmap4": "scenes/textures/grass.32.png",
-                "mipmap5": "scenes/textures/grass.16.png",
-                "mipmap6": "scenes/textures/grass.8.png"
+                "mipmap0": "scenes/stadium/textures/grass/grass.512.png",
+                "mipmap1": "scenes/stadium/textures/grass/grass.256.png",
+                "mipmap2": "scenes/stadium/textures/grass/grass.128.png",
+                "mipmap3": "scenes/stadium/textures/grass/grass.64.png",
+                "mipmap4": "scenes/stadium/textures/grass/grass.32.png",
+                "mipmap5": "scenes/stadium/textures/grass/grass.16.png",
+                "mipmap6": "scenes/stadium/textures/grass/grass.8.png"
             },
             "concrete": {
-                "filepath": "scenes/textures/concrete.png",
+                "filepath": "scenes/stadium/textures/concrete.png",
                 "isVideo": false
             },
             "metal": {
-                "filepath": "scenes/textures/metal.png",
+                "filepath": "scenes/stadium/textures/metal.png",
                 "isVideo": false
             },
             "football": {
-                "filepath": "scenes/textures/football.webp",
+                "filepath": "scenes/stadium/textures/football.webp",
                 "isVideo": false
             },
             "goal": {
-                "filepath": "scenes/textures/goal.jpg",
+                "filepath": "scenes/stadium/textures/goal.jpg",
                 "isVideo": false
             },
             "pub": {
-                "filepath": "scenes/videos/ad.mp4",
+                "filepath": "scenes/stadium/videos/ad.mp4",
                 "isVideo": true
             },
             "grass_bump": {
-                "filepath": "scenes/textures/grass_bump.png",
+                "filepath": "scenes/stadium/textures/grass_bump.png",
                 "isVideo": false
             },
             "flag_bump": {
-                "filepath": "scenes/textures/flag_bump.jpg",
+                "filepath": "scenes/stadium/textures/flag_bump.jpg",
                 "isVideo": false
             },
             "steel": {
-                "filepath": "scenes/textures/steel.avif",
+                "filepath": "scenes/stadium/textures/steel.avif",
                 "isVideo": false
             },
             "blue_metal": {
-                "filepath": "scenes/textures/blue_metal.jpg",
+                "filepath": "scenes/stadium/textures/blue_metal.jpg",
                 "isVideo": false
             },
             "black_cloth": {
-                "filepath": "scenes/textures/black_cloth.avif",
+                "filepath": "scenes/stadium/textures/black_cloth.avif",
                 "isVideo": false
             }
         },
@@ -234,7 +234,8 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
-                "textureref": "blue_metal"
+                "textureref": "blue_metal",
+                "texlength_s": 0.2
             },
             "black_cloth": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
