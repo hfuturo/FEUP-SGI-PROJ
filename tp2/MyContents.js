@@ -151,7 +151,12 @@ class MyContents {
             let texture;
 
             if (rawTexture.isVideo) {
-                const video = document.getElementById("/" + path);
+                const video = document.createElement("video");
+                video.src = path;
+                video.load();
+                video.autoplay = true;
+                video.loop = true;
+                video.muted = true;
                 texture = new THREE.VideoTexture(video);
                 texture.colorSpace = THREE.SRGBColorSpace;
             }
