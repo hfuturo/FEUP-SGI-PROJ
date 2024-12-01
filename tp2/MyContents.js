@@ -95,6 +95,10 @@ class MyContents {
         this.app.gui.finish();
     }
 
+    /**
+     * Intializes cameras based on JSON specifications
+     * @param {*} data parsed JSON data
+     */
     initCameras(data) {
         const aspect = window.innerWidth / window.innerHeight;
 
@@ -133,6 +137,10 @@ class MyContents {
         this.app.setActiveCamera(data.activeCameraId);
     }
 
+    /**
+     * Initializes textures based on JSON specifications
+     * @param {*} textures parsed JSON textures
+     */
     initTextures(textures) {
         const loader = new THREE.TextureLoader();
 
@@ -186,6 +194,10 @@ class MyContents {
         }
     }
 
+    /**
+     * Initializes materials based on JSON specifications
+     * @param {*} materials parsed JSON materials
+     */
     initMaterials(materials) {
         for (let materialId in materials) {
             const m = materials[materialId];
@@ -233,6 +245,10 @@ class MyContents {
         }
     }
 
+    /**
+     * Initializes the skybox based on JSON specifications
+     * @param {*} skybox parsed JSON skybox
+     */
     initSkybox(skybox) {
         const loader = new THREE.TextureLoader();
 
@@ -258,6 +274,11 @@ class MyContents {
         this.app.scene.add(mesh);
     }
 
+    /**
+     * Traverses the scene graph and initializes the primitives and lights (leaf nodes)
+     * @param {*} node current node
+     * @param {*} parentId id of the parent node
+     */
     initPrimitives(node, parentId) {
         if (node.type === 'node') {
             if (node.children.length === 0 && node.lods.length === 0) {
@@ -281,6 +302,10 @@ class MyContents {
         }
     }
 
+    /**
+     * Initializes a light source based on its JSON specification
+     * @param {*} lightSpec parsed JSON light specification
+     */
     initLight(lightSpec) {
         
         let light;
@@ -324,6 +349,16 @@ class MyContents {
         this.lights[lightSpec.id] = light;
     }
 
+    /**
+     * Traverse the scene graph and initializes the objects (non-leaf nodes) grouping nodes with the same parent
+     * Propagates materials and shadows
+     * @param {*} node current node
+     * @param {*} parentId id of the parent node
+     * @param {*} material inherited material or undefined if no material is inherited
+     * @param {*} receiveshadows inherited receiveshadows or false if no receiveshadows is inherited
+     * @param {*} castshadows inherited castshadows or false if no castshadows is inherited
+     * @returns 
+     */
     initObjects(node, parentId, material, receiveshadows=false, castshadows=false) {
         if (node.type === 'node') {
             const group = new THREE.Group();
