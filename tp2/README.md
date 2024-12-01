@@ -1,23 +1,17 @@
-# sgi-tp2-base
-The starting point of the second assignment of SGI.
+# SGI 2024/2025 - TP2
 
-# Getting started
+## Group: T04G05
 
-Considering a code block (for instance class A.js), to load an JSON file (in the defined structure) call:
+| Name             | Number    | E-Mail             |
+| ---------------- | --------- | ------------------ |
+| Henrique Silva   | 202105647 | up202105647@up.pt  |
+| Tomás Gaspar     | 202108828 | up202108828@up.pt  |
 
-    let reader = new MyFileReader(app, this, *this.onSceneLoaded*);
-    reader.open("<path to JSON file>");	
+----
+## Project information
 
-The last argument in the MyFileReader object call is the name of the method that is to be called when the JSON file is loaded and parsed.
+The scene is a football stadium which contains a pitch with lines delimiting its perimeter and the penalty area, goals, corner flags, and a ball. Around the pitch there are some spectator stands and a working light in each corner. Finally there are two substitute benches and a score board.
+Bellow are two pictures which illustrate the developed scene.
 
-Hence, In the same code block (for instance class A.js) add a function method with the following signature: 
-
-    onSceneLoaded(data) {
-        // do something with the data object
-    }
-
-This method is called once the JSON file is loaded and parsed successfully. This method single input argument, *data*, is an object containing the entire scene data object.
-
-# Version
-
-20241105v1
+![](./screenshots/1.png)
+![](./screenshots/2.png)
