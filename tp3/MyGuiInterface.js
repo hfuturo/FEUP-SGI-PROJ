@@ -55,6 +55,9 @@ class MyGuiInterface  {
             .name("Show mesh")
             .onChange(()=>this.contents.updateMeshVisibility());
     }
+
+    finish() {        
+    }
 }
 
 export { MyGuiInterface };

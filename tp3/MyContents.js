@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
+import { MyInitializer } from "./yasf/MyInitializer.js";
 
 /**
  *  This class contains the contents of out application
@@ -12,6 +13,8 @@ class MyContents {
   constructor(app) {
     this.app = app;
     this.axis = null;
+
+    this.initializer = new MyInitializer(this.app, './yasf/scene.json');
 
     //Curve related attributes
     this.segments = 100;

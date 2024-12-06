@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import { MyApp } from './MyApp.js';
 import { MyGuiInterface } from './MyGuiInterface.js';
 import { MyContents } from './MyContents.js';
@@ -17,6 +16,7 @@ app.setContents(contents);
 
 // create the gui interface object
 let gui = new MyGuiInterface(app)
+app.setGui(gui)
 // set the contents object in the gui interface object
 gui.setContents(contents)
 

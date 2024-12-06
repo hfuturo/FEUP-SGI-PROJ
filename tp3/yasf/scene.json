@@ -1,0 +1,76 @@
+{
+    "yasf": {
+        "globals": {
+            "background": {
+                "r": 0.0, 
+                "g": 0.0, 
+                "b": 0.0
+            },
+            "ambient": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "intensity": 0.1
+            },
+            "fog": {
+                "color": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "near": 10.0,
+                "far": 100.0
+            },
+            "skybox": {
+                "size": {"x": 512.0, "y": 512.0, "z": 512.0},
+                "center": {"x": 0.0, "y": 0.0, "z": 0.0},
+                "emissive": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "intensity": 0.0,
+                "front": "",
+                "back": "",
+                "up": "",
+                "down": "",
+                "left": "",
+                "right": ""
+            }
+        },
+        "textures": {
+
+        },
+        "materials": {
+
+        },
+        "cameras": {
+            "initial": "perspective",
+            "perspective": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 15,
+                    "y": 15,
+                    "z": 15
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        },
+        "graph": {
+            "rootid": "scene",
+            "scene": {
+                "type": "node",
+                "children": {
+                    "rectangle": {
+                        "type": "rectangle",
+                        "xy1": {"x": -1, "y": -1},
+                        "xy2": {"x": 1, "y": 1}
+                    }
+                }
+            }
+        }
+    }
+}

@@ -21,6 +21,7 @@ class MyApp  {
         this.activeCameraName = null
         this.lastCameraName = null
         this.cameras = []
+        this.lookAt = []
         this.frustumSize = 20
 
         // other attributes
@@ -43,13 +44,13 @@ class MyApp  {
         this.stats.showPanel(1) // 0: fps, 1: ms, 2: mb, 3+: custom
         document.body.appendChild(this.stats.dom)
 
-        this.initCameras();
-        this.setActiveCamera('Perspective')
-
         // Create a renderer with Antialiasing
         this.renderer = new THREE.WebGLRenderer({antialias:true});
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setClearColor("#000000");
+
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         // Configure renderer size
         this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -59,18 +60,6 @@ class MyApp  {
 
         // manage window resizes
         window.addEventListener('resize', this.onResize.bind(this), false );
-    }
-
-    /**
-     * initializes all the cameras
-     */
-    initCameras() {
-        const aspect = window.innerWidth / window.innerHeight;
-
-        // Create a basic perspective camera
-        const perspective1 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
-        perspective1.position.set(10,10,10)
-        this.cameras['Perspective'] = perspective1
     }
 
     /**
@@ -105,10 +94,12 @@ class MyApp  {
                 // Orbit controls allow the camera to orbit around a target.
                 this.controls = new OrbitControls( this.activeCamera, this.renderer.domElement );
                 this.controls.enableZoom = true;
+                this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
                 this.controls.update();
             }
             else {
                 this.controls.object = this.activeCamera
+                this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
             }
         }
     }
@@ -148,13 +139,15 @@ class MyApp  {
         // update the animation if contents were provided
         if (this.activeCamera !== undefined && this.activeCamera !== null) {
             this.contents.update()
+
+            // required if controls.enableDamping or controls.autoRotate are set to true
+            this.controls.update();
+            
+            // render the scene
+            this.renderer.render(this.scene, this.activeCamera);
         }
 
-        // required if controls.enableDamping or controls.autoRotate are set to true
-        this.controls.update();
 
-        // render the scene
-        this.renderer.render(this.scene, this.activeCamera);
 
         // subsequent async calls to the render loop
         requestAnimationFrame( this.render.bind(this) );
