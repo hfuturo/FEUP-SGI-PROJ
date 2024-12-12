@@ -38,7 +38,22 @@
 
         },
         "materials": {
-
+            "white": {
+                "emissive": {"r": 0.5, "g": 0.5, "b": 0.5},
+                "color": {"r": 1, "g": 1, "b": 1},
+                "specular": {"r": 0.5, "g": 0.5, "b": 0.5},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1
+            },
+            "black": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1
+            }
         },
         "cameras": {
             "initial": "perspective",
@@ -64,7 +79,120 @@
             "scene": {
                 "type": "node",
                 "children": {
-                    "rectangle": {
+                    "nodesList":[
+                        "billboard"
+                    ]
+                }
+            },
+            "billboard": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "left_billboard_leg",
+                        "right_billboard_leg",
+                        "billboard_screen"
+                    ]
+                }
+            },
+            "billboard_screen": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"white"
+                },
+                "children":{
+                    "nodesList":[
+                        "billboard_structure",
+                        "billboard_display"
+                    ]
+                }
+            },
+            "billboard_structure": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"black"
+                },
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 0}},
+                    {"type": "scale", "amount": {"x": 16, "y": 8, "z": 2}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "box"
+                    ]
+                }
+            },
+            "billboard_display": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 1.01}},
+                    {"type": "scale", "amount": {"x": 8, "y": 4, "z": 1}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "rectangle"                        
+                    ]
+                }
+            },
+            "right_billboard_leg": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"black"
+                },
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -5, "y": 2.5, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.5, "y": 5, "z": 0.5}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder"
+                    ]
+                }
+            },
+            "left_billboard_leg": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"black"
+                },
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 5, "y": 2.5, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.5, "y": 5, "z": 0.5}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder"
+                    ]
+                }
+            },
+            "cylinder": {
+                "type": "node",
+                "children": {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "base": 1,
+                        "top": 1,
+                        "height": 1,
+                        "slices": 20,
+                        "stacks": 5
+                    }
+                }
+            },
+            "box": {
+                "type": "node",
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {"x": 0.5, "y": 0.5, "z": 0.5},
+                        "xyz2": {"x": -0.5, "y": -0.5, "z": -0.5},
+                        "parts_x": 1,
+                        "parts_y": 1,
+                        "parts_z": 1
+                    }
+                }
+            },
+            "rectangle": {
+                "type": "node",
+                "children": {
+                    "rectanglePrim": {
                         "type": "rectangle",
                         "xy1": {"x": -1, "y": -1},
                         "xy2": {"x": 1, "y": 1}
