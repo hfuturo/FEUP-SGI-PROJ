@@ -57,6 +57,7 @@ class MyFileReader {
 			this.loadTextures(rootElement);
 			this.loadMaterials(rootElement);
 			this.loadNodes(rootElement);
+			this.loadTrack(rootElement);
 		}
 		catch (error) {
 			this.errorMessage = error;
@@ -807,6 +808,10 @@ class MyFileReader {
 		primitiveObj.representations.push(obj);
 
 		return;
+	}
+
+	loadTrack(rootElement) {
+		console.log(rootElement["track"])
 	}
 
 }

@@ -19,7 +19,7 @@
                     "b": 0.0
                 },
                 "near": 10.0,
-                "far": 100.0
+                "far": 1000.0
             },
             "skybox": {
                 "size": {"x": 512.0, "y": 512.0, "z": 512.0},
@@ -80,7 +80,43 @@
                 "type": "node",
                 "children": {
                     "nodesList":[
-                        "billboard"
+                        "billboard",
+                        "parking_lot"
+                    ]
+                }
+            },
+            "parking_lot": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "parking_lot1",
+                        "parking_lot2"
+                    ]
+                }
+            },
+            "parking_lot1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -22, "y": 0, "z": -25}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 10, "y": 20, "z": 1}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "parking_lot2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -22, "y": 0, "z": 25}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 10, "y": 20, "z": 1}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "rectangle"
                     ]
                 }
             },
@@ -199,6 +235,19 @@
                     }
                 }
             }
+        },
+        "track": {
+            "routes": {
+                "1": [
+                    {"x": 0, "y": 0, "z": 0}                   
+                ]
+            },
+            "powerups": [
+                {"x": 0, "y": 0, "z": 0}
+            ],
+            "obstacles": [
+                {"x": 0, "y": 0, "z": 0}
+            ]
         }
     }
 }

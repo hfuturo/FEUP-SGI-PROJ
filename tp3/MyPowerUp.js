@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-class MyTrackObject {
+class MyPowerUp {
 
     constructor(scene, points) {
         this.scene = scene;
@@ -10,6 +10,7 @@ class MyTrackObject {
             new THREE.BoxGeometry(2, 2, 2),
             new THREE.MeshBasicMaterial({ color: 0x0000ff })
         );
+        this.representation.position.set(position.x, position.y, position.z);
     }
 
     display() {
@@ -18,4 +19,4 @@ class MyTrackObject {
 
 }
 
-export { MyTrackObject };
+export { MyPowerUp };
