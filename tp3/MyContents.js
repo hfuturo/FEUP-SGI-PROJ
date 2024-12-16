@@ -3,6 +3,8 @@ import { MyAxis } from "./MyAxis.js";
 import { MyInitializer } from "./yasf/MyInitializer.js";
 import { MyBallon } from "./MyBalloon.js";
 import { MyTrack } from "./MyTrack.js";
+import { MyPowerUp } from "./MyPowerUp.js";
+import { MyObstacle } from "./MyObstacle.js";
 
 /**
  *  This class contains the contents of out application
@@ -16,12 +18,21 @@ class MyContents {
     this.app = app;
     this.axis = null;
 
-    this.initializer = new MyInitializer(this.app, './yasf/scene.json');
+    this.initializer = new MyInitializer(this.app, './yasf/scene.json', this.onAfterSceneLoadedAndBeforeRender.bind(this));
     this.balloon = new MyBallon(this.app, 2, 3);
-    this.track = new MyTrack(this.app, [], [], []);
-
-
   }
+
+  onAfterSceneLoadedAndBeforeRender() {
+    const track = this.initializer.track;
+
+    this.track = new MyTrack(
+      this.app,
+      track.powerups.map(pos => new MyPowerUp(this.app, pos)), 
+      track.obstacles.map(pos => new MyObstacle(this.app, pos))
+    );
+    this.track.display();
+  }
+
   /**
    * initializes the contents
    */
@@ -48,7 +59,6 @@ class MyContents {
     this.app.scene.add(ambientLight);
 
     this.balloon.display();
-    this.track.display();
   }
 
   /**

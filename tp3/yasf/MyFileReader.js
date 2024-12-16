@@ -811,7 +811,36 @@ class MyFileReader {
 	}
 
 	loadTrack(rootElement) {
-		console.log(rootElement["track"])
+		const trackElem = rootElement["track"];
+
+		this.data["track"] = {}
+
+		this.loadRoutes(trackElem["routes"]);
+		this.loadTrackObject(trackElem["powerups"], "powerups");
+		this.loadTrackObject(trackElem["obstacles"], "obstacles");
+	}
+
+	loadRoutes(routesElem) {
+		this.data["track"]["routes"] = []
+
+		for (const route in routesElem) {
+			const routeElem = routesElem[route];
+			const points = []
+			for (const point of routeElem) {
+				points.push(this.getVectorN(point, ["x", "y", "z"]));
+			}
+			this.data["track"]["routes"][route] = points;
+		}
+	}
+
+	loadTrackObject(trackObjectElem, key) {
+		const points = []
+		for (const obj of trackObjectElem) {
+			const position = this.getVectorN(obj, ["x", "y", "z"]);
+			points.push(position);
+		}
+
+		this.data["track"][key] = points;
 	}
 
 }

@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 
 class MyTrack {
-    constructor(app, route, obstacles, powerUps) {
+    constructor(app, obstacles, powerUps) {
         this.app = app;
-        this.route = route;
         this.obstacles = obstacles;
         this.powerUps = powerUps;
 
@@ -63,40 +62,6 @@ class MyTrack {
         const mesh = new THREE.Mesh(geometry, material);
         mesh.scale.set(1, 0.01, 1);
         return mesh;
-    }
-
-    /**
-     * Creates the mesh, the line and the wireframe used to visualize the curve
-     */
-    #createCurveObjects() {
-        let geometry = new THREE.TubeGeometry(
-            this.path,
-            this.segments,
-            this.width,
-            3,
-            this.closedCurve
-        );
-        this.mesh = new THREE.Mesh(geometry, this.material);
-        this.wireframe = new THREE.Mesh(geometry, this.wireframeMaterial);
-
-        let points = this.path.getPoints(this.segments);
-        let bGeometry = new THREE.BufferGeometry().setFromPoints(points);
-
-        // Create the final object to add to the scene
-        this.line = new THREE.Line(bGeometry, this.lineMaterial);
-
-        this.curve = new THREE.Group();
-        this.mesh.visible = this.showMesh;
-        this.wireframe.visible = this.showWireframe;
-        this.line.visible = this.showLine;
-
-        this.curve.add(this.mesh);
-        this.curve.add(this.wireframe);
-        this.curve.add(this.line);
-
-        this.curve.rotateZ(Math.PI);
-        this.curve.scale.set(1, 0.01, 1);
-        this.app.scene.add(this.curve);
     }
 
 }

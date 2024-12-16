@@ -3,8 +3,9 @@ import { MyFileReader } from './MyFileReader.js';
 import { MyPrimitive } from './MyPrimitive.js';
 
 class MyInitializer {
-    constructor(app, sceneFile) {
+    constructor(app, sceneFile, callback) {
         this.app = app;
+        this.callback = callback;
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open(sceneFile);
@@ -58,6 +59,10 @@ class MyInitializer {
         this.activeLight = Object.keys(this.lights)[0];
 
         this.app.gui.finish();
+
+        this.track = data.track;
+        
+        this.callback();
     }
 
     /**

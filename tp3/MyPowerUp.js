@@ -2,19 +2,18 @@ import * as THREE from 'three';
 
 class MyPowerUp {
 
-    constructor(scene, points) {
-        this.scene = scene;
-        this.points = points;
+    constructor(app, pos) {
+        this.app = app;
 
         this.representation = new THREE.Mesh(
             new THREE.BoxGeometry(2, 2, 2),
             new THREE.MeshBasicMaterial({ color: 0x0000ff })
         );
-        this.representation.position.set(position.x, position.y, position.z);
+        this.representation.position.set(pos[0], pos[1], pos[2]);
     }
 
     display() {
-        this.scene.add(this.representation);
+        this.app.scene.add(this.representation);
     }
 
 }
