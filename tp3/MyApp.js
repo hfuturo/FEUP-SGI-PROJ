@@ -30,6 +30,9 @@ class MyApp  {
         this.gui = null
         this.axis = null
         this.contents == null
+
+        this.lastTime = performance.now();
+        this.accumulator = 0;
     }
     /**
      * initializes the application
@@ -136,10 +139,21 @@ class MyApp  {
         this.stats.begin()
         this.updateCameraIfRequired()
 
+        const now = performance.now();
+        const deltaTime = now - this.lastTime;
+        this.lastTime = now;
+
+        // 60 fps
+        const fixedTimeStep = 1 / 60;
+        this.accumulator += deltaTime / 1000;
+
+        while (this.accumulator >= fixedTimeStep) {
+            this.contents.update();
+            this.accumulator -= fixedTimeStep;
+        }
+
         // update the animation if contents were provided
         if (this.activeCamera !== undefined && this.activeCamera !== null) {
-            this.contents.update()
-
             // required if controls.enableDamping or controls.autoRotate are set to true
             this.controls.update();
             

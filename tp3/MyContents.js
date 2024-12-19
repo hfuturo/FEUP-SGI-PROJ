@@ -44,6 +44,8 @@ class MyContents {
       this.app.scene.add(this.axis);
     }
 
+    document.addEventListener('keydown', this.keyHandler.bind(this));
+
     // add a point light on top of the model
     const pointLight = new THREE.PointLight(0xffffff, 500, 0);
     pointLight.position.set(0, 20, 0);
@@ -61,11 +63,26 @@ class MyContents {
     this.balloon.display();
   }
 
+  keyHandler(event) {
+    switch (event.key) {
+      case 'w':
+        this.balloon.up();
+        break;
+      case 's':
+        this.balloon.down();
+        break;
+      default:
+        break;
+    } 
+  }
+
   /**
    * updates the contents
    * this method is called from the render method of the app
    */
-  update() {}
+  update() {
+    this.balloon.update();
+  }
 }
 
 export { MyContents };

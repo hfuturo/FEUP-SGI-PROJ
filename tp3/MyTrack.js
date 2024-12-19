@@ -33,9 +33,9 @@ class MyTrack {
             new THREE.Vector3(12, 0, 10),
             new THREE.Vector3(12, 0, 6),
             new THREE.Vector3(10, 0, 4),
-            new THREE.Vector3(7, 0, 4),
+            new THREE.Vector3(7, 0, 3),
             new THREE.Vector3(6, 0, 0),
-            new THREE.Vector3(7, 0, -4),
+            new THREE.Vector3(7, 0, -3),
             new THREE.Vector3(10, 0, -4),
             new THREE.Vector3(12, 0, -6),
             new THREE.Vector3(12, 0, -10),
@@ -46,10 +46,10 @@ class MyTrack {
             new THREE.Vector3(1 - Math.cos(Math.PI / 6), 0, -10 - Math.sin(Math.PI / 6)),
             new THREE.Vector3(0, 0, -10),
             new THREE.Vector3(0, 0, -5)
-        ].map(point => point.multiplyScalar(4));
+        ].map(point => point.multiplyScalar(8));
 
         const curve = new THREE.CatmullRomCurve3(points);
-        const geometry = new THREE.TubeGeometry(curve, 100, 10, 3, true);
+        const geometry = new THREE.TubeGeometry(curve, 100, 20, 3, true);
         
         const texture = new THREE.TextureLoader().load("./images/uvmapping.jpg");
         texture.wrapS = THREE.RepeatWrapping;

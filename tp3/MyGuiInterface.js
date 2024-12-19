@@ -15,6 +15,9 @@ class MyGuiInterface  {
         this.app = app
         this.datgui =  new GUI();
         this.contents = null
+
+        this.homogeneous = true
+        this.windControllers = []
     }
 
     /**
@@ -29,31 +32,23 @@ class MyGuiInterface  {
      * Initialize the gui interface
      */
     init() {
-        
-        // const folderGeometry = this.datgui.addFolder("Curve");
-        // folderGeometry
-        //     .add(this.contents, "segments", 10, 200)
-        //     .step(50)
-        //     .onChange((value)=>this.contents.updateCurve(value));
-        // folderGeometry
-        //     .add(this.contents, "closedCurve")
-        //     .onChange((value)=>this.contents.updateCurveClosing(value));
-        // folderGeometry
-        //     .add(this.contents, "textureRepeat", 1, 100)
-        //     .step(1)
-        //     .onChange((value)=>{this.contents.updateTextureRepeat(value)});
-        // folderGeometry
-        //     .add(this.contents, "showLine")
-        //     .name("Show line")
-        //     .onChange(()=>this.contents.updateLineVisibility());
-        // folderGeometry
-        //     .add(this.contents, "showWireframe")
-        //     .name("Show wireframe")
-        //     .onChange(()=>this.contents.updateWireframeVisibility());
-        // folderGeometry
-        //     .add(this.contents, "showMesh")
-        //     .name("Show mesh")
-        //     .onChange(()=>this.contents.updateMeshVisibility());
+        const wind = this.datgui.addFolder('Wind')
+        wind.add(this, 'homogeneous').name('Homogeneous')
+        this.windControllers.push(wind.add(this.contents.balloon.wind, 'north', 0, 10).name('North').onChange((val) => this.#changeHomogeneous(val)))
+        this.windControllers.push(wind.add(this.contents.balloon.wind, 'south', 0, 10).name('South').onChange((val) => this.#changeHomogeneous(val)))
+        this.windControllers.push(wind.add(this.contents.balloon.wind, 'east', 0, 10).name('East').onChange((val) => this.#changeHomogeneous(val)))
+        this.windControllers.push(wind.add(this.contents.balloon.wind, 'west', 0, 10).name('West').onChange((val) => this.#changeHomogeneous(val)))
+    }
+
+    #changeHomogeneous(val) {
+        if (this.homogeneous) {
+            this.contents.balloon.wind.north = val
+            this.contents.balloon.wind.south = val
+            this.contents.balloon.wind.east = val
+            this.contents.balloon.wind.west = val
+
+            this.windControllers.forEach(controller => controller.updateDisplay());
+        }
     }
 
     finish() {        
