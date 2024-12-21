@@ -13,6 +13,7 @@ class MyInitializer {
         this.textures = [];
         this.materials = [];
         this.primitives = [];
+        this.objects = [];
         this.lights = [];
         this.lightClones = [];
         this.wireframe = [];
@@ -384,6 +385,7 @@ class MyInitializer {
                 }
             }
 
+            this.objects[node.id] = group;
             return group;
         } else if (node.type === 'primitive') {
             let mesh;

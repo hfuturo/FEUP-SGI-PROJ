@@ -5,6 +5,7 @@ import { MyBallon } from "./MyBalloon.js";
 import { MyTrack } from "./MyTrack.js";
 import { MyPowerUp } from "./MyPowerUp.js";
 import { MyObstacle } from "./MyObstacle.js";
+import { MyReliefImage } from "./MyReliefImage.js";
 
 /**
  *  This class contains the contents of out application
@@ -20,6 +21,7 @@ class MyContents {
 
     this.initializer = new MyInitializer(this.app, './yasf/scene.json', this.onAfterSceneLoadedAndBeforeRender.bind(this));
     this.balloon = new MyBallon(this.app, 2, 3);
+    this.reliefImage = new MyReliefImage();
   }
 
   onAfterSceneLoadedAndBeforeRender() {
