@@ -1,4 +1,7 @@
 import * as THREE from "three";
+import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
+import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
+
 
 class MyBallon {
 
@@ -23,15 +26,24 @@ class MyBallon {
     }
 
     display() {
-        const box = new THREE.Mesh(new THREE.BoxGeometry(this.boxLength, this.boxLength, this.boxLength));
-        const sphere = new THREE.Mesh(new THREE.SphereGeometry(this.sphereRadius));
-        sphere.position.set(0, this.boxLength/2 + this.sphereRadius * 0.90, 0);
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
 
-        this.group.add(box);
-        this.group.add(sphere);
+        objLoader.load(
+            "models/balloon1/Air_Balloon.obj",
+            (ballon) => this.group.add(ballon),
+            (obj) => console.log(`${obj.loaded / obj.total * 100}% loaded`),
+            (error) => console.error(`Error loading ballon object: ${error}`)
+        );
+        
+        mtlLoader.load(
+            "models/balloon1/Air_Balloon.mtl",
+            (model) => objLoader.setMaterials(model),
+            (mtl) => console.log(`${mtl.loaded / mtl.total * 100}% loaded`),
+            (error) => console.error(`Error loading ballon material: ${error}`)
+        );
 
-        this.group.position.set(0, this.boxLength/2, 0);
-
+        this.group.scale.set(0.5, 0.5, 0.5);
         this.app.scene.add(this.group);
     }
 
