@@ -27,13 +27,25 @@ class MyBallon {
         this.balloonScale = 0.25;
 
         // geometries to detect collision
-        this.collisionTopRadius = 12;
+        this.collisionTopRadius = 3;
         this.topSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionTopRadius),
             new THREE.MeshBasicMaterial({ color: 0x0000FF})
         );
 
-        this.collisionBottomRadius = 3;
+        this.collisionMiddleRadius = 1.25;
+        this.middleSphere = new THREE.Mesh(
+            new THREE.SphereGeometry(this.collisionMiddleRadius),
+            new THREE.MeshBasicMaterial({ color: 0xFF0000 })
+        );
+
+        this.collisionMiddleBottomRadius = 0.45;
+        this.middleBottomSphere = new THREE.Mesh(
+            new THREE.SphereGeometry(this.collisionMiddleBottomRadius),
+            new THREE.MeshBasicMaterial({ color: 0xFF00FF })
+        );
+
+        this.collisionBottomRadius = 0.275;
         this.bottomSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionBottomRadius),
             new THREE.MeshBasicMaterial({ color: 0x00FF00})
@@ -46,7 +58,10 @@ class MyBallon {
 
         objLoader.load(
             "models/balloon1/Air_Balloon.obj",
-            (ballon) => this.group.add(ballon),
+            (ballon) => {
+                ballon.scale.set(this.balloonScale, this.balloonScale, this.balloonScale);
+                this.group.add(ballon);
+            },
             (obj) => console.log(`${obj.loaded / obj.total * 100}% loaded`),
             (error) => console.error(`Error loading ballon object: ${error}`)
         );
@@ -58,9 +73,14 @@ class MyBallon {
             (error) => console.error(`Error loading ballon material: ${error}`)
         );
 
-        this.topSphere.position.set(0, 22, 0);
-        this.group.scale.set(this.balloonScale, this.balloonScale, this.balloonScale);
+        this.topSphere.position.set(0, 5.5, 0);
+        this.middleSphere.position.set(0, 3, 0);
+        this.middleBottomSphere.position.set(0, 1.5, 0);
+        this.bottomSphere.position.set(0, 0.325, 0);
         this.group.add(this.topSphere);
+        this.group.add(this.middleSphere);
+        this.group.add(this.middleBottomSphere);
+        this.group.add(this.bottomSphere);
         this.app.scene.add(this.group);
     }
 
@@ -174,13 +194,32 @@ class MyBallon {
         const objPosition = object.getPosition();
         const objRadius = object.getRadius();
 
-        const diffX = Math.pow(objPosition[0] - this.group.position.x, 2);
-        const diffY = Math.pow(objPosition[1] - this.group.position.y, 2);
-        const diffZ = Math.pow(objPosition[2] - this.group.position.z, 2);
+        if (this.#checkCollision(this.topSphere, this.collisionTopRadius, objPosition, objRadius))
+            return true;
 
-        return Math.sqrt(diffX + diffY + diffZ) <= (objRadius + this.collisionTopRadius * 0.5);
+        if (this.#checkCollision(this.middleSphere, this.collisionMiddleRadius, objPosition, objRadius))
+            return true;
+
+        if (this.#checkCollision(this.middleBottomSphere, this.collisionMiddleBottomRadius, objPosition, objRadius))
+            return true;
+
+        if (this.#checkCollision(this.bottomSphere, this.collisionBottomRadius, objPosition, objRadius))
+            return true;
+
+        return false;
     }
 
+    #checkCollision(thisSphere, thisRadius, otherSphere, otherRadius) {
+        const position = new THREE.Vector3();
+        thisSphere.getWorldPosition(position);
+
+        const diffX = Math.pow(otherSphere[0] - position.x, 2);
+        const diffY = Math.pow(otherSphere[1] - position.y, 2);
+        const diffZ = Math.pow(otherSphere[2] - position.z, 2);
+
+        return Math.sqrt(diffX + diffY + diffZ) <= (otherRadius + thisRadius)
+    }
+    
     getPosition() {
         return this.group.position;
     }
