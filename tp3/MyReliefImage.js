@@ -9,16 +9,12 @@ class MyReliefImage {
     }
 
     async getImage(gray, color) {
-        const loader = new THREE.TextureLoader()
-        const grayTex = loader.load(gray)
-        const colorTex = loader.load(color)
-
         const [vertexShader, fragmentShader] = await Promise.all([this.vertexShader, this.fragmentShader]);
 
         this.material = new THREE.ShaderMaterial({
             uniforms: {
-                uGrayTex: { type: 'sampler2D', value: grayTex },
-                uColorTex: { type: 'sampler2D', value: colorTex },
+                uGrayTex: { type: 'sampler2D', value: gray },
+                uColorTex: { type: 'sampler2D', value: color },
             },
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,

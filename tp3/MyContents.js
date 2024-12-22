@@ -21,7 +21,14 @@ class MyContents {
 
     this.initializer = new MyInitializer(this.app, './yasf/scene.json', this.onAfterSceneLoadedAndBeforeRender.bind(this));
     this.balloon = new MyBallon(this.app, 2, 3);
+
     this.reliefImage = new MyReliefImage();
+    this.reliefRefresh = 60;
+    this.reliefClock = new THREE.Clock();
+
+    THREE.DefaultLoadingManager.onLoad = () => {
+      this.lastReliefRefresh = this.reliefRefresh;
+    };
   }
 
   onAfterSceneLoadedAndBeforeRender() {
@@ -84,6 +91,27 @@ class MyContents {
    */
   update() {
     this.balloon.update();
+
+    if (this.lastReliefRefresh === 0)
+      this.#updateReliefImage();
+
+    this.lastReliefRefresh += this.reliefClock.getDelta();
+    if (this.lastReliefRefresh >= this.reliefRefresh) {
+      this.lastReliefRefresh = 0;
+      this.app.renderTarget = true;
+    }
+  }
+
+  #updateReliefImage() {
+    this.reliefImage.getImage(this.app.targetDepth, this.app.targetRGB).then(mesh => {
+      if (this.reliefMesh) {
+        this.app.scene.remove(this.reliefMesh);
+      }
+
+      this.reliefMesh = mesh;
+      this.reliefMesh.position.set(0, 10, 10);
+      this.app.scene.add(this.reliefMesh);
+    });
   }
 }
 

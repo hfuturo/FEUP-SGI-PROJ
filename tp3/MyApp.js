@@ -26,6 +26,9 @@ class MyApp  {
 
         // other attributes
         this.renderer = null
+        this.renderTarget = false;
+        this.targetRGB = undefined;
+        this.targetDepth = undefined;
         this.controls = null
         this.gui = null
         this.axis = null
@@ -156,6 +159,22 @@ class MyApp  {
         if (this.activeCamera !== undefined && this.activeCamera !== null) {
             // required if controls.enableDamping or controls.autoRotate are set to true
             this.controls.update();
+
+            if (this.renderTarget) {
+                this.renderTarget = false;
+
+                const target = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight );
+                target.depthTexture = new THREE.DepthTexture();
+                target.depthTexture.format = THREE.DepthFormat;
+
+
+                this.renderer.setRenderTarget(target);
+                this.renderer.render(this.scene, this.activeCamera);
+                this.renderer.setRenderTarget(null);
+
+                this.targetRGB = target.texture;
+                this.targetDepth = target.depthTexture;
+            }
             
             // render the scene
             this.renderer.render(this.scene, this.activeCamera);

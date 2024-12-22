@@ -38,6 +38,8 @@ class MyGuiInterface  {
         this.windControllers.push(wind.add(this.contents.balloon.wind, 'south', 0, 10).name('South').onChange((val) => this.#changeHomogeneous(val)))
         this.windControllers.push(wind.add(this.contents.balloon.wind, 'east', 0, 10).name('East').onChange((val) => this.#changeHomogeneous(val)))
         this.windControllers.push(wind.add(this.contents.balloon.wind, 'west', 0, 10).name('West').onChange((val) => this.#changeHomogeneous(val)))
+
+        this.datgui.add(this.contents, 'reliefRefresh', 1, 60, 1).name('Relief Image Refresh (s)')
     }
 
     #changeHomogeneous(val) {
