@@ -26,29 +26,32 @@ class MyBallon {
 
         this.balloonScale = 0.25;
 
-        // geometries to detect collision
+        // set opacity to 1 to see geometries
+        this.collisionMaterial = new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 0 });
+
+        // geometries to detect collisions
         this.collisionTopRadius = 3;
         this.topSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionTopRadius),
-            new THREE.MeshBasicMaterial({ color: 0x0000FF})
+            this.collisionMaterial
         );
 
         this.collisionMiddleRadius = 1.25;
         this.middleSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionMiddleRadius),
-            new THREE.MeshBasicMaterial({ color: 0xFF0000 })
+            this.collisionMaterial
         );
 
         this.collisionMiddleBottomRadius = 0.45;
         this.middleBottomSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionMiddleBottomRadius),
-            new THREE.MeshBasicMaterial({ color: 0xFF00FF })
+            this.collisionMaterial
         );
 
         this.collisionBottomRadius = 0.275;
         this.bottomSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionBottomRadius),
-            new THREE.MeshBasicMaterial({ color: 0x00FF00})
+            this.collisionMaterial
         );
     }
 
@@ -217,7 +220,7 @@ class MyBallon {
         const diffY = Math.pow(otherSphere[1] - position.y, 2);
         const diffZ = Math.pow(otherSphere[2] - position.z, 2);
 
-        return Math.sqrt(diffX + diffY + diffZ) <= (otherRadius + thisRadius)
+        return Math.sqrt(diffX + diffY + diffZ) <= (otherRadius + thisRadius);
     }
     
     getPosition() {

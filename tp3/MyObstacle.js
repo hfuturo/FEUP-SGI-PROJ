@@ -7,12 +7,11 @@ class MyObstacle {
         this.app = app;
         this.pos = pos;
 
-
         // need to manually update sclae if radius is changed
-        this.RADIUS = 3.3;
+        this.RADIUS = 2.4;
         this.sphere = new THREE.Mesh(
-            new THREE.SphereGeometry(this.RADIUS),
-            new THREE.MeshBasicMaterial({ color: 0x0000ff })
+            this.sphere = new THREE.SphereGeometry(this.RADIUS),
+            new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 0 })
         );
         this.group = new THREE.Group();
     }
@@ -60,7 +59,7 @@ class MyObstacle {
         });
         
         // need to manually update sphere radius if scale is changed
-        spike.scale.set(2, 2, 2);
+        spike.scale.set(1.5, 1.5, 1.5);
         this.group.add(spike);
     }
 
