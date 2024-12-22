@@ -64,6 +64,10 @@ class MyTrack {
         return mesh;
     }
 
+    getObstacles() {
+        return this.obstacles;
+    }
+
 }
 
 export { MyTrack };

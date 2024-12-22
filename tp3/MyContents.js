@@ -29,8 +29,8 @@ class MyContents {
 
     this.track = new MyTrack(
       this.app,
-      track.powerups.map(pos => new MyPowerUp(this.app, pos)), 
-      track.obstacles.map(pos => new MyObstacle(this.app, pos))
+      track.obstacles.map(pos => new MyObstacle(this.app, pos)),
+      track.powerups.map(pos => new MyPowerUp(this.app, pos))
     );
     this.track.display();
   }
@@ -84,6 +84,14 @@ class MyContents {
    */
   update() {
     this.balloon.update();
+
+    if (this.track === undefined || this.track === null) return;
+
+    this.track.getObstacles().forEach((obstacle) => {
+      this.balloon.collides(obstacle) ?
+        console.log("COLISAO") : 
+        console.log("NAO HA COLISAO");
+    });
   }
 }
 

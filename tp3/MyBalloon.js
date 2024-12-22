@@ -19,10 +19,25 @@ class MyBallon {
 
         this.height = 0;
         this.group = new THREE.Group();
-
+        
         this.clock = new THREE.Clock();
         this.mixer = new THREE.AnimationMixer(this.group);
         this.animationPlaying = false;
+
+        this.balloonScale = 0.25;
+
+        // geometries to detect collision
+        this.collisionTopRadius = 12;
+        this.topSphere = new THREE.Mesh(
+            new THREE.SphereGeometry(this.collisionTopRadius),
+            new THREE.MeshBasicMaterial({ color: 0x0000FF})
+        );
+
+        this.collisionBottomRadius = 3;
+        this.bottomSphere = new THREE.Mesh(
+            new THREE.SphereGeometry(this.collisionBottomRadius),
+            new THREE.MeshBasicMaterial({ color: 0x00FF00})
+        );
     }
 
     display() {
@@ -43,7 +58,9 @@ class MyBallon {
             (error) => console.error(`Error loading ballon material: ${error}`)
         );
 
-        this.group.scale.set(0.5, 0.5, 0.5);
+        this.topSphere.position.set(0, 22, 0);
+        this.group.scale.set(this.balloonScale, this.balloonScale, this.balloonScale);
+        this.group.add(this.topSphere);
         this.app.scene.add(this.group);
     }
 
@@ -151,6 +168,21 @@ class MyBallon {
         this.mixer.addEventListener('finished', onAnimationFinished);
 
         positionAction.play()
+    }
+
+    collides(object) {
+        const objPosition = object.getPosition();
+        const objRadius = object.getRadius();
+
+        const diffX = Math.pow(objPosition[0] - this.group.position.x, 2);
+        const diffY = Math.pow(objPosition[1] - this.group.position.y, 2);
+        const diffZ = Math.pow(objPosition[2] - this.group.position.z, 2);
+
+        return Math.sqrt(diffX + diffY + diffZ) <= (objRadius + this.collisionTopRadius * 0.5);
+    }
+
+    getPosition() {
+        return this.group.position;
     }
 }
 
