@@ -28,6 +28,10 @@ class MyBallon {
 
         this.balloonScale = 0.25;
 
+        this.#initCollisionObjects();
+    }
+
+    #initCollisionObjects() {
         // set opacity to 1 to see geometries
         this.collisionMaterial = new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 1 });
 

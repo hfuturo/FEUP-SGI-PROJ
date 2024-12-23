@@ -7,13 +7,18 @@ class MyObstacle {
         this.app = app;
         this.pos = pos;
 
+        this.group = new THREE.Group();
+
+        this.#initCollisionObjects();
+    }
+    
+    #initCollisionObjects() {
         // need to manually update sclae if radius is changed
         this.RADIUS = 2.4;
         this.sphere = new THREE.Mesh(
             this.sphere = new THREE.SphereGeometry(this.RADIUS),
             new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 0 })
         );
-        this.group = new THREE.Group();
     }
 
     display() {
