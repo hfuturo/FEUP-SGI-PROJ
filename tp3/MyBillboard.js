@@ -20,6 +20,39 @@ class MyBillboard {
         this.app.scene.add(this.timeObj[0]);
     }
 
+    startLayer(x, y, size) {
+        if (this.layerObj) {
+            this.app.scene.remove(this.layerObj[0]);
+        }
+
+        this.layer = 0;
+        this.layerObj = [this.drawText(`Layer:${this.layer}(-)`, x, y, size), x, y, size];
+
+        this.app.scene.add(this.layerObj[0]);
+    }
+
+    startLaps(x, y, size) {
+        if (this.lapObj) {
+            this.app.scene.remove(this.lapObj[0]);
+        }
+
+        this.lap = 0;
+        this.lapObj = [this.drawText(`Lap:${this.lap}/`, x, y, size), x, y, size];
+
+        this.app.scene.add(this.lapObj[0]);
+    }
+
+    startVouchers(x, y, size) {
+        if (this.vouchersObj) {
+            this.app.scene.remove(this.vouchersObj[0]);
+        }
+
+        this.vouchers = 0;
+        this.vouchersObj = [this.drawText(`Vouchers:${this.vouchers}`, x, y, size), x, y, size];
+
+        this.app.scene.add(this.vouchersObj[0]);
+    }
+
     stopTimer() {
         this.startTime = null;
     }
@@ -46,7 +79,23 @@ class MyBillboard {
                 texture.offset.x = 1 / 15;
                 texture.offset.y = 2 / 6;
 
-            } else {
+            } else if (text[i] === '(') {
+                texture.offset.x = 4 / 15;
+                texture.offset.y = 1 / 6;
+            }
+            else if (text[i] === ')') {
+                texture.offset.x = 13 / 15;
+                texture.offset.y = 1 / 6;
+            }
+            else if (text[i] === '/')  {
+                texture.offset.x = 4 / 15;
+                texture.offset.y = 2 / 6;
+            }
+            else if (text[i] === '-') {
+                texture.offset.x = 7 / 15;
+                texture.offset.y = 2 / 6;
+            }
+            else {
                 // no char displayed
                 texture.offset.x = 1;
                 texture.offset.y = 1;
@@ -55,7 +104,7 @@ class MyBillboard {
             const material = new THREE.MeshBasicMaterial({ map: texture, color: 0x000000, transparent: true });
     
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(size, size), material);
-            mesh.position.set(this.position.x + x*0.75, this.position.y, this.position.z);
+            mesh.position.set(this.position.x + x*0.75, this.position.y, this.position.z + 1.1);
             group.add(mesh);
         }
     
@@ -83,6 +132,54 @@ class MyBillboard {
                 this.app.scene.add(this.timeObj[0]);
             }
         }
+    }
+
+    updateLayer(update) {
+        if ((this.layer === 0 && update < 0) || (this.layer === 4 && update > 0))
+            return;
+        
+        this.app.scene.remove(this.layerObj[0]);
+        this.layer += update;
+
+        let direction;
+
+        switch (this.layer) {
+            case 0:
+                direction = "-";
+                break;
+            case 1:
+                direction = "N";
+                break;
+            case 2:
+                direction = "S";
+                break;
+            case 3:
+                direction = "E";
+                break;
+            case 4:
+                direction = "W";
+                break;
+        }
+
+        this.layerObj[0] = this.drawText(`Layer:${this.layer}(${direction})`, this.layerObj[1], this.layerObj[2], this.layerObj[3]);
+        this.app.scene.add(this.layerObj[0]);
+    }
+
+    incrementLap() {
+        this.app.scene.remove(this.lapObj[0]);
+        this.lap++;
+        this.lapObj[0] = this.drawText(`Lap:${this.lap}/`);
+        this.app.scene.add(this.lapObj[0]);
+    }
+
+    updateVoucher(quantity) {
+        if (this.vouchers === 0 && quantity < 0)
+            return;
+
+        this.app.scene.remove(this.vouchersObj[0]);
+        this.vouchers += quantity;
+        this.vouchersObj[0] = this.drawText(`Vouchers:${this.vouchers}`, this.vouchersObj[1], this.vouchersObj[2], this.vouchersObj[3]);
+        this.app.scene.add(this.vouchersObj[0]);
     }
 }
 

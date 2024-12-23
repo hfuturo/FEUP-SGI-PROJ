@@ -94,7 +94,7 @@ class MyBallon {
     }
 
     up() {
-        if (this.height === 4 || this.animationPlaying) return;
+        if (this.height === 4 || this.animationPlaying) return false;
 
         const yDisplacement = (this.boxLength + this.sphereRadius*2)*1.1/10;
         // 0 -> max wind in current height
@@ -126,10 +126,12 @@ class MyBallon {
 
         this.createAnimation(times, positions);
         this.height++;
+
+        return true;
     }
 
     down() {
-        if (this.height === 0 || this.animationPlaying) return;
+        if (this.height === 0 || this.animationPlaying) return false;
         
         const yDisplacement = (this.boxLength + this.sphereRadius*2)*1.1/10;
         // 0 -> max wind in current height
@@ -161,6 +163,8 @@ class MyBallon {
 
         this.createAnimation(times, positions);
         this.height--;
+
+        return true;
     }
 
     update() {

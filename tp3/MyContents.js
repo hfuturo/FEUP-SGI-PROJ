@@ -31,6 +31,8 @@ class MyContents {
     THREE.DefaultLoadingManager.onLoad = () => {
       this.lastReliefRefresh = this.reliefRefresh;
     };
+
+    this.taggedObjects = [];
   }
 
   onAfterSceneLoadedAndBeforeRender() {
@@ -45,13 +47,11 @@ class MyContents {
 
     const billboardObj = this.initializer.objects["billboard"];
     this.billboardItems.add(billboardObj);
-
     this.billboard = new MyBillboard(this.app, billboardObj.position);
-
-    const text = this.billboard.drawText("Hello World", 10, 10, 2);
-    this.billboardItems.add(text);
-
-    this.billboard.startTimer(7, 3, 2);
+    this.billboard.startTimer(-5, 12, 2);
+    this.billboard.startLaps(-7, 10, 2);
+    this.billboard.startLayer(-7, 8, 2);
+    this.billboard.startVouchers(-7, 6, 2);
 
     this.app.scene.add(this.billboardItems)
   }
@@ -89,10 +89,12 @@ class MyContents {
   keyHandler(event) {
     switch (event.key) {
       case 'w':
-        this.balloon.up();
+        if (this.balloon.up())
+          this.billboard.updateLayer(1);
         break;
       case 's':
-        this.balloon.down();
+        if (this.balloon.down())
+          this.billboard.updateLayer(-1);
         break;
       default:
         break;
@@ -109,15 +111,21 @@ class MyContents {
     if (this.track === undefined || this.track === null) return;
 
     this.track.getObstacles().forEach((obstacle) => {
-      this.balloon.collides(obstacle) ?
-        console.log("COLISAO") : 
-        console.log("NAO HA COLISAO");
+      if (this.balloon.collides(obstacle)) {
+        if (this.taggedObjects.includes(obstacle)) return;
+
+        this.#tagObject(obstacle);
+        this.billboard.updateVoucher(-1);
+      }
     });
 
     this.track.getPowerUps().forEach((powerUp) => {
-      this.balloon.collides(powerUp) ? 
-        console.log("COLISAO") : 
-        console.log("NAO HA COLISAO");
+      if (this.balloon.collides(powerUp)) {
+        if (this.taggedObjects.includes(powerUp)) return;
+
+        this.#tagObject(powerUp);
+        this.billboard.updateVoucher(1);
+      }
     })
 
     if (this.lastReliefRefresh === 0)
@@ -142,6 +150,17 @@ class MyContents {
       this.reliefMesh.position.set(0, 10, 10);
       this.app.scene.add(this.reliefMesh);
     });
+  }
+
+  #tagObject(object) {
+    this.taggedObjects.push(object);
+
+    // removes object after 1 second
+    setTimeout(() => this.#clearTaggedObject(object), 2000);
+  }
+
+  #clearTaggedObject(object) {
+    this.taggedObjects = this.taggedObjects.filter((obj) => obj !== object);
   }
 }
 
