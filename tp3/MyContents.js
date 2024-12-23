@@ -6,7 +6,7 @@ import { MyTrack } from "./MyTrack.js";
 import { MyPowerUp } from "./MyPowerUp.js";
 import { MyObstacle } from "./MyObstacle.js";
 import { MyReliefImage } from "./MyReliefImage.js";
-
+import { MyBillboard } from "./MyBillboard.js";
 /**
  *  This class contains the contents of out application
  */
@@ -26,6 +26,8 @@ class MyContents {
     this.reliefRefresh = 60;
     this.reliefClock = new THREE.Clock();
 
+    this.billboardItems = new THREE.Group();
+
     THREE.DefaultLoadingManager.onLoad = () => {
       this.lastReliefRefresh = this.reliefRefresh;
     };
@@ -40,6 +42,18 @@ class MyContents {
       track.powerups.map(pos => new MyPowerUp(this.app, pos))
     );
     this.track.display();
+
+    const billboardObj = this.initializer.objects["billboard"];
+    this.billboardItems.add(billboardObj);
+
+    this.billboard = new MyBillboard(this.app, billboardObj.position);
+
+    const text = this.billboard.drawText("Hello World", 10, 10, 2);
+    this.billboardItems.add(text);
+
+    this.billboard.startTimer(7, 3, 2);
+
+    this.app.scene.add(this.billboardItems)
   }
 
   /**
@@ -114,6 +128,8 @@ class MyContents {
       this.lastReliefRefresh = 0;
       this.app.renderTarget = true;
     }
+
+    this.billboard.update();
   }
 
   #updateReliefImage() {

@@ -51,7 +51,7 @@ class MyTrack {
         const curve = new THREE.CatmullRomCurve3(points);
         const geometry = new THREE.TubeGeometry(curve, 100, 20, 3, true);
         
-        const texture = new THREE.TextureLoader().load("./images/uvmapping.jpg");
+        const texture = new THREE.TextureLoader().load("./textures/uvmapping.jpg");
         texture.wrapS = THREE.RepeatWrapping;
     
         const material = new THREE.MeshBasicMaterial({ map: texture });
