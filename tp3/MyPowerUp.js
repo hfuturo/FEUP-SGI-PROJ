@@ -36,7 +36,7 @@ class MyPowerUp {
     #initCollisionObjects() {
         this.box = new THREE.Mesh(
             new THREE.BoxGeometry(this.width, this.height, this.depth),
-            new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 1 })
+            new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 0 })
         );
 
         this.box.position.set(0, 1, 0);
