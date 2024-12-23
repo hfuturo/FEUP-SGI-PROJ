@@ -68,6 +68,10 @@ class MyTrack {
         return this.obstacles;
     }
 
+    getPowerUps() {
+        return this.powerUps;
+    }
+
 }
 
 export { MyTrack };

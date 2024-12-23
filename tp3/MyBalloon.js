@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
+import { MyObstacle } from "./MyObstacle.js";
+import { MyPowerUp } from "./MyPowerUp.js";
 
 
 class MyBallon {
@@ -27,7 +29,7 @@ class MyBallon {
         this.balloonScale = 0.25;
 
         // set opacity to 1 to see geometries
-        this.collisionMaterial = new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 0 });
+        this.collisionMaterial = new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 1 });
 
         // geometries to detect collisions
         this.collisionTopRadius = 3;
@@ -194,33 +196,79 @@ class MyBallon {
     }
 
     collides(object) {
+
         const objPosition = object.getPosition();
-        const objRadius = object.getRadius();
 
-        if (this.#checkCollision(this.topSphere, this.collisionTopRadius, objPosition, objRadius))
-            return true;
+        if (object instanceof MyObstacle) {
+            const objRadius = object.getRadius();
 
-        if (this.#checkCollision(this.middleSphere, this.collisionMiddleRadius, objPosition, objRadius))
-            return true;
+            if (this.#checkSphereCollision(this.topSphere, this.collisionTopRadius, objPosition, objRadius))
+                return true;
+    
+            if (this.#checkSphereCollision(this.middleSphere, this.collisionMiddleRadius, objPosition, objRadius))
+                return true;
+    
+            if (this.#checkSphereCollision(this.middleBottomSphere, this.collisionMiddleBottomRadius, objPosition, objRadius))
+                return true;
+    
+            if (this.#checkSphereCollision(this.bottomSphere, this.collisionBottomRadius, objPosition, objRadius))
+                return true;
+        }
+        else if (object instanceof MyPowerUp) {
+            const objWidth = object.getWidth() / 2;
+            const objHeight = object.getHeight() / 2;
+            const objDepth = object.getDepth() / 2;
 
-        if (this.#checkCollision(this.middleBottomSphere, this.collisionMiddleBottomRadius, objPosition, objRadius))
-            return true;
+            if (this.#checkBoxCollision(this.topSphere, this.collisionTopRadius, objPosition, objWidth, objHeight, objDepth))
+                return true;
 
-        if (this.#checkCollision(this.bottomSphere, this.collisionBottomRadius, objPosition, objRadius))
-            return true;
+            if (this.#checkBoxCollision(this.middleSphere, this.collisionMiddleRadius, objPosition, objWidth, objHeight, objDepth))
+                return true;
+
+            if (this.#checkBoxCollision(this.middleBottomSphere, this.collisionMiddleBottomRadius, objPosition, objWidth, objHeight, objDepth))
+                return true;
+
+            if (this.#checkBoxCollision(this.bottomSphere, this.collisionBottomRadius, objPosition, objWidth, objHeight, objDepth))
+                return true;
+        }
 
         return false;
     }
 
-    #checkCollision(thisSphere, thisRadius, otherSphere, otherRadius) {
+    #checkSphereCollision(thisSphere, thisRadius, objPosition, objRadius) {
         const position = new THREE.Vector3();
         thisSphere.getWorldPosition(position);
 
-        const diffX = Math.pow(otherSphere[0] - position.x, 2);
-        const diffY = Math.pow(otherSphere[1] - position.y, 2);
-        const diffZ = Math.pow(otherSphere[2] - position.z, 2);
+        const diffX = Math.pow(objPosition[0] - position.x, 2);
+        const diffY = Math.pow(objPosition[1] - position.y, 2);
+        const diffZ = Math.pow(objPosition[2] - position.z, 2);
 
-        return Math.sqrt(diffX + diffY + diffZ) <= (otherRadius + thisRadius);
+        return Math.sqrt(diffX + diffY + diffZ) <= (objRadius + thisRadius);
+    }
+
+    #checkBoxCollision(sphere, radius, objPosition, objWidth, objHeight, objDepth) {
+        const position = new THREE.Vector3();
+        sphere.getWorldPosition(position);
+
+        const diffX = Math.abs(position.x - objPosition[0]);
+        const diffY = Math.abs(position.y - objPosition[1]);
+        const diffZ = Math.abs(position.z - objPosition[2]);
+
+        if (diffX >= (objWidth + radius)) return false;
+        if (diffY >= (objHeight + radius)) return false;
+        if (diffZ >= (objDepth + radius)) return false;
+
+        if (diffX < objWidth) return true;
+        if (diffY < objHeight) return true;
+        if (diffZ < objDepth) return true;
+
+        const cornerDistance = Math.sqrt(
+                                    Math.pow(diffX - objWidth, 2) +
+                                    Math.pow(diffY - objHeight, 2) +
+                                    Math.pow(diffZ - objDepth, 2)
+                                );   
+
+        return cornerDistance < (radius * radius);
     }
     
     getPosition() {

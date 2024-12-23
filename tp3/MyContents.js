@@ -98,8 +98,13 @@ class MyContents {
       this.balloon.collides(obstacle) ?
         console.log("COLISAO") : 
         console.log("NAO HA COLISAO");
-
     });
+
+    this.track.getPowerUps().forEach((powerUp) => {
+      this.balloon.collides(powerUp) ? 
+        console.log("COLISAO") : 
+        console.log("NAO HA COLISAO");
+    })
 
     if (this.lastReliefRefresh === 0)
       this.#updateReliefImage();
