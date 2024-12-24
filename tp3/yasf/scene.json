@@ -132,7 +132,9 @@
             "out_billboard_s": {
                 "type": "node",
                 "transforms":[
-                    {"type": "translate", "amount": {"x": 10, "y": 0, "z": -5}}
+                    {"type": "translate", "amount": {"x": 45, "y": 0, "z": 120}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
+                    {"type": "scale", "amount": {"x": 3, "y": 3, "z": 3}}
                 ],
                 "children": {
                     "nodesList": [
@@ -143,7 +145,8 @@
             "out_billboard_n": {
                 "type": "node",
                 "transforms":[
-                    {"type": "translate", "amount": {"x": 10, "y": 0, "z": 5}}
+                    {"type": "translate", "amount": {"x": 45, "y": 0, "z": -120}},
+                    {"type": "scale", "amount": {"x": 3, "y": 3, "z": 3}}
                 ],
                 "children": {
                     "nodesList": [
@@ -191,7 +194,7 @@
             "billboard_display": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 1.01}},
+                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": 1.05}},
                     {"type": "scale", "amount": {"x": 8, "y": 4, "z": 1}}
                 ],
                 "children":{

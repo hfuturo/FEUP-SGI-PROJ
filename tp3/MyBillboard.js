@@ -1,9 +1,12 @@
 import * as THREE from 'three';
 
+//TODO: Refactor this
 class MyBillboard {
-    constructor(app, position) {
+    constructor(app, position, scale, rotation) {
         this.app = app;
         this.position = position;
+        this.scale = scale;
+        this.rotation = rotation.y !== 0;
 
         this.font = new THREE.TextureLoader().load('textures/font.png');
     }
@@ -58,6 +61,10 @@ class MyBillboard {
     }
 
     drawText(text, x, y, size) {
+        x *= this.scale.x;
+        y *= this.scale.y;
+        size *= this.scale.z;
+
         const group = new THREE.Group();
         text = text.toUpperCase();
     
@@ -101,14 +108,26 @@ class MyBillboard {
                 texture.offset.y = 1;
             }
     
-            const material = new THREE.MeshBasicMaterial({ map: texture, color: 0x000000, transparent: true });
+            const material = new THREE.MeshBasicMaterial({ map: texture, color: 0x000000, transparent: true, side: THREE.DoubleSide });
     
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(size, size), material);
-            mesh.position.set(this.position.x / 2 + x*0.75, this.position.y / 2, this.position.z / 2 + 1.1);
+            if (this.rotation) {
+                mesh.position.set(this.position.x / 2 - x * 0.75, this.position.y / 2, this.position.z / 2 - (this.scale.z * 1.1));
+                mesh.rotation.y = 180 * Math.PI / 180;
+            }
+            else {
+                mesh.position.set(this.position.x / 2 + x*0.75, this.position.y / 2, this.position.z / 2 + (this.scale.z * 1.1));
+            }
+
             group.add(mesh);
         }
     
-        group.position.set(this.position.x / 2 + x, this.position.y / 2 + y, this.position.z / 2);
+        if (this.rotation) {
+            group.position.set(this.position.x / 2 - x, this.position.y / 2 + y, this.position.z / 2);
+        }
+        else {
+            group.position.set(this.position.x / 2 + x, this.position.y / 2 + y, this.position.z / 2);
+        }
     
         return group;
     }

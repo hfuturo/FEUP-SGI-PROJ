@@ -54,8 +54,7 @@ class MyContents {
     const billboardObj = this.initializer.objects["out_billboards"];
     
     billboardObj.children.forEach((billboard) => {
-      console.log(billboard);
-      const bb = new MyBillboard(this.app, billboard.position, billboard.scale);
+      const bb = new MyBillboard(this.app, billboard.position, billboard.scale, billboard.rotation);
       bb.startTimer(-5, 12, 2);
       bb.startLaps(-7, 10, 2);
       bb.startLayer(-7, 8, 2);
