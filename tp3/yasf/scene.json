@@ -80,7 +80,7 @@
                 "type": "node",
                 "children": {
                     "nodesList":[
-                        "billboard",
+                        "out_billboards",
                         "parking_lot"
                     ]
                 }
@@ -117,6 +117,37 @@
                 "children": {
                     "nodesList": [
                         "rectangle"
+                    ]
+                }
+            },
+            "out_billboards": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "out_billboard_s",
+                        "out_billboard_n"
+                    ]
+                }
+            },
+            "out_billboard_s": {
+                "type": "node",
+                "transforms":[
+                    {"type": "translate", "amount": {"x": 10, "y": 0, "z": -5}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "billboard"
+                    ]
+                }
+            },
+            "out_billboard_n": {
+                "type": "node",
+                "transforms":[
+                    {"type": "translate", "amount": {"x": 10, "y": 0, "z": 5}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "billboard"
                     ]
                 }
             },

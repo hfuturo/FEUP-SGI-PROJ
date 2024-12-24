@@ -104,11 +104,11 @@ class MyBillboard {
             const material = new THREE.MeshBasicMaterial({ map: texture, color: 0x000000, transparent: true });
     
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(size, size), material);
-            mesh.position.set(this.position.x + x*0.75, this.position.y, this.position.z + 1.1);
+            mesh.position.set(this.position.x / 2 + x*0.75, this.position.y / 2, this.position.z / 2 + 1.1);
             group.add(mesh);
         }
     
-        group.position.set(this.position.x + x, this.position.y + y, this.position.z);
+        group.position.set(this.position.x / 2 + x, this.position.y / 2 + y, this.position.z / 2);
     
         return group;
     }

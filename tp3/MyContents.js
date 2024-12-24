@@ -26,16 +26,20 @@ class MyContents {
     this.reliefRefresh = 60;
     this.reliefClock = new THREE.Clock();
 
-    this.billboardItems = new THREE.Group();
-
     THREE.DefaultLoadingManager.onLoad = () => {
       this.lastReliefRefresh = this.reliefRefresh;
     };
-
+    
+    this.billBoards = [];
     this.taggedObjects = [];
   }
 
   onAfterSceneLoadedAndBeforeRender() {
+    this.loadTrack();
+    this.loadBillBoards();
+  }
+
+  loadTrack() {
     const track = this.initializer.track;
 
     this.track = new MyTrack(
@@ -44,16 +48,21 @@ class MyContents {
       track.powerups.map(pos => new MyPowerUp(this.app, pos))
     );
     this.track.display();
+  }
 
-    const billboardObj = this.initializer.objects["billboard"];
-    this.billboardItems.add(billboardObj);
-    this.billboard = new MyBillboard(this.app, billboardObj.position);
-    this.billboard.startTimer(-5, 12, 2);
-    this.billboard.startLaps(-7, 10, 2);
-    this.billboard.startLayer(-7, 8, 2);
-    this.billboard.startVouchers(-7, 6, 2);
+  loadBillBoards() {
+    const billboardObj = this.initializer.objects["out_billboards"];
+    
+    billboardObj.children.forEach((billboard) => {
+      console.log(billboard);
+      const bb = new MyBillboard(this.app, billboard.position, billboard.scale);
+      bb.startTimer(-5, 12, 2);
+      bb.startLaps(-7, 10, 2);
+      bb.startLayer(-7, 8, 2);
+      bb.startVouchers(-7, 6, 2);
 
-    this.app.scene.add(this.billboardItems)
+      this.billBoards.push(bb);
+    });
   }
 
   /**
@@ -90,11 +99,11 @@ class MyContents {
     switch (event.key) {
       case 'w':
         if (this.balloon.up())
-          this.billboard.updateLayer(1);
+          this.billBoards.forEach((billboard) => billboard.updateLayer(1));
         break;
       case 's':
         if (this.balloon.down())
-          this.billboard.updateLayer(-1);
+          this.billBoards.forEach((billboard) => billboard.updateLayer(-1));
         break;
       default:
         break;
@@ -115,7 +124,7 @@ class MyContents {
         if (this.taggedObjects.includes(obstacle)) return;
 
         this.#tagObject(obstacle);
-        this.billboard.updateVoucher(-1);
+        this.billBoards.forEach((billboard) => billboard.updateVoucher(-1));
       }
     });
 
@@ -124,7 +133,7 @@ class MyContents {
         if (this.taggedObjects.includes(powerUp)) return;
 
         this.#tagObject(powerUp);
-        this.billboard.updateVoucher(1);
+        this.billBoards.forEach((billboard) => billboard.updateVoucher(1));
       }
     })
 
@@ -137,7 +146,8 @@ class MyContents {
       this.app.renderTarget = true;
     }
 
-    this.billboard.update();
+
+    this.billBoards.forEach((billboard) => billboard.update());
   }
 
   #updateReliefImage() {
@@ -155,7 +165,7 @@ class MyContents {
   #tagObject(object) {
     this.taggedObjects.push(object);
 
-    // removes object after 1 second
+    // removes object after 2 second
     setTimeout(() => this.#clearTaggedObject(object), 2000);
   }
 
