@@ -1,14 +1,16 @@
 import * as THREE from 'three';
 
-//TODO: Refactor this
 class MyBillboard {
-    constructor(app, position, scale, rotation) {
+    constructor(app, position, depth, rotation) {
         this.app = app;
         this.position = position;
-        this.scale = scale;
-        this.rotation = rotation.y !== 0;
+        this.depth = depth;
+        this.rotation = rotation ? rotation.y : 0;
 
         this.font = new THREE.TextureLoader().load('textures/font.png');
+
+        this.textObjs = [];
+        this.pictureObjs = [];
     }
 
     startTimer(x, y, size) {
@@ -19,7 +21,7 @@ class MyBillboard {
         this.lastTime = this.startTime;
 
         const displayTime = `00:00:00`;
-        this.timeObj = [this.drawText(displayTime, x, y, size), x, y, size];
+        this.timeObj = [this.createText(displayTime, x, y, size), x, y, size];
         this.app.scene.add(this.timeObj[0]);
     }
 
@@ -29,7 +31,7 @@ class MyBillboard {
         }
 
         this.layer = 0;
-        this.layerObj = [this.drawText(`Layer:${this.layer}(-)`, x, y, size), x, y, size];
+        this.layerObj = [this.createText(`Layer:${this.layer}(-)`, x, y, size), x, y, size];
 
         this.app.scene.add(this.layerObj[0]);
     }
@@ -40,7 +42,7 @@ class MyBillboard {
         }
 
         this.lap = 0;
-        this.lapObj = [this.drawText(`Lap:${this.lap}/`, x, y, size), x, y, size];
+        this.lapObj = [this.createText(`Lap:${this.lap}/`, x, y, size), x, y, size];
 
         this.app.scene.add(this.lapObj[0]);
     }
@@ -51,7 +53,7 @@ class MyBillboard {
         }
 
         this.vouchers = 0;
-        this.vouchersObj = [this.drawText(`Vouchers:${this.vouchers}`, x, y, size), x, y, size];
+        this.vouchersObj = [this.createText(`Vouchers:${this.vouchers}`, x, y, size), x, y, size];
 
         this.app.scene.add(this.vouchersObj[0]);
     }
@@ -60,11 +62,36 @@ class MyBillboard {
         this.startTime = null;
     }
 
-    drawText(text, x, y, size) {
-        x *= this.scale.x;
-        y *= this.scale.y;
-        size *= this.scale.z;
+    addText(text, x, y, size) {
+        const textObj = this.createText(text, x, y, size);
+        this.textObjs.push(textObj);
+        this.app.scene.add(textObj);
+    }
 
+    addPicture(texture, x, y, size) {
+        const pictureObj = this.createPicture(texture, x, y, size);
+        this.pictureObjs.push(pictureObj);
+        this.app.scene.add(pictureObj);
+    }
+
+    addButton(x, y, width, height, text, callback, addon) {
+        // TODO finish
+        const group = new THREE.Group();
+        const button = new THREE.Mesh(
+            new THREE.BoxGeometry(width, height, 0.1),
+            new THREE.MeshLambertMaterial({ color: 0xFF0000 })
+        )
+
+        text.position.set(width, height, 0.11);
+        group.add(button);
+        group.add(text);
+
+        group.position.set(this.position.x + x, this.position.y + y, this.position.z + this.depth);
+
+        this.app.scene.add(group);
+    }
+
+    createText(text, x, y, size) {
         const group = new THREE.Group();
         text = text.toUpperCase();
     
@@ -108,28 +135,43 @@ class MyBillboard {
                 texture.offset.y = 1;
             }
     
-            const material = new THREE.MeshBasicMaterial({ map: texture, color: 0x000000, transparent: true, side: THREE.DoubleSide });
+            const material = new THREE.MeshBasicMaterial({ map: texture, color: 0x000000, transparent: true});
     
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(size, size), material);
-            if (this.rotation) {
-                mesh.position.set(this.position.x / 2 - x * 0.75, this.position.y / 2, this.position.z / 2 - (this.scale.z * 1.1));
-                mesh.rotation.y = 180 * Math.PI / 180;
-            }
-            else {
-                mesh.position.set(this.position.x / 2 + x*0.75, this.position.y / 2, this.position.z / 2 + (this.scale.z * 1.1));
+            if (this.rotation === Math.PI) {
+                mesh.position.set(-x * 0.75, 0, 0);
+                mesh.rotation.y = Math.PI;
+            } else {
+                mesh.position.set(x * 0.75, 0, 0);
             }
 
             group.add(mesh);
         }
     
-        if (this.rotation) {
-            group.position.set(this.position.x / 2 - x, this.position.y / 2 + y, this.position.z / 2);
+        if (this.rotation === Math.PI) {
+            group.position.set(this.position.x - x, this.position.y + y, this.position.z - this.depth);
         }
         else {
-            group.position.set(this.position.x / 2 + x, this.position.y / 2 + y, this.position.z / 2);
+            group.position.set(this.position.x + x, this.position.y + y, this.position.z + this.depth);
         }
     
         return group;
+    }
+
+    createPicture(texture, x, y, size) {
+        const plane = new THREE.PlaneGeometry(size, size);
+        const tex = new THREE.TextureLoader().load(texture);
+        const material = new THREE.MeshBasicMaterial({ map: tex, transparent: true });
+
+        const mesh = new THREE.Mesh(plane, material);
+        if (this.rotation === Math.PI) {
+            mesh.position.set(this.position.x - x, this.position.y + y, this.position.z + this.depth);
+            mesh.rotation.y = Math.PI;
+        } else {
+            mesh.position.set(this.position.x + x, this.position.y + y, this.position.z + this.depth);
+        }
+
+        return mesh;
     }
     
 
@@ -147,7 +189,7 @@ class MyBillboard {
                 
                 this.lastTime = currentTime;
                 this.app.scene.remove(this.timeObj[0]);
-                this.timeObj[0] = this.drawText(displayTime, this.timeObj[1], this.timeObj[2], this.timeObj[3]);
+                this.timeObj[0] = this.createText(displayTime, this.timeObj[1], this.timeObj[2], this.timeObj[3]);
                 this.app.scene.add(this.timeObj[0]);
             }
         }
@@ -180,14 +222,14 @@ class MyBillboard {
                 break;
         }
 
-        this.layerObj[0] = this.drawText(`Layer:${this.layer}(${direction})`, this.layerObj[1], this.layerObj[2], this.layerObj[3]);
+        this.layerObj[0] = this.createText(`Layer:${this.layer}(${direction})`, this.layerObj[1], this.layerObj[2], this.layerObj[3]);
         this.app.scene.add(this.layerObj[0]);
     }
 
     incrementLap() {
         this.app.scene.remove(this.lapObj[0]);
         this.lap++;
-        this.lapObj[0] = this.drawText(`Lap:${this.lap}/`);
+        this.lapObj[0] = this.createText(`Lap:${this.lap}/`);
         this.app.scene.add(this.lapObj[0]);
     }
 
@@ -197,8 +239,29 @@ class MyBillboard {
 
         this.app.scene.remove(this.vouchersObj[0]);
         this.vouchers += quantity;
-        this.vouchersObj[0] = this.drawText(`Vouchers:${this.vouchers}`, this.vouchersObj[1], this.vouchersObj[2], this.vouchersObj[3]);
+        this.vouchersObj[0] = this.createText(`Vouchers:${this.vouchers}`, this.vouchersObj[1], this.vouchersObj[2], this.vouchersObj[3]);
         this.app.scene.add(this.vouchersObj[0]);
+    }
+
+    clear() {
+        this.textObjs.forEach((textObj) => this.app.scene.remove(textObj));
+        this.textObjs = [];
+
+        this.pictureObjs.forEach((pictureObj) => this.app.scene.remove(pictureObj));
+        this.pictureObjs = [];
+
+        if (this.timeObj) {
+            this.app.scene.remove(this.timeObj[0]);
+        }
+        if (this.layerObj) {
+            this.app.scene.remove(this.layerObj[0]);
+        }
+        if (this.lapObj) {
+            this.app.scene.remove(this.lapObj[0]);
+        }
+        if (this.vouchersObj) {
+            this.app.scene.remove(this.vouchersObj[0]);
+        }
     }
 }
 

@@ -7,6 +7,13 @@ import { MyPowerUp } from "./MyPowerUp.js";
 import { MyObstacle } from "./MyObstacle.js";
 import { MyReliefImage } from "./MyReliefImage.js";
 import { MyBillboard } from "./MyBillboard.js";
+
+const state = {
+  START: 0,
+  PLAYING: 1,
+  END: 2
+}
+
 /**
  *  This class contains the contents of out application
  */
@@ -25,6 +32,9 @@ class MyContents {
     this.reliefImage = new MyReliefImage();
     this.reliefRefresh = 60;
     this.reliefClock = new THREE.Clock();
+
+    this.state = state.PLAYING;
+    this.acceptingInputs = false;
 
     THREE.DefaultLoadingManager.onLoad = () => {
       this.lastReliefRefresh = this.reliefRefresh;
@@ -51,17 +61,46 @@ class MyContents {
   }
 
   loadBillBoards() {
+    this.billBoards.forEach((billboard) => this.app.scene.remove(billboard))
+    this.billBoards = [];
+
+    if (this.state === state.START) this.loadBillBoardsStart();
+    else if (this.state === state.PLAYING) this.loadBillBoardsPlaying();
+    else if (this.state === state.END) this.loadBillBoardsEnd();
+  }
+
+  loadBillBoardsStart() {
+    const billboardObj = this.initializer.objects["out_billboards"].children[1];
+
+    const bb = new MyBillboard(this.app, billboardObj.position, 3.2, billboardObj.rotation);
+    bb.addText('Game Name', -12, 36, 4);
+
+    bb.addPicture('textures/henrique.jpg', 20, 18, 4);
+    bb.addText('Henrique Silva', 7, 18, 1);
+
+    bb.addPicture('textures/tomas.jpg', -20, 18, 4);
+    bb.addText('Tomas Gaspar', -17, 18, 1);
+
+    bb.addPicture('textures/feup.png', 0, 18, 4);
+
+    this.billBoards.push(bb);
+  }
+
+  loadBillBoardsPlaying() {
     const billboardObj = this.initializer.objects["out_billboards"];
     
     billboardObj.children.forEach((billboard) => {
-      const bb = new MyBillboard(this.app, billboard.position, billboard.scale, billboard.rotation);
-      bb.startTimer(-5, 12, 2);
-      bb.startLaps(-7, 10, 2);
-      bb.startLayer(-7, 8, 2);
-      bb.startVouchers(-7, 6, 2);
+      const bb = new MyBillboard(this.app, billboard.position, 3.2, billboard.rotation);
+      bb.startTimer(-13, 17, 5);
+      bb.startLaps(-20, 14, 4);
+      bb.startLayer(-20, 12, 4);
+      bb.startVouchers(-20, 10, 4);
 
       this.billBoards.push(bb);
     });
+  }
+
+  loadBillBoardsEnd() {
   }
 
   /**
@@ -95,6 +134,13 @@ class MyContents {
   }
 
   keyHandler(event) {
+    if (!this.acceptingInputs) return;
+
+    if (this.state === state.START) keyHandlerStart(event);
+    else if (this.state === state.PLAYING) keyHandlerPlaying(event);
+  }
+
+  keyHandlerPlaying(event) {
     switch (event.key) {
       case 'w':
         if (this.balloon.up())
