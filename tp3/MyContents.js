@@ -91,10 +91,10 @@ class MyContents {
     
     billboardObj.children.forEach((billboard) => {
       const bb = new MyBillboard(this.app, billboard.position, 3.2, billboard.rotation);
-      bb.startTimer(-13, 17, 5);
-      bb.startLaps(-20, 14, 4);
-      bb.startLayer(-20, 12, 4);
-      bb.startVouchers(-20, 10, 4);
+      bb.startTimer(-13, 36, 5);
+      bb.startLaps(-20, 30, 4);
+      bb.startLayer(-20, 25, 4);
+      bb.startVouchers(-20, 20, 4);
 
       this.billBoards.push(bb);
     });
