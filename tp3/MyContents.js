@@ -7,6 +7,7 @@ import { MyPowerUp } from "./MyPowerUp.js";
 import { MyObstacle } from "./MyObstacle.js";
 import { MyReliefImage } from "./MyReliefImage.js";
 import { MyBillboard } from "./MyBillboard.js";
+import { MyPicker } from "./MyPicker.js";
 
 const state = {
   START: 0,
@@ -38,11 +39,12 @@ class MyContents {
     this.playerBalloon = undefined;
     this.opponentBalloon = undefined;
     this.username = '';
+    this.highlight = null;
 
     THREE.DefaultLoadingManager.onLoad = () => {
       this.lastReliefRefresh = this.reliefRefresh;
     };
-    
+
     this.billBoards = [];
     this.taggedObjects = [];
   }
@@ -76,49 +78,51 @@ class MyContents {
   }
 
   loadBillBoardsStart() {
-    const billboardObj = this.initializer.objects["out_billboards"].children[1];
+    this.picker = new MyPicker(this.app, [], this.startPicker.bind(this));
+    const billboardObj = this.initializer.objects["out_billboards"];
 
-    const bb = new MyBillboard(this.app, billboardObj.position, 3.2, billboardObj.rotation);
-    bb.addText('Game Name', -12, 36, 4);
+    billboardObj.children.forEach((billboard) => {
+      const bb = new MyBillboard(this.app, billboard.position, 3.2, billboard.rotation);
+      bb.addText('Game Name', -12, 36, 4);
 
-    bb.addPicture('textures/henrique.jpg', 20, 18, 4);
-    bb.addText('Henrique Silva', 7, 18, 1);
+      bb.addPicture('textures/henrique.jpg', 20, 18, 4);
+      bb.addText('Henrique Silva', 7, 18, 1);
 
-    bb.addPicture('textures/tomas.jpg', -20, 18, 4);
-    bb.addText('Tomas Gaspar', -17, 18, 1);
+      bb.addPicture('textures/tomas.jpg', -20, 18, 4);
+      bb.addText('Tomas Gaspar', -17, 18, 1);
 
-    bb.addPicture('textures/feup.png', 0, 18, 4);
+      bb.addPicture('textures/feup.png', 0, 18, 4);
 
-    const playerBalloon = [
-      bb.createText('Player', -3.75, 4, 2, 0xffffff),
-      bb.createPicture('textures/balloons/default.webp', 0, -1.25, 7),
-    ]
-    bb.addButton('player', -16, 27, 12, 12, playerBalloon)
+      const playerBalloon = [
+        bb.createText('Player', -3.75, 4, 2, 0xffffff),
+        bb.createPicture('textures/balloons/default.webp', 0, -1.25, 7),
+      ]
+      bb.addButton('player', -16, 27, 12, 12, playerBalloon)
 
-    const opponentBalloon = [
-      bb.createText('PC', -1, 4, 2, 0xffffff),
-      bb.createPicture('textures/balloons/default.webp', 0, -1.25, 7),
-    ]
-    bb.addButton('pc', -3, 27, 12, 12, opponentBalloon)
+      const opponentBalloon = [
+        bb.createText('PC', -1, 4, 2, 0xffffff),
+        bb.createPicture('textures/balloons/default.webp', 0, -1.25, 7),
+      ]
+      bb.addButton('pc', -3, 27, 12, 12, opponentBalloon)
 
-    const nameInput = [
-      bb.createText('Name', -2.25, 2.25, 2, 0xffffff),
-      bb.createText('________', -6.5, -1.5, 2.5, 0xffffff),
-      bb.createText(this.username, -6.5, -1, 2.5, 0xffffff),
-    ]
-    bb.addButton('name', 13, 29.25, 18, 7.5, nameInput, this.insertName.bind(this))
+      const nameInput = [
+        bb.createText('Name', -2.25, 2.25, 2, 0xffffff),
+        bb.createText('________', -6.5, -1.5, 2.5, 0xffffff),
+        bb.createText(this.username, -6.5, -1, 2.5, 0xffffff),
+      ]
+      bb.addButton('name', 13, 29.25, 18, 7.5, nameInput)
 
-    const start = [bb.createText('Start', -4.5, 0, 3, 0xffffff)]
-    bb.addButton('start', 13, 23, 18, 4, start, this.startGame.bind(this))
+      const start = [bb.createText('Start', -4.5, 0, 3, 0xffffff)]
+      bb.addButton('start', 13, 23, 18, 4, start)
 
-    bb.setOutBoundsClick(this.outBoundsClick.bind(this));
-
-    this.billBoards.push(bb);
+      bb.buttonObjs.forEach((button) => this.picker.add(button.children[0]));
+      this.billBoards.push(bb);
+    });
   }
 
   loadBillBoardsPlaying() {
     const billboardObj = this.initializer.objects["out_billboards"];
-    
+
     billboardObj.children.forEach((billboard) => {
       const bb = new MyBillboard(this.app, billboard.position, 3.2, billboard.rotation);
       bb.startTimer(-13, 36, 5);
@@ -163,24 +167,59 @@ class MyContents {
     this.balloon.display();
   }
 
+  startPicker(intersects) {
+    if (intersects.length > 0) {
+      const name = intersects[0].object.name;
+      this.billBoards.forEach((billboard) => {
+        if (this.highlight !== null) billboard.unHighlightButton(this.highlight);
+        billboard.highlightButton(name);
+      });
+      this.highlight = name;
+
+      if (name === 'start') this.startGame();
+      else if (name === 'name') this.insertName();
+    } 
+    else {
+      this.acceptingInputs = false;
+      if (this.highlight !== null) {
+        this.billBoards.forEach((billboard) => {
+          billboard.unHighlightButton(this.highlight);
+        });
+        this.highlight = null;
+      }
+    }
+  }
+
   startGame() {
+    const unhighlight = () => {
+      setTimeout(() => {
+        if (this.highlight !== null) {
+          this.billBoards.forEach((billboard) => {
+            billboard.unHighlightButton(this.highlight);
+          });
+        }
+      }, 250);
+    }
+
     if (this.playerBalloon === undefined) {
       const warn = this.billBoards[0].createText('Please select your balloon', -9, 20, 1, 0xff0000);
-      this.billBoards[0].addTempElement(warn);
+      this.billBoards.forEach((billboard) => billboard.addTempElement(warn));
+      unhighlight();
       return;
     }
 
     if (this.opponentBalloon === undefined) {
       const warn = this.billBoards[0].createText('Please select PC balloon', -9, 20, 1, 0xff0000);
       this.billBoards[0].addTempElement(warn);
+      unhighlight();
       return;
     }
 
     if (this.username === '') {
       const warn = this.billBoards[0].createText('Please insert username', -7, 20, 1, 0xff0000);
       this.billBoards[0].addTempElement(warn);
+      unhghlight();
       return;
-
     }
 
     this.state = state.PLAYING;
@@ -206,21 +245,28 @@ class MyContents {
 
   keyHandlerStart(event) {
     const updateDisplay = () => {
-      const userrname = this.billBoards[0].createText(this.username, -6.5, -1, 2.5, 0xffffff);
-      this.billBoards[0].removeButtonElement('name');
-      this.billBoards[0].addButtonElement('name', userrname);
+      this.billBoards.forEach((billboard) => {
+        const username = billboard.createText(this.username, -6.5, -1, 2.5, 0xffffff);
+        billboard.removeButtonElement('name');
+        billboard.addButtonElement('name', username);
+      });
     }
 
     if (event.key >= 'a' && event.key <= 'z' && this.username.length < 8) {
       this.username += event.key;
       updateDisplay();
-    } 
+    }
     else if (event.key === 'Backspace') {
       this.username = this.username.slice(0, -1);
       updateDisplay();
     }
     else if (event.key === 'Enter' || event.key === 'Escape') {
       this.acceptingInputs = false;
+      if (this.highlight !== null) {
+        this.billBoards.forEach((billboard) => {
+          billboard.unHighlightButton(this.highlight);
+        });
+      }
     }
   }
 
@@ -236,7 +282,7 @@ class MyContents {
         break;
       default:
         break;
-    } 
+    }
   }
 
   /**
