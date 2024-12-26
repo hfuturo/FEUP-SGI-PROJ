@@ -48,21 +48,21 @@ class MyContents {
     this.billBoards = [];
     this.taggedObjects = [];
 
-    const l1 = new THREE.DirectionalLight(0xFFFFFF, 2);
+    const l1 = new THREE.DirectionalLight(0xFFFFFF, 1);
     l1.position.set(250, 250, 250);
     const l1h = new THREE.DirectionalLightHelper(l1, 3);
     this.app.scene.add(l1);
     this.app.scene.add(l1h);
 
 
-    const l2 = new THREE.DirectionalLight(0xFFFFFF, 4);
+    const l2 = new THREE.DirectionalLight(0xFFFFFF, 2);
     l2.position.set(-250, 250, -250);
     const l2h = new THREE.DirectionalLightHelper(l2, 3);
     this.app.scene.add(l2);
     this.app.scene.add(l2h);
     
 
-    const l3 = new THREE.DirectionalLight(0xFFFFFF, 1.15);
+    const l3 = new THREE.DirectionalLight(0xFFFFFF, 0.6);
     l3.position.set(40, 50, 0);
     l3.target.position.set(40, 250, 0);
     const l3h = new THREE.DirectionalLightHelper(l3, 3);
@@ -70,7 +70,7 @@ class MyContents {
     this.app.scene.add(l3h);
 
 
-    const l4 = new THREE.DirectionalLight(0xFFFFFF, 2);
+    const l4 = new THREE.DirectionalLight(0xFFFFFF, 1);
     l4.position.set(250, -250, 250);
     const l4h = new THREE.DirectionalLightHelper(l4, 3);
     this.app.scene.add(l4);
