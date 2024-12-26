@@ -35,7 +35,10 @@
             }
         },
         "textures": {
-
+            "rust": {
+                "filepath": "textures/rust.jpg",
+                "isVideo": false
+            }
         },
         "materials": {
             "white": {
@@ -53,6 +56,15 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1
+            },
+            "rust": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "rust"
             }
         },
         "cameras": {
@@ -97,7 +109,8 @@
                 "children": {
                     "nodesList":[
                         "out_billboards",
-                        "parking_lot"
+                        "parking_lot",
+                        "sparkles"
                     ],
                     "directionallight": {
                         "type": "directionallight",
@@ -106,6 +119,42 @@
                         "intensity": 2,
                         "position": {"x": 300, "y": 300, "z": 300}
                     }
+                }
+            },
+            "sparkles": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "rust"
+                },
+                "children": {
+                    "nodesList": [
+                        "left_sparkle",
+                        "right_sparkle"
+                    ]
+                }
+            },
+            "right_sparkle": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -6, "y": 0.5, "z": 2}},
+                    {"type": "scale", "amount": {"x": 0.25, "y": 1, "z": 0.25}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder"
+                    ]
+                }
+            },
+            "left_sparkle": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 6, "y": 0.5, "z": 2}},
+                    {"type": "scale", "amount": {"x": 0.25, "y": 1, "z": 0.25}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder"
+                    ]
                 }
             },
             "parking_lot": {

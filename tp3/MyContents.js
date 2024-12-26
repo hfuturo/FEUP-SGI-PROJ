@@ -8,6 +8,7 @@ import { MyObstacle } from "./MyObstacle.js";
 import { MyReliefImage } from "./MyReliefImage.js";
 import { MyBillboard } from "./MyBillboard.js";
 import { MyPicker } from "./MyPicker.js";
+import { MySparkle } from "./MySparkle.js";
 
 const state = {
   START: 0,
@@ -40,6 +41,8 @@ class MyContents {
     this.opponentBalloon = undefined;
     this.username = '';
     this.highlight = null;
+
+    this.sparkles = [];
 
     THREE.DefaultLoadingManager.onLoad = () => {
       this.lastReliefRefresh = this.reliefRefresh;
@@ -87,6 +90,11 @@ class MyContents {
   onAfterSceneLoadedAndBeforeRender() {
     this.loadTrack();
     this.loadBillBoards();
+    this.loadSparkles();
+  }
+
+  loadSparkles() {
+    this.sparklesObj = this.initializer.objects["sparkles"].children;
   }
 
   loadTrack() {
@@ -329,6 +337,8 @@ class MyContents {
 
     if (this.track === undefined || this.track === null) return;
 
+    this.#shootSparkles();
+
     this.track.getObstacles().forEach((obstacle) => {
       if (this.balloon.collides(obstacle)) {
         if (this.taggedObjects.includes(obstacle)) return;
@@ -358,6 +368,21 @@ class MyContents {
 
 
     this.billBoards.forEach((billboard) => billboard.update());
+  }
+
+  #shootSparkles() {
+    this.sparklesObj.forEach((sparkleObj) => {
+      this.sparkles.push(new MySparkle(this.app, sparkleObj.position));
+    });
+
+    for (let i = 0; i < this.sparkles.length; i++) {
+      if (this.sparkles[i].done) {
+        this.sparkles.slice(i, 1);
+        continue;
+      }
+
+      this.sparkles[i].update();
+    }
   }
 
   #updateReliefImage() {
