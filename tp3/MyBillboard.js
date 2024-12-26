@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { MyPicker } from './MyPicker.js';
 
 class MyBillboard {
     constructor(app, position, depth, rotation) {
@@ -11,6 +12,11 @@ class MyBillboard {
 
         this.textObjs = [];
         this.pictureObjs = [];
+        this.buttonObjs = [];
+        this.callbacks = [];
+
+        this.picker = new MyPicker(this.app, [], this.pickingHelper.bind(this));
+        this.highlighted = null;
     }
 
     startTimer(x, y, size) {
@@ -74,24 +80,60 @@ class MyBillboard {
         this.app.scene.add(pictureObj);
     }
 
-    addButton(x, y, width, height, text, callback, addon) {
-        // TODO finish
+    addButton(id, x, y, width, height, elements, callback) {
         const group = new THREE.Group();
+        group.name = id;
         const button = new THREE.Mesh(
-            new THREE.BoxGeometry(width, height, 0.1),
+            new THREE.BoxGeometry(width, height, 0.5),
             new THREE.MeshLambertMaterial({ color: 0xFF0000 })
         )
-
-        text.position.set(width, height, 0.11);
         group.add(button);
-        group.add(text);
+
+        elements.forEach((element) => {
+            element.position.set(element.position.x - this.position.x, element.position.y - this.position.y, 0.3);
+            group.add(element);
+        });
 
         group.position.set(this.position.x + x, this.position.y + y, this.position.z + this.depth);
+
+        this.buttonObjs.push(group);
+        this.callbacks.push(callback);
+        this.picker.add(group.children[0]);
 
         this.app.scene.add(group);
     }
 
-    createText(text, x, y, size) {
+    removeButtonElement(id) {
+        this.buttonObjs.forEach((buttonObj) => {
+            if (buttonObj.name === id) {
+                buttonObj.children.pop();
+            }
+        });
+    }
+
+    addButtonElement(id, element) {
+        this.buttonObjs.forEach((buttonObj) => {
+            if (buttonObj.name === id) {
+                element.position.set(element.position.x - this.position.x, element.position.y - this.position.y, 0.3);
+                buttonObj.add(element);
+            }
+        });
+    }
+
+    addTempElement(element) {
+        this.app.scene.add(element);
+        const highlighted = this.highlighted.uuid;
+
+        setTimeout(() => {
+            this.app.scene.remove(element);
+            if (this.highlighted && this.highlighted.uuid === highlighted) {
+                this.highlighted.material.color.set(0xff0000);
+                this.highlighted = null;
+            }
+        }, 3000);
+    }
+
+    createText(text, x, y, size, color=0x000000) {
         const group = new THREE.Group();
         text = text.toUpperCase();
     
@@ -129,13 +171,17 @@ class MyBillboard {
                 texture.offset.x = 7 / 15;
                 texture.offset.y = 2 / 6;
             }
+            else if (text[i] === '_') {
+                texture.offset.x = 8 / 15;
+                texture.offset.y = 1 / 6;
+            }
             else {
                 // no char displayed
                 texture.offset.x = 1;
                 texture.offset.y = 1;
             }
     
-            const material = new THREE.MeshBasicMaterial({ map: texture, color: 0x000000, transparent: true});
+            const material = new THREE.MeshBasicMaterial({ map: texture, color: color, transparent: true});
     
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(size, size), material);
             if (this.rotation === Math.PI) {
@@ -250,6 +296,11 @@ class MyBillboard {
         this.pictureObjs.forEach((pictureObj) => this.app.scene.remove(pictureObj));
         this.pictureObjs = [];
 
+        this.buttonObjs.forEach((buttonObj) => this.app.scene.remove(buttonObj));
+        this.buttonObjs = [];
+        this.callbacks = [];
+        this.picker.removeObjects();
+
         if (this.timeObj) {
             this.app.scene.remove(this.timeObj[0]);
         }
@@ -262,6 +313,31 @@ class MyBillboard {
         if (this.vouchersObj) {
             this.app.scene.remove(this.vouchersObj[0]);
         }
+    }
+
+    pickingHelper(intersects) {
+        if (intersects.length > 0) {
+            const obj = intersects[0].object;
+
+            for (let i = 0; i < this.buttonObjs.length; i++) {
+                if (obj === this.buttonObjs[i].children[0]) {
+                    if (this.highlighted)
+                        this.highlighted.material.color.set(0xff0000);
+                    this.buttonObjs[i].children[0].material.color.set(0xa00000);
+                    this.highlighted = this.buttonObjs[i].children[0];
+                    this.callbacks[i]();
+                    return;
+                }
+            }
+        }
+        if (this.highlighted)
+            this.highlighted.material.color.set(0xff0000);
+        this.highlighted = null;
+        this.outBoundsClick();
+    }
+
+    setOutBoundsClick(callback) {
+        this.outBoundsClick = callback;
     }
 }
 

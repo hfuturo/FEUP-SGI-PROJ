@@ -56,7 +56,7 @@
             }
         },
         "cameras": {
-            "initial": "perspective",
+            "initial": "billboard",
             "perspective": {
                 "type": "perspective",
                 "angle": 60,
@@ -71,6 +71,22 @@
                     "x": 0,
                     "y": 0,
                     "z": 0
+                }
+            },
+            "billboard": {
+                "type": "perspective",
+                "angle": 90,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 45,
+                    "y": 27,
+                    "z": -100
+                },
+                "target": {
+                    "x": 45,
+                    "y": 27,
+                    "z": -101
                 }
             }
         },

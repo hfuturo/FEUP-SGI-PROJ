@@ -33,8 +33,11 @@ class MyContents {
     this.reliefRefresh = 60;
     this.reliefClock = new THREE.Clock();
 
-    this.state = state.PLAYING;
+    this.state = state.START;
     this.acceptingInputs = false;
+    this.playerBalloon = undefined;
+    this.opponentBalloon = undefined;
+    this.username = '';
 
     THREE.DefaultLoadingManager.onLoad = () => {
       this.lastReliefRefresh = this.reliefRefresh;
@@ -61,7 +64,10 @@ class MyContents {
   }
 
   loadBillBoards() {
-    this.billBoards.forEach((billboard) => this.app.scene.remove(billboard))
+    this.billBoards.forEach((billboard) => {
+      billboard.clear();
+      this.app.scene.remove(billboard);
+    });
     this.billBoards = [];
 
     if (this.state === state.START) this.loadBillBoardsStart();
@@ -82,6 +88,30 @@ class MyContents {
     bb.addText('Tomas Gaspar', -17, 18, 1);
 
     bb.addPicture('textures/feup.png', 0, 18, 4);
+
+    const playerBalloon = [
+      bb.createText('Player', -3.75, 4, 2, 0xffffff),
+      bb.createPicture('textures/balloons/default.webp', 0, -1.25, 7),
+    ]
+    bb.addButton('player', -16, 27, 12, 12, playerBalloon)
+
+    const opponentBalloon = [
+      bb.createText('PC', -1, 4, 2, 0xffffff),
+      bb.createPicture('textures/balloons/default.webp', 0, -1.25, 7),
+    ]
+    bb.addButton('pc', -3, 27, 12, 12, opponentBalloon)
+
+    const nameInput = [
+      bb.createText('Name', -2.25, 2.25, 2, 0xffffff),
+      bb.createText('________', -6.5, -1.5, 2.5, 0xffffff),
+      bb.createText(this.username, -6.5, -1, 2.5, 0xffffff),
+    ]
+    bb.addButton('name', 13, 29.25, 18, 7.5, nameInput, this.insertName.bind(this))
+
+    const start = [bb.createText('Start', -4.5, 0, 3, 0xffffff)]
+    bb.addButton('start', 13, 23, 18, 4, start, this.startGame.bind(this))
+
+    bb.setOutBoundsClick(this.outBoundsClick.bind(this));
 
     this.billBoards.push(bb);
   }
@@ -133,11 +163,65 @@ class MyContents {
     this.balloon.display();
   }
 
+  startGame() {
+    if (this.playerBalloon === undefined) {
+      const warn = this.billBoards[0].createText('Please select your balloon', -9, 20, 1, 0xff0000);
+      this.billBoards[0].addTempElement(warn);
+      return;
+    }
+
+    if (this.opponentBalloon === undefined) {
+      const warn = this.billBoards[0].createText('Please select PC balloon', -9, 20, 1, 0xff0000);
+      this.billBoards[0].addTempElement(warn);
+      return;
+    }
+
+    if (this.username === '') {
+      const warn = this.billBoards[0].createText('Please insert username', -7, 20, 1, 0xff0000);
+      this.billBoards[0].addTempElement(warn);
+      return;
+
+    }
+
+    this.state = state.PLAYING;
+    this.app.setActiveCamera("perspective");
+
+    this.loadBillBoards();
+  }
+
+  insertName() {
+    this.acceptingInputs = true;
+  }
+
+  outBoundsClick() {
+    this.acceptingInputs = false;
+  }
+
   keyHandler(event) {
     if (!this.acceptingInputs) return;
 
-    if (this.state === state.START) keyHandlerStart(event);
-    else if (this.state === state.PLAYING) keyHandlerPlaying(event);
+    if (this.state === state.START) this.keyHandlerStart(event);
+    else if (this.state === state.PLAYING) this.keyHandlerPlaying(event);
+  }
+
+  keyHandlerStart(event) {
+    const updateDisplay = () => {
+      const userrname = this.billBoards[0].createText(this.username, -6.5, -1, 2.5, 0xffffff);
+      this.billBoards[0].removeButtonElement('name');
+      this.billBoards[0].addButtonElement('name', userrname);
+    }
+
+    if (event.key >= 'a' && event.key <= 'z' && this.username.length < 8) {
+      this.username += event.key;
+      updateDisplay();
+    } 
+    else if (event.key === 'Backspace') {
+      this.username = this.username.slice(0, -1);
+      updateDisplay();
+    }
+    else if (event.key === 'Enter' || event.key === 'Escape') {
+      this.acceptingInputs = false;
+    }
   }
 
   keyHandlerPlaying(event) {
