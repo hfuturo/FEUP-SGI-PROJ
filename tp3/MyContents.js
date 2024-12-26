@@ -47,6 +47,36 @@ class MyContents {
 
     this.billBoards = [];
     this.taggedObjects = [];
+
+    const l1 = new THREE.DirectionalLight(0xFFFFFF, 2);
+    l1.position.set(250, 250, 250);
+
+    const l1h = new THREE.DirectionalLightHelper(l1, 3);
+    this.app.scene.add(l1);
+    this.app.scene.add(l1h);
+
+
+    const l2 = new THREE.DirectionalLight(0xFFFFFF, 2);
+    l2.position.set(-250, 250, -250);
+
+    const l2h = new THREE.DirectionalLightHelper(l2, 3);
+    this.app.scene.add(l2);
+    this.app.scene.add(l2h);
+    
+
+    const l3 = new THREE.DirectionalLight(0xFFFFFF, 2);
+    l3.position.set(-250, 250, -250);
+    // l3.position.set(-250, 250, 250);
+    const l3h = new THREE.DirectionalLightHelper(l3, 3);
+    this.app.scene.add(l3);
+    this.app.scene.add(l3h);
+
+    // const l5 = new THREE.DirectionalLight(0xFFFFFF, 2);
+    // l5.position.set(0, -1, 0);
+
+    // const l5h = new THREE.DirectionalLightHelper(l5, 3);
+    // this.app.scene.add(l5);
+    // this.app.scene.add(l5h);
   }
 
   onAfterSceneLoadedAndBeforeRender() {

@@ -26,12 +26,12 @@
                 "center": {"x": 0.0, "y": 0.0, "z": 0.0},
                 "emissive": {"r": 1.0, "g": 1.0, "b": 1.0},
                 "intensity": 0.0,
-                "front": "",
-                "back": "",
-                "up": "",
-                "down": "",
-                "left": "",
-                "right": ""
+                "front": "textures/skybox/front.jpeg",
+                "back": "textures/skybox/back.jpeg",
+                "up": "textures/skybox/up.jpeg",
+                "down": "textures/skybox/down.jpeg",
+                "left": "textures/skybox/left.jpeg",
+                "right": "textures/skybox/right.jpeg"
             }
         },
         "textures": {
@@ -98,7 +98,14 @@
                     "nodesList":[
                         "out_billboards",
                         "parking_lot"
-                    ]
+                    ],
+                    "directionallight": {
+                        "type": "directionallight",
+                        "enabled": true,
+                        "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                        "intensity": 2,
+                        "position": {"x": 300, "y": 300, "z": 300}
+                    }
                 }
             },
             "parking_lot": {
