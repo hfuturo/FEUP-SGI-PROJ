@@ -14,13 +14,14 @@ class MyBallon {
         west: 5
     }
     
-    constructor(app, boxLength, sphereRadius) {
+    constructor(app, name) {
         this.app = app;
-        this.boxLength = boxLength;
-        this.sphereRadius = sphereRadius;
 
         this.height = 0;
         this.group = new THREE.Group();
+        this.group.name = name;
+
+        this.ySize = 9;
         
         this.clock = new THREE.Clock();
         this.mixer = new THREE.AnimationMixer(this.group);
@@ -96,7 +97,7 @@ class MyBallon {
     up() {
         if (this.height === 4 || this.animationPlaying) return false;
 
-        const yDisplacement = (this.boxLength + this.sphereRadius*2)*1.1/10;
+        const yDisplacement = this.ySize/10;
         // 0 -> max wind in current height
         // 0.5 -> half wind in current height and half wind in new height
         // 1 -> max wind in new height
@@ -133,7 +134,7 @@ class MyBallon {
     down() {
         if (this.height === 0 || this.animationPlaying) return false;
         
-        const yDisplacement = (this.boxLength + this.sphereRadius*2)*1.1/10;
+        const yDisplacement = this.ySize/10;
         // 0 -> max wind in current height
         // 0.5 -> half wind in current height and half wind in new height
         // 1 -> max wind in new height

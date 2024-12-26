@@ -12,11 +12,8 @@ class MyPicker {
 
         this.objects = objects
         this.pickingHelper = pickingHelper
-
-        document.addEventListener(
-            "pointerdown",
-            this.onPointerMove.bind(this)
-        );
+        this.boundPointerDown = this.onPointerMove.bind(this)
+        this.activate()
     }
 
     add(object) {
@@ -34,10 +31,24 @@ class MyPicker {
         this.pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
         this.raycaster.setFromCamera(this.pointer, this.app.activeCamera);
-        
+
         const intersects = this.raycaster.intersectObjects(this.objects);
 
         this.pickingHelper(intersects)
+    }
+
+    activate() {
+        document.addEventListener(
+            "pointerdown",
+            this.boundPointerDown
+        );
+    }
+
+    dispose() {
+        document.removeEventListener(
+            "pointerdown",
+            this.boundPointerDown
+        );
     }
 }
 
