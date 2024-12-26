@@ -7,12 +7,12 @@ class MyBillboard {
         this.depth = depth;
         this.rotation = rotation ? rotation.y : 0;
 
-        this.font = new THREE.TextureLoader().load('textures/font.png');
-
         this.textObjs = [];
         this.pictureObjs = [];
         this.buttonObjs = [];
     }
+
+    static font = new THREE.TextureLoader().load('textures/font.png');
 
     startTimer(x, y, size) {
         if (this.timeObj) {
@@ -121,7 +121,7 @@ class MyBillboard {
     removeButtonElement(id) {
         this.buttonObjs.forEach((buttonObj) => {
             if (buttonObj.children[0].name === id) {
-                buttonObj.children[0].children.pop();
+                buttonObj.children.pop();
             }
         });
     }
@@ -131,7 +131,7 @@ class MyBillboard {
             if (buttonObj.children[0].name === id) {
                 const z = this.rotation === Math.PI ? -0.3 : 0.3;
                 element.position.set(element.position.x - this.position.x, element.position.y - this.position.y, z);
-                buttonObj.children[0].add(element);
+                buttonObj.add(element);
             }
         });
     }
@@ -143,13 +143,13 @@ class MyBillboard {
         }, 3000);
     }
 
-    createText(text, x, y, size, color=0x000000) {
+    static createText(text, size, color=0x000000) {
         const group = new THREE.Group();
         text = text.toUpperCase();
     
         for (let i = 0, x = 0; i < text.length; i++, x += size) {
             // Clone the texture to ensure independent offsets for each character
-            const texture = this.font.clone();
+            const texture = MyBillboard.font.clone();
             texture.repeat.set(1 / 15, 1 / 6);
     
             if (text[i] >= 'A' && text[i] <= 'M') {
@@ -194,20 +194,24 @@ class MyBillboard {
             const material = new THREE.MeshBasicMaterial({ map: texture, color: color, transparent: true});
     
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(size, size), material);
-            if (this.rotation === Math.PI) {
-                mesh.position.set(-x * 0.75, 0, 0);
-                mesh.rotation.y = Math.PI;
-            } else {
-                mesh.position.set(x * 0.75, 0, 0);
-            }
+            mesh.position.set(x * 0.75, 0, 0);
 
             group.add(mesh);
         }
     
+        return group;
+    }
+
+    createText(text, x, y, size, color=0x000000) {
+        const group = MyBillboard.createText(text, size, color);
+
         if (this.rotation === Math.PI) {
+            group.children.forEach((mesh) => {
+                mesh.position.x *= -1;
+                mesh.rotation.y = Math.PI;
+            });
             group.position.set(this.position.x - x, this.position.y + y, this.position.z - this.depth);
-        }
-        else {
+        } else {
             group.position.set(this.position.x + x, this.position.y + y, this.position.z + this.depth);
         }
     

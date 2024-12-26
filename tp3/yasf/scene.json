@@ -101,6 +101,54 @@
                     "y": 27,
                     "z": -101
                 }
+            },
+            "parking_lot1": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": -40,
+                    "y": 5,
+                    "z": 25
+                },
+                "target": {
+                    "x": -39,
+                    "y": 5,
+                    "z": 25
+                }
+            },
+            "parking_lot2": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": -40,
+                    "y": 5,
+                    "z": -25
+                },
+                "target": {
+                    "x": -39,
+                    "y": 5,
+                    "z": -25
+                }
+            },
+            "grid_selection": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 0,
+                    "y": 30,
+                    "z": 10
+                },
+                "target": {
+                    "x": 0,
+                    "y": 24,
+                    "z": 8
+                }
             }
         },
         "graph": {
@@ -343,9 +391,9 @@
             "parking_lot1": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -22, "y": 0, "z": -25}},
+                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": -25}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 10, "y": 20, "z": 1}}
+                    {"type": "scale", "amount": {"x": 20, "y": 20, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [
@@ -356,9 +404,9 @@
             "parking_lot2": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -22, "y": 0, "z": 25}},
+                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": 25}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 10, "y": 20, "z": 1}}
+                    {"type": "scale", "amount": {"x": 20, "y": 20, "z": 1}}
                 ],
                 "children": {
                     "nodesList": [

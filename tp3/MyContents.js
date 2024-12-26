@@ -10,6 +10,7 @@ import { MyBillboard } from "./MyBillboard.js";
 import { MyPicker } from "./MyPicker.js";
 import { MySparkle } from "./MySparkle.js";
 import { MyFirework } from "./MyFireWork.js";
+import { MyParkingLot } from "./MyParkingLot.js";
 
 const state = {
   START: 0,
@@ -30,7 +31,10 @@ class MyContents {
     this.axis = null;
 
     this.initializer = new MyInitializer(this.app, './yasf/scene.json', this.onAfterSceneLoadedAndBeforeRender.bind(this));
-    this.balloon = new MyBallon(this.app, 2, 3);
+    this.balloon = new MyBallon(this.app, '1');
+
+    this.parkingLot1 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, 25), [new MyBallon(this.app, '1')]);
+    this.parkingLot2 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, -25), [new MyBallon(this.app, '1')]);
 
     this.reliefImage = new MyReliefImage();
     this.reliefRefresh = 60;
@@ -128,7 +132,8 @@ class MyContents {
   }
 
   loadBillBoardsStart() {
-    this.picker = new MyPicker(this.app, [], this.startPicker.bind(this));
+    this.choosingBalloon = false;
+    this.picker = new MyPicker(this.app, [], this.startMenuPicker.bind(this));
     const billboardObj = this.initializer.objects["out_billboards"];
 
     billboardObj.children.forEach((billboard) => {
@@ -215,9 +220,13 @@ class MyContents {
     this.app.scene.add(ambientLight);
 
     this.balloon.display();
+    this.parkingLot1.display();
+    this.parkingLot2.display();
   }
 
-  startPicker(intersects) {
+  startMenuPicker(intersects) {
+    if (this.choosingBalloon) return;
+
     if (intersects.length > 0) {
       const name = intersects[0].object.name;
       this.billBoards.forEach((billboard) => {
@@ -228,7 +237,16 @@ class MyContents {
 
       if (name === 'start') this.startGame();
       else if (name === 'name') this.insertName();
-    } 
+      else if (name === 'player' || name === 'pc') {
+        this.choosingBalloon = true;
+        this.chooseBalloon(name).then(() => {
+          this.billBoards.forEach((billboard) => {
+            this.choosingBalloon = false;
+            billboard.unHighlightButton(name);
+          });
+        });
+      }
+    }
     else {
       this.acceptingInputs = false;
       if (this.highlight !== null) {
@@ -252,26 +270,33 @@ class MyContents {
     }
 
     if (this.playerBalloon === undefined) {
-      const warn = this.billBoards[0].createText('Please select your balloon', -9, 20, 1, 0xff0000);
-      this.billBoards.forEach((billboard) => billboard.addTempElement(warn));
+      this.billBoards.forEach((billboard) => {
+        const warn = billboard.createText('Please select your balloon', -9, 20, 1, 0xff0000);
+        billboard.addTempElement(warn);
+      });
       unhighlight();
       return;
     }
 
     if (this.opponentBalloon === undefined) {
-      const warn = this.billBoards[0].createText('Please select PC balloon', -9, 20, 1, 0xff0000);
-      this.billBoards[0].addTempElement(warn);
+      this.billBoards.forEach((billboard) => {
+        const warn = billboard.createText('Please select PC balloon', -9, 20, 1, 0xff0000);
+        billboard.addTempElement(warn);
+      });
       unhighlight();
       return;
     }
 
     if (this.username === '') {
-      const warn = this.billBoards[0].createText('Please insert username', -7, 20, 1, 0xff0000);
-      this.billBoards[0].addTempElement(warn);
-      unhghlight();
+      this.billBoards.forEach((billboard) => {
+        const warn = billboard.createText('Please insert username', -7, 20, 1, 0xff0000);
+        billboard.addTempElement(warn);
+      });
+      unhighlight();
       return;
     }
 
+    this.picker.dispose();
     this.state = state.PLAYING;
     this.app.setActiveCamera("perspective");
 
@@ -282,8 +307,117 @@ class MyContents {
     this.acceptingInputs = true;
   }
 
-  outBoundsClick() {
-    this.acceptingInputs = false;
+  chooseBalloon(name) {
+    return new Promise((resolve) => {
+      const selectedBalloon = (ballon) => {
+        this.billBoards.forEach((billboard) => {
+          billboard.removeButtonElement(name);
+
+          if (this.startPos) {
+            billboard.removeButtonElement(name)
+          }
+
+          const picture = billboard.createPicture(`./textures/balloons/${ballon.name}.jpg`, 0, -1.25, 7);
+          billboard.addButtonElement(name, picture);
+        });
+
+        if (name === 'player') {
+          this.playerBalloon = ballon;
+          this.app.setActiveCamera("grid_selection")
+
+          const pos1 = MyBillboard.createText('1', 10, 0xffffff);
+          pos1.rotation.x = -Math.PI / 2;
+          pos1.position.set(10, 0.3, 0);
+
+          const pos2 = MyBillboard.createText('2', 10, 0xffffff);
+          pos2.rotation.x = -Math.PI / 2;
+          pos2.position.set(-10, 0.3, 0);
+
+          const base1 = new THREE.Mesh(
+            new THREE.BoxGeometry(10, 0.3, 10),
+            new THREE.MeshBasicMaterial({ color: 0x000000 })
+          )
+          base1.position.set(-10, 0.15, 0);
+
+          const base2 = new THREE.Mesh(
+            new THREE.BoxGeometry(10, 0.3, 10),
+            new THREE.MeshBasicMaterial({ color: 0x000000 })
+          )
+          base2.position.set(10, 0.15, 0);
+
+          this.app.scene.add(base1);
+          this.app.scene.add(base2);
+          this.app.scene.add(pos1);
+          this.app.scene.add(pos2);
+
+          let highlighted;
+          const picker = new MyPicker(this.app, [base1, base2], (intersects) => {
+            if (intersects.length > 0) {
+              if (highlighted && highlighted.uuid === intersects[0].object.uuid) {
+                this.app.scene.remove(base1);
+                this.app.scene.remove(base2);
+                this.app.scene.remove(pos1);
+                this.app.scene.remove(pos2);
+
+                this.billBoards.forEach((billboard) => {
+                  if (this.startPos)
+                    billboard.removeButtonElement('pc');
+
+                  const pos = billboard.createText(intersects[0].object.position.x > 0 ? '1' : '2', 5, -5, 2, 0xffffff);
+                  billboard.addButtonElement('player', pos);
+
+                  const oppPos = billboard.createText(intersects[0].object.position.x > 0 ? '2' : '1', 5, -5, 2, 0xffffff);
+                  billboard.addButtonElement('pc', oppPos);
+                })
+
+                this.startPos = intersects[0].object.position;
+
+                picker.dispose();
+                this.app.setActiveCamera("billboard");
+                resolve();
+              } else {
+                if (highlighted) {
+                  highlighted.material.color.set(0x000000);
+                }
+                highlighted = intersects[0].object;
+                highlighted.material.color.set(0xff0000);
+              }
+            } else {
+              if (highlighted) {
+                highlighted.material.color.set(0x000000);
+                highlighted = null;
+              }
+            }
+          });
+
+        } else {
+          if (this.startPos) {
+            this.billBoards.forEach((billboard) => {
+              let pos;
+              if (name === 'player')
+                pos = billboard.createText(this.startPos.x > 0 ? '1' : '2', 5, -5, 2, 0xffffff);
+              else pos = billboard.createText(this.startPos.x > 0 ? '2' : '1', 5, -5, 2, 0xffffff);
+
+              billboard.addButtonElement(name, pos);
+            })
+          }
+
+          this.opponentBalloon = ballon;
+          this.app.setActiveCamera("billboard");
+          resolve();
+        }
+      }
+
+      if (name === 'player') {
+        this.app.setActiveCamera("parking_lot1");
+        this.parkingLot1.initPicker();
+        this.parkingLot1.setCallback(selectedBalloon);
+      } else {
+        this.app.setActiveCamera("parking_lot2");
+        this.parkingLot2.initPicker();
+        this.parkingLot2.setCallback(selectedBalloon);
+      }
+    });
   }
 
   keyHandler(event) {
