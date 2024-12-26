@@ -64,6 +64,7 @@
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1,
+                "twosided": true,
                 "textureref": "rust"
             }
         },
@@ -110,7 +111,8 @@
                     "nodesList":[
                         "out_billboards",
                         "parking_lot",
-                        "sparkles"
+                        "sparkles",
+                        "fireworks"
                     ],
                     "directionallight": {
                         "type": "directionallight",
@@ -119,6 +121,178 @@
                         "intensity": 2,
                         "position": {"x": 300, "y": 300, "z": 300}
                     }
+                }
+            },
+            "fireworks": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "left_firework",
+                        "right_firework"
+                    ]
+                }
+            },
+            "right_firework": {
+                "type": "node",
+                "transforms":[
+                    {"type": "translate", "amount": {"x": 5, "y": 0, "z": 10}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "firework"
+                    ]
+                }
+            },
+            "left_firework": {
+                "type": "node",
+                "transforms":[
+                    {"type": "translate", "amount": {"x": -5, "y": 0, "z": 10}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "firework"
+                    ]
+                }
+            },
+            "firework": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "firework_support",
+                        "firework_cannons"
+                    ]
+                }
+            },
+            "firework_cannons": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "firework_cannons_right_row",
+                        "firework_cannons_row",
+                        "firework_cannons_left_row"
+                    ]
+                }
+            },
+            "firework_cannons_left_row": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -0.3, "y": 0, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "firework_cannons_row"
+                    ]
+                }
+            },
+            "firework_cannons_right_row": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0.3, "y": 0, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "firework_cannons_row"
+                    ]
+                }
+            },
+            "firework_cannons_row": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "rust"
+                },
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 0.15, "y": 0.5, "z": 0.15}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "firework_cannon_1",
+                        "firework_cannon_2",
+                        "firework_cannon_3",
+                        "firework_cannon_4",
+                        "firework_cannon_5",
+                        "firework_cannon_6"
+                    ]
+                }
+            },
+            "firework_cannon_1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 2, "z": -5}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder_open"
+                    ]
+                }
+            },
+            "firework_cannon_2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 2, "z": -3}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder_open"
+                    ]
+                }
+            },
+            "firework_cannon_3": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 2, "z": -1}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder_open"
+                    ]
+                }
+            },
+            "firework_cannon_4": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 2, "z": 1}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder_open"
+                    ]
+                }
+            },
+            "firework_cannon_5": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 2, "z": 3}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder_open"
+                    ]
+                }
+            },
+            "firework_cannon_6": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 2, "z": 5}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "cylinder_open"
+                    ]
+                }
+            },
+            "firework_support": {
+                "type": "node",
+                "materialref":{
+                    "materialId": "black"
+                },
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0.5, "z": 0}},
+                    {"type": "scale", "amount": {"x": 1, "y": 1, "z": 2}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "box"
+                    ]
                 }
             },
             "sparkles": {
@@ -136,7 +310,7 @@
             "right_sparkle": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -6, "y": 0.5, "z": 2}},
+                    {"type": "translate", "amount": {"x": 15, "y": 0.5, "z": 10}},
                     {"type": "scale", "amount": {"x": 0.25, "y": 1, "z": 0.25}}
                 ],
                 "children": {
@@ -148,7 +322,7 @@
             "left_sparkle": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 6, "y": 0.5, "z": 2}},
+                    {"type": "translate", "amount": {"x": -15, "y": 0.5, "z": 10}},
                     {"type": "scale", "amount": {"x": 0.25, "y": 1, "z": 0.25}}
                 ],
                 "children": {
@@ -315,6 +489,20 @@
                         "height": 1,
                         "slices": 20,
                         "stacks": 5
+                    }
+                }
+            },
+            "cylinder_open": {
+                "type": "node",
+                "children": {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "base": 1,
+                        "top": 1,
+                        "height": 1,
+                        "slices": 20,
+                        "stacks": 5,
+                        "capsclose": true
                     }
                 }
             },

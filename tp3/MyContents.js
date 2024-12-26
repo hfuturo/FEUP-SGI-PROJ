@@ -9,6 +9,7 @@ import { MyReliefImage } from "./MyReliefImage.js";
 import { MyBillboard } from "./MyBillboard.js";
 import { MyPicker } from "./MyPicker.js";
 import { MySparkle } from "./MySparkle.js";
+import { MyFirework } from "./MyFireWork.js";
 
 const state = {
   START: 0,
@@ -43,6 +44,7 @@ class MyContents {
     this.highlight = null;
 
     this.sparkles = [];
+    this.fireworks = [];
 
     THREE.DefaultLoadingManager.onLoad = () => {
       this.lastReliefRefresh = this.reliefRefresh;
@@ -91,6 +93,11 @@ class MyContents {
     this.loadTrack();
     this.loadBillBoards();
     this.loadSparkles();
+    this.loadFireworks();
+  }
+
+  loadFireworks() {
+    this.fireworksObj = this.initializer.objects["fireworks"].children;
   }
 
   loadSparkles() {
@@ -338,6 +345,7 @@ class MyContents {
     if (this.track === undefined || this.track === null) return;
 
     this.#shootSparkles();
+    this.#shootFireworks();
 
     this.track.getObstacles().forEach((obstacle) => {
       if (this.balloon.collides(obstacle)) {
@@ -368,6 +376,24 @@ class MyContents {
 
 
     this.billBoards.forEach((billboard) => billboard.update());
+  }
+
+  #shootFireworks() {
+    this.fireworksObj.forEach((fireworkObj) => {
+      if (Math.random() < 0.05) {
+        this.fireworks.push(new MyFirework(this.app, fireworkObj.position));
+      }
+    });
+
+
+    for (let i = 0; i < this.fireworks.length; i++) {
+      if (this.fireworks[i].done) {
+        this.fireworks.splice(i, 1);
+        continue;
+      }
+
+      this.fireworks[i].update();
+    }
   }
 
   #shootSparkles() {

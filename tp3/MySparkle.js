@@ -46,6 +46,7 @@ class MySparkle {
         this.points.position.set(...this.position);
         this.points.castShadow = true;
         this.points.receiveShadow = true;
+        this.points.frustumCulled = false;
         this.app.scene.add(this.points);
     }
 
