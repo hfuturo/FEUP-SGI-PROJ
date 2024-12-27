@@ -29,6 +29,12 @@ class MyBallon {
 
         this.balloonScale = 0.25;
 
+        this.vouchers = 0;
+        this.freezed = false;
+
+        // used to store obstacles that collided with balloon
+        this.collidedObjects = [];
+
         this.#initCollisionObjects();
     }
 
@@ -169,6 +175,8 @@ class MyBallon {
     }
 
     update() {
+        if (this.freezed) return;
+
         if (this.height === 1)
             this.group.position.z -= this.wind.north/50;
         else if (this.height === 2)
@@ -202,6 +210,17 @@ class MyBallon {
         this.mixer.addEventListener('finished', onAnimationFinished);
 
         positionAction.play()
+    }
+
+    handleCollision(object) {
+        if (object instanceof MyObstacle) {
+            this.vouchers === 0 ? this.freeze() : this.vouchers--;
+        }
+        else if (object instanceof MyPowerUp) {
+            this.vouchers++;
+        }
+
+        this.#tagObject(object);
     }
 
     collides(object) {
@@ -244,6 +263,10 @@ class MyBallon {
         return false;
     }
 
+    collidedWith(object) {
+        return this.collidedObjects.includes(object);
+    }
+
     #checkSphereCollision(thisSphere, thisRadius, objPosition, objRadius) {
         const position = new THREE.Vector3();
         thisSphere.getWorldPosition(position);
@@ -282,6 +305,32 @@ class MyBallon {
     
     getPosition() {
         return this.group.position;
+    }
+
+    getVouchers() {
+        return this.vouchers;
+    }
+
+    freeze() {
+        this.freezed = true;
+
+        // releases balloon after 2 seconds penalty
+        setTimeout(() => this.#unfreeze(), 2000);
+    }
+
+    #unfreeze() {
+        this.freezed = false;
+    }
+
+    #tagObject(object) {
+        this.collidedObjects.push(object);
+    
+        // removes object after 4s (2s penalty + 2s so ballon is not affected by the same obstacle twice in a row)
+        setTimeout(() => this.#removeTaggedObject(object), 4000);
+    }
+    
+    #removeTaggedObject(object) {
+        this.collidedObjects = this.collidedObjects.filter((obj) => obj !== object);
     }
 }
 

@@ -529,23 +529,7 @@ class MyContents {
 
     this.billBoards.forEach((billboard) => billboard.update());
 
-    this.track.getObstacles().forEach((obstacle) => {
-      if (this.balloon.collides(obstacle)) {
-        if (this.taggedObjects.includes(obstacle)) return;
-
-        this.#tagObject(obstacle);
-        this.billBoards.forEach((billboard) => billboard.updateVoucher(-1));
-      }
-    });
-
-    this.track.getPowerUps().forEach((powerUp) => {
-      if (this.balloon.collides(powerUp)) {
-        if (this.taggedObjects.includes(powerUp)) return;
-
-        this.#tagObject(powerUp);
-        this.billBoards.forEach((billboard) => billboard.updateVoucher(1));
-      }
-    })
+    this.#checkCollisions();
 
     if (this.app.activeCameraName === 'balloon') {
       if (this.balloonCamera === '1') {
@@ -556,6 +540,25 @@ class MyContents {
         this.app.updateTarget();
       }
     }
+  }
+
+  #checkCollisions() {
+    this.track.getObstacles().forEach((obstacle) => {
+      if (!this.balloon.collides(obstacle) || this.balloon.collidedWith(obstacle)) return;
+
+      if (this.balloon.getVouchers() > 0) {
+        this.billBoards.forEach((billboard) => billboard.updateVoucher(-1));
+      }
+
+      this.balloon.handleCollision(obstacle);
+    });
+
+    this.track.getPowerUps().forEach((powerUp) => {
+      if (!this.balloon.collides(powerUp) || this.balloon.collidedWith(powerUp)) return;
+
+      this.billBoards.forEach((billboard) => billboard.updateVoucher(1));
+      this.balloon.handleCollision(powerUp);
+    });
   }
 
   #shootFireworks() {
@@ -603,16 +606,16 @@ class MyContents {
     });
   }
 
-  #tagObject(object) {
-    this.taggedObjects.push(object);
+  // #tagObject(object) {
+  //   this.taggedObjects.push(object);
 
-    // removes object after 2 second
-    setTimeout(() => this.#clearTaggedObject(object), 2000);
-  }
+  //   // removes object after 4s (2s penalty + 2s so ballon is not affected by the same obstacle twice in a row)
+  //   setTimeout(() => this.#clearTaggedObject(object), 4000);
+  // }
 
-  #clearTaggedObject(object) {
-    this.taggedObjects = this.taggedObjects.filter((obj) => obj !== object);
-  }
+  // #clearTaggedObject(object) {
+  //   this.taggedObjects = this.taggedObjects.filter((obj) => obj !== object);
+  // }
 }
 
 export { MyContents };
