@@ -333,12 +333,11 @@ class MyBallon {
     freezeAndReplace(point, penalty=2000) {
         this.freezed = true;
         
-        // move shadow so it does not flicker
         this.shadow.position.set(...point);
+        this.group.position.set(point.x, this.group.position.y, point.z);
 
-        // releases balloon after 2 seconds penalty and replaces it on the nearest track point
+        // releases balloon after 2 seconds
         setTimeout(() => {
-            this.group.position.set(point.x, this.group.position.y, point.z);
             this.freezed = false;
         }, penalty);
     }   
