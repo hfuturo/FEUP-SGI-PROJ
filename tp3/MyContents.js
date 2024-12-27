@@ -116,7 +116,7 @@ class MyContents {
       bb.addPicture('textures/tomas.jpg', -20, 18, 4);
       bb.addText('Tomas Gaspar', -17, 18, 1);
 
-      bb.addPicture('textures/feup.png', 0, 18, 4);
+      bb.addPicture('textures/feup.png', 0, 18, 8, 0.3);
 
       const playerBalloon = [
         bb.createText('Player', -2.75, 4, 1.5, 0xffffff),
@@ -162,10 +162,10 @@ class MyContents {
 
     billboardObj.children.forEach((billboard) => {
       const bb = new MyBillboard(this.app, billboard.position, 3.2, billboard.rotation);
-      bb.startTimer(-13, 36, 5);
-      bb.startLaps(-20, 30, 4);
-      bb.startLayer(-20, 25, 4);
-      bb.startVouchers(-20, 20, 4);
+      bb.startTimer(-10, 36, 4);
+      bb.startLaps(this.numLaps, 15, 18, 3);
+      bb.startLayer(-21, 29);
+      bb.startVouchers(0, 18, 3);
 
       this.billBoards.push(bb);
     });
@@ -288,9 +288,7 @@ class MyContents {
     this.acceptingInputs = true;
 
     this.app.setActiveCamera("balloon");
-    this.app.setMovingCameraDistance(15);
-    this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
-    this.app.updateTarget();
+    this.balloonThirdPerson();
 
     this.loadBillBoards();
   }
@@ -483,21 +481,31 @@ class MyContents {
           this.billBoards.forEach((billboard) => billboard.updateLayer(-1));
         break;
       case 'c':
-        if (this.balloonCamera === '1') {
-          this.app.setMovingCameraDistance(15);
-          this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
-          this.app.updateTarget();
-          this.balloonCamera = '3';
-        } else if (this.balloonCamera === '3') {
-          this.app.setMovingCameraDistance(0.1);
-          this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 0.75, this.balloon.group.position.z);
-          this.app.updateTarget();
-          this.balloonCamera = '1';
+        if (this.app.activeCameraName === 'balloon') {
+          if (this.balloonCamera === '1') {
+            this.balloonThirdPerson();
+            this.balloonCamera = '3';
+          } else if (this.balloonCamera === '3') {
+            this.balloonFirstPerson();
+            this.balloonCamera = '1';
+          }
         }
         break;
       default:
         break;
     }
+  }
+
+  balloonFirstPerson() {
+    this.app.setupMovingCamera(0.1);
+    this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 0.75, this.balloon.group.position.z);
+    this.app.updateTarget();
+  }
+
+  balloonThirdPerson() {
+    this.app.setupMovingCamera(15);
+    this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
+    this.app.updateTarget();
   }
 
   /**
@@ -522,6 +530,8 @@ class MyContents {
     if (this.state === state.PLAYING) {
       this.updatePlaying();
     }
+
+    this.app.gui.update();
   }
 
   updatePlaying() {

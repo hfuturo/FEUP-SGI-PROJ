@@ -3,6 +3,7 @@ import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { MyObstacle } from "./MyObstacle.js";
 import { MyPowerUp } from "./MyPowerUp.js";
+import { MyAnimation } from "./MyAnimation.js";
 
 
 class MyBallon {
@@ -30,10 +31,9 @@ class MyBallon {
         );
         this.shadow.rotation.set(-90 * Math.PI / 180, 0, 0);
 
-        this.clock = new THREE.Clock();
-        this.balloonMixer = new THREE.AnimationMixer(this.group);
-        this.shadowMixer = new THREE.AnimationMixer(this.shadow);
         this.animationPlaying = false;
+        this.balloonAnimation = new MyAnimation(this.group);
+        this.shadowAnimation = new MyAnimation(this.shadow);
 
         this.balloonScale = 0.25;
 
@@ -114,7 +114,7 @@ class MyBallon {
     }
 
     up() {
-        if (this.height === 4 || this.animationPlaying) return false;
+        if (this.height === 4 || this.balloonAnimation.isPlaying() || this.shadowAnimation.isPlaying()) return false;
 
         const yDisplacement = this.ySize/10;
         // 0 -> max wind in current height
@@ -150,15 +150,15 @@ class MyBallon {
             }
         }
 
-        this.createBalloonAnimation(times, balloonPositions);
-        this.createShadowAnimation(times, shadowPositions);
+        this.balloonAnimation.createAnimation(times, balloonPositions);
+        this.shadowAnimation.createAnimation(times, shadowPositions);
         this.height++;
 
         return true;
     }
 
     down() {
-        if (this.height === 0 || this.animationPlaying) return false;
+        if (this.height === 0 || this.balloonAnimation.isPlaying() || this.shadowAnimation.isPlaying()) return false;
         
         const yDisplacement = this.ySize/10;
         // 0 -> max wind in current height
@@ -193,8 +193,8 @@ class MyBallon {
             }
         }
 
-        this.createBalloonAnimation(times, balloonPositions);
-        this.createShadowAnimation(times, shadowPositions);
+        this.balloonAnimation.createAnimation(times, balloonPositions);
+        this.shadowAnimation.createAnimation(times, shadowPositions);
         this.height--;
 
         return true;
@@ -220,56 +220,8 @@ class MyBallon {
             this.shadow.position.x -= this.wind.west/50;
         }
 
-        if (this.balloonMixer) {
-            const delta = this.clock.getDelta();
-
-            this.balloonMixer.update(delta);
-            this.shadowMixer.update(delta);
-        }
-    }
-
-    createBalloonAnimation(times, values) {
-        const positionKF = new THREE.VectorKeyframeTrack('.position', times, values, THREE.InterpolateSmooth);
-
-        const positionClip = new THREE.AnimationClip('positionAnimation', -1, [positionKF]);
-
-        const positionAction = this.balloonMixer.clipAction(positionClip);
-        positionAction.setLoop(THREE.LoopOnce);
-        positionAction.clampWhenFinished = true;
-        this.animationPlaying = true;
-
-        const onAnimationFinished = () => {
-            this.animationPlaying = false;
-            this.balloonMixer.stopAllAction();
-            this.group.position.set(values.at(-3), values.at(-2), values.at(-1));
-            this.balloonMixer.removeEventListener('finished', onAnimationFinished);
-        };
-
-        this.balloonMixer.addEventListener('finished', onAnimationFinished);
-
-        positionAction.play();
-    }
-
-    createShadowAnimation(times, values) {
-        const positionKF = new THREE.VectorKeyframeTrack('.position', times, values, THREE.InterpolateSmooth);
-
-        const positionClip = new THREE.AnimationClip('positionAnimation', -1, [positionKF]);
-
-        const positionAction = this.shadowMixer.clipAction(positionClip);
-        positionAction.setLoop(THREE.LoopOnce);
-        positionAction.clampWhenFinished = true;
-        this.animationPlaying = true;
-
-        const onAnimationFinished = () => {
-            this.animationPlaying = false;
-            this.shadowMixer.stopAllAction();
-            this.shadow.position.set(values.at(-3), this.shadowY, values.at(-1));
-            this.shadowMixer.removeEventListener('finished', onAnimationFinished);
-        };
-
-        this.shadowMixer.addEventListener('finished', onAnimationFinished);
-
-        positionAction.play();
+        this.balloonAnimation.update();
+        this.shadowAnimation.update();
     }
 
     handleCollision(object) {

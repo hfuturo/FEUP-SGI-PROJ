@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { MyAnimation } from './MyAnimation.js';
 
 class MyBillboard {
     constructor(app, position, depth, rotation) {
@@ -15,9 +16,6 @@ class MyBillboard {
     static font = new THREE.TextureLoader().load('textures/font.png');
 
     startTimer(x, y, size) {
-        if (this.timeObj) {
-            this.app.scene.remove(this.timeObj[0]);
-        }
         this.startTime = Date.now();
         this.lastTime = this.startTime;
 
@@ -26,35 +24,37 @@ class MyBillboard {
         this.app.scene.add(this.timeObj[0]);
     }
 
-    startLayer(x, y, size) {
-        if (this.layerObj) {
-            this.app.scene.remove(this.layerObj[0]);
-        }
-
+    startLayer(x, y) {
         this.layer = 0;
-        this.layerObj = [this.createText(`Layer:${this.layer}(-)`, x, y, size), x, y, size];
+        
+        this.addPicture('textures/height.png', x, y, 1.75, 9);
 
-        this.app.scene.add(this.layerObj[0]);
+        const wind = this.createPicture('textures/wind.png', -20, 18, 2.5);
+        wind.scale.set(0, 1, 1);
+        if (this.rotation === Math.PI)
+            wind.rotation.z = -Math.PI/2;
+        else wind.rotation.z = Math.PI/2;
+
+        this.layerObj = [this.createPicture('textures/balloon.jpg', -18, 22, 2.5), wind];
+        this.layerObj.forEach((obj) => this.app.scene.add(obj));
+
+        this.balloonAnimation = new MyAnimation(this.layerObj[0]);
+        this.windAnimation = new MyAnimation(this.layerObj[1]);
     }
 
-    startLaps(x, y, size) {
-        if (this.lapObj) {
-            this.app.scene.remove(this.lapObj[0]);
-        }
-
+    startLaps(laps, x, y, size) {
         this.lap = 0;
-        this.lapObj = [this.createText(`Lap:${this.lap}/`, x, y, size), x, y, size];
+        this.lapObj = [this.createText(`${this.lap}/${laps}`, x, y, size), laps, x, y, size];
 
         this.app.scene.add(this.lapObj[0]);
     }
 
     startVouchers(x, y, size) {
-        if (this.vouchersObj) {
-            this.app.scene.remove(this.vouchersObj[0]);
-        }
+        const img = this.createPicture('textures/voucher.png', x - size, y, size);
+        this.app.scene.add(img);
 
         this.vouchers = 0;
-        this.vouchersObj = [this.createText(`Vouchers:${this.vouchers}`, x, y, size), x, y, size];
+        this.vouchersObj = [this.createText(`${this.vouchers}`, x, y, size), x, y, size];
 
         this.app.scene.add(this.vouchersObj[0]);
     }
@@ -69,8 +69,8 @@ class MyBillboard {
         this.app.scene.add(textObj);
     }
 
-    addPicture(texture, x, y, size) {
-        const pictureObj = this.createPicture(texture, x, y, size);
+    addPicture(texture, x, y, size, yRatio=1) {
+        const pictureObj = this.createPicture(texture, x, y, size, yRatio);
         this.pictureObjs.push(pictureObj);
         this.app.scene.add(pictureObj);
     }
@@ -222,8 +222,8 @@ class MyBillboard {
         return group;
     }
 
-    createPicture(texture, x, y, size) {
-        const plane = new THREE.PlaneGeometry(size, size);
+    createPicture(texture, x, y, size, yRatio=1) {
+        const plane = new THREE.PlaneGeometry(size, size*yRatio);
         const tex = new THREE.TextureLoader().load(texture);
         const material = new THREE.MeshBasicMaterial({ map: tex, transparent: true });
 
@@ -257,43 +257,50 @@ class MyBillboard {
                 this.app.scene.add(this.timeObj[0]);
             }
         }
+
+        if (this.balloonAnimation) {
+            this.balloonAnimation.update();
+        }
+
+        if (this.windAnimation) {
+            this.windAnimation.update();
+        }
     }
 
     updateLayer(update) {
-        if ((this.layer === 0 && update < 0) || (this.layer === 4 && update > 0))
-            return;
-        
-        this.app.scene.remove(this.layerObj[0]);
-        this.layer += update;
+        const positions = [
+            ...this.layerObj[0].position,
+            this.layerObj[0].position.x, this.layerObj[0].position.y + 3.5*update, this.layerObj[0].position.z
+        ];
+        this.balloonAnimation.createAnimation([0, 1], positions);
 
-        let direction;
-
-        switch (this.layer) {
-            case 0:
-                direction = "-";
-                break;
-            case 1:
-                direction = "N";
-                break;
-            case 2:
-                direction = "S";
-                break;
-            case 3:
-                direction = "E";
-                break;
-            case 4:
-                direction = "W";
-                break;
+        if (this.layer === 0 || (this.layer === 1 && update === -1)) {
+            const initial = [0, 1, 1], final = [1, 1, 1];
+            this.windAnimation.createAnimation([0, 1], update === 1 ? [...initial, ...final] : [...final, ...initial], 'scale')
+        } else if ((this.layer === 1 && update === 1) || (this.layer === 2 && update === -1)) {
+            const initial = [1, 1, 1], final = [-1, 1, 1];
+            this.windAnimation.createAnimation([0, 1], update === 1 ? [...initial, ...final] : [...final, ...initial], 'scale')
+        } else if ((this.layer === 2 && update === 1) || (this.layer === 3 && update === -1)) {
+            const initial = this.layerObj[1].rotation
+            const final = initial.clone();
+            final.z += update === 1 ? Math.PI/2 : -Math.PI/2;
+            this.windAnimation.createAnimation([0, 1], [...initial.toArray().slice(0, 3), ...final.toArray().slice(0,3)], 'rotation')
+        } else if ((this.layer === 3 && update === 1) || (this.layer === 4 && update === -1)) {
+            const initial = [-1, 1, 1], final = [1, 1, 1];
+            this.windAnimation.createAnimation([0, 1], update === 1 ? [...initial, ...final] : [...final, ...initial], 'scale')
         }
 
-        this.layerObj[0] = this.createText(`Layer:${this.layer}(${direction})`, this.layerObj[1], this.layerObj[2], this.layerObj[3]);
-        this.app.scene.add(this.layerObj[0]);
+        this.layer += update;
     }
 
     incrementLap() {
         this.app.scene.remove(this.lapObj[0]);
         this.lap++;
-        this.lapObj[0] = this.createText(`Lap:${this.lap}/`);
+        if (this.lap > 10) {
+            this.lapObj[0] = this.createText(`${this.lap}/${this.lapObj[1]}`, this.lapObj[2] - this.lapObj[4]*0.75, this.lapObj[3], this.lapObj[4]);
+        } else {
+            this.lapObj[0] = this.createText(`${this.lap}/${this.lapObj[1]}`, this.lapObj[2], this.lapObj[3], this.lapObj[4]);
+        }
         this.app.scene.add(this.lapObj[0]);
     }
 
@@ -303,7 +310,7 @@ class MyBillboard {
 
         this.app.scene.remove(this.vouchersObj[0]);
         this.vouchers += quantity;
-        this.vouchersObj[0] = this.createText(`Vouchers:${this.vouchers}`, this.vouchersObj[1], this.vouchersObj[2], this.vouchersObj[3]);
+        this.vouchersObj[0] = this.createText(`${this.vouchers}`, this.vouchersObj[1], this.vouchersObj[2], this.vouchersObj[3]);
         this.app.scene.add(this.vouchersObj[0]);
     }
 
@@ -321,7 +328,7 @@ class MyBillboard {
             this.app.scene.remove(this.timeObj[0]);
         }
         if (this.layerObj) {
-            this.app.scene.remove(this.layerObj[0]);
+            this.layerObj.forEach((obj) => this.app.scene.remove(obj));
         }
         if (this.lapObj) {
             this.app.scene.remove(this.lapObj[0]);

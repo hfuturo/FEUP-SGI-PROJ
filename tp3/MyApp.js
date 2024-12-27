@@ -74,7 +74,7 @@ class MyApp  {
      */
     setActiveCamera(cameraName) {   
         this.activeCameraName = cameraName
-        this.activeCamera = this.cameras[this.activeCameraName]
+        this.activeCamera = this.cameras[this.activeCameraName].clone();
     }
 
     /**
@@ -88,7 +88,7 @@ class MyApp  {
         // camera changed?
         if (this.lastCameraName !== this.activeCameraName) {
             this.lastCameraName = this.activeCameraName;
-            this.activeCamera = this.cameras[this.activeCameraName]
+            this.activeCamera = this.cameras[this.activeCameraName].clone();
             document.getElementById("camera").innerHTML = this.activeCameraName
            
             // call on resize to update the camera aspect ratio
@@ -114,7 +114,7 @@ class MyApp  {
         this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
     }
 
-    setMovingCameraDistance(distance) {
+    setupMovingCamera(distance) {
         this.controls.maxDistance = distance;
         this.controls.minDistance = distance;
         if (distance > 1) {
@@ -124,6 +124,13 @@ class MyApp  {
             this.controls.maxPolarAngle = Math.PI/2 + 0.25;
             this.controls.minPolarAngle = Math.PI/2 - 0.25;
         }
+    }
+
+    setupFixedCamera() {
+        this.controls.maxPolarAngle = Math.PI;
+        this.controls.minPolarAngle = 0;
+        this.controls.minDistance = 0;
+        this.controls.maxDistance = Infinity;
     }
 
     /**

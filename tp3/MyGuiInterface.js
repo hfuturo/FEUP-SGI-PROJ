@@ -60,7 +60,23 @@ class MyGuiInterface  {
         this.track.add(this.contents.track, 'scale', 5, 20, 1).name('Scale').onChange((val) => this.contents.track.updateTrack(val, undefined))
         this.track.add(this.contents.track, 'width', 1, 30, 5).name('Width').onChange((val) => this.contents.track.updateTrack(undefined, val))
 
-        this.general.add(this.app, 'activeCameraName', Object.keys(this.app.cameras) ).name("Camera")
+        this.cameraController = this.general.add(this.app, 'activeCameraName', Object.keys(this.app.cameras) ).name("Camera").onChange((val) => {
+            this.app.setActiveCamera(val);
+            if (val === 'balloon') {
+                if (this.contents.balloonCamera === '1') {
+                    this.contents.balloonFirstPerson();
+                } else if (this.contents.balloonCamera === '3') {
+                    this.contents.balloonThirdPerson();
+                }
+            } else {
+                this.app.setupFixedCamera();
+            }
+        });
+    }
+
+    update() {
+        if (this.cameraController)
+            this.cameraController.updateDisplay();
     }
 }
 
