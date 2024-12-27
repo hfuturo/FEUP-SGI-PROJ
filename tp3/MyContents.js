@@ -272,6 +272,7 @@ class MyContents {
     this.app.setActiveCamera("balloon");
     this.app.setMovingCameraDistance(15);
     this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
+    this.app.updateTarget();
 
     this.loadBillBoards();
   }
@@ -441,11 +442,12 @@ class MyContents {
         if (this.balloonCamera === '1') {
           this.app.setMovingCameraDistance(15);
           this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
-          
+          this.app.updateTarget();
           this.balloonCamera = '3';
         } else if (this.balloonCamera === '3') {
           this.app.setMovingCameraDistance(0.1);
           this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 0.75, this.balloon.group.position.z);
+          this.app.updateTarget();
           this.balloonCamera = '1';
         }
         break;
@@ -504,8 +506,10 @@ class MyContents {
     if (this.app.activeCameraName === 'balloon') {
       if (this.balloonCamera === '1') {
         this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 0.75, this.balloon.group.position.z);
+        this.app.updateTarget();
       } else if (this.balloonCamera === '3') {
         this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
+        this.app.updateTarget();
       }
     }
   }
