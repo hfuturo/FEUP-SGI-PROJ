@@ -220,6 +220,7 @@ class MySceneData {
             { name: "color", type: "rgb" },
             { name: "intensity", type: "float", required: false, default: 1.0 },
             { name: "position", type: "vector3" },
+            { name: "target", type: "vector3", required: false, default: [0, 0, 0]},
             { name: "castshadow", type: "boolean", required: false, default: false },
             { name: "shadowleft", type: "float", required: false, default: -5.0 },
             { name: "shadowright", type: "float", required: false, default: 5.0 },

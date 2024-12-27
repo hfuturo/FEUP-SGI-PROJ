@@ -314,6 +314,10 @@ class MyInitializer {
             light.shadow.camera.right = lightSpec.shadowright;
             light.shadow.camera.bottom = lightSpec.shadowbottom;
             light.shadow.camera.top = lightSpec.shadowtop;
+
+            light.target.position.set(...lightSpec.target);
+
+            const helper = new THREE.DirectionalLightHelper(light, 3);
         }
 
         light.position.set(...lightSpec.position);
