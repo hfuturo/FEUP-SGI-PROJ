@@ -355,10 +355,10 @@ class MyContents {
                   if (this.startPos)
                     billboard.removeButtonElement('pc');
 
-                  const pos = billboard.createText(intersects[0].object.position.x > 0 ? 'A' : 'B', 5, -5, 2, 0xffffff);
+                  const pos = billboard.createText(intersects[0].object.position.x > 0 ? 'A' : 'B', 4, -5, 1.5, 0xffffff);
                   billboard.addButtonElement('player', pos);
 
-                  const oppPos = billboard.createText(intersects[0].object.position.x > 0 ? 'B' : 'A', 5, -5, 2, 0xffffff);
+                  const oppPos = billboard.createText(intersects[0].object.position.x > 0 ? 'B' : 'A', 4, -5, 1.5, 0xffffff);
                   billboard.addButtonElement('pc', oppPos);
                 })
 
@@ -387,8 +387,8 @@ class MyContents {
             this.billBoards.forEach((billboard) => {
               let pos;
               if (name === 'player')
-                pos = billboard.createText(this.startPos.x > 0 ? 'A' : 'B', 5, -5, 2, 0xffffff);
-              else pos = billboard.createText(this.startPos.x > 0 ? 'B' : 'A', 5, -5, 2, 0xffffff);
+                pos = billboard.createText(this.startPos.x > 0 ? 'A' : 'B', 4, -5, 1.5, 0xffffff);
+              else pos = billboard.createText(this.startPos.x > 0 ? 'B' : 'A', 4, -5, 1.5, 0xffffff);
 
               billboard.addButtonElement(name, pos);
             })
