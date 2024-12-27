@@ -530,6 +530,7 @@ class MyContents {
     this.billBoards.forEach((billboard) => billboard.update());
 
     this.#checkCollisions();
+    this.#checkOffTrack();
 
     if (this.app.activeCameraName === 'balloon') {
       if (this.balloonCamera === '1') {
@@ -539,6 +540,14 @@ class MyContents {
         this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
         this.app.updateTarget();
       }
+    }
+  }
+
+  #checkOffTrack() {
+    const {closestPoint, offTrack} = this.track.isOffTrack(this.balloon.getShadowPosition(), 18, 10000);
+
+    if (offTrack) {
+      this.balloon.freezeAndReplace(closestPoint);
     }
   }
 

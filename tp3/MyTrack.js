@@ -6,6 +6,8 @@ class MyTrack {
         this.obstacles = obstacles;
         this.powerUps = powerUps;
 
+        this.curve = null;
+
         this.scale = 8;
         this.width = 20;
 
@@ -34,6 +36,11 @@ class MyTrack {
     #createTrack(scale=this.scale, width=this.width) {
         const points = [
             new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(0, 0, 0.1),
+            new THREE.Vector3(0, 0, 2),
+            new THREE.Vector3(0, 0, 4),
+            new THREE.Vector3(0, 0, 6),
+            new THREE.Vector3(0, 0, 8),
             new THREE.Vector3(0, 0, 10),
             new THREE.Vector3(1 - Math.cos(Math.PI / 6), 0, 10 + Math.sin(Math.PI / 6)),
             new THREE.Vector3(1 - Math.cos(Math.PI / 4), 0, 10 + Math.sin(Math.PI / 4)),
@@ -55,11 +62,14 @@ class MyTrack {
             new THREE.Vector3(1 - Math.cos(Math.PI / 4), 0, -10 - Math.sin(Math.PI / 4)),
             new THREE.Vector3(1 - Math.cos(Math.PI / 6), 0, -10 - Math.sin(Math.PI / 6)),
             new THREE.Vector3(0, 0, -10),
-            new THREE.Vector3(0, 0, -5)
+            new THREE.Vector3(0, 0, -8),
+            new THREE.Vector3(0, 0, -6),
+            new THREE.Vector3(0, 0, -4),
+            new THREE.Vector3(0, 0, -2)
         ].map(point => point.multiplyScalar(scale));
 
-        const curve = new THREE.CatmullRomCurve3(points);
-        const geometry = new THREE.TubeGeometry(curve, 100, width, 3, true);
+        this.curve = new THREE.CatmullRomCurve3(points);
+        const geometry = new THREE.TubeGeometry(this.curve, 100, width, 3, true);
 
         const mesh = new THREE.Mesh(geometry, this.material);
         mesh.scale.set(1, 0.01, 1);
@@ -78,6 +88,28 @@ class MyTrack {
 
     getPowerUps() {
         return this.powerUps;
+    }
+
+    isOffTrack(point, margin, nPoints=1000) {
+        const curvePoints = this.curve.getPoints(nPoints);
+
+        let minDistance = Infinity;
+        let closestPoint = null;
+
+        curvePoints.forEach((curvePoint) => {
+            const distance = point.distanceTo(curvePoint);
+            
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestPoint = curvePoint;
+            }
+        });
+
+
+        return {
+            "closestPoint": closestPoint,
+            "offTrack": minDistance > margin
+        };
     }
 
 }
