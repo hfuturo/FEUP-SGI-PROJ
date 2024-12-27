@@ -177,6 +177,10 @@ class MyBillboard {
                 texture.offset.x = 4 / 15;
                 texture.offset.y = 2 / 6;
             }
+            else if (text[i] === '\\') {
+                texture.offset.x = 5 / 15;
+                texture.offset.y = 2 / 6;
+            }
             else if (text[i] === '-') {
                 texture.offset.x = 7 / 15;
                 texture.offset.y = 2 / 6;

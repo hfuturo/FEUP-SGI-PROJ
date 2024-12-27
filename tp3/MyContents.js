@@ -44,6 +44,7 @@ class MyContents {
     this.acceptingInputs = false;
     this.playerBalloon = undefined;
     this.opponentBalloon = undefined;
+    this.numLaps = 1;
     this.username = '';
     this.highlight = null;
 
@@ -118,16 +119,28 @@ class MyContents {
       bb.addPicture('textures/feup.png', 0, 18, 4);
 
       const playerBalloon = [
-        bb.createText('Player', -3.75, 4, 2, 0xffffff),
+        bb.createText('Player', -2.75, 4, 1.5, 0xffffff),
         bb.createPicture('textures/balloons/default.webp', 0, -1.25, 7),
       ]
-      bb.addButton('player', -16, 27, 12, 12, playerBalloon)
+      bb.addButton('player', -17.5, 27, 9, 12, playerBalloon)
 
       const opponentBalloon = [
-        bb.createText('PC', -1, 4, 2, 0xffffff),
+        bb.createText('PC', -0.5, 4, 1.5, 0xffffff),
         bb.createPicture('textures/balloons/default.webp', 0, -1.25, 7),
       ]
-      bb.addButton('pc', -3, 27, 12, 12, opponentBalloon)
+      bb.addButton('pc', -7.5, 27, 9, 12, opponentBalloon)
+
+      const laps = [
+        bb.createText('Laps', -1.1, 1, 1, 0xffffff),
+        bb.createText('1', 0, -0.75, 2.5, 0xffffff)
+      ]
+      bb.addButton('laps', 0.5, 27, 6, 4, laps)
+
+      const lapsUp = [bb.createText('/\\', -0.5, 0, 1.5, 0xffffff)]
+      bb.addButton('lapsUp', 0.5, 31, 6, 3, lapsUp)
+
+      const lapsDown = [bb.createText('\\/', -0.5, 0, 1.5, 0xffffff)]
+      bb.addButton('lapsDown', 0.5, 23, 6, 3, lapsDown)
 
       const nameInput = [
         bb.createText('Name', -2.25, 2.25, 2, 0xffffff),
@@ -198,11 +211,13 @@ class MyContents {
 
     if (intersects.length > 0) {
       const name = intersects[0].object.name;
-      this.billBoards.forEach((billboard) => {
-        if (this.highlight !== null) billboard.unHighlightButton(this.highlight);
-        billboard.highlightButton(name);
-      });
-      this.highlight = name;
+      if (name !== 'laps') {
+        this.billBoards.forEach((billboard) => {
+          if (this.highlight !== null) billboard.unHighlightButton(this.highlight);
+          billboard.highlightButton(name);
+        });
+        this.highlight = name;
+      }
 
       if (name === 'start') this.startGame();
       else if (name === 'name') this.insertName();
@@ -214,6 +229,9 @@ class MyContents {
             billboard.unHighlightButton(name);
           });
         });
+      }
+      else if (name === 'lapsUp' || name === 'lapsDown') {
+        this.changeNumLaps(name);
       }
     }
     else {
@@ -391,6 +409,32 @@ class MyContents {
         this.parkingLot2.initPicker();
         this.parkingLot2.setCallback(selectedBalloon);
       }
+    });
+  }
+
+  changeNumLaps(name) {
+    setTimeout(() => {
+      if (this.highlight !== null) {
+        this.billBoards.forEach((billboard) => {
+          billboard.unHighlightButton(this.highlight);
+        });
+      }
+    }, 100);
+
+    if (name === 'lapsUp' && this.numLaps < 99) {
+      this.numLaps++;
+    } else if (name === 'lapsDown' && this.numLaps > 1) {
+      this.numLaps--;
+    } else {
+      return;
+    }
+
+    this.billBoards.forEach((billboard) => {
+      let laps;
+      if (this.numLaps < 10) laps = billboard.createText(this.numLaps.toString(), 0, -0.75, 2.5, 0xffffff);
+      else laps = billboard.createText(this.numLaps.toString(), -1, -0.75, 2.5, 0xffffff);
+      billboard.removeButtonElement('laps');
+      billboard.addButtonElement('laps', laps);
     });
   }
 
