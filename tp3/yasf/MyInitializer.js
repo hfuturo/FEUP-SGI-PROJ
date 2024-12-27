@@ -59,8 +59,6 @@ class MyInitializer {
         }
         this.activeLight = Object.keys(this.lights)[0];
 
-        this.app.gui.finish();
-
         this.track = data.track;
         
         this.callback();

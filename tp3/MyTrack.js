@@ -6,6 +6,16 @@ class MyTrack {
         this.obstacles = obstacles;
         this.powerUps = powerUps;
 
+        this.scale = 8;
+        this.width = 20;
+
+        const texture = new THREE.TextureLoader().load("./textures/uvmapping.jpg");
+
+        this.material = new THREE.MeshBasicMaterial({ map: texture });
+        this.material.map.repeat.set(3, 3);
+        this.material.map.wrapS = THREE.RepeatWrapping;
+        this.material.map.wrapT = THREE.RepeatWrapping;
+
         this.representation = this.#createTrack();
     }
 
@@ -21,7 +31,7 @@ class MyTrack {
         });
     }
 
-    #createTrack() {
+    #createTrack(scale=this.scale, width=this.width) {
         const points = [
             new THREE.Vector3(0, 0, 0),
             new THREE.Vector3(0, 0, 10),
@@ -46,22 +56,20 @@ class MyTrack {
             new THREE.Vector3(1 - Math.cos(Math.PI / 6), 0, -10 - Math.sin(Math.PI / 6)),
             new THREE.Vector3(0, 0, -10),
             new THREE.Vector3(0, 0, -5)
-        ].map(point => point.multiplyScalar(8));
+        ].map(point => point.multiplyScalar(scale));
 
         const curve = new THREE.CatmullRomCurve3(points);
-        const geometry = new THREE.TubeGeometry(curve, 100, 20, 3, true);
-        
-        const texture = new THREE.TextureLoader().load("./textures/uvmapping.jpg");
-        texture.wrapS = THREE.RepeatWrapping;
-    
-        const material = new THREE.MeshBasicMaterial({ map: texture });
-        material.map.repeat.set(3, 3);
-        material.map.wrapS = THREE.RepeatWrapping;
-        material.map.wrapT = THREE.RepeatWrapping;
+        const geometry = new THREE.TubeGeometry(curve, 100, width, 3, true);
 
-        const mesh = new THREE.Mesh(geometry, material);
+        const mesh = new THREE.Mesh(geometry, this.material);
         mesh.scale.set(1, 0.01, 1);
         return mesh;
+    }
+
+    updateTrack(scale=this.scale, width=this.width) {
+        this.app.scene.remove(this.representation);
+        this.representation = this.#createTrack(scale, width);
+        this.app.scene.add(this.representation);
     }
 
     getObstacles() {

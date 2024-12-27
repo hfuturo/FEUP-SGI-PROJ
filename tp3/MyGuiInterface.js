@@ -32,6 +32,8 @@ class MyGuiInterface  {
      * Initialize the gui interface
      */
     init() {
+        this.track = this.datgui.addFolder('Track')
+
         const wind = this.datgui.addFolder('Wind')
         wind.add(this, 'homogeneous').name('Homogeneous')
         this.windControllers.push(wind.add(this.contents.balloon.wind, 'north', 0, 10).name('North').onChange((val) => this.#changeHomogeneous(val)))
@@ -53,7 +55,9 @@ class MyGuiInterface  {
         }
     }
 
-    finish() {        
+    finish() {
+        this.track.add(this.contents.track, 'scale', 5, 20, 1).name('Scale').onChange((val) => this.contents.track.updateTrack(val, undefined))
+        this.track.add(this.contents.track, 'width', 1, 30, 5).name('Width').onChange((val) => this.contents.track.updateTrack(undefined, val))
     }
 }
 

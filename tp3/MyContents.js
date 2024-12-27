@@ -9,7 +9,7 @@ import { MyReliefImage } from "./MyReliefImage.js";
 import { MyBillboard } from "./MyBillboard.js";
 import { MyPicker } from "./MyPicker.js";
 import { MySparkle } from "./MySparkle.js";
-import { MyFirework } from "./MyFireWork.js";
+import { MyFirework } from "./MyFirework.js";
 import { MyParkingLot } from "./MyParkingLot.js";
 
 const state = {
@@ -47,6 +47,8 @@ class MyContents {
     this.username = '';
     this.highlight = null;
 
+    this.balloonCamera = '3';
+
     this.sparkles = [];
     this.fireworks = [];
 
@@ -63,6 +65,8 @@ class MyContents {
     this.loadBillBoards();
     this.loadSparkles();
     this.loadFireworks();
+
+    this.app.gui.finish();
   }
 
   loadFireworks() {
@@ -263,7 +267,11 @@ class MyContents {
 
     this.picker.dispose();
     this.state = state.PLAYING;
-    this.app.setActiveCamera("perspective");
+    this.acceptingInputs = true;
+
+    this.app.setActiveCamera("balloon");
+    this.app.setMovingCameraDistance(15);
+    this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
 
     this.loadBillBoards();
   }
@@ -290,11 +298,11 @@ class MyContents {
           this.playerBalloon = ballon;
           this.app.setActiveCamera("grid_selection")
 
-          const pos1 = MyBillboard.createText('1', 10, 0xffffff);
+          const pos1 = MyBillboard.createText('A', 10, 0xffffff);
           pos1.rotation.x = -Math.PI / 2;
           pos1.position.set(10, 0.3, 0);
 
-          const pos2 = MyBillboard.createText('2', 10, 0xffffff);
+          const pos2 = MyBillboard.createText('B', 10, 0xffffff);
           pos2.rotation.x = -Math.PI / 2;
           pos2.position.set(-10, 0.3, 0);
 
@@ -328,10 +336,10 @@ class MyContents {
                   if (this.startPos)
                     billboard.removeButtonElement('pc');
 
-                  const pos = billboard.createText(intersects[0].object.position.x > 0 ? '1' : '2', 5, -5, 2, 0xffffff);
+                  const pos = billboard.createText(intersects[0].object.position.x > 0 ? 'A' : 'B', 5, -5, 2, 0xffffff);
                   billboard.addButtonElement('player', pos);
 
-                  const oppPos = billboard.createText(intersects[0].object.position.x > 0 ? '2' : '1', 5, -5, 2, 0xffffff);
+                  const oppPos = billboard.createText(intersects[0].object.position.x > 0 ? 'B' : 'A', 5, -5, 2, 0xffffff);
                   billboard.addButtonElement('pc', oppPos);
                 })
 
@@ -360,8 +368,8 @@ class MyContents {
             this.billBoards.forEach((billboard) => {
               let pos;
               if (name === 'player')
-                pos = billboard.createText(this.startPos.x > 0 ? '1' : '2', 5, -5, 2, 0xffffff);
-              else pos = billboard.createText(this.startPos.x > 0 ? '2' : '1', 5, -5, 2, 0xffffff);
+                pos = billboard.createText(this.startPos.x > 0 ? 'A' : 'B', 5, -5, 2, 0xffffff);
+              else pos = billboard.createText(this.startPos.x > 0 ? 'B' : 'A', 5, -5, 2, 0xffffff);
 
               billboard.addButtonElement(name, pos);
             })
@@ -429,6 +437,18 @@ class MyContents {
         if (this.balloon.down())
           this.billBoards.forEach((billboard) => billboard.updateLayer(-1));
         break;
+      case 'c':
+        if (this.balloonCamera === '1') {
+          this.app.setMovingCameraDistance(15);
+          this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
+          
+          this.balloonCamera = '3';
+        } else if (this.balloonCamera === '3') {
+          this.app.setMovingCameraDistance(0.1);
+          this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 0.75, this.balloon.group.position.z);
+          this.balloonCamera = '1';
+        }
+        break;
       default:
         break;
     }
@@ -439,12 +459,29 @@ class MyContents {
    * this method is called from the render method of the app
    */
   update() {
+    if (this.fireworksObj) {
+      this.#shootSparkles();
+      this.#shootFireworks();
+    }
+
+    if (this.lastReliefRefresh === 0)
+      this.#updateReliefImage();
+
+    this.lastReliefRefresh += this.reliefClock.getDelta();
+    if (this.lastReliefRefresh >= this.reliefRefresh) {
+      this.lastReliefRefresh = 0;
+      this.app.renderTarget = true;
+    }
+
+    if (this.state === state.PLAYING) {
+      this.updatePlaying();
+    }
+  }
+
+  updatePlaying() {
     this.balloon.update();
 
-    if (this.track === undefined || this.track === null) return;
-
-    this.#shootSparkles();
-    this.#shootFireworks();
+    this.billBoards.forEach((billboard) => billboard.update());
 
     this.track.getObstacles().forEach((obstacle) => {
       if (this.balloon.collides(obstacle)) {
@@ -464,17 +501,13 @@ class MyContents {
       }
     })
 
-    if (this.lastReliefRefresh === 0)
-      this.#updateReliefImage();
-
-    this.lastReliefRefresh += this.reliefClock.getDelta();
-    if (this.lastReliefRefresh >= this.reliefRefresh) {
-      this.lastReliefRefresh = 0;
-      this.app.renderTarget = true;
+    if (this.app.activeCameraName === 'balloon') {
+      if (this.balloonCamera === '1') {
+        this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 0.75, this.balloon.group.position.z);
+      } else if (this.balloonCamera === '3') {
+        this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
+      }
     }
-
-
-    this.billBoards.forEach((billboard) => billboard.update());
   }
 
   #shootFireworks() {

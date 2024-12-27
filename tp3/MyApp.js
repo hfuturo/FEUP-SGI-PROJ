@@ -100,13 +100,27 @@ class MyApp  {
                 // Orbit controls allow the camera to orbit around a target.
                 this.controls = new OrbitControls( this.activeCamera, this.renderer.domElement );
                 this.controls.enableZoom = true;
-                this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
                 this.controls.update();
             }
             else {
                 this.controls.object = this.activeCamera
-                this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
             }
+        }
+
+        if (this.controls !== null) {
+            this.controls.target.set(this.lookAt[this.activeCameraName].x, this.lookAt[this.activeCameraName].y, this.lookAt[this.activeCameraName].z)
+        }
+    }
+
+    setMovingCameraDistance(distance) {
+        this.controls.maxDistance = distance;
+        this.controls.minDistance = distance;
+        if (distance > 1) {
+            this.controls.maxPolarAngle = Math.PI / 6 * 2;
+            this.controls.minPolarAngle = Math.PI / 6;
+        } else {
+            this.controls.maxPolarAngle = Math.PI/2 + 0.25;
+            this.controls.minPolarAngle = Math.PI/2 - 0.25;
         }
     }
 
