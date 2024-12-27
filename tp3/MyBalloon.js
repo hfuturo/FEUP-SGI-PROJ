@@ -23,12 +23,12 @@ class MyBallon {
 
         this.ySize = 9;
         
+        this.shadowY = 0.3;
         this.shadow = new THREE.Mesh(
-            new THREE.PlaneGeometry(1, 1),
-            new THREE.MeshBasicMaterial({ color: 0xFFFFFF})
+            new THREE.PlaneGeometry(0.4, 0.4),
+            new THREE.MeshBasicMaterial({ color: 0x000000})
         );
-        this.shadow.position.set(0, 0, 0);
-
+        this.shadow.rotation.set(-90 * Math.PI / 180, 0, 0);
 
         this.clock = new THREE.Clock();
         this.balloonMixer = new THREE.AnimationMixer(this.group);
@@ -40,7 +40,7 @@ class MyBallon {
         this.vouchers = 0;
         this.freezed = false;
 
-        // used to store obstacles that collided with balloon
+        // used to store obstacles temporarily that collided with balloon
         this.collidedObjects = [];
 
         this.#initCollisionObjects();
@@ -120,8 +120,8 @@ class MyBallon {
         // 0 -> max wind in current height
         // 0.5 -> half wind in current height and half wind in new height
         // 1 -> max wind in new height
-        const times = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-        const balloonPositions = [...this.group.position]
+        const times = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+        const balloonPositions = [...this.group.position];
         const shadowPositions = [...this.shadow.position];
 
         // multiply offsets by 6 because we are only setting 10 positions but we have 60 fps
@@ -129,24 +129,24 @@ class MyBallon {
             if (this.height === 0) {
                 const z = balloonPositions.at(-1) - this.wind.north/50 * i/10 * 6;
                 balloonPositions.push(balloonPositions[0], balloonPositions[1] + yDisplacement*i, z);
-                shadowPositions.push(balloonPositions[0], 0, z)
+                shadowPositions.push(balloonPositions[0], this.shadowY, z);
             }
             else if (this.height === 1) {
                 const z = balloonPositions.at(-1) + this.wind.south/50 * i/10 * 6 - this.wind.north/50 * (1 - i/10) * 6;
                 balloonPositions.push(balloonPositions[0], balloonPositions[1] + yDisplacement*i, z);
-                shadowPositions.push(balloonPositions[0], 0, z);
+                shadowPositions.push(balloonPositions[0], this.shadowY, z);
 
             }
             else if (this.height === 2) {
                 const z = balloonPositions.at(-1) + this.wind.south/50 * (1 - i/10) * 6;
                 const x = balloonPositions.at(-3) + this.wind.east/50 * i/10 * 6;
                 balloonPositions.push(x, balloonPositions[1] + yDisplacement*i, z);
-                shadowPositions.push(x, 0, z);
+                shadowPositions.push(x, this.shadowY, z);
             }
             else if (this.height === 3) {
                 const x = balloonPositions.at(-3) + this.wind.east/50 * (1 - i/10) * 6 - this.wind.west/50 * i/10 * 6;
                 balloonPositions.push(x, balloonPositions[1] + yDisplacement*i, balloonPositions[2]);
-                shadowPositions.push(x, 0, balloonPositions[2])
+                shadowPositions.push(x, this.shadowY, balloonPositions[2]);
             }
         }
 
@@ -164,8 +164,8 @@ class MyBallon {
         // 0 -> max wind in current height
         // 0.5 -> half wind in current height and half wind in new height
         // 1 -> max wind in new height
-        const times = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-        const balloonPositions = [...this.group.position]
+        const times = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+        const balloonPositions = [...this.group.position];
         const shadowPositions = [...this.shadow.position];
 
         // multiply offsets by 6 because we are only setting 10 positions but we have 60 fps
@@ -173,23 +173,23 @@ class MyBallon {
             if (this.height === 1) {
                 const z = balloonPositions.at(-1) - this.wind.north/50 * (1 - i/10) * 6;
                 balloonPositions.push(balloonPositions[0], balloonPositions[1] - yDisplacement*i, z);
-                shadowPositions.push(balloonPositions[0], 0, z);
+                shadowPositions.push(balloonPositions[0], this.shadowY, z);
             }
             else if (this.height === 2) {
                 const z = balloonPositions.at(-1) + this.wind.south/50 * (1 - i/10) * 6 - this.wind.north/50 * i/10 * 6;
                 balloonPositions.push(balloonPositions[0], balloonPositions[1] - yDisplacement*i, z);
-                shadowPositions.push(balloonPositions[0], 0, z);
+                shadowPositions.push(balloonPositions[0], this.shadowY, z);
             }
             else if (this.height === 3) {
                 const z = balloonPositions.at(-1) + this.wind.south/50 * i/10 * 6;
                 const x = balloonPositions.at(-3) + this.wind.east/50 * (1 - i/10) * 6;
                 balloonPositions.push(x, balloonPositions[1] - yDisplacement*i, z);
-                shadowPositions.push(x, 0, z);
+                shadowPositions.push(x, this.shadowY, z);
             }
             else if (this.height === 4) {
                 const x = balloonPositions.at(-3) + this.wind.east/50 * i/10 * 6 - this.wind.west/50 * (1 - i/10) * 6;
                 balloonPositions.push(x, balloonPositions[1] - yDisplacement*i, balloonPositions[2]);
-                shadowPositions.push(x, 0, balloonPositions[2]);
+                shadowPositions.push(x, this.shadowY, balloonPositions[2]);
             }
         }
 
@@ -229,13 +229,13 @@ class MyBallon {
     }
 
     createBalloonAnimation(times, values) {
-        const positionKF = new THREE.VectorKeyframeTrack('.position', times, values, THREE.InterpolateSmooth)
+        const positionKF = new THREE.VectorKeyframeTrack('.position', times, values, THREE.InterpolateSmooth);
 
-        const positionClip = new THREE.AnimationClip('positionAnimation', -1, [positionKF])
+        const positionClip = new THREE.AnimationClip('positionAnimation', -1, [positionKF]);
 
-        const positionAction = this.balloonMixer.clipAction(positionClip)
-        positionAction.setLoop(THREE.LoopOnce)
-        positionAction.clampWhenFinished = true
+        const positionAction = this.balloonMixer.clipAction(positionClip);
+        positionAction.setLoop(THREE.LoopOnce);
+        positionAction.clampWhenFinished = true;
         this.animationPlaying = true;
 
         const onAnimationFinished = () => {
@@ -247,29 +247,29 @@ class MyBallon {
 
         this.balloonMixer.addEventListener('finished', onAnimationFinished);
 
-        positionAction.play()
+        positionAction.play();
     }
 
     createShadowAnimation(times, values) {
-        const positionKF = new THREE.VectorKeyframeTrack('.position', times, values, THREE.InterpolateSmooth)
+        const positionKF = new THREE.VectorKeyframeTrack('.position', times, values, THREE.InterpolateSmooth);
 
-        const positionClip = new THREE.AnimationClip('positionAnimation', -1, [positionKF])
+        const positionClip = new THREE.AnimationClip('positionAnimation', -1, [positionKF]);
 
-        const positionAction = this.shadowMixer.clipAction(positionClip)
-        positionAction.setLoop(THREE.LoopOnce)
-        positionAction.clampWhenFinished = true
+        const positionAction = this.shadowMixer.clipAction(positionClip);
+        positionAction.setLoop(THREE.LoopOnce);
+        positionAction.clampWhenFinished = true;
         this.animationPlaying = true;
 
         const onAnimationFinished = () => {
             this.animationPlaying = false;
             this.shadowMixer.stopAllAction();
-            this.shadow.position.set(values.at(-3), values.at(-2), values.at(-1));
+            this.shadow.position.set(values.at(-3), this.shadowY, values.at(-1));
             this.shadowMixer.removeEventListener('finished', onAnimationFinished);
         };
 
         this.shadowMixer.addEventListener('finished', onAnimationFinished);
 
-        positionAction.play()
+        positionAction.play();
     }
 
     handleCollision(object) {
@@ -371,26 +371,23 @@ class MyBallon {
         return this.vouchers;
     }
 
-    freeze() {
+    freeze(penalty=2000) {
         this.freezed = true;
 
         // releases balloon after 2 seconds penalty
-        setTimeout(() => this.#unfreeze(), 2000);
+        setTimeout(() => this.freezed = false, penalty);
     }
 
-    freezeAndReplace(point) {
+    freezeAndReplace(point, penalty=2000) {
         this.freezed = true;
 
+        // releases balloon after 2 seconds penalty and replaces it on the nearest track point
         setTimeout(() => {
-            this.group.position.set(point.x, this.group.y, point.z);
+            this.group.position.set(point.x, this.group.position.y, point.z);
             this.shadow.position.set(...point);
-            this.#unfreeze();
-        }, 2000);
+            this.freezed = false;
+        }, penalty);
     }   
-
-    #unfreeze() {
-        this.freezed = false;
-    }
 
     #tagObject(object) {
         this.collidedObjects.push(object);

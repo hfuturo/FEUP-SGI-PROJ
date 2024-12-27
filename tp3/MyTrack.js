@@ -65,7 +65,8 @@ class MyTrack {
             new THREE.Vector3(0, 0, -8),
             new THREE.Vector3(0, 0, -6),
             new THREE.Vector3(0, 0, -4),
-            new THREE.Vector3(0, 0, -2)
+            new THREE.Vector3(0, 0, -2),
+            new THREE.Vector3(0, 0, -0.1)
         ].map(point => point.multiplyScalar(scale));
 
         this.curve = new THREE.CatmullRomCurve3(points);
@@ -90,21 +91,20 @@ class MyTrack {
         return this.powerUps;
     }
 
-    isOffTrack(point, margin, nPoints=1000) {
-        const curvePoints = this.curve.getPoints(nPoints);
+    isBalloonOffTrack(shadowPos, margin, nPoints=1000) {
+        const curvePoints = this.curve.getSpacedPoints(nPoints);
 
         let minDistance = Infinity;
         let closestPoint = null;
 
         curvePoints.forEach((curvePoint) => {
-            const distance = point.distanceTo(curvePoint);
+            const distance = shadowPos.distanceTo(curvePoint);
             
             if (distance < minDistance) {
                 minDistance = distance;
                 closestPoint = curvePoint;
             }
         });
-
 
         return {
             "closestPoint": closestPoint,

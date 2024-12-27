@@ -544,7 +544,7 @@ class MyContents {
   }
 
   #checkOffTrack() {
-    const {closestPoint, offTrack} = this.track.isOffTrack(this.balloon.getShadowPosition(), 18, 10000);
+    const {closestPoint, offTrack} = this.track.isBalloonOffTrack(this.balloon.getShadowPosition(), 18);
 
     if (offTrack) {
       this.balloon.freezeAndReplace(closestPoint);
