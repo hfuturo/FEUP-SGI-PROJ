@@ -460,7 +460,9 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "billboard"
+                        "left_billboard_legs",
+                        "right_billboard_legs",
+                        "billboard_structure_hollow"
                     ]
                 }
             },
@@ -535,6 +537,80 @@
                     ]
                 }
             },
+            "billboard_structure_hollow": {
+                "type": "node",
+                "materialref": {
+                    "materialId":"black"
+                },
+                "children":{
+                    "nodesList": [
+                        "billboard_back_wall",
+                        "billboard_side_wall1",
+                        "billboard_side_wall2",
+                        "billboard_floor",
+                        "billboard_ceiling"
+                    ]
+                }
+            },
+            "billboard_back_wall": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 9, "z": -4}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
+                    {"type": "scale", "amount": {"x": 16.5, "y": 8, "z": 0.5}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "box"                        
+                    ]
+                }
+            },
+            "billboard_side_wall1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -8, "y": 9, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.5, "y": 8, "z": 8}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "box"                        
+                    ]
+                }
+            },
+            "billboard_side_wall2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "billboard_side_wall1"                        
+                    ]
+                }
+            },
+            "billboard_floor": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 5, "z": 0}},
+                    {"type": "scale", "amount": {"x": 16.5, "y": 0.5, "z": 8}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "box"                        
+                    ]
+                }
+            },
+            "billboard_ceiling": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 8, "z": 0}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "billboard_floor"                   
+                    ]
+                }
+            },
             "billboard_display": {
                 "type": "node",
                 "transforms": [
@@ -562,6 +638,29 @@
                     ]
                 }
             },
+            "right_billboard_leg1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 4}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "right_billboard_leg"
+                    ]
+                }
+            },
+            "right_billboard_legs": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -2}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "right_billboard_leg",
+                        "right_billboard_leg1"
+                    ]
+                }
+            },
             "left_billboard_leg": {
                 "type": "node",
                 "materialref":{
@@ -574,6 +673,29 @@
                 "children": {
                     "nodesList": [
                         "cylinder"
+                    ]
+                }
+            },
+            "left_billboard_legs": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -2}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "left_billboard_leg",
+                        "left_billboard_leg1"
+                    ]
+                }
+            },
+            "left_billboard_leg1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 4}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "left_billboard_leg"
                     ]
                 }
             },
