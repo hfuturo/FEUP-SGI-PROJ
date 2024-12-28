@@ -37,20 +37,20 @@ class MyGuiInterface  {
 
         const wind = this.datgui.addFolder('Wind')
         wind.add(this, 'homogeneous').name('Homogeneous')
-        this.windControllers.push(wind.add(this.contents.balloon.wind, 'north', 0, 10).name('North').onChange((val) => this.#changeHomogeneous(val)))
-        this.windControllers.push(wind.add(this.contents.balloon.wind, 'south', 0, 10).name('South').onChange((val) => this.#changeHomogeneous(val)))
-        this.windControllers.push(wind.add(this.contents.balloon.wind, 'east', 0, 10).name('East').onChange((val) => this.#changeHomogeneous(val)))
-        this.windControllers.push(wind.add(this.contents.balloon.wind, 'west', 0, 10).name('West').onChange((val) => this.#changeHomogeneous(val)))
+        this.windControllers.push(wind.add(this.contents.wind, 'north', 0, 10).name('North').onChange((val) => this.#changeHomogeneous(val)))
+        this.windControllers.push(wind.add(this.contents.wind, 'south', 0, 10).name('South').onChange((val) => this.#changeHomogeneous(val)))
+        this.windControllers.push(wind.add(this.contents.wind, 'east', 0, 10).name('East').onChange((val) => this.#changeHomogeneous(val)))
+        this.windControllers.push(wind.add(this.contents.wind, 'west', 0, 10).name('West').onChange((val) => this.#changeHomogeneous(val)))
 
         this.datgui.add(this.contents, 'reliefRefresh', 1, 60, 1).name('Relief Image Refresh (s)')
     }
 
     #changeHomogeneous(val) {
         if (this.homogeneous) {
-            this.contents.balloon.wind.north = val
-            this.contents.balloon.wind.south = val
-            this.contents.balloon.wind.east = val
-            this.contents.balloon.wind.west = val
+            this.contents.wind.north = val
+            this.contents.wind.south = val
+            this.contents.wind.east = val
+            this.contents.wind.west = val
 
             this.windControllers.forEach(controller => controller.updateDisplay());
         }

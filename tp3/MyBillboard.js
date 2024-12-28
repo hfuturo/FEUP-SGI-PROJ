@@ -59,6 +59,42 @@ class MyBillboard {
         this.app.scene.add(this.vouchersObj[0]);
     }
 
+    startBalloonTracking(x, y, size) {
+        this.addPicture('textures/track.png', x, y, size);
+        this.addText('Player', x + 8, y - 6, 1);
+        this.addText('PC', x + 8, y - 8, 1);
+
+        const geometry = new THREE.CircleGeometry(0.5);
+        const rotatedX = this.rotation === Math.PI ? -x - 6.9 : x + 6.9;
+        const z = this.rotation === Math.PI ? -0.3 - this.depth : 0.3 + this.depth;
+
+        const red = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0xFF0000 }));
+        red.position.set(this.position.x + rotatedX, this.position.y + y - 5.9, this.position.z + z);
+        this.pictureObjs.push(red);
+
+        const blue = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x0000FF }));
+        blue.position.set(this.position.x + rotatedX, this.position.y + y - 7.9, this.position.z + z);
+        this.pictureObjs.push(blue);
+
+        this.balloonTrackingOrigin = [this.position.x + (this.rotation === Math.PI ? x + 3.45 : -x - 3.45), this.position.y + y + 0.1, size];
+
+        if (this.rotation === Math.PI) {
+            red.rotation.y = Math.PI;
+            blue.rotation.y = Math.PI;
+        }
+
+        this.app.scene.add(red);
+        this.app.scene.add(blue);
+
+        this.player = red.clone();
+        this.player.scale.set(0.3, 0.3, 0.3);
+        this.pc = blue.clone();
+        this.pc.scale.set(0.3, 0.3, 0.3);
+
+        this.app.scene.add(this.player);
+        this.app.scene.add(this.pc);
+    }
+
     stopTimer() {
         this.startTime = null;
     }
@@ -314,6 +350,14 @@ class MyBillboard {
         this.app.scene.add(this.vouchersObj[0]);
     }
 
+    updateBalloonTracking(xPlayer, zPlayer, xPC, zPC) {
+        this.player.position.x = this.balloonTrackingOrigin[0] + xPlayer * this.balloonTrackingOrigin[2] / 250;
+        this.player.position.y = this.balloonTrackingOrigin[1] - zPlayer * this.balloonTrackingOrigin[2] / 250;
+
+        this.pc.position.x = this.balloonTrackingOrigin[0] + xPC * this.balloonTrackingOrigin[2] / 250;
+        this.pc.position.y = this.balloonTrackingOrigin[1] - zPC * this.balloonTrackingOrigin[2] / 250;
+    }
+
     clear() {
         this.textObjs.forEach((textObj) => this.app.scene.remove(textObj));
         this.textObjs = [];
@@ -335,6 +379,12 @@ class MyBillboard {
         }
         if (this.vouchersObj) {
             this.app.scene.remove(this.vouchersObj[0]);
+        }
+        if (this.player) {
+            this.app.scene.remove(this.player);
+        }
+        if (this.pc) {
+            this.app.scene.remove(this.pc);
         }
     }
 }

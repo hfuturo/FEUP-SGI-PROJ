@@ -76,8 +76,14 @@ class MyParkingLot {
                 this.setHighlight(this.highlight, true);
                 this.picker.dispose();
 
-                if (this.callback)
-                    this.callback(parentObj);
+                if (this.callback) {
+                    for (let i = 0; i < this.balloons.length; i++) {
+                        if (this.balloons[i].group === parentObj) {
+                            this.callback(this.balloons[i]);
+                            break;
+                        }
+                    }
+                }
             }
             
         } else {

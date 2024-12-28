@@ -7,20 +7,14 @@ import { MyAnimation } from "./MyAnimation.js";
 
 
 class MyBallon {
-
-    wind = {
-        north: 5,
-        south: 5,
-        east: 5,
-        west: 5
-    }
     
-    constructor(app, name) {
+    constructor(app, name, wind) {
         this.app = app;
+        this.name = name;
+        this.wind = wind;
 
         this.height = 0;
         this.group = new THREE.Group();
-        this.group.name = name;
 
         this.ySize = 9;
         
@@ -317,6 +311,11 @@ class MyBallon {
     
     getPosition() {
         return this.group.position;
+    }
+
+    setPosition(position) {
+        this.group.position.set(position.x, position.y, position.z);
+        this.shadow.position.set(position.x, this.shadowY, position.z);
     }
 
     getVouchers() {

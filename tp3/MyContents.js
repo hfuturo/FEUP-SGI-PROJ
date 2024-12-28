@@ -30,11 +30,17 @@ class MyContents {
     this.app = app;
     this.axis = null;
 
-    this.initializer = new MyInitializer(this.app, './yasf/scene.json', this.onAfterSceneLoadedAndBeforeRender.bind(this));
-    this.balloon = new MyBallon(this.app, '1');
+    this.wind = {
+      north: 5,
+      south: 5,
+      east: 5,
+      west: 5
+    }
 
-    this.parkingLot1 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, 25), [new MyBallon(this.app, '1')]);
-    this.parkingLot2 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, -25), [new MyBallon(this.app, '1')]);
+    this.initializer = new MyInitializer(this.app, './yasf/scene.json', this.onAfterSceneLoadedAndBeforeRender.bind(this));
+
+    this.parkingLot1 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, 25), [new MyBallon(this.app, '1', this.wind)]);
+    this.parkingLot2 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, -25), [new MyBallon(this.app, '1', this.wind)]);
 
     this.reliefImage = new MyReliefImage();
     this.reliefRefresh = 60;
@@ -163,9 +169,11 @@ class MyContents {
     billboardObj.children.forEach((billboard) => {
       const bb = new MyBillboard(this.app, billboard.position, 3.2, billboard.rotation);
       bb.startTimer(-10, 36, 4);
-      bb.startLaps(this.numLaps, 15, 18, 3);
+      bb.startLaps(this.numLaps, 15, 26, 3);
       bb.startLayer(-21, 29);
-      bb.startVouchers(0, 18, 3);
+      bb.startVouchers(18, 30, 3);
+      bb.startBalloonTracking(0, 25, 18);
+      bb.updateBalloonTracking(this.startPos.x, this.startPos.z, this.startPos.x * -1, this.startPos.z);
 
       this.billBoards.push(bb);
     });
@@ -201,7 +209,6 @@ class MyContents {
     const ambientLight = new THREE.AmbientLight(0x555555);
     this.app.scene.add(ambientLight);
 
-    this.balloon.display();
     this.parkingLot1.display();
     this.parkingLot2.display();
   }
@@ -288,6 +295,8 @@ class MyContents {
     this.acceptingInputs = true;
 
     this.app.setActiveCamera("balloon");
+    this.playerBalloon.setPosition(this.startPos);
+    this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y, this.startPos.z));
     this.balloonThirdPerson();
 
     this.loadBillBoards();
@@ -361,6 +370,7 @@ class MyContents {
                 })
 
                 this.startPos = intersects[0].object.position;
+                this.startPos.y = 0;
 
                 picker.dispose();
                 this.app.setActiveCamera("billboard");
@@ -473,11 +483,11 @@ class MyContents {
   keyHandlerPlaying(event) {
     switch (event.key) {
       case 'w':
-        if (this.balloon.up())
+        if (this.playerBalloon.up())
           this.billBoards.forEach((billboard) => billboard.updateLayer(1));
         break;
       case 's':
-        if (this.balloon.down())
+        if (this.playerBalloon.down())
           this.billBoards.forEach((billboard) => billboard.updateLayer(-1));
         break;
       case 'c':
@@ -498,13 +508,15 @@ class MyContents {
 
   balloonFirstPerson() {
     this.app.setupMovingCamera(0.1);
-    this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 0.75, this.balloon.group.position.z);
+    const pos = this.playerBalloon.getPosition();
+    this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + 0.75, pos.z);
     this.app.updateTarget();
   }
 
   balloonThirdPerson() {
     this.app.setupMovingCamera(15);
-    this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
+    const pos = this.playerBalloon.getPosition();
+    this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + 5, pos.z);
     this.app.updateTarget();
   }
 
@@ -535,48 +547,54 @@ class MyContents {
   }
 
   updatePlaying() {
-    this.balloon.update();
+    this.playerBalloon.update();
 
-    this.billBoards.forEach((billboard) => billboard.update());
+    this.billBoards.forEach((billboard) => {
+      billboard.update()
+      const playerPos = this.playerBalloon.getPosition();
+      const opponentPos = this.opponentBalloon.getPosition();
+      billboard.updateBalloonTracking(playerPos.x, playerPos.z, opponentPos.x, opponentPos.z);
+  });
 
     this.#checkCollisions();
     this.#checkOffTrack();
 
     if (this.app.activeCameraName === 'balloon') {
+      const pos = this.playerBalloon.getPosition();
       if (this.balloonCamera === '1') {
-        this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 0.75, this.balloon.group.position.z);
+        this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + 0.75, pos.z);
         this.app.updateTarget();
       } else if (this.balloonCamera === '3') {
-        this.app.lookAt["balloon"] = new THREE.Vector3(this.balloon.group.position.x, this.balloon.group.position.y + 5, this.balloon.group.position.z);
+        this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + 5, pos.z);
         this.app.updateTarget();
       }
     }
   }
 
   #checkOffTrack() {
-    const {closestPoint, offTrack} = this.track.isBalloonOffTrack(this.balloon.getShadowPosition(), 18);
+    const {closestPoint, offTrack} = this.track.isBalloonOffTrack(this.playerBalloon.getShadowPosition(), 18);
 
     if (offTrack) {
-      this.balloon.freezeAndReplace(closestPoint);
+      this.playerBalloon.freezeAndReplace(closestPoint);
     }
   }
 
   #checkCollisions() {
     this.track.getObstacles().forEach((obstacle) => {
-      if (!this.balloon.collides(obstacle) || this.balloon.collidedWith(obstacle)) return;
+      if (!this.playerBalloon.collides(obstacle) || this.playerBalloon.collidedWith(obstacle)) return;
 
-      if (this.balloon.getVouchers() > 0) {
+      if (this.playerBalloon.getVouchers() > 0) {
         this.billBoards.forEach((billboard) => billboard.updateVoucher(-1));
       }
 
-      this.balloon.handleCollision(obstacle);
+      this.playerBalloon.handleCollision(obstacle);
     });
 
     this.track.getPowerUps().forEach((powerUp) => {
-      if (!this.balloon.collides(powerUp) || this.balloon.collidedWith(powerUp)) return;
+      if (!this.playerBalloon.collides(powerUp) || this.playerBalloon.collidedWith(powerUp)) return;
 
       this.billBoards.forEach((billboard) => billboard.updateVoucher(1));
-      this.balloon.handleCollision(powerUp);
+      this.playerBalloon.handleCollision(powerUp);
     });
   }
 
