@@ -17,7 +17,9 @@ class MyGuiInterface  {
         this.contents = null
 
         this.homogeneous = true
+        this.reliefProportion = true
         this.windControllers = []
+        this.reliefControllers = []
     }
 
     /**
@@ -42,7 +44,12 @@ class MyGuiInterface  {
         this.windControllers.push(wind.add(this.contents.wind, 'east', 0, 10).name('East').onChange((val) => this.#changeHomogeneous(val)))
         this.windControllers.push(wind.add(this.contents.wind, 'west', 0, 10).name('West').onChange((val) => this.#changeHomogeneous(val)))
 
-        this.datgui.add(this.contents, 'reliefRefresh', 1, 60, 1).name('Relief Image Refresh (s)')
+        const relief = this.datgui.addFolder('Relief');
+        relief.add(this.contents, 'reliefRefresh', 1, 60, 1).name('Image Refresh (s)')
+        relief.add(this.contents.reliefImage, 'scale', 0, 10, 1).name('Scale')
+        relief.add(this, 'reliefProportion').name('Keep Proportions')
+        this.reliefControllers.push(relief.add(this.contents.reliefImage, 'verticalDivisions', 100, 800, 100).name('Vertical Divisions').onChange((val) => this.#changeProportions(val, 'v')))
+        this.reliefControllers.push(relief.add(this.contents.reliefImage, 'horizontalDivisions', 200, 1600, 100).name('Horizontal Divisions').onChange((val) => this.#changeProportions(val, 'h')))
     }
 
     #changeHomogeneous(val) {
@@ -53,6 +60,20 @@ class MyGuiInterface  {
             this.contents.wind.west = val
 
             this.windControllers.forEach(controller => controller.updateDisplay());
+        }
+    }
+
+    #changeProportions(val, type) {
+        if (this.reliefProportion) {
+            if (type === 'v') {
+                this.contents.reliefImage.horizontalDivisions = val * 2
+                this.contents.reliefImage.verticalDivisions = val
+            } else if (type === 'h') {
+                this.contents.reliefImage.horizontalDivisions = val
+                this.contents.reliefImage.verticalDivisions = val / 2
+            }
+
+            this.reliefControllers.forEach(controller => controller.updateDisplay());
         }
     }
 

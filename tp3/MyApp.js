@@ -188,13 +188,15 @@ class MyApp  {
 
                 const target = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight );
                 target.depthTexture = new THREE.DepthTexture();
+                target.depthTexture.magFilter = THREE.NearestFilter;
+                target.depthTexture.minFilter = THREE.NearestFilter;
                 target.depthTexture.format = THREE.DepthFormat;
-
+                target.depthTexture.type = THREE.UnsignedIntType;
 
                 this.renderer.setRenderTarget(target);
                 this.renderer.render(this.scene, this.activeCamera);
                 this.renderer.setRenderTarget(null);
-
+                
                 this.targetRGB = target.texture;
                 this.targetDepth = target.depthTexture;
             }

@@ -42,7 +42,7 @@ class MyContents {
     this.parkingLot1 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, 25), [new MyBallon(this.app, '1', this.wind)]);
     this.parkingLot2 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, -25), [new MyBallon(this.app, '1', this.wind)]);
 
-    this.reliefImage = new MyReliefImage();
+    this.reliefImage = new MyReliefImage(this.app);
     this.reliefRefresh = 60;
     this.reliefClock = new THREE.Clock();
 
@@ -632,14 +632,13 @@ class MyContents {
   }
 
   #updateReliefImage() {
-    // this.app.scene.add(new THREE.Mesh(new THREE.PlaneGeometry(32, 16), new THREE.MeshBasicMaterial({ map: this.app.targetDepth })));
     this.reliefImage.getImage(this.app.targetDepth, this.app.targetRGB).then(mesh => {
       if (this.reliefMesh) {
         this.app.scene.remove(this.reliefMesh);
       }
 
       this.reliefMesh = mesh;
-      this.reliefMesh.position.set(87.8, 18, 0);
+      this.reliefMesh.position.set(94, 18, 0);
       this.reliefMesh.rotation.y = -Math.PI / 2;
       this.app.scene.add(this.reliefMesh);
     });
