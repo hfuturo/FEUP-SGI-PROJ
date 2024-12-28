@@ -18,10 +18,28 @@ class MyBillboard {
     startTimer(x, y, size) {
         this.startTime = Date.now();
         this.lastTime = this.startTime;
+        this.pause = false;
 
         const displayTime = `00:00:00`;
         this.timeObj = [this.createText(displayTime, x, y, size), x, y, size];
         this.app.scene.add(this.timeObj[0]);
+
+        this.pauseObj = this.createPicture('textures/pause.png', 20, 36, 5);
+        this.app.scene.add(this.pauseObj);
+    }
+
+    pauseTimer() {
+        this.pause = !this.pause;
+        this.app.scene.remove(this.pauseObj);
+
+        if (this.pause) {
+            this.pauseObj = this.createPicture('textures/play.png', 20, 36, 4);
+            this.app.scene.add(this.pauseObj);
+        } else {
+            this.startTime = Date.now() - (this.lastTime - this.startTime);
+            this.pauseObj = this.createPicture('textures/pause.png', 20, 36, 5);
+            this.app.scene.add(this.pauseObj);
+        }
     }
 
     startLayer(x, y) {
@@ -276,7 +294,7 @@ class MyBillboard {
     
 
     update() {
-        if (this.startTime) {
+        if (this.startTime && !this.pause) {
             const currentTime = Date.now();
 
             if (currentTime - this.lastTime >= 1000) {
@@ -308,6 +326,10 @@ class MyBillboard {
             ...this.layerObj[0].position,
             this.layerObj[0].position.x, this.layerObj[0].position.y + 3.5*update, this.layerObj[0].position.z
         ];
+        
+        while(this.balloonAnimation.isPlaying() || this.windAnimation.isPlaying()) {
+            // sometimes there are some delays and the animations are not finished
+        }
         this.balloonAnimation.createAnimation([0, 1], positions);
 
         if (this.layer === 0 || (this.layer === 1 && update === -1)) {

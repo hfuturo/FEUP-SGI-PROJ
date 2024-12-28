@@ -295,6 +295,7 @@ class MyContents {
     this.acceptingInputs = true;
 
     this.app.setActiveCamera("balloon");
+    this.pause = false;
     this.playerBalloon.setPosition(this.startPos);
     this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y, this.startPos.z));
     this.balloonThirdPerson();
@@ -501,6 +502,10 @@ class MyContents {
           }
         }
         break;
+      case ' ':
+        this.pause = !this.pause;
+        this.billBoards.forEach((billboard) => billboard.pauseTimer());
+        break;
       default:
         break;
     }
@@ -539,7 +544,7 @@ class MyContents {
       this.app.renderTarget = true;
     }
 
-    if (this.state === state.PLAYING) {
+    if (this.state === state.PLAYING && !this.pause) {
       this.updatePlaying();
     }
 
