@@ -70,18 +70,13 @@ class MyContents {
   onAfterSceneLoadedAndBeforeRender() {
     this.loadTrack();
     this.loadBillBoards();
-    this.loadSparkles();
-    this.loadFireworks();
+
+    this.sparklesObj = this.initializer.objects["sparkles"].children;
+    this.fireworksObj = this.initializer.objects["fireworks"].children;
+
+    this.app.scene.add(this.initializer.objects["relief_display"]);
 
     this.app.gui.finish();
-  }
-
-  loadFireworks() {
-    this.fireworksObj = this.initializer.objects["fireworks"].children;
-  }
-
-  loadSparkles() {
-    this.sparklesObj = this.initializer.objects["sparkles"].children;
   }
 
   loadTrack() {
@@ -637,13 +632,15 @@ class MyContents {
   }
 
   #updateReliefImage() {
+    // this.app.scene.add(new THREE.Mesh(new THREE.PlaneGeometry(32, 16), new THREE.MeshBasicMaterial({ map: this.app.targetDepth })));
     this.reliefImage.getImage(this.app.targetDepth, this.app.targetRGB).then(mesh => {
       if (this.reliefMesh) {
         this.app.scene.remove(this.reliefMesh);
       }
 
       this.reliefMesh = mesh;
-      this.reliefMesh.position.set(0, 10, 10);
+      this.reliefMesh.position.set(87.8, 18, 0);
+      this.reliefMesh.rotation.y = -Math.PI / 2;
       this.app.scene.add(this.reliefMesh);
     });
   }

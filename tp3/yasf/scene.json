@@ -19,7 +19,7 @@
                     "b": 0.0
                 },
                 "near": 10.0,
-                "far": 1000.0
+                "far": 10000.0
             },
             "skybox": {
                 "size": {"x": 512.0, "y": 512.0, "z": 512.0},
@@ -158,6 +158,7 @@
                 "children": {
                     "nodesList":[
                         "out_billboards",
+                        "relief_display",
                         "parking_lot",
                         "sparkles",
                         "fireworks"
@@ -447,6 +448,19 @@
                 "children": {
                     "nodesList": [
                         "rectangle"
+                    ]
+                }
+            },
+            "relief_display": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 90, "y": 0, "z": 0}},
+                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}},
+                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 2}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "billboard"
                     ]
                 }
             },

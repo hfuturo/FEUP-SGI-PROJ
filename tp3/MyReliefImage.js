@@ -20,7 +20,7 @@ class MyReliefImage {
             fragmentShader: fragmentShader,
         });
 
-        const plane = new THREE.PlaneGeometry(8, 4, 80, 40);
+        const plane = new THREE.PlaneGeometry(32, 16, 320, 160);
         const mesh = new THREE.Mesh(plane, this.material);
 
         return mesh;
