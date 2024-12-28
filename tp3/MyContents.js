@@ -572,7 +572,7 @@ class MyContents {
   }
 
   #checkOffTrack() {
-    const {closestPoint, offTrack} = this.track.isBalloonOffTrack(this.playerBalloon.getShadowPosition(), 18);
+    const {closestPoint, offTrack} = this.track.isBalloonOffTrack(this.playerBalloon.getShadowPosition());
 
     if (offTrack) {
       this.playerBalloon.freezeAndReplace(closestPoint);
@@ -644,17 +644,6 @@ class MyContents {
       this.app.scene.add(this.reliefMesh);
     });
   }
-
-  // #tagObject(object) {
-  //   this.taggedObjects.push(object);
-
-  //   // removes object after 4s (2s penalty + 2s so ballon is not affected by the same obstacle twice in a row)
-  //   setTimeout(() => this.#clearTaggedObject(object), 4000);
-  // }
-
-  // #clearTaggedObject(object) {
-  //   this.taggedObjects = this.taggedObjects.filter((obj) => obj !== object);
-  // }
 }
 
 export { MyContents };

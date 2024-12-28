@@ -91,7 +91,7 @@ class MyTrack {
         return this.powerUps;
     }
 
-    isBalloonOffTrack(shadowPos, margin, nPoints=1000) {
+    isBalloonOffTrack(shadowPos, margin=(this.width * 0.9), nPoints=1000) {
         const curvePoints = this.curve.getSpacedPoints(nPoints);
 
         let minDistance = Infinity;
