@@ -83,13 +83,13 @@ class MyContents {
     this.parkingLot1 = new MyParkingLot(
       this.app, 
       new THREE.Vector3(-40, 0, 25), 
-      Object.keys(ballonsTransformations).map((ballonId) => new MyBallon(this.app, ballonId, this.wind, ballonsTransformations))
+      Object.keys(ballonsTransformations).map((ballonId) => new MyBallon(this.app, ballonId, this.wind, ballonsTransformations[ballonId]))
     );
     
     this.parkingLot2 = new MyParkingLot(
       this.app, 
       new THREE.Vector3(-40, 0, -25), 
-      Object.keys(ballonsTransformations).map((ballonId) => new MyBallon(this.app, ballonId, this.wind, ballonsTransformations))
+      Object.keys(ballonsTransformations).map((ballonId) => new MyBallon(this.app, ballonId, this.wind, ballonsTransformations[ballonId]))
     );
 
     this.parkingLot1.display();

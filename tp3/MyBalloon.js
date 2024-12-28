@@ -46,38 +46,40 @@ class MyBallon {
 
     #initCollisionObjects() {
         // set opacity to 1 to see geometries
-        this.collisionMaterial = new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 0 });
+        this.collisionMaterial = new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 1 });
 
         // geometries to detect collisions
-        this.collisionTopRadius = 3;
+        this.collisionTopRadius = this.balloonTransformations.topSphere.radius;
         this.topSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionTopRadius),
             this.collisionMaterial
         );
+        this.topSphere.position.set(...this.balloonTransformations.topSphere.position);
 
-        this.collisionMiddleRadius = 1.25;
+        this.collisionMiddleRadius = this.balloonTransformations.middleSphere.radius;
         this.middleSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionMiddleRadius),
             this.collisionMaterial
         );
+        this.middleSphere.position.set(...this.balloonTransformations.middleSphere.position);
 
-        this.collisionMiddleBottomRadius = 0.45;
+        this.collisionMiddleBottomRadius = this.balloonTransformations.middleBottomSphere.radius;
         this.middleBottomSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionMiddleBottomRadius),
             this.collisionMaterial
         );
+        this.middleBottomSphere.position.set(...this.balloonTransformations.middleBottomSphere.position);
 
-        this.collisionBottomRadius = 0.275;
+        this.collisionBottomRadius = this.balloonTransformations.bottomSphere.radius;
         this.bottomSphere = new THREE.Mesh(
             new THREE.SphereGeometry(this.collisionBottomRadius),
             this.collisionMaterial
         );
+        this.bottomSphere.position.set(...this.balloonTransformations.bottomSphere.position);
     }
 
-    display() {        
-        const balloonTransformation = this.balloonTransformations[this.name];
-        
-        if (balloonTransformation.type === 'obj') {
+    display() {                
+        if (this.balloonTransformations.type === 'obj') {
             const objLoader = new OBJLoader();
             const mtlLoader = new MTLLoader();
 
@@ -91,9 +93,9 @@ class MyBallon {
             objLoader.load(
                 `models/balloons/balloon${this.name}/balloon.obj`,
                 (balloon) => {
-                    balloon.position.set(...balloonTransformation.position);
-                    balloon.scale.set(...balloonTransformation.scale);
-                    balloon.rotation.set(...balloonTransformation.rotation.map((angle => angle * Math.PI / 180)));
+                    balloon.position.set(...this.balloonTransformations.position);
+                    balloon.scale.set(...this.balloonTransformations.scale);
+                    balloon.rotation.set(...this.balloonTransformations.rotation.map((angle => angle * Math.PI / 180)));
                     this.group.add(balloon);
                 },
                 (obj) => console.log(`${obj.loaded / obj.total * 100}% loaded`),
@@ -106,13 +108,13 @@ class MyBallon {
             fbxLoader.load(
                 `models/balloons/balloon${this.name}/balloon.fbx`,
                 (balloon) => {
-                    balloon.position.set(...balloonTransformation.position);
-                    balloon.scale.set(...balloonTransformation.scale);
-                    balloon.rotation.set(...balloonTransformation.rotation.map((angle => angle * Math.PI / 180)));
+                    balloon.position.set(...this.balloonTransformations.position);
+                    balloon.scale.set(...this.balloonTransformations.scale);
+                    balloon.rotation.set(...this.balloonTransformations.rotation.map((angle => angle * Math.PI / 180)));
 
-                    if ('textures' in balloonTransformation) {
+                    if ('textures' in this.balloonTransformations) {
                         const textureLoader = new THREE.TextureLoader();
-                        const textures = balloonTransformation["textures"].map((texture) => textureLoader.load(texture));
+                        const textures = this.balloonTransformations["textures"].map((texture) => textureLoader.load(texture));
 
                         balloon.traverse((child) => {
                             if (child.isMesh) {
@@ -137,10 +139,6 @@ class MyBallon {
             );
         }
 
-        this.topSphere.position.set(0, 5.5, 0);
-        this.middleSphere.position.set(0, 3, 0);
-        this.middleBottomSphere.position.set(0, 1.5, 0);
-        this.bottomSphere.position.set(0, 0.325, 0);
         this.group.add(this.topSphere);
         this.group.add(this.middleSphere);
         this.group.add(this.middleBottomSphere);

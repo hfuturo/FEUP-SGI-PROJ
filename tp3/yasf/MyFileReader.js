@@ -813,14 +813,12 @@ class MyFileReader {
 
 	loadBalloonsTransformations(rootElement) {
 		const balloonsTransformationsElem = rootElement["balloons_transformations"];
-		// console.log(balloonsTransformationsElem);
+
 		this.data["balloons_transformations"] = {};
 
 		for (const [k,v] of Object.entries(balloonsTransformationsElem)) {
 			this.data["balloons_transformations"][k] = v;
 		}
-
-		console.log(this.data);
 	}
 
 	loadTrack(rootElement) {
