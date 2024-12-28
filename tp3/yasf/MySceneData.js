@@ -235,7 +235,7 @@ class MySceneData {
             { name: "mindist", type: "float" },
         ]
 
-        this.primaryNodeIds = ["globals", "cameras", "textures", "materials", "graph", "track"]
+        this.primaryNodeIds = ["globals", "cameras", "textures", "materials", "graph", "track", "balloons_transformations"];
 
         this.primitiveIds = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs", "polygon"]
 

@@ -60,6 +60,7 @@ class MyInitializer {
         this.activeLight = Object.keys(this.lights)[0];
 
         this.track = data.track;
+        this.balloons_transformations = data.balloons_transformations;
         
         this.callback();
     }

@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
+import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 import { MyObstacle } from "./MyObstacle.js";
 import { MyPowerUp } from "./MyPowerUp.js";
 import { MyAnimation } from "./MyAnimation.js";
@@ -8,10 +9,11 @@ import { MyAnimation } from "./MyAnimation.js";
 
 class MyBallon {
     
-    constructor(app, name, wind) {
+    constructor(app, name, wind, balloonTransformations) {
         this.app = app;
         this.name = name;
         this.wind = wind;
+        this.balloonTransformations = balloonTransformations;
 
         this.height = 0;
         this.group = new THREE.Group();
@@ -28,8 +30,6 @@ class MyBallon {
         this.animationPlaying = false;
         this.balloonAnimation = new MyAnimation(this.group);
         this.shadowAnimation = new MyAnimation(this.shadow);
-
-        this.balloonScale = 0.25;
 
         this.vouchers = 0;
         this.freezed = false;
@@ -74,26 +74,68 @@ class MyBallon {
         );
     }
 
-    display() {
-        const objLoader = new OBJLoader();
-        const mtlLoader = new MTLLoader();
-
-        objLoader.load(
-            "models/balloon1/Air_Balloon.obj",
-            (ballon) => {
-                ballon.scale.set(this.balloonScale, this.balloonScale, this.balloonScale);
-                this.group.add(ballon);
-            },
-            (obj) => console.log(`${obj.loaded / obj.total * 100}% loaded`),
-            (error) => console.error(`Error loading ballon object: ${error}`)
-        );
+    display() {        
+        const balloonTransformation = this.balloonTransformations[this.name];
         
-        mtlLoader.load(
-            "models/balloon1/Air_Balloon.mtl",
-            (model) => objLoader.setMaterials(model),
-            (mtl) => console.log(`${mtl.loaded / mtl.total * 100}% loaded`),
-            (error) => console.error(`Error loading ballon material: ${error}`)
-        );
+        if (balloonTransformation.type === 'obj') {
+            const objLoader = new OBJLoader();
+            const mtlLoader = new MTLLoader();
+
+            mtlLoader.load(
+                `models/balloons/balloon${this.name}/balloon.mtl`,
+                (model) => objLoader.setMaterials(model),
+                (mtl) => console.log(`${mtl.loaded / mtl.total * 100}% loaded`),
+                (error) => console.error(`Error loading ballon material: ${error}`)
+            );
+
+            objLoader.load(
+                `models/balloons/balloon${this.name}/balloon.obj`,
+                (balloon) => {
+                    balloon.position.set(...balloonTransformation.position);
+                    balloon.scale.set(...balloonTransformation.scale);
+                    balloon.rotation.set(...balloonTransformation.rotation.map((angle => angle * Math.PI / 180)));
+                    this.group.add(balloon);
+                },
+                (obj) => console.log(`${obj.loaded / obj.total * 100}% loaded`),
+                (error) => console.error(`Error loading ballon object: ${error}`)
+            );
+        }
+        else {
+            const fbxLoader = new FBXLoader();
+
+            fbxLoader.load(
+                `models/balloons/balloon${this.name}/balloon.fbx`,
+                (balloon) => {
+                    balloon.position.set(...balloonTransformation.position);
+                    balloon.scale.set(...balloonTransformation.scale);
+                    balloon.rotation.set(...balloonTransformation.rotation.map((angle => angle * Math.PI / 180)));
+
+                    if ('textures' in balloonTransformation) {
+                        const textureLoader = new THREE.TextureLoader();
+                        const textures = balloonTransformation["textures"].map((texture) => textureLoader.load(texture));
+
+                        balloon.traverse((child) => {
+                            if (child.isMesh) {
+                                if (Array.isArray(child.material)) {
+                                    child.material.forEach((mat, index) => {
+                                        mat.map = textures[index % textures.length];
+                                        mat.needsUpdate = true;
+                                    });
+                                }
+                                else {
+                                    child.material.map = textures[0];
+                                    child.material.needsUpdate = true;
+                                }
+                            }
+                        });
+                    }
+
+                    this.group.add(balloon);
+                },
+                (obj) => console.log(`${obj.loaded / obj.total * 100}% loaded`),
+                (error) => console.error(`Error loading ballon object: ${error}`)
+            );
+        }
 
         this.topSphere.position.set(0, 5.5, 0);
         this.middleSphere.position.set(0, 3, 0);

@@ -640,6 +640,51 @@
             "obstacles": [
                 {"x": 0, "y": 7, "z": -20}
             ]
+        },
+        "balloons_transformations": {
+            "1": {
+                "type": "obj",
+                "position": [0, 0, 0],
+                "scale": [0.25, 0.25, 0.25],
+                "rotation": [0, 0, 0]
+            },
+            "2": {
+                "type": "fbx",
+                "position": [0, 0, 0],
+                "scale": [0.0044, 0.0044, 0.0044],
+                "rotation": [0, 0, 0],
+                "textures": [
+                    "models/balloons/balloon2/hot_air_balloon_albedo.png",
+                    "models/balloons/balloon2/internal_ground_ao_texture.jpeg"
+                ]
+            },
+            "3": {
+                "type": "fbx",
+                "position": [0, 0.5, 0],
+                "scale": [0.0055, 0.0055, 0.0055],
+                "rotation": [0, 0, 0],
+                "textures": [
+                    "models/balloons/balloon3/colors.png"
+                ]
+            },
+            "4": {
+                "type": "fbx",
+                "position": [0, 0.5, 0],
+                "scale": [0.0085, 0.0085, 0.0085],
+                "rotation": [0, 0, 0],
+                "textures": [
+                    "models/balloons/balloon4/balloon.png"
+                ]
+            },
+            "5": {
+                "type": "fbx",
+                "position": [0, 0.2, 0],
+                "scale": [0.0025, 0.0025, 0.0025],
+                "rotation": [0, 0, 0],
+                "textures": [
+                    "models/balloons/balloon5/Piskel-blender.png"
+                ]
+            }
         }
     }
 }

@@ -39,9 +39,6 @@ class MyContents {
 
     this.initializer = new MyInitializer(this.app, './yasf/scene.json', this.onAfterSceneLoadedAndBeforeRender.bind(this));
 
-    this.parkingLot1 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, 25), [new MyBallon(this.app, '1', this.wind)]);
-    this.parkingLot2 = new MyParkingLot(this.app, new THREE.Vector3(-40, 0, -25), [new MyBallon(this.app, '1', this.wind)]);
-
     this.reliefImage = new MyReliefImage();
     this.reliefRefresh = 60;
     this.reliefClock = new THREE.Clock();
@@ -70,6 +67,7 @@ class MyContents {
   onAfterSceneLoadedAndBeforeRender() {
     this.loadTrack();
     this.loadBillBoards();
+    this.loadParkingLots();
 
     this.sparklesObj = this.initializer.objects["sparkles"].children;
     this.fireworksObj = this.initializer.objects["fireworks"].children;
@@ -77,6 +75,25 @@ class MyContents {
     this.app.scene.add(this.initializer.objects["relief_display"]);
 
     this.app.gui.finish();
+  }
+
+  loadParkingLots() {
+    const ballonsTransformations = this.initializer.balloons_transformations;
+
+    this.parkingLot1 = new MyParkingLot(
+      this.app, 
+      new THREE.Vector3(-40, 0, 25), 
+      Object.keys(ballonsTransformations).map((ballonId) => new MyBallon(this.app, ballonId, this.wind, ballonsTransformations))
+    );
+    
+    this.parkingLot2 = new MyParkingLot(
+      this.app, 
+      new THREE.Vector3(-40, 0, -25), 
+      Object.keys(ballonsTransformations).map((ballonId) => new MyBallon(this.app, ballonId, this.wind, ballonsTransformations))
+    );
+
+    this.parkingLot1.display();
+    this.parkingLot2.display();
   }
 
   loadTrack() {
@@ -203,9 +220,6 @@ class MyContents {
     // add an ambient light
     const ambientLight = new THREE.AmbientLight(0x555555);
     this.app.scene.add(ambientLight);
-
-    this.parkingLot1.display();
-    this.parkingLot2.display();
   }
 
   startMenuPicker(intersects) {

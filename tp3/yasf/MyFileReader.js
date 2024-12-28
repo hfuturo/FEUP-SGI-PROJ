@@ -58,6 +58,7 @@ class MyFileReader {
 			this.loadMaterials(rootElement);
 			this.loadNodes(rootElement);
 			this.loadTrack(rootElement);
+			this.loadBalloonsTransformations(rootElement);
 		}
 		catch (error) {
 			this.errorMessage = error;
@@ -808,6 +809,18 @@ class MyFileReader {
 		primitiveObj.representations.push(obj);
 
 		return;
+	}
+
+	loadBalloonsTransformations(rootElement) {
+		const balloonsTransformationsElem = rootElement["balloons_transformations"];
+		// console.log(balloonsTransformationsElem);
+		this.data["balloons_transformations"] = {};
+
+		for (const [k,v] of Object.entries(balloonsTransformationsElem)) {
+			this.data["balloons_transformations"][k] = v;
+		}
+
+		console.log(this.data);
 	}
 
 	loadTrack(rootElement) {
