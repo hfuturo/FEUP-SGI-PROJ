@@ -460,8 +460,8 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "left_billboard_leg",
-                        "right_billboard_leg",
+                        "left_billboard_legs",
+                        "right_billboard_legs",
                         "billboard_structure_hollow"
                     ]
                 }
@@ -638,6 +638,29 @@
                     ]
                 }
             },
+            "right_billboard_leg1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 4}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "right_billboard_leg"
+                    ]
+                }
+            },
+            "right_billboard_legs": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -2}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "right_billboard_leg",
+                        "right_billboard_leg1"
+                    ]
+                }
+            },
             "left_billboard_leg": {
                 "type": "node",
                 "materialref":{
@@ -650,6 +673,29 @@
                 "children": {
                     "nodesList": [
                         "cylinder"
+                    ]
+                }
+            },
+            "left_billboard_legs": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -2}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "left_billboard_leg",
+                        "left_billboard_leg1"
+                    ]
+                }
+            },
+            "left_billboard_leg1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 4}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "left_billboard_leg"
                     ]
                 }
             },
