@@ -6,6 +6,8 @@ class MyTrack {
         this.obstacles = obstacles;
         this.powerUps = powerUps;
 
+        this.clock = new THREE.Clock();
+
         this.curve = null;
 
         this.scale = 8;
@@ -110,6 +112,17 @@ class MyTrack {
             "closestPoint": closestPoint,
             "offTrack": minDistance > margin
         };
+    }
+
+    update() {
+        const delta = this.clock.getDelta();
+        this.powerUps.forEach(powerUp => {
+            powerUp.update(delta);
+        });
+
+        this.obstacles.forEach(obstacle => {
+            obstacle.update(delta);
+        });
     }
 
 }

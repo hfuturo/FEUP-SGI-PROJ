@@ -539,6 +539,10 @@ class MyContents {
    * this method is called from the render method of the app
    */
   update() {
+    if (this.track) {
+      this.track.update();
+    }
+
     if (this.fireworksObj) {
       this.#shootSparkles();
       this.#shootFireworks();
