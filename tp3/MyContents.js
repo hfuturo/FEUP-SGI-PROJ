@@ -276,6 +276,7 @@ class MyContents {
       document.getElementById('laps').getElementsByTagName('p')[1].innerText = `0/${this.numLaps}`;
     }
     else if (newState === state.END) {
+      document.getElementById('hud').style.visibility = 'hidden';
       this.timer = this.billBoards[0].stopTimer();
       this.app.setActiveCamera("billboard");
       this.app.setupFixedCamera();

@@ -347,7 +347,7 @@ class MyBillboard {
             let initial = [0, 1, 1], final = [1, 1, 1];
             this.windAnimation.createAnimation([0, 1], update === 1 ? [...initial, ...final] : [...final, ...initial], 'scale')
 
-            initial = {transform: 'scaleX(0)', visibility: 'hidden'}, final = {transform: 'scaleX(1)', visibility: 'visible'};
+            initial = {transform: 'scaleX(0)', visibility: 'hidden'}, final = {transform: 'scaleX(1)', visibility: 'inherit'};
             document.getElementById('wind').animate(
                 [
                     update === 1 ? initial : final,
