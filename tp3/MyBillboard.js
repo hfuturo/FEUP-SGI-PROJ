@@ -20,8 +20,8 @@ class MyBillboard {
         this.lastTime = this.startTime;
         this.pause = false;
 
-        const displayTime = `00:00:00`;
-        this.timeObj = [this.createText(displayTime, x, y, size), x, y, size];
+        this.displayTime = `00:00:00`;
+        this.timeObj = [this.createText(this.displayTime, x, y, size), x, y, size];
         this.app.scene.add(this.timeObj[0]);
 
         this.pauseObj = this.createPicture('textures/pause.png', 20, 36, 5);
@@ -68,8 +68,7 @@ class MyBillboard {
     }
 
     startVouchers(x, y, size) {
-        const img = this.createPicture('textures/voucher.png', x - size, y, size);
-        this.app.scene.add(img);
+        this.addPicture('textures/voucher.png', x - size, y, size);
 
         this.vouchers = 0;
         this.vouchersObj = [this.createText(`${this.vouchers}`, x, y, size), x, y, size];
@@ -115,6 +114,7 @@ class MyBillboard {
 
     stopTimer() {
         this.startTime = null;
+        return this.displayTime;
     }
 
     addText(text, x, y, size) {
@@ -129,11 +129,11 @@ class MyBillboard {
         this.app.scene.add(pictureObj);
     }
 
-    addButton(id, x, y, width, height, elements) {
+    addButton(id, x, y, width, height, elements, color=0xff0000) {
         const group = new THREE.Group();
         const button = new THREE.Mesh(
             new THREE.BoxGeometry(width, height, 0.5),
-            new THREE.MeshLambertMaterial({ color: 0xFF0000 })
+            new THREE.MeshLambertMaterial({ color: color })
         )
         button.name = id;
         group.add(button);
@@ -303,11 +303,11 @@ class MyBillboard {
                 const hours = Math.floor(timer / 3600000).toString().padStart(2, '0');
                 const minutes = Math.floor((timer % 3600000) / 60000).toString().padStart(2, '0');
                 const seconds = Math.floor((timer % 60000) / 1000).toString().padStart(2, '0');
-                const displayTime = `${hours}:${minutes}:${seconds}`;
+                this.displayTime = `${hours}:${minutes}:${seconds}`;
                 
                 this.lastTime = currentTime;
                 this.app.scene.remove(this.timeObj[0]);
-                this.timeObj[0] = this.createText(displayTime, this.timeObj[1], this.timeObj[2], this.timeObj[3]);
+                this.timeObj[0] = this.createText(this.displayTime, this.timeObj[1], this.timeObj[2], this.timeObj[3]);
                 this.app.scene.add(this.timeObj[0]);
             }
         }
@@ -373,6 +373,11 @@ class MyBillboard {
     }
 
     updateBalloonTracking(xPlayer, zPlayer, xPC, zPC) {
+        if (this.rotation === Math.PI) {
+            xPlayer *= -1;
+            xPC *= -1;
+        }
+        
         this.player.position.x = this.balloonTrackingOrigin[0] + xPlayer * this.balloonTrackingOrigin[2] / 250;
         this.player.position.y = this.balloonTrackingOrigin[1] - zPlayer * this.balloonTrackingOrigin[2] / 250;
 
@@ -407,6 +412,9 @@ class MyBillboard {
         }
         if (this.pc) {
             this.app.scene.remove(this.pc);
+        }
+        if (this.pauseObj) {
+            this.app.scene.remove(this.pauseObj);
         }
     }
 }

@@ -159,9 +159,7 @@
                     "nodesList":[
                         "out_billboards",
                         "relief_display",
-                        "parking_lot",
-                        "sparkles",
-                        "fireworks"
+                        "parking_lot"
                     ],
                     "directionallight1": {
                         "type": "directionallight",
@@ -220,7 +218,7 @@
             "right_firework": {
                 "type": "node",
                 "transforms":[
-                    {"type": "translate", "amount": {"x": 5, "y": 0, "z": 10}}
+                    {"type": "translate", "amount": {"x": 15, "y": 0, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [
@@ -231,7 +229,7 @@
             "left_firework": {
                 "type": "node",
                 "transforms":[
-                    {"type": "translate", "amount": {"x": -5, "y": 0, "z": 10}}
+                    {"type": "translate", "amount": {"x": -15, "y": 0, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [
@@ -395,8 +393,8 @@
             "right_sparkle": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 15, "y": 0.5, "z": 10}},
-                    {"type": "scale", "amount": {"x": 0.25, "y": 1, "z": 0.25}}
+                    {"type": "translate", "amount": {"x": 5, "y": 13.125, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.25, "y": 0.25, "z": 0.25}}
                 ],
                 "children": {
                     "nodesList": [
@@ -407,8 +405,8 @@
             "left_sparkle": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -15, "y": 0.5, "z": 10}},
-                    {"type": "scale", "amount": {"x": 0.25, "y": 1, "z": 0.25}}
+                    {"type": "translate", "amount": {"x": -5, "y": 13.125, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.25, "y": 0.25, "z": 0.25}}
                 ],
                 "children": {
                     "nodesList": [
@@ -484,7 +482,9 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "billboard"
+                        "billboard",
+                        "sparkles",
+                        "fireworks"
                     ]
                 }
             },
@@ -496,7 +496,9 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "billboard"
+                        "billboard",
+                        "sparkles",
+                        "fireworks"
                     ]
                 }
             },

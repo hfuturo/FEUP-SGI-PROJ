@@ -71,6 +71,8 @@ class MyTrack {
             new THREE.Vector3(0, 0, -0.1)
         ].map(point => point.multiplyScalar(scale));
 
+        this.middleX = 6 * scale;
+
         this.curve = new THREE.CatmullRomCurve3(points);
         const geometry = new THREE.TubeGeometry(this.curve, 100, width, 3, true);
 

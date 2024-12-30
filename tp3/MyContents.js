@@ -43,15 +43,7 @@ class MyContents {
     this.reliefRefresh = 60;
     this.reliefClock = new THREE.Clock();
 
-    this.state = state.START;
-    this.acceptingInputs = false;
-    this.playerBalloon = undefined;
-    this.opponentBalloon = undefined;
-    this.numLaps = 1;
-    this.username = '';
     this.highlight = null;
-
-    this.balloonCamera = '3';
 
     this.sparkles = [];
     this.fireworks = [];
@@ -66,13 +58,11 @@ class MyContents {
 
   onAfterSceneLoadedAndBeforeRender() {
     this.loadTrack();
-    this.loadBillBoards();
     this.loadParkingLots();
 
-    this.sparklesObj = this.initializer.objects["sparkles"].children;
-    this.fireworksObj = this.initializer.objects["fireworks"].children;
-
     this.app.scene.add(this.initializer.objects["relief_display"]);
+
+    this.changeState(state.START);
 
     this.app.gui.finish();
   }
@@ -192,6 +182,45 @@ class MyContents {
   }
 
   loadBillBoardsEnd() {
+    this.picker = new MyPicker(this.app, [], this.endMenuPicker.bind(this));
+
+    const billboardObj = this.initializer.objects["out_billboards"];
+
+    this.sparklesObj = [], this.fireworksObj = [];
+    billboardObj.children.forEach((billboard) => {
+      // load fireworks and sparkles
+      this.sparklesObj.push(...billboard.children[1].children);
+      this.fireworksObj.push(...billboard.children[2].children);
+
+      const bb = new MyBillboard(this.app, billboard.position, 3.2, billboard.rotation);
+
+      bb.addText('Game Over', -12, 36, 4);
+      bb.addText(this.timer, -5, 33, 2);
+
+      const playerBalloon = [
+        bb.createText('Player', -2.75, 4, 1.5, 0xffffff),
+        bb.createPicture(`textures/balloons/${this.playerBalloon.name}.jpg`, 0, -1.25, 7),
+      ]
+      const playerColor = this.currLap === this.numLaps ? 0xffd700 : 0xff0000;
+      bb.addButton('player', -12, 23, 9, 12, playerBalloon, playerColor);
+
+      const opponentBalloon = [
+        bb.createText('PC', -0.5, 4, 1.5, 0xffffff),
+        bb.createPicture(`textures/balloons/${this.opponentBalloon.name}.jpg`, 0, -1.25, 7),
+      ]
+      const opponentColor = this.currLap === this.numLaps ? 0xff0000 : 0xffd700;
+      bb.addButton('pc', -2, 23, 9, 12, opponentBalloon, opponentColor);
+
+      const crownPos = this.currLap === this.numLaps ? -12 : -2;
+      bb.addPicture('textures/crown.png', crownPos, 31, 5.5, 0.6);
+
+      bb.addButton('restart', 10, 26, 5, 5, [bb.createPicture('textures/restart.png', 0, 0, 4)]);
+
+      bb.addButton('exit', 10, 20, 5, 5, [bb.createPicture('textures/home.webp', 0, 0, 4)]);
+
+      bb.buttonObjs.forEach((button) => this.picker.add(button.children[0]));
+      this.billBoards.push(bb);
+    });
   }
 
   /**
@@ -220,6 +249,48 @@ class MyContents {
     // add an ambient light
     const ambientLight = new THREE.AmbientLight(0x555555);
     this.app.scene.add(ambientLight);
+  }
+
+  changeState(newState) {
+    this.state = newState;
+
+    if (newState === state.START) {
+      this.app.setActiveCamera("billboard");
+
+      if (this.playerBalloon) { // place the balloon back in the parking lot
+        this.parkingLot1.returnBalloon(this.playerBalloon);
+        this.parkingLot2.returnBalloon(this.opponentBalloon);
+      }
+
+      this.acceptingInputs = false;
+      this.playerBalloon = undefined;
+      this.opponentBalloon = undefined;
+      this.balloonCamera = '3';
+      this.numLaps = 1;
+      this.currLap = 0;
+      this.username = '';
+    }
+    else if (newState === state.PLAYING) {
+      this.app.setActiveCamera("balloon");
+      this.balloonThirdPerson();
+      this.picker.dispose();
+
+      this.acceptingInputs = true;
+      this.pause = false;
+      this.checkpoint = true;
+  
+      this.playerBalloon.setPosition(this.startPos);
+      this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y, this.startPos.z));
+      this.balloonThirdPerson();
+    }
+    else if (newState === state.END) {
+      this.timer = this.billBoards[0].stopTimer();
+      this.app.setActiveCamera("billboard");
+      this.app.setupFixedCamera();
+      this.picker.dispose();
+    }
+
+    this.loadBillBoards();
   }
 
   startMenuPicker(intersects) {
@@ -299,17 +370,7 @@ class MyContents {
       return;
     }
 
-    this.picker.dispose();
-    this.state = state.PLAYING;
-    this.acceptingInputs = true;
-
-    this.app.setActiveCamera("balloon");
-    this.pause = false;
-    this.playerBalloon.setPosition(this.startPos);
-    this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y, this.startPos.z));
-    this.balloonThirdPerson();
-
-    this.loadBillBoards();
+    this.changeState(state.PLAYING);
   }
 
   insertName() {
@@ -456,6 +517,18 @@ class MyContents {
     });
   }
 
+  endMenuPicker(intersects) {
+    if (intersects.length > 0) {
+      const name = intersects[0].object.name;
+      if (name === 'restart') {
+        this.changeState(state.PLAYING);
+      }
+      else if (name === 'exit') {
+        this.changeState(state.START);
+      }
+    }
+  }
+
   keyHandler(event) {
     if (!this.acceptingInputs) return;
 
@@ -521,6 +594,11 @@ class MyContents {
   }
 
   balloonFirstPerson() {
+    if (this.playerBalloon === undefined) {
+      console.warn('No balloon selected');
+      return;
+    }
+
     this.app.setupMovingCamera(0.1);
     const pos = this.playerBalloon.getPosition();
     this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + 0.75, pos.z);
@@ -528,6 +606,11 @@ class MyContents {
   }
 
   balloonThirdPerson() {
+    if (this.playerBalloon === undefined) {
+      console.warn('No balloon selected');
+      return;
+    }
+
     this.app.setupMovingCamera(15);
     const pos = this.playerBalloon.getPosition();
     this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + 5, pos.z);
@@ -543,11 +626,6 @@ class MyContents {
       this.track.update();
     }
 
-    if (this.fireworksObj) {
-      this.#shootSparkles();
-      this.#shootFireworks();
-    }
-
     if (this.lastReliefRefresh === 0)
       this.#updateReliefImage();
 
@@ -561,11 +639,32 @@ class MyContents {
       this.updatePlaying();
     }
 
+    if (this.state === state.END) {
+      this.#shootSparkles();
+      this.#shootFireworks();
+    }
+
     this.app.gui.update();
   }
 
   updatePlaying() {
     this.playerBalloon.update();
+
+    const position = this.playerBalloon.getPosition();
+    if (position.z < 1 && position.z > -1) {
+      if (position.x > this.track.middleX - this.track.width && position.x < this.track.middleX + this.track.width) {
+        this.checkpoint = true;
+      } else if (this.checkpoint) {
+        this.checkpoint = false;
+        this.currLap++;
+        this.billBoards.forEach((billboard) => billboard.incrementLap());
+
+        if (this.currLap === this.numLaps) {
+          this.changeState(state.END);
+          return;
+        } 
+      }
+    }
 
     this.billBoards.forEach((billboard) => {
       billboard.update()
@@ -619,10 +718,12 @@ class MyContents {
   #shootFireworks() {
     this.fireworksObj.forEach((fireworkObj) => {
       if (Math.random() < 0.05) {
-        this.fireworks.push(new MyFirework(this.app, fireworkObj.position));
+        const pos = new THREE.Vector3();
+        fireworkObj.getWorldPosition(pos);
+
+        this.fireworks.push(new MyFirework(this.app, pos));
       }
     });
-
 
     for (let i = 0; i < this.fireworks.length; i++) {
       if (this.fireworks[i].done) {
@@ -636,7 +737,9 @@ class MyContents {
 
   #shootSparkles() {
     this.sparklesObj.forEach((sparkleObj) => {
-      this.sparkles.push(new MySparkle(this.app, sparkleObj.position));
+      const pos = new THREE.Vector3();
+      sparkleObj.getWorldPosition(pos);
+      this.sparkles.push(new MySparkle(this.app, pos));
     });
 
     for (let i = 0; i < this.sparkles.length; i++) {
