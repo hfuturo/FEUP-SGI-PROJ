@@ -44,6 +44,26 @@ class MyBallon {
         return this.shadow.position;
     }
 
+    getTopSpherePosition() {
+        const position = new THREE.Vector3();
+        this.topSphere.getWorldPosition(position);
+
+        return {
+            topPosition: position,
+            topRadius: this.collisionTopRadius
+        };
+    }
+
+    getBottomSpherePosition() {
+        const position = new THREE.Vector3();
+        this.bottomSphere.getWorldPosition(position);
+
+        return {
+            bottomPosition: position,
+            bottomRadius: this.collisionBottomRadius
+        };
+    }
+
     #initCollisionObjects() {
         // set opacity to 1 to see geometries
         this.collisionMaterial = new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 0 });
@@ -259,7 +279,7 @@ class MyBallon {
     }
 
     handleCollision(object) {
-        if (object instanceof MyObstacle) {
+        if (object instanceof MyObstacle || object instanceof MyBallon) {
             this.vouchers === 0 ? this.freeze() : this.vouchers--;
         }
         else if (object instanceof MyPowerUp) {
@@ -305,6 +325,22 @@ class MyBallon {
             if (this.#checkBoxCollision(this.bottomSphere, this.collisionBottomRadius, objPosition, objWidth, objHeight, objDepth))
                 return true;
         }
+        else if (object instanceof MyBallon) {
+            const {topPosition, topRadius} = object.getTopSpherePosition();
+            const {bottomPosition, bottomRadius} = object.getBottomSpherePosition();
+
+            if (this.#checkSphereCollision(this.topSphere, this.collisionTopRadius, topPosition, topRadius))
+                return true;
+
+            if (this.#checkSphereCollision(this.bottomSphere, this.collisionBottomRadius, topPosition, topRadius))
+                return true;
+
+            if (this.#checkSphereCollision(this.topSphere, this.collisionTopRadius, bottomPosition, bottomRadius))
+                return true;
+
+            if (this.#checkSphereCollision(this.bottomSphere, this.collisionBottomRadius, bottomPosition, bottomRadius))
+                return true;
+        }
 
         return false;
     }
@@ -317,9 +353,9 @@ class MyBallon {
         const position = new THREE.Vector3();
         thisSphere.getWorldPosition(position);
 
-        const diffX = Math.pow(objPosition[0] - position.x, 2);
-        const diffY = Math.pow(objPosition[1] - position.y, 2);
-        const diffZ = Math.pow(objPosition[2] - position.z, 2);
+        const diffX = Math.pow((Array.isArray(objPosition) ? objPosition[0] : objPosition.x) - position.x, 2);
+        const diffY = Math.pow((Array.isArray(objPosition) ? objPosition[1] : objPosition.y) - position.y, 2);
+        const diffZ = Math.pow((Array.isArray(objPosition) ? objPosition[2] : objPosition.z) - position.z, 2);
 
         return Math.sqrt(diffX + diffY + diffZ) <= (objRadius + thisRadius);
     }

@@ -264,12 +264,12 @@ class MyContents {
 
       this.acceptingInputs = true;
       this.pause = false;
-      this.checkpoint = true;
+      this.checkpoint = false;
       this.currLap = 0;
       this.playerBalloon.height = 0;
   
       this.playerBalloon.setPosition(this.startPos);
-      this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y, this.startPos.z));
+      this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y + 10, this.startPos.z));
       this.balloonThirdPerson();
     }
     else if (newState === state.END) {
@@ -713,6 +713,10 @@ class MyContents {
       this.billBoards.forEach((billboard) => billboard.updateVoucher(1));
       this.playerBalloon.handleCollision(powerUp);
     });
+
+    if (this.playerBalloon.collides(this.opponentBalloon)) {
+      this.playerBalloon.handleCollision(this.opponentBalloon);
+    }
   }
 
   #shootFireworks() {
