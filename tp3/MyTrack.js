@@ -10,7 +10,6 @@ class MyTrack {
 
         this.curve = null;
 
-        this.scale = 8;
         this.width = 20;
 
         const texture = new THREE.TextureLoader().load("./textures/uvmapping.jpg");
@@ -35,7 +34,7 @@ class MyTrack {
         });
     }
 
-    #createTrack(scale=this.scale, width=this.width) {
+    #createTrack(width=20) {
         const points = [
             new THREE.Vector3(0, 0, 0),
             new THREE.Vector3(0, 0, 0.1),
@@ -69,9 +68,9 @@ class MyTrack {
             new THREE.Vector3(0, 0, -4),
             new THREE.Vector3(0, 0, -2),
             new THREE.Vector3(0, 0, -0.1)
-        ].map(point => point.multiplyScalar(scale));
+        ].map(point => point.multiplyScalar(8));
 
-        this.middleX = 6 * scale;
+        this.middleX = 6 * 8;
 
         this.curve = new THREE.CatmullRomCurve3(points);
         const geometry = new THREE.TubeGeometry(this.curve, 100, width, 3, true);
@@ -81,9 +80,9 @@ class MyTrack {
         return mesh;
     }
 
-    updateTrack(scale=this.scale, width=this.width) {
+    updateTrack(width) {
         this.app.scene.remove(this.representation);
-        this.representation = this.#createTrack(scale, width);
+        this.representation = this.#createTrack(width);
         this.app.scene.add(this.representation);
     }
 

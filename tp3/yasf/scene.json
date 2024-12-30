@@ -455,7 +455,7 @@
             "right_parking_lot": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": -25}}
+                    {"type": "translate", "amount": {"x": -40, "y": -0.25, "z": -25}}
                 ],
                 "children": {
                     "nodesList": [
@@ -466,7 +466,7 @@
             "left_parking_lot": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": 25}}
+                    {"type": "translate", "amount": {"x": -40, "y": -0.25, "z": 25}}
                 ],
                 "children": {
                     "nodesList": [

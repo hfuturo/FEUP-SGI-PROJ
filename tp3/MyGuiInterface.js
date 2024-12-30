@@ -35,7 +35,6 @@ class MyGuiInterface  {
      */
     init() {
         this.general = this.datgui.addFolder('General')
-        this.track = this.datgui.addFolder('Track')
 
         const wind = this.datgui.addFolder('Wind')
         wind.add(this, 'homogeneous').name('Homogeneous')
@@ -78,9 +77,6 @@ class MyGuiInterface  {
     }
 
     finish() {
-        this.track.add(this.contents.track, 'scale', 5, 20, 1).name('Scale').onChange((val) => this.contents.track.updateTrack(val, undefined))
-        this.track.add(this.contents.track, 'width', 1, 30, 5).name('Width').onChange((val) => this.contents.track.updateTrack(undefined, val))
-
         this.cameraController = this.general.add(this.app, 'activeCameraName', Object.keys(this.app.cameras) ).name("Camera").onChange((val) => {
             this.app.setActiveCamera(val);
             if (val === 'balloon') {
@@ -95,6 +91,8 @@ class MyGuiInterface  {
         });
 
         this.general.add(this.contents, 'penalty', 0, 10000).name('Penalty').onChange((val) => this.contents.updatePenalty(val));
+
+        this.general.add(this.contents.track, 'width', 1, 30, 5).name('Track Width').onChange((val) => this.contents.track.updateTrack(val))
     }
 
     update() {
