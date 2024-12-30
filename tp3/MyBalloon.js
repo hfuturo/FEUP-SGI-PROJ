@@ -406,10 +406,17 @@ class MyBallon {
     }
 
     freezeAndReplace(point, penalty=2000) {
-        this.freezed = true;
-        
         this.shadow.position.set(point.x, this.shadowY, point.z);
         this.group.position.set(point.x, this.group.position.y, point.z);
+        
+        if (this.vouchers > 0) {
+            this.vouchers--;
+            return;
+        }
+        else {
+            this.freezed = true;
+        }
+        
 
         // releases balloon after 2 seconds
         setTimeout(() => {
