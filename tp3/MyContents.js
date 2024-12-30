@@ -235,20 +235,6 @@ class MyContents {
     }
 
     document.addEventListener('keydown', this.keyHandler.bind(this));
-
-    // add a point light on top of the model
-    const pointLight = new THREE.PointLight(0xffffff, 500, 0);
-    pointLight.position.set(0, 20, 0);
-    this.app.scene.add(pointLight);
-
-    // add a point light helper for the previous point light
-    const sphereSize = 0.5;
-    const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize);
-    this.app.scene.add(pointLightHelper);
-
-    // add an ambient light
-    const ambientLight = new THREE.AmbientLight(0x555555);
-    this.app.scene.add(ambientLight);
   }
 
   changeState(newState) {
@@ -266,9 +252,9 @@ class MyContents {
       this.acceptingInputs = false;
       this.playerBalloon = undefined;
       this.opponentBalloon = undefined;
+      this.startPos = undefined;
       this.balloonCamera = '3';
       this.numLaps = 1;
-      this.currLap = 0;
       this.username = '';
     }
     else if (newState === state.PLAYING) {
@@ -278,7 +264,9 @@ class MyContents {
 
       this.acceptingInputs = true;
       this.pause = false;
-      this.checkpoint = true;
+      this.checkpoint = false;
+      this.currLap = 0;
+      this.playerBalloon.height = 0;
   
       this.playerBalloon.setPosition(this.startPos);
       this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y, this.startPos.z));
