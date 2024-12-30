@@ -2,9 +2,10 @@ import * as THREE from 'three';
 
 class MySparkle {
 
-    constructor(app, position) {
+    constructor(app, position, size=0.5) {
         this.app = app;
         this.position = position;
+        this.size = size;
 
         this.done = false;
         this.dest = [];
@@ -15,7 +16,7 @@ class MySparkle {
         this.points = null;
 
         this.material = new THREE.PointsMaterial({
-            size: 0.1,
+            size: this.size,
             color: 0xFFFFFF,
             opacity: 1,
             vertexColors: true,
@@ -50,7 +51,7 @@ class MySparkle {
         this.app.scene.add(this.points);
     }
 
-    #reset() {
+    reset() {
         this.app.scene.remove(this.points);
         this.dest = [];
         this.vertices = null;
@@ -76,7 +77,7 @@ class MySparkle {
             verticesAtribute.needsUpdate = true;
             
             if(Math.ceil(vertices[1]) > this.dest[1] * 0.95) {
-                this.#reset();
+                this.reset();
                 this.done = true;
             }
         }

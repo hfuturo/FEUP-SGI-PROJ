@@ -2,9 +2,12 @@ import * as THREE from 'three';
 
 class MyFirework {
 
-    constructor(app, position) {
+    constructor(app, position, size=0.5) {
         this.app = app;
         this.position = position;
+        this.size = size;
+
+        this.color = this.#getRandomColor();
 
         this.done = false;
         this.dest = [];
@@ -15,23 +18,27 @@ class MyFirework {
         this.points = null;
         
         this.material = new THREE.PointsMaterial({
-            size: 0.1,
+            size: this.size,
             color: 0xffffff,
             opacity: 1,
             vertexColors: true,
             transparent: true
         });
         
-        this.height = 20;
+        this.height = 70;
         this.speed = 60;
 
         this.#launch();
     }
 
-    #launch() {
+    #getRandomColor() {
         const color = new THREE.Color();
-        color.setHSL( THREE.MathUtils.randFloat(0.1, 0.9), 1, 0.9);
-        const colors = [color.r, color.g, color.b];
+        color.setHSL(THREE.MathUtils.randFloat(0.1, 0.9), THREE.MathUtils.randFloat(0.5, 0.9), THREE.MathUtils.randFloat(0.5, 0.9));
+        return color;
+    }
+
+    #launch() {
+        const colors = [this.color.r, this.color.g, this.color.b];
 
         const x = THREE.MathUtils.randFloat(-5, 5);
         const y = THREE.MathUtils.randFloat(this.height * 0.9, this.height * 1.1);
@@ -51,12 +58,23 @@ class MyFirework {
     }
 
     explode(origin, n, rangeBegin, rangeEnd) {
-        const color = new THREE.Color();
+        let mixedColors = false;
+        if (Math.random() < 0.05) {
+            mixedColors = true;
+        }
+        
         const range = rangeEnd - rangeBegin;
         
         for (let i = 0; i < n; i++) {
-            color.setHSL( THREE.MathUtils.randFloat(0.1, 0.9), 1, 0.9);
-            const colors = [color.r, color.g, color.b];
+            let colors;
+            
+            if (mixedColors) {
+                const color = this.#getRandomColor();
+                colors = [color.r, color.g, color.b];
+            }
+            else {
+                colors = [this.color.r, this.color.g, this.color.b];
+            }
     
             const x = THREE.MathUtils.randFloat(-range, range);
             const y = THREE.MathUtils.randFloat(-range, range);
@@ -103,7 +121,7 @@ class MyFirework {
                 //is YY coordinate higher close to destination YY? 
                 if(Math.ceil(vertices[1]) > (this.dest[1] * 0.95)) {
                     // add n particles departing from the location at (vertices[0], vertices[1], vertices[2])
-                    this.explode(vertices, 80, this.height * 0.05, this.height * 0.8);
+                    this.explode(vertices, 80, this.height * 0.05, this.height * 0.5);
                     return;
                 }
             }

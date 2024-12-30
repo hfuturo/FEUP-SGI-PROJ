@@ -208,6 +208,9 @@
             },
             "fireworks": {
                 "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -10}}
+                ],
                 "children": {
                     "nodesList": [
                         "left_firework",
@@ -218,7 +221,7 @@
             "right_firework": {
                 "type": "node",
                 "transforms":[
-                    {"type": "translate", "amount": {"x": 15, "y": 0, "z": 0}}
+                    {"type": "translate", "amount": {"x": 30, "y": 0, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [
@@ -229,7 +232,7 @@
             "left_firework": {
                 "type": "node",
                 "transforms":[
-                    {"type": "translate", "amount": {"x": -15, "y": 0, "z": 0}}
+                    {"type": "translate", "amount": {"x": -30, "y": 0, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [

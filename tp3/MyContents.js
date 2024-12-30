@@ -264,7 +264,7 @@ class MyContents {
 
       this.acceptingInputs = true;
       this.pause = false;
-      this.checkpoint = false;
+      this.checkpoint = true;
       this.currLap = 0;
       this.playerBalloon.height = 0;
   
@@ -520,6 +520,12 @@ class MyContents {
       else if (name === 'exit') {
         this.changeState(state.START);
       }
+
+      this.fireworks.forEach((firework) => firework.reset());
+      this.sparkles.forEach((sparkle) => sparkle.reset());
+
+      this.fireworks = [];
+      this.sparkles = [];
     }
   }
 
