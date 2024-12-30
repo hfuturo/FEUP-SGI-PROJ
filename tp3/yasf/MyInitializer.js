@@ -316,7 +316,6 @@ class MyInitializer {
 
             light.target.position.set(...lightSpec.target);
 
-            const helper = new THREE.DirectionalLightHelper(light, 3);
         }
 
         light.position.set(...lightSpec.position);

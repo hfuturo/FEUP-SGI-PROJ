@@ -16,9 +16,21 @@ class MyBallon {
         this.balloonTransformations = balloonTransformations;
 
         this.height = 0;
+        this.representation = new THREE.LOD();
+
         this.group = new THREE.Group();
+        const billboard = new THREE.Sprite(new THREE.SpriteMaterial({ 
+            map: new THREE.TextureLoader().load(`textures/balloons/${this.name}.png`),
+            color: 0xffffff
+        }));
+        billboard.scale.set(9, 9, 9);
+        billboard.position.y = 4;
+
+        this.representation.addLevel(this.group, 0);
+        this.representation.addLevel(billboard, 40);
 
         this.ySize = 9;
+        this.basketHeight = this.balloonTransformations.basket;
         
         this.shadowY = 0.3;
         this.shadow = new THREE.Mesh(
@@ -28,7 +40,7 @@ class MyBallon {
         this.shadow.rotation.set(-90 * Math.PI / 180, 0, 0);
 
         this.animationPlaying = false;
-        this.balloonAnimation = new MyAnimation(this.group);
+        this.balloonAnimation = new MyAnimation(this.representation);
         this.shadowAnimation = new MyAnimation(this.shadow);
 
         this.vouchers = 0;
@@ -169,7 +181,7 @@ class MyBallon {
         this.group.add(this.middleSphere);
         this.group.add(this.middleBottomSphere);
         this.group.add(this.bottomSphere);
-        this.app.scene.add(this.group);
+        this.app.scene.add(this.representation);
         this.app.scene.add(this.shadow);
     }
 
@@ -181,7 +193,7 @@ class MyBallon {
         // 0.5 -> half wind in current height and half wind in new height
         // 1 -> max wind in new height
         const times = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
-        const balloonPositions = [...this.group.position];
+        const balloonPositions = [...this.representation.position];
         const shadowPositions = [...this.shadow.position];
 
         // multiply offsets by 6 because we are only setting 10 positions but we have 60 fps
@@ -225,7 +237,7 @@ class MyBallon {
         // 0.5 -> half wind in current height and half wind in new height
         // 1 -> max wind in new height
         const times = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
-        const balloonPositions = [...this.group.position];
+        const balloonPositions = [...this.representation.position];
         const shadowPositions = [...this.shadow.position];
 
         // multiply offsets by 6 because we are only setting 10 positions but we have 60 fps
@@ -264,19 +276,19 @@ class MyBallon {
         if (this.freezed) return;
 
         if (this.height === 1) {
-            this.group.position.z -= this.wind.north/50;
+            this.representation.position.z -= this.wind.north/50;
             this.shadow.position.z -= this.wind.north/50;
         }
         else if (this.height === 2) {
-            this.group.position.z += this.wind.south/50;
+            this.representation.position.z += this.wind.south/50;
             this.shadow.position.z += this.wind.south/50;
         }
         else if (this.height === 3) {
-            this.group.position.x += this.wind.east/50;
+            this.representation.position.x += this.wind.east/50;
             this.shadow.position.x += this.wind.east/50;
         }
         else if (this.height === 4) {
-            this.group.position.x -= this.wind.west/50;
+            this.representation.position.x -= this.wind.west/50;
             this.shadow.position.x -= this.wind.west/50;
         }
 
@@ -392,11 +404,11 @@ class MyBallon {
     }
     
     getPosition() {
-        return this.group.position;
+        return this.representation.position;
     }
 
     setPosition(position) {
-        this.group.position.set(position.x, position.y, position.z);
+        this.representation.position.set(position.x, position.y, position.z);
         this.shadow.position.set(position.x, this.shadowY, position.z);
     }
 
@@ -413,7 +425,7 @@ class MyBallon {
 
     freezeAndReplace(point) {
         this.shadow.position.set(point.x, this.shadowY, point.z);
-        this.group.position.set(point.x, this.group.position.y, point.z);
+        this.representation.position.set(point.x, this.representation.position.y, point.z);
         
         if (this.vouchers > 0) {
             this.vouchers--;

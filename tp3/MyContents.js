@@ -208,14 +208,14 @@ class MyContents {
 
       const playerBalloon = [
         bb.createText('Player', -2.75, 4, 1.5, 0xffffff),
-        bb.createPicture(`textures/balloons/${this.playerBalloon.name}.jpg`, 0, -1.25, 7),
+        bb.createPicture(`textures/balloons/${this.playerBalloon.name}.png`, 0, -1.25, 7),
       ]
       const playerColor = this.currLap === this.numLaps ? 0xffd700 : 0xff0000;
       bb.addButton('player', -12, 23, 9, 12, playerBalloon, playerColor);
 
       const opponentBalloon = [
         bb.createText('PC', -0.5, 4, 1.5, 0xffffff),
-        bb.createPicture(`textures/balloons/${this.opponentBalloon.name}.jpg`, 0, -1.25, 7),
+        bb.createPicture(`textures/balloons/${this.opponentBalloon.name}.png`, 0, -1.25, 7),
       ]
       const opponentColor = this.currLap === this.numLaps ? 0xff0000 : 0xffd700;
       bb.addButton('pc', -2, 23, 9, 12, opponentBalloon, opponentColor);
@@ -278,7 +278,7 @@ class MyContents {
       this.playerBalloon.height = 0;
   
       this.playerBalloon.setPosition(this.startPos);
-      this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y + 10, this.startPos.z));
+      this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y, this.startPos.z));
       this.balloonThirdPerson();
 
       document.getElementById('hud').style.visibility = 'visible';
@@ -389,7 +389,7 @@ class MyContents {
             billboard.removeButtonElement(name)
           }
 
-          const picture = billboard.createPicture(`./textures/balloons/${ballon.name}.jpg`, 0, -1.25, 7);
+          const picture = billboard.createPicture(`./textures/balloons/${ballon.name}.png`, 0, -1.25, 7);
           billboard.addButtonElement(name, picture);
         });
 
@@ -618,7 +618,7 @@ class MyContents {
 
     this.app.setupMovingCamera(0.1);
     const pos = this.playerBalloon.getPosition();
-    this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + 0.75, pos.z);
+    this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + this.playerBalloon.basketHeight, pos.z);
     this.app.updateTarget();
   }
 
@@ -722,7 +722,7 @@ class MyContents {
     if (this.app.activeCameraName === 'balloon') {
       const pos = this.playerBalloon.getPosition();
       if (this.balloonCamera === '1') {
-        this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + 0.75, pos.z);
+        this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + this.playerBalloon.basketHeight, pos.z);
         this.app.updateTarget();
       } else if (this.balloonCamera === '3') {
         this.app.lookAt["balloon"] = new THREE.Vector3(pos.x, pos.y + 5, pos.z);

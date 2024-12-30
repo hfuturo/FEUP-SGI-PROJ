@@ -23,7 +23,7 @@ class MyParkingLot {
             const x = this.position.x + Math.cos(i * angle) * 12.5;
             const z = this.position.z + Math.sin(i * angle) * 12.5;
 
-            this.balloons[i].group.position.set(x, this.position.y, z);
+            this.balloons[i].representation.position.set(x, this.position.y, z);
             this.balloons[i].display();
         }
     }
@@ -32,18 +32,18 @@ class MyParkingLot {
         const angle = 2 * Math.PI / this.balloons.length;
 
         for (let i = 0; i < this.balloons.length; i++) {
-            if (this.balloons[i].group === balloon.group) {
+            if (this.balloons[i].representation === balloon.representation) {
                 const x = this.position.x + Math.cos(i * angle) * 12.5;
                 const z = this.position.z + Math.sin(i * angle) * 12.5;
 
-                this.balloons[i].group.position.set(x, this.position.y, z);
+                this.balloons[i].representation.position.set(x, this.position.y, z);
                 break;
             }
         }
     }
 
     initPicker() {
-        this.picker = new MyPicker(this.app, this.balloons.map((balloon) => balloon.group), this.pickingHelper.bind(this));
+        this.picker = new MyPicker(this.app, this.balloons.map((balloon) => balloon.representation), this.pickingHelper.bind(this));
         this.highlight = null;
     }
 
@@ -79,7 +79,7 @@ class MyParkingLot {
         if (intersects.length > 0) {
             const object = intersects[0].object;
             let parentObj = object;
-            while (parentObj.parent.type === "Mesh" || parentObj.parent.type === "Group") {
+            while (parentObj.parent.type === "Mesh" || parentObj.parent.type === "Group" || parentObj.parent.type === "LOD") {
                 parentObj = parentObj.parent;
             }
 
@@ -96,7 +96,7 @@ class MyParkingLot {
 
                 if (this.callback) {
                     for (let i = 0; i < this.balloons.length; i++) {
-                        if (this.balloons[i].group === parentObj) {
+                        if (this.balloons[i].representation === parentObj) {
                             this.callback(this.balloons[i]);
                             break;
                         }
