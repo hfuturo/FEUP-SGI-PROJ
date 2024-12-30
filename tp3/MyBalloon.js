@@ -37,7 +37,13 @@ class MyBallon {
         // used to store obstacles temporarily that collided with balloon
         this.collidedObjects = [];
 
+        this.penalty = 2000;
+
         this.#initCollisionObjects();
+    }
+
+    setPenalty(penalty) {
+        this.penalty = penalty;
     }
 
     getShadowPosition() {
@@ -398,14 +404,14 @@ class MyBallon {
         return this.vouchers;
     }
 
-    freeze(penalty=2000) {
+    freeze() {
         this.freezed = true;
 
         // releases balloon after 2 seconds penalty
-        setTimeout(() => this.freezed = false, penalty);
+        setTimeout(() => this.freezed = false, this.penalty);
     }
 
-    freezeAndReplace(point, penalty=2000) {
+    freezeAndReplace(point) {
         this.shadow.position.set(point.x, this.shadowY, point.z);
         this.group.position.set(point.x, this.group.position.y, point.z);
         
@@ -419,16 +425,14 @@ class MyBallon {
         
 
         // releases balloon after 2 seconds
-        setTimeout(() => {
-            this.freezed = false;
-        }, penalty);
+        setTimeout(() => this.freezed = false, this.penalty);
     }   
 
     #tagObject(object) {
         this.collidedObjects.push(object);
     
         // removes object after 4s (2s penalty + 2s so ballon is not affected by the same obstacle twice in a row)
-        setTimeout(() => this.#removeTaggedObject(object), 4000);
+        setTimeout(() => this.#removeTaggedObject(object), 2000 + this.penalty);
     }
     
     #removeTaggedObject(object) {

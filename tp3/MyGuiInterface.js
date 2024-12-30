@@ -93,6 +93,8 @@ class MyGuiInterface  {
                 this.app.setupFixedCamera();
             }
         });
+
+        this.general.add(this.contents, 'penalty', 0, 10000).name('Penalty').onChange((val) => this.contents.updatePenalty(val));
     }
 
     update() {

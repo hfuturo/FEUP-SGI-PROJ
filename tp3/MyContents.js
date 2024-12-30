@@ -54,6 +54,14 @@ class MyContents {
 
     this.billBoards = [];
     this.taggedObjects = [];
+
+    this.penalty = 2000;
+  }
+
+  updatePenalty(val) {
+    this.penalty = val;
+    this.playerBalloon.setPenalty(this.penalty);
+    this.opponentBalloon.setPenalty(this.penalty);
   }
 
   onAfterSceneLoadedAndBeforeRender() {
@@ -704,7 +712,7 @@ class MyContents {
     const {closestPoint, offTrack} = this.track.isBalloonOffTrack(this.playerBalloon.getShadowPosition());
 
     if (offTrack) {
-      this.playerBalloon.freezeAndReplace(closestPoint);
+      this.playerBalloon.freezeAndReplace(closestPoint, this.penalty);
     }
   }
 
