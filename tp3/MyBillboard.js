@@ -53,7 +53,7 @@ class MyBillboard {
             wind.rotation.z = -Math.PI/2;
         else wind.rotation.z = Math.PI/2;
 
-        this.layerObj = [this.createPicture('textures/balloon.jpg', -18, 22, 2.5), wind];
+        this.layerObj = [this.createPicture('textures/balloon.png', -18, 22, 2.5), wind];
         this.layerObj.forEach((obj) => this.app.scene.add(obj));
 
         this.balloonAnimation = new MyAnimation(this.layerObj[0]);
@@ -61,6 +61,8 @@ class MyBillboard {
     }
 
     startLaps(laps, x, y, size) {
+        this.addText('Lap', x + 0.75, y + 2, 2);
+
         this.lap = 0;
         this.lapObj = [this.createText(`${this.lap}/${laps}`, x, y, size), laps, x, y, size];
 
@@ -326,6 +328,15 @@ class MyBillboard {
             ...this.layerObj[0].position,
             this.layerObj[0].position.x, this.layerObj[0].position.y + 3.5*update, this.layerObj[0].position.z
         ];
+
+        const htmlOptions = { duration: 1000, fill: 'forwards' };
+        document.getElementById('balloon').animate(
+            [
+                { transform: `translateY(${this.layer*-110}px)` },
+                { transform: `translateY(${this.layer*-110 + update * -110}px)` }
+            ],
+            htmlOptions
+        )
         
         while(this.balloonAnimation.isPlaying() || this.windAnimation.isPlaying()) {
             // sometimes there are some delays and the animations are not finished
@@ -333,19 +344,55 @@ class MyBillboard {
         this.balloonAnimation.createAnimation([0, 1], positions);
 
         if (this.layer === 0 || (this.layer === 1 && update === -1)) {
-            const initial = [0, 1, 1], final = [1, 1, 1];
+            let initial = [0, 1, 1], final = [1, 1, 1];
             this.windAnimation.createAnimation([0, 1], update === 1 ? [...initial, ...final] : [...final, ...initial], 'scale')
+
+            initial = {transform: 'scaleX(0)', visibility: 'hidden'}, final = {transform: 'scaleX(1)', visibility: 'visible'};
+            document.getElementById('wind').animate(
+                [
+                    update === 1 ? initial : final,
+                    update === 1 ? final : initial
+                ],
+                htmlOptions
+            )
         } else if ((this.layer === 1 && update === 1) || (this.layer === 2 && update === -1)) {
-            const initial = [1, 1, 1], final = [-1, 1, 1];
+            let initial = [1, 1, 1], final = [-1, 1, 1];
             this.windAnimation.createAnimation([0, 1], update === 1 ? [...initial, ...final] : [...final, ...initial], 'scale')
+
+            initial = {transform: 'scaleX(1)'}, final = {transform: 'scaleX(-1)'};
+            document.getElementById('wind').animate(
+                [
+                    update === 1 ? initial : final,
+                    update === 1 ? final : initial
+                ],
+                htmlOptions
+            )
         } else if ((this.layer === 2 && update === 1) || (this.layer === 3 && update === -1)) {
-            const initial = this.layerObj[1].rotation
-            const final = initial.clone();
+            let initial = this.layerObj[1].rotation
+            let final = initial.clone();
             final.z += update === 1 ? Math.PI/2 : -Math.PI/2;
             this.windAnimation.createAnimation([0, 1], [...initial.toArray().slice(0, 3), ...final.toArray().slice(0,3)], 'rotation')
+
+            initial = {transform: 'rotate(180deg)'}, final = {transform: 'rotate(90deg)'};
+            document.getElementById('wind').animate(
+                [
+                    update === 1 ? initial : final,
+                    update === 1 ? final : initial
+                ],
+                htmlOptions
+            )
         } else if ((this.layer === 3 && update === 1) || (this.layer === 4 && update === -1)) {
-            const initial = [-1, 1, 1], final = [1, 1, 1];
+            let initial = [-1, 1, 1], final = [1, 1, 1];
             this.windAnimation.createAnimation([0, 1], update === 1 ? [...initial, ...final] : [...final, ...initial], 'scale')
+
+            initial = {transform: 'scaleY(1) rotate(90deg)'}, final = {transform: 'scaleY(-1) rotate(90deg)'};
+            document.getElementById('wind').animate(
+                [
+                    update === 1 ? initial : final,
+                    update === 1 ? final : initial
+                ],
+                htmlOptions
+            )
         }
 
         this.layer += update;

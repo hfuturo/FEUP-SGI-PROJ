@@ -2,10 +2,11 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>SGI Demo Flat Curve</title>
+    <title>SGI</title>
 
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
 
     <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
  
@@ -23,6 +24,22 @@
 <body>
     <div id="canvas"></div>
     <div id="camera"></div>
+    <div id="hud">
+      <img src="textures/height.png" id="height"/>
+      <img src="textures/balloon.png" id="balloon"/>
+      <img src="textures/wind.png" id="wind"/>
+      <p id="timer"></p>
+      <div id="laps">
+        <p>LAP</p>
+        <p></p>
+      </div>
+      <div id="vouchers">
+        <img src="textures/voucher.png"/>
+        <p></p>
+      </div>
+      <p id="pause">GAME PAUSED</p>
+
+    </div>
     <script type="module" src="main.js"></script>
 </body>
 

@@ -171,7 +171,7 @@ class MyContents {
     billboardObj.children.forEach((billboard) => {
       const bb = new MyBillboard(this.app, billboard.position, 3.2, billboard.rotation);
       bb.startTimer(-10, 36, 4);
-      bb.startLaps(this.numLaps, 15, 26, 3);
+      bb.startLaps(this.numLaps, 15, 23, 3);
       bb.startLayer(-21, 29);
       bb.startVouchers(18, 30, 3);
       bb.startBalloonTracking(0, 25, 18);
@@ -271,6 +271,9 @@ class MyContents {
       this.playerBalloon.setPosition(this.startPos);
       this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y + 10, this.startPos.z));
       this.balloonThirdPerson();
+
+      document.getElementById('hud').style.visibility = 'visible';
+      document.getElementById('laps').getElementsByTagName('p')[1].innerText = `0/${this.numLaps}`;
     }
     else if (newState === state.END) {
       this.timer = this.billBoards[0].stopTimer();
@@ -587,6 +590,10 @@ class MyContents {
       case ' ':
         this.pause = !this.pause;
         this.billBoards.forEach((billboard) => billboard.pauseTimer());
+        document.getElementById('pause').style.visibility = this.pause ? 'visible' : 'hidden';
+        break;
+      case 'h':
+        document.getElementById('hud').style.visibility = document.getElementById('hud').style.visibility === 'visible' ? 'hidden' : 'visible';
         break;
       default:
         break;
@@ -650,6 +657,8 @@ class MyContents {
   updatePlaying() {
     this.playerBalloon.update();
 
+    document.getElementById('timer').innerText = this.billBoards[0].displayTime;
+
     const position = this.playerBalloon.getPosition();
     if (position.z < 1 && position.z > -1) {
       if (position.x > this.track.middleX - this.track.width && position.x < this.track.middleX + this.track.width) {
@@ -658,6 +667,8 @@ class MyContents {
         this.checkpoint = false;
         this.currLap++;
         this.billBoards.forEach((billboard) => billboard.incrementLap());
+
+        document.getElementById('laps').getElementsByTagName('p')[1].innerText = `${this.currLap}/${this.numLaps}`;
 
         if (this.currLap === this.numLaps) {
           this.changeState(state.END);
@@ -702,6 +713,7 @@ class MyContents {
 
       if (this.playerBalloon.getVouchers() > 0) {
         this.billBoards.forEach((billboard) => billboard.updateVoucher(-1));
+        document.getElementById('vouchers').getElementsByTagName('p')[0].innerText = this.playerBalloon.getVouchers() - 1;
       }
 
       this.playerBalloon.handleCollision(obstacle);
@@ -711,6 +723,7 @@ class MyContents {
       if (!this.playerBalloon.collides(powerUp) || this.playerBalloon.collidedWith(powerUp)) return;
 
       this.billBoards.forEach((billboard) => billboard.updateVoucher(1));
+      document.getElementById('vouchers').getElementsByTagName('p')[0].innerText = this.playerBalloon.getVouchers() + 1;
       this.playerBalloon.handleCollision(powerUp);
     });
 

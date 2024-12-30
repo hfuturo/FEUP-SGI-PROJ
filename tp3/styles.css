@@ -2,6 +2,7 @@
 
 body { 
     margin: 0; 
+    overflow: hidden;
 }
 
 #canvas { 
@@ -19,4 +20,100 @@ body {
     font-family: 'Courier New', Courier, monospace;
     font-size: 20px; 
     z-index: 1000; 
+}
+
+#hud { 
+    position: absolute;
+    left: 20px;
+    top: 80px;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    font-family: 'Audiowide';
+    visibility: hidden;
+}
+
+#hud #height {
+    height: 500px;
+}
+
+#hud #balloon {
+    position: relative;
+    bottom: -10px;
+    left: 10px;
+    height: 80px;
+}
+
+#hud #wind {
+    position: absolute;
+    height: 80px;
+    left: 10px;
+    bottom: 120px;
+    rotate: -90deg;
+    visibility: hidden;
+}
+
+#hud #timer {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 60px;
+    font-weight: bold;
+}
+
+#hud #laps {
+    position: absolute;
+    bottom: 80px;
+    right: 50px;
+    font-size: 70px;
+}
+
+#hud #laps p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#hud #laps p:first-child {
+    font-size: 40px;
+}
+
+#hud #vouchers {
+    position: absolute;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    bottom: 200px;
+    right: 80px
+}
+
+#hud #vouchers img {
+    width: 100px;
+    display: inline-block;
+}
+
+#hud #vouchers p {
+    align-self: center;
+    font-size: 60px;
+}
+
+#hud #pause {
+    position: absolute;
+    top: -160px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 80px;
+    font-weight: bold;
+    animation: blink 1s infinite;
+    visibility: hidden;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
 }
