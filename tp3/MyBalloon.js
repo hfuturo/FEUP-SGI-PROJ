@@ -148,7 +148,7 @@ class MyBallon {
     }
 
     up() {
-        if (this.height === 4 || this.balloonAnimation.isPlaying() || this.shadowAnimation.isPlaying()) return false;
+        if (this.freezed || this.height === 4 || this.balloonAnimation.isPlaying() || this.shadowAnimation.isPlaying()) return false;
 
         const yDisplacement = this.ySize/10;
         // 0 -> max wind in current height
@@ -192,7 +192,7 @@ class MyBallon {
     }
 
     down() {
-        if (this.height === 0 || this.balloonAnimation.isPlaying() || this.shadowAnimation.isPlaying()) return false;
+        if (this.freezed || this.height === 0 || this.balloonAnimation.isPlaying() || this.shadowAnimation.isPlaying()) return false;
         
         const yDisplacement = this.ySize/10;
         // 0 -> max wind in current height
