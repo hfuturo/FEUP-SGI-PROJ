@@ -115,6 +115,8 @@ class MyApp  {
     }
 
     setupMovingCamera(distance) {
+        if (!this.controls) return;
+
         this.controls.maxDistance = distance;
         this.controls.minDistance = distance;
         if (distance > 1) {
@@ -124,13 +126,21 @@ class MyApp  {
             this.controls.maxPolarAngle = Math.PI/2 + 0.25;
             this.controls.minPolarAngle = Math.PI/2 - 0.25;
         }
+
+        this.controls.object = this.activeCamera;
+        this.updateTarget();
     }
 
     setupFixedCamera() {
+        if (!this.controls) return;
+        
         this.controls.maxPolarAngle = Math.PI;
         this.controls.minPolarAngle = 0;
         this.controls.minDistance = 0;
         this.controls.maxDistance = Infinity;
+
+        this.controls.object = this.activeCamera;
+        this.updateTarget();
     }
 
     /**

@@ -256,6 +256,7 @@ class MyContents {
 
     if (newState === state.START) {
       this.app.setActiveCamera("billboard");
+      this.app.setupFixedCamera();
 
       if (this.playerBalloon) { // place the balloon back in the parking lot
         this.parkingLot1.returnBalloon(this.playerBalloon);
@@ -394,6 +395,7 @@ class MyContents {
         if (name === 'player') {
           this.playerBalloon = ballon;
           this.app.setActiveCamera("grid_selection")
+          this.app.setupFixedCamera();
 
           const pos1 = MyBillboard.createText('A', 10, 0xffffff);
           pos1.rotation.x = -Math.PI / 2;
@@ -445,6 +447,7 @@ class MyContents {
 
                 picker.dispose();
                 this.app.setActiveCamera("billboard");
+                this.app.setupFixedCamera();
                 resolve();
               } else {
                 if (highlighted) {
@@ -475,16 +478,19 @@ class MyContents {
 
           this.opponentBalloon = ballon;
           this.app.setActiveCamera("billboard");
+          this.app.setupFixedCamera();
           resolve();
         }
       }
 
       if (name === 'player') {
         this.app.setActiveCamera("parking_lot1");
+        this.app.setupFixedCamera();
         this.parkingLot1.initPicker();
         this.parkingLot1.setCallback(selectedBalloon);
       } else {
         this.app.setActiveCamera("parking_lot2");
+        this.app.setupFixedCamera();
         this.parkingLot2.initPicker();
         this.parkingLot2.setCallback(selectedBalloon);
       }
