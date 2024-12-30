@@ -8,6 +8,10 @@ class MyParkingLot {
         this.balloons = balloons;
     }
 
+    getPosition() {
+        return this.position;
+    }
+
     setCallback(callback) {
         this.callback = callback;
     }

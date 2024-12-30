@@ -56,6 +56,7 @@ class MyContents {
     this.taggedObjects = [];
 
     this.penalty = 2000;
+    this.boostersSparkles = [];
   }
 
   updatePenalty(val) {
@@ -660,7 +661,29 @@ class MyContents {
       this.#shootFireworks();
     }
 
+    if (this.parkingLot1 && this.parkingLot2)
+      this.updateBoosters();
+
     this.app.gui.update();
+  }
+
+  updateBoosters() {
+    const color = {
+      "h": 0.12,
+      "s": 0.96,
+      "l": 0.71
+    }
+    this.boostersSparkles.push(new MySparkle(this.app, this.parkingLot1.getPosition(), 1, true, color));
+    this.boostersSparkles.push(new MySparkle(this.app, this.parkingLot2.getPosition(), 1, true, color));
+
+    for (let i = 0; i < this.boostersSparkles.length; i++) {
+      if (this.boostersSparkles[i].done) {
+        this.boostersSparkles.slice(i, 1);
+        continue;
+      }
+
+      this.boostersSparkles[i].update();
+    }
   }
 
   updatePlaying() {

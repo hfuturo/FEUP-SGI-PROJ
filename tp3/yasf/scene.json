@@ -38,6 +38,14 @@
             "rust": {
                 "filepath": "textures/rust.jpg",
                 "isVideo": false
+            },
+            "concrete": {
+                "filepath": "textures/concrete.jpg",
+                "isVideo": false
+            },
+            "iron": {
+                "filepath": "textures/iron.webp",
+                "isVideo": false
             }
         },
         "materials": {
@@ -66,6 +74,24 @@
                 "opacity": 1,
                 "twosided": true,
                 "textureref": "rust"
+            },
+            "concrete": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "concrete"
+            },
+            "iron": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "iron"
             }
         },
         "cameras": {
@@ -159,7 +185,7 @@
                     "nodesList":[
                         "out_billboards",
                         "relief_display",
-                        "parking_lot"
+                        "parking_lots"
                     ],
                     "directionallight1": {
                         "type": "directionallight",
@@ -417,38 +443,73 @@
                     ]
                 }
             },
+            "parking_lots": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "right_parking_lot",
+                        "left_parking_lot"
+                    ]
+                }
+            },
+            "right_parking_lot": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": -25}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "parking_lot"
+                    ]
+                }
+            },
+            "left_parking_lot": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": 25}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "parking_lot"
+                    ]
+                }
+            },
             "parking_lot": {
                 "type": "node",
                 "children": {
                     "nodesList": [
-                        "parking_lot1",
-                        "parking_lot2"
+                        "parking_lot_floor",
+                        "parking_lot_booster"
                     ]
                 }
             },
-            "parking_lot1": {
+            "parking_lot_floor": {
                 "type": "node",
+                "materialref":{
+                    "materialId": "concrete"
+                },
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": -25}},
                     {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 20, "y": 20, "z": 1}}
+                    {"type": "scale", "amount": {"x": 40, "y": 40, "z": 0.5}}
                 ],
                 "children": {
                     "nodesList": [
-                        "rectangle"
+                        "box"
                     ]
                 }
             },
-            "parking_lot2": {
+            "parking_lot_booster": {
                 "type": "node",
+                "materialref":{
+                    "materialId": "iron"
+                },
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -40, "y": 0, "z": 25}},
-                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
-                    {"type": "scale", "amount": {"x": 20, "y": 20, "z": 1}}
+                    {"type": "translate", "amount": {"x": 0, "y": -1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 2}}
                 ],
                 "children": {
-                    "nodesList": [
-                        "rectangle"
+                    "nodesList":[
+                        "cylinder_bigger_top_opened"
                     ]
                 }
             },
@@ -724,6 +785,20 @@
                         "type": "cylinder",
                         "base": 1,
                         "top": 1,
+                        "height": 1,
+                        "slices": 20,
+                        "stacks": 5,
+                        "capsclose": true
+                    }
+                }
+            },
+            "cylinder_bigger_top_opened": {
+                "type": "node",
+                "children": {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "base": 0.75,
+                        "top": 2,
                         "height": 1,
                         "slices": 20,
                         "stacks": 5,

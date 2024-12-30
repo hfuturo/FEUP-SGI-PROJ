@@ -2,10 +2,12 @@ import * as THREE from 'three';
 
 class MySparkle {
 
-    constructor(app, position, size=0.5) {
+    constructor(app, position, size=0.5, inverted=false, color=undefined) {
         this.app = app;
         this.position = position;
         this.size = size;
+        this.inverted = inverted;
+        this.color = color;
 
         this.done = false;
         this.dest = [];
@@ -31,13 +33,20 @@ class MySparkle {
 
     #launch() {
         const color = new THREE.Color();
-        color.setHSL(THREE.MathUtils.randFloat(0.1, 0.9), 1, 0.9);
+
+        if (this.color !== undefined) {
+            color.setHSL(this.color.h, this.color.s, this.color.l);
+        }
+        else {
+            color.setHSL(THREE.MathUtils.randFloat(0.1, 0.9), 1, 0.9);
+        }
+
         const colors = [color.r, color.g, color.b];
 
-        const x = THREE.MathUtils.randFloat(-1.5, 1.5);
+        const x = THREE.MathUtils.randFloat(-2.5, 2.5);
         const y = THREE.MathUtils.randFloat(this.height * 0.9, this.height * 1.1);
-        const z = THREE.MathUtils.randFloat(-1.5, 1.5);
-        this.dest.push(x, y, z) ;
+        const z = THREE.MathUtils.randFloat(-2.5, 2.5);
+        this.dest.push(x, this.inverted ? -y : y, z) ;
         const vertices = [0, 0, 0];
         
         this.geometry = new THREE.BufferGeometry();
@@ -76,7 +85,11 @@ class MySparkle {
 
             verticesAtribute.needsUpdate = true;
             
-            if(Math.ceil(vertices[1]) > this.dest[1] * 0.95) {
+            const needsReset = this.inverted ?
+                Math.ceil(vertices[1]) < this.dest[1] * 0.95 :
+                Math.ceil(vertices[1]) > this.dest[1] * 0.95;
+
+            if (needsReset) {
                 this.reset();
                 this.done = true;
             }
