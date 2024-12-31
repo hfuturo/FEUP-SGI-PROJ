@@ -100,10 +100,14 @@ class MyContents {
 
     this.track = new MyTrack(
       this.app,
-      track.obstacles.map(pos => new MyObstacle(this.app, pos)),
-      track.powerups.map(pos => new MyPowerUp(this.app, pos))
+      track.obstacles.map(pos => new MyObstacle(this.app, pos, this.initializer.objects["spike"].clone())),
+      track.powerups.map(pos => new MyPowerUp(this.app, pos, this.initializer.objects["gift"].clone())),
     );
     this.track.display();
+    
+    // remove the spike object from the yasf graph
+    this.initializer.objects["spike"].parent.remove(this.initializer.objects["spike"]);
+    this.initializer.objects["gift"].parent.remove(this.initializer.objects["gift"]);
   }
 
   loadBillBoards() {

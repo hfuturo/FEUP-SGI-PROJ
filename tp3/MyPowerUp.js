@@ -3,14 +3,20 @@ import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 
 class MyPowerUp {
 
-    constructor(app, pos) {
+    constructor(app, pos, simpleRepresentation) {
         this.app = app;
         this.pos = pos;
         this.width = 2;
         this.height = 2;
         this.depth = 2;
 
+        this.representation = new THREE.LOD();
+        this.representation.position.set(...this.pos);
+
         this.group = new THREE.Group();
+        this.representation.addLevel(this.group, 0);
+        this.representation.addLevel(simpleRepresentation, 100);
+
         this.pulsating = fetch('./shaders/pulsating.vert').then(res => res.text());
         this.materials = [];
 
@@ -62,8 +68,7 @@ class MyPowerUp {
             (error) => console.error(`Error loading powerup object: ${error}`)
         );
 
-        this.group.position.set(...this.pos);
-        this.app.scene.add(this.group);
+        this.app.scene.add(this.representation);
     }
 
     #initCollisionObjects() {

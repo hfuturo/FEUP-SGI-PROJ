@@ -3,11 +3,17 @@ import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 
 class MyObstacle {
 
-    constructor(app, pos) {
+    constructor(app, pos, simpleRepresentation) {
         this.app = app;
         this.pos = pos;
 
+        this.representation = new THREE.LOD();
+        this.representation.position.set(...this.pos);
+
         this.group = new THREE.Group();
+        this.representation.addLevel(this.group, 0);
+        this.representation.addLevel(simpleRepresentation, 100);
+
         this.materials = [];
 
         this.pulsating = fetch('./shaders/pulsating.vert').then(res => res.text());
@@ -74,8 +80,7 @@ class MyObstacle {
         );
 
         this.group.add(this.sphere);
-        this.group.position.set(...this.pos);
-        this.app.scene.add(this.group);
+        this.app.scene.add(this.representation);
     }
 
     getPosition() {

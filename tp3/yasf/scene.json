@@ -43,10 +43,6 @@
                 "filepath": "textures/concrete.jpg",
                 "isVideo": false
             },
-            "iron": {
-                "filepath": "textures/iron.webp",
-                "isVideo": false
-            },
             "industrial": {
                 "filepath": "textures/industrial.jpg",
                 "isVideo": false
@@ -68,6 +64,14 @@
             "black": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1
+            },
+            "red": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 0.0, "b": 0.0},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
@@ -103,14 +107,13 @@
                 "texlength_s": 0.25,
                 "texlength_t": 0.15
             },
-            "iron": {
+            "metal": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
-                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
-                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
-                "shininess": 0.0,
+                "color": {"r": 0.53, "g": 0.53, "b": 0.53},
+                "specular": {"r": 0.33, "g": 0.33, "b": 0.33},
+                "shininess": 100.0,
                 "transparent": false,
-                "opacity": 1,
-                "textureref": "iron"
+                "opacity": 1
             },
             "industrial": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -225,7 +228,9 @@
                         "out_billboards",
                         "relief_display",
                         "parking_lots",
-                        "platform"
+                        "platform",
+                        "spike",
+                        "gift"
                     ],
                     "directionallight1": {
                         "type": "directionallight",
@@ -667,7 +672,7 @@
             "parking_lot_booster": {
                 "type": "node",
                 "materialref":{
-                    "materialId": "iron"
+                    "materialId": "metal"
                 },
                 "transforms": [
                     {"type": "translate", "amount": {"x": 0, "y": -1, "z": 0}},
@@ -931,6 +936,218 @@
                     ]
                 }
             },
+            "spike": {
+                "type": "node",
+                "materialref":{
+                    "materialId":"metal"
+                },
+                "children": {
+                    "nodesList": [
+                        "spike_center",
+                        "spikes"
+                    ]
+                }
+            },
+            "spike_center": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 1.7, "y": 1.7, "z": 1.7}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "sphere"
+                    ]
+                }
+            },
+            "spikes": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "spike1",
+                        "spike2",
+                        "spike3",
+                        "spike4",
+                        "spike5",
+                        "spike6"
+                    ]
+                }
+            },
+            "spike1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 2, "z": 0}},
+                    {"type": "scale", "amount": {"x": 0.4, "y": 1.5, "z": 0.4}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "box"
+                    ]
+                }
+            },
+            "spike2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "spike1"
+                    ]
+                }
+            },
+            "spike3": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 90}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "spike1"
+                    ]
+                }
+            },
+            "spike4": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 180}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "spike1"
+                    ]
+                }
+            },
+            "spike5": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 270}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "spike1"
+                    ]
+                }
+            },
+            "spike6": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 270, "y": 0, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "spike1"
+                    ]
+                }
+            },
+            "gift": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 1, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "gift_box",
+                        "gift_bow"
+                    ]
+                }
+            },
+            "gift_box": {
+                "type": "node",
+                "transforms": [
+                    {"type": "scale", "amount": {"x": 2, "y": 2, "z": 2}}
+                ],
+                "materialref":{
+                    "materialId":"white"
+                },
+                "children": {
+                    "nodesList": [
+                        "box"
+                    ]
+                }
+            },
+            "gift_bow": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "gift_bow1",
+                        "gift_bow2",
+                        "gift_bow3",
+                        "gift_bow4",
+                        "gift_bow5",
+                        "gift_bow6"
+                    ]
+                }
+            },
+            "gift_bow1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 1.05}},
+                    {"type": "scale", "amount": {"x": 0.2, "y": 1, "z": 1}}
+                ],
+                "materialref":{
+                    "materialId":"red"
+                },
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "gift_bow2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "gift_bow1"
+                    ]
+                }
+            },
+            "gift_bow3": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "gift_bow1"
+                    ]
+                }
+            },
+            "gift_bow4": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": 0, "y": 270, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "gift_bow1"
+                    ]
+                }
+            },
+            "gift_bow5": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "gift_bow1"
+                    ]
+                }
+            },
+            "gift_bow6": {
+                "type": "node",
+                "transforms": [
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 90}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "gift_bow1"
+                    ]
+                }
+            },
             "cylinder": {
                 "type": "node",
                 "children": {
@@ -992,6 +1209,17 @@
                         "type": "rectangle",
                         "xy1": {"x": -1, "y": -1},
                         "xy2": {"x": 1, "y": 1}
+                    }
+                }
+            },
+            "sphere": {
+                "type": "node",
+                "children": {
+                    "spherePrim": {
+                        "type": "sphere",
+                        "radius": 1,
+                        "slices": 20,
+                        "stacks": 20
                     }
                 }
             }
