@@ -38,7 +38,12 @@ class MyAnimation {
         action.clampWhenFinished = true
         this.animationPlaying = true;
 
-        const onAnimationFinished = () => {
+        const onFinished = () => {
+            this.stopAnimation(property);
+        };
+        this.mixer.addEventListener('finished', onFinished);
+
+        this.stopAnimation = () => {
             this.animationPlaying = false;
             this.mixer.stopAllAction();
             if (property === 'rotation') {
@@ -47,10 +52,8 @@ class MyAnimation {
             } else {
                 this.object[property].set(values.at(-3), values.at(-2), values.at(-1));
             }
-            this.mixer.removeEventListener('finished', onAnimationFinished);
+            this.mixer.removeEventListener('finished', onFinished);
         };
-
-        this.mixer.addEventListener('finished', onAnimationFinished);
 
         action.play()
     }

@@ -424,6 +424,11 @@ class MyBallon {
     }
 
     freezeAndReplace(point) {
+        if (this.balloonAnimation.isPlaying()) {
+            this.balloonAnimation.stopAnimation();
+            this.shadowAnimation.stopAnimation();
+        }
+
         this.shadow.position.set(point.x, this.shadowY, point.z);
         this.representation.position.set(point.x, this.representation.position.y, point.z);
         
