@@ -211,18 +211,18 @@ class MyContents {
       bb.addText(this.timer, -5, 33, 2);
 
       const playerBalloon = [
-        bb.createText('Player', -2.75, 4, 1.5, 0xffffff),
+        bb.createText(this.username, -3.5, 4, 1.5, 0xffffff),
         bb.createPicture(`textures/balloons/${this.playerBalloon.name}.png`, 0, -1.25, 7),
       ]
       const playerColor = this.currLap === this.numLaps ? 0xffd700 : 0xff0000;
-      bb.addButton('player', -12, 23, 9, 12, playerBalloon, playerColor);
+      bb.addButton('player', -12.75, 23, 10.5, 12, playerBalloon, playerColor);
 
       const opponentBalloon = [
-        bb.createText('PC', -0.5, 4, 1.5, 0xffffff),
+        bb.createText('PC', -0.25, 4, 1.5, 0xffffff),
         bb.createPicture(`textures/balloons/${this.opponentBalloon.name}.png`, 0, -1.25, 7),
       ]
       const opponentColor = this.currLap === this.numLaps ? 0xff0000 : 0xffd700;
-      bb.addButton('pc', -2, 23, 9, 12, opponentBalloon, opponentColor);
+      bb.addButton('pc', -1.25, 23, 10.5, 12, opponentBalloon, opponentColor);
 
       const crownPos = this.currLap === this.numLaps ? -12 : -2;
       bb.addPicture('textures/crown.png', crownPos, 31, 5.5, 0.6);
@@ -739,6 +739,10 @@ class MyContents {
     const {closestPoint, offTrack} = this.track.isBalloonOffTrack(this.playerBalloon.getShadowPosition());
 
     if (offTrack) {
+      if (this.playerBalloon.getVouchers() > 0) {
+        document.getElementById('vouchers').getElementsByTagName('p')[0].innerText = this.playerBalloon.getVouchers() - 1;
+        this.billBoards.forEach((billboard) => billboard.updateVoucher(-1));
+      }
       this.playerBalloon.freezeAndReplace(closestPoint, this.penalty);
     }
   }
@@ -748,8 +752,8 @@ class MyContents {
       if (!this.playerBalloon.collides(obstacle) || this.playerBalloon.collidedWith(obstacle)) return;
 
       if (this.playerBalloon.getVouchers() > 0) {
-        this.billBoards.forEach((billboard) => billboard.updateVoucher(-1));
         document.getElementById('vouchers').getElementsByTagName('p')[0].innerText = this.playerBalloon.getVouchers() - 1;
+        this.billBoards.forEach((billboard) => billboard.updateVoucher(-1));
       }
 
       this.playerBalloon.handleCollision(obstacle);
