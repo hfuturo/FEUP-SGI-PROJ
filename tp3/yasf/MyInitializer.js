@@ -192,7 +192,7 @@ class MyInitializer {
                 material.side = THREE.DoubleSide;
 
             if (m.textureref) {
-                material.map = this.textures[m.textureref];
+                material.map = this.textures[m.textureref].clone();
                 material.map.repeat.set(
                     1 / m.texlength_s,
                     1 / m.texlength_t
@@ -200,7 +200,7 @@ class MyInitializer {
             }
 
             if (m.bumpref) {
-                material.bumpMap = this.textures[m.bumpref];
+                material.bumpMap = this.textures[m.bumpref].clone();
                 material.bumpScale = m.bumpscale;
                 material.bumpMap.repeat.set(
                     1 / m.texlength_s,
@@ -209,7 +209,7 @@ class MyInitializer {
             }
 
             if (m.specularref) {
-                material.specularMap = this.textures[m.specularref];
+                material.specularMap = this.textures[m.specularref].clone();
                 material.specularMap.repeat.set(
                     1 / m.texlength_s,
                     1 / m.texlength_t
@@ -316,6 +316,7 @@ class MyInitializer {
 
             light.target.position.set(...lightSpec.target);
 
+            const helper = new THREE.DirectionalLightHelper(light, 3);
         }
 
         light.position.set(...lightSpec.position);

@@ -46,6 +46,14 @@
             "iron": {
                 "filepath": "textures/iron.webp",
                 "isVideo": false
+            },
+            "industrial": {
+                "filepath": "textures/industrial.jpg",
+                "isVideo": false
+            },
+            "turbine": {
+                "filepath": "textures/turbine.mp4",
+                "isVideo": true
             }
         },
         "materials": {
@@ -84,6 +92,17 @@
                 "opacity": 1,
                 "textureref": "concrete"
             },
+            "concrete_tiles": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "concrete",
+                "texlength_s": 0.25,
+                "texlength_t": 0.15
+            },
             "iron": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 1.0, "g": 1.0, "b": 1.0},
@@ -92,6 +111,26 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "iron"
+            },
+            "industrial": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "industrial",
+                "texlength_s": 2,
+                "texlength_t": 2
+            },
+            "turbine": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "turbine"
             }
         },
         "cameras": {
@@ -134,12 +173,12 @@
                 "near": 0.1,
                 "far": 1000,
                 "location": {
-                    "x": -40,
+                    "x": -80,
                     "y": 5,
                     "z": 25
                 },
                 "target": {
-                    "x": -39,
+                    "x": -79,
                     "y": 5,
                     "z": 25
                 }
@@ -150,12 +189,12 @@
                 "near": 0.1,
                 "far": 1000,
                 "location": {
-                    "x": -40,
+                    "x": -80,
                     "y": 5,
                     "z": -25
                 },
                 "target": {
-                    "x": -39,
+                    "x": -79,
                     "y": 5,
                     "z": -25
                 }
@@ -185,7 +224,8 @@
                     "nodesList":[
                         "out_billboards",
                         "relief_display",
-                        "parking_lots"
+                        "parking_lots",
+                        "platform"
                     ],
                     "directionallight1": {
                         "type": "directionallight",
@@ -232,10 +272,136 @@
                     }
                 }
             },
+            "platform": {
+                "type": "node",
+                "children": {
+                    "nodesList":[
+                        "platform_main",
+                        "all_turbines"
+                    ]
+                }
+            },
+            "platform_main": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 50, "y": -2, "z": 0}},
+                    {"type": "scale", "amount": {"x": 180, "y": 2, "z": 300}}
+                ],
+                "materialref": {
+                    "materialId": "concrete_tiles"
+                },
+                "children": {
+                    "nodesList": [
+                        "box"
+                    ]
+                }
+            },
+            "all_turbines": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "turbine_group1",
+                        "turbine_group2",
+                        "turbine_group3",
+                        "turbine_group4"
+                    ]
+                }
+            },
+            "turbine_group1": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "turbine_up",
+                        "turbine_down",
+                        "turbine_surrounding"
+                    ]
+                }
+            },
+            "turbine_group2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 130, "y": 0, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "turbine_group1"
+                    ]
+                }
+            },
+            "turbine_group3": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 240}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "turbine_group1"
+                    ]
+                }
+            },
+            "turbine_group4": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 130, "y": 0, "z": 240}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "turbine_group1"
+                    ]
+                }
+            },
+            "turbine_up": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -20, "y": 2, "z": -120}},
+                    {"type": "rotate", "amount": {"x": -90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 10, "y": 10, "z": 10}}
+                ],
+                "materialref":{
+                    "materialId": "turbine"
+                },
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "turbine_down": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -20, "y": -6, "z": -120}},
+                    {"type": "rotate", "amount": {"x": 90, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": -10, "y": 10, "z": 10}}
+                ],
+                "materialref":{
+                    "materialId": "turbine"
+                },
+                "children": {
+                    "nodesList": [
+                        "rectangle"
+                    ]
+                }
+            },
+            "turbine_surrounding": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -20, "y": -2, "z": -120}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 0, "z": 0}},
+                    {"type": "scale", "amount": {"x": 20, "y": 7.7, "z": 20}}
+                ],
+                "materialref":{
+                    "materialId": "industrial"
+                },
+                "children": {
+                    "nodesList": [
+                        "box"
+                    ]
+                }
+            },
             "fireworks": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": -10}}
+                    {"type": "translate", "amount": {"x": 0, "y": 0, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [
@@ -247,7 +413,7 @@
             "right_firework": {
                 "type": "node",
                 "transforms":[
-                    {"type": "translate", "amount": {"x": 30, "y": 0, "z": 0}}
+                    {"type": "translate", "amount": {"x": 15, "y": 0, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [
@@ -258,7 +424,7 @@
             "left_firework": {
                 "type": "node",
                 "transforms":[
-                    {"type": "translate", "amount": {"x": -30, "y": 0, "z": 0}}
+                    {"type": "translate", "amount": {"x": -15, "y": 0, "z": 0}}
                 ],
                 "children": {
                     "nodesList": [
@@ -455,7 +621,7 @@
             "right_parking_lot": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -40, "y": -0.25, "z": -25}}
+                    {"type": "translate", "amount": {"x": -80, "y": -0.25, "z": -25}}
                 ],
                 "children": {
                     "nodesList": [
@@ -466,7 +632,7 @@
             "left_parking_lot": {
                 "type": "node",
                 "transforms": [
-                    {"type": "translate", "amount": {"x": -40, "y": -0.25, "z": 25}}
+                    {"type": "translate", "amount": {"x": -80, "y": -0.25, "z": 25}}
                 ],
                 "children": {
                     "nodesList": [

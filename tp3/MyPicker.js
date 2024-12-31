@@ -6,7 +6,7 @@ class MyPicker {
 
         this.raycaster = new THREE.Raycaster()
         this.raycaster.near = 1
-        this.raycaster.far = 100
+        this.raycaster.far = 50
 
         this.pointer = new THREE.Vector2()
 
