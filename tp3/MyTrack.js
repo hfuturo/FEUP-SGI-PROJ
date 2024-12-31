@@ -12,10 +12,10 @@ class MyTrack {
 
         this.width = 20;
 
-        const texture = new THREE.TextureLoader().load("./textures/uvmapping.jpg");
+        const texture = new THREE.TextureLoader().load("./textures/road.jpg");
 
         this.material = new THREE.MeshBasicMaterial({ map: texture });
-        this.material.map.repeat.set(3, 3);
+        this.material.map.repeat.set(12, 2);
         this.material.map.wrapS = THREE.RepeatWrapping;
         this.material.map.wrapT = THREE.RepeatWrapping;
 
