@@ -277,6 +277,9 @@ class MyContents {
       this.balloonCamera = '3';
       this.numLaps = 1;
       this.username = '';
+
+      if (this.picker)
+        this.picker.dispose();
     }
     else if (newState === state.PLAYING) {
       this.app.setActiveCamera("balloon");

@@ -39,13 +39,14 @@ class MyAnimation {
         this.animationPlaying = true;
 
         const onFinished = () => {
-            this.stopAnimation(property);
+            this.stopAnimation();
         };
         this.mixer.addEventListener('finished', onFinished);
 
         this.stopAnimation = () => {
             this.animationPlaying = false;
             this.mixer.stopAllAction();
+            this.clock = new THREE.Clock();
             if (property === 'rotation') {
                 const euler = new THREE.Euler(values.at(-3), values.at(-2), values.at(-1));
                 this.object.quaternion.setFromEuler(euler);
