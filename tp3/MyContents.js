@@ -11,6 +11,7 @@ import { MyPicker } from "./MyPicker.js";
 import { MySparkle } from "./MySparkle.js";
 import { MyFirework } from "./MyFirework.js";
 import { MyParkingLot } from "./MyParkingLot.js";
+import { MyRoute } from "./MyRoute.js";
 
 const state = {
   START: 0,
@@ -55,6 +56,7 @@ class MyContents {
     this.billBoards = [];
     this.taggedObjects = [];
 
+    this.opponentLapTime = 70;
     this.penalty = 2000;
     this.boostersSparkles = [];
   }
@@ -104,6 +106,8 @@ class MyContents {
       track.powerups.map(pos => new MyPowerUp(this.app, pos, this.initializer.objects["gift"].clone())),
     );
     this.track.display();
+
+    this.routes = new MyRoute(this.app, track.routes);
     
     // remove the spike object from the yasf graph
     this.initializer.objects["spike"].parent.remove(this.initializer.objects["spike"]);
@@ -259,6 +263,10 @@ class MyContents {
 
       if (this.playerBalloon) { // place the balloon back in the parking lot
         this.parkingLot1.returnBalloon(this.playerBalloon);
+
+        if (this.opponentBalloon.balloonAnimation.isPlaying())
+          this.opponentBalloon.balloonAnimation.stopAnimation();
+
         this.parkingLot2.returnBalloon(this.opponentBalloon);
       }
 
@@ -282,7 +290,12 @@ class MyContents {
       this.playerBalloon.height = 0;
   
       this.playerBalloon.setPosition(this.startPos);
+
+      if (this.opponentBalloon.balloonAnimation.isPlaying()) {
+        this.opponentBalloon.balloonAnimation.stopAnimation();
+      }
       this.opponentBalloon.setPosition(new THREE.Vector3(this.startPos.x * -1, this.startPos.y, this.startPos.z));
+      this.opponentBalloon.animateAutonomous(this.routes.getRoute(this.opponentBalloon.name), this.opponentLapTime, this.numLaps);
       this.balloonThirdPerson();
 
       document.getElementById('hud').style.visibility = 'visible';
@@ -692,9 +705,11 @@ class MyContents {
 
   updatePlaying() {
     this.playerBalloon.update();
+    this.opponentBalloon.update();
 
     document.getElementById('timer').innerText = this.billBoards[0].displayTime;
 
+    // check if player won/crossed checkpoint
     const position = this.playerBalloon.getPosition();
     if (position.z < 1 && position.z > -1) {
       if (position.x > this.track.middleX - this.track.width && position.x < this.track.middleX + this.track.width) {
@@ -711,6 +726,12 @@ class MyContents {
           return;
         } 
       }
+    }
+
+    // check if PC won
+    if (!this.opponentBalloon.balloonAnimation.isPlaying()) {
+      this.changeState(state.END);
+      return;
     }
 
     this.billBoards.forEach((billboard) => {

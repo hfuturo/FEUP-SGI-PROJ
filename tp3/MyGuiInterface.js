@@ -77,6 +77,9 @@ class MyGuiInterface  {
     }
 
     finish() {
+        const data = {
+            selectedRoute: null
+        }
         this.cameraController = this.general.add(this.app, 'activeCameraName', Object.keys(this.app.cameras) ).name("Camera").onChange((val) => {
             this.app.setActiveCamera(val);
             if (val === 'balloon') {
@@ -93,6 +96,10 @@ class MyGuiInterface  {
         this.general.add(this.contents, 'penalty', 0, 10000).name('Penalty').onChange((val) => this.contents.updatePenalty(val));
 
         this.general.add(this.contents.track, 'width', 1, 30, 5).name('Track Width').onChange((val) => this.contents.track.updateTrack(val))
+
+        this.general.add(data, 'selectedRoute', [null].concat(Object.keys(this.contents.routes.routes))).name('Preview Route').onChange((val) => this.contents.routes.displayRoute(val));
+
+        this.general.add(this.contents, 'opponentLapTime', 10, 150, 10).name('PC Lap Time')
     }
 
     update() {

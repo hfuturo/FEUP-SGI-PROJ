@@ -455,6 +455,26 @@ class MyBallon {
     #removeTaggedObject(object) {
         this.collidedObjects = this.collidedObjects.filter((obj) => obj !== object);
     }
+
+    animateAutonomous(route, lapTime, numLaps) {
+        let lapDistance = Math.sqrt(Math.pow(route[0].x - this.representation.position.x, 2) + Math.pow(route[0].z - this.representation.position.z, 2));
+        for (let i = 1; i < route.length; i++) {
+            lapDistance += Math.sqrt(Math.pow(route[i].x - route[i-1].x, 2) + Math.pow(route[i].z - route[i-1].z, 2));
+        }
+
+        const timePerUnit = lapTime / lapDistance;
+        const positions = [...this.representation.position], times = [0];
+        for (let lap = 0; lap < numLaps; lap++) {
+            route.forEach((point) => {
+                const distance = Math.sqrt(Math.pow(point.x - positions.at(-3), 2) + Math.pow(point.z - positions.at(-1), 2));
+                const time = distance * timePerUnit;
+                times.push(times.at(-1) + time);
+                positions.push(point.x, point.y, point.z);
+            });
+        }
+
+        this.balloonAnimation.createAnimation(times, positions);
+    }
 }
 
 export { MyBallon };
