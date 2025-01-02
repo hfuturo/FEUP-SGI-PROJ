@@ -49,9 +49,17 @@ class MyContents {
     this.sparkles = [];
     this.fireworks = [];
 
+    // create the relief image after textures have loaded
     THREE.DefaultLoadingManager.onLoad = () => {
       this.lastReliefRefresh = this.reliefRefresh;
     };
+    // if textures take too long to load, create the relief image anyway
+    setTimeout(() => {
+      THREE.DefaultLoadingManager.onLoad = () => {};
+      if (this.lastReliefRefresh === undefined) {
+        this.lastReliefRefresh = this.reliefRefresh;
+      }
+    }, 2500);
 
     this.billBoards = [];
     this.taggedObjects = [];

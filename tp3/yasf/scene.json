@@ -54,6 +54,10 @@
             "finish_line": {
                 "filepath": "textures/finish_line.jpg",
                 "isVideo": false
+            },
+            "wood": {
+                "filepath": "textures/wood.png",
+                "isVideo": false
             }
         },
         "materials": {
@@ -147,6 +151,17 @@
                 "transparent": false,
                 "opacity": 1,
                 "textureref": "finish_line"
+            },
+            "wood": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.54, "g": 0.32, "b": 0.16},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 1.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "wood",
+                "twosided": true,
+                "texlength_t": 0.1
             }
         },
         "cameras": {
@@ -244,7 +259,8 @@
                         "platform",
                         "spike",
                         "gift",
-                        "finish_lines"
+                        "finish_lines",
+                        "bridges"
                     ],
                     "directionallight1": {
                         "type": "directionallight",
@@ -1206,6 +1222,69 @@
                     "nodesList": [
                         "gift_bow1"
                     ]
+                }
+            },
+            "bridges": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "wood"
+                },
+                "children":{
+                    "nodesList": [
+                        "bridge1",
+                        "bridge2"
+                    ]
+                }
+            },
+            "bridge1": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": -37, "y": -1, "z": -2.5}},
+                    {"type": "rotate", "amount": {"x": 0, "y": -90, "z": 0}},
+                    {"type": "scale", "amount": {"x": 3.5, "y": 2, "z": 1.8}}
+                ],
+                "children": {
+                    "nodesList": [
+                        "bridge"
+                    ]
+                }
+            },
+            "bridge2": {
+                "type": "node",
+                "transforms": [
+                    {"type": "translate", "amount": {"x": 0, "y": 0.1, "z": 0}},
+                    {"type": "scale", "amount": {"x": 1, "y": 1, "z": -1}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "bridge1"
+                    ]
+                }
+            },
+            "bridge": {
+                "type": "node",
+                "children": {
+                    "bridge": {
+                        "type": "nurbs",
+                        "degree_u": 1,
+                        "degree_v": 5,
+                        "parts_u": 8,
+                        "parts_v": 32,
+                        "controlpoints": [
+                            {"x": -2, "y": 0, "z": 0},
+                            {"x": -2, "y": 0.5, "z": 1},
+                            {"x": -2, "y": 2, "z": 4},
+                            {"x": -2, "y": 2, "z": 6},
+                            {"x": -7, "y": 2.5, "z": 9},
+                            {"x": -5.5, "y": 0, "z": 15},
+                            {"x": 2, "y": 0, "z": 0},
+                            {"x": 2, "y": 0.5, "z": 1},
+                            {"x": 2, "y": 2, "z": 4},
+                            {"x": 2, "y": 2, "z": 6},
+                            {"x": -3, "y": 2.5, "z": 9},
+                            {"x": -1.5, "y": 0, "z": 15}
+                        ]
+                    }
                 }
             },
             "cylinder": {
