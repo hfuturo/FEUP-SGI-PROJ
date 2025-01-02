@@ -238,7 +238,7 @@ class MyInitializer {
         const emissive = new THREE.Color(...skybox.emissive);
 
         const box = new THREE.BoxGeometry(...skybox.size);
-        const mesh = new THREE.Mesh(box, textures.map(t => new THREE.MeshLambertMaterial({ 
+        const mesh = new THREE.Mesh(box, textures.map(t => new THREE.MeshBasicMaterial({ 
             map: t, 
             side: THREE.BackSide, 
             emissive: emissive, 
@@ -315,8 +315,6 @@ class MyInitializer {
             light.shadow.camera.top = lightSpec.shadowtop;
 
             light.target.position.set(...lightSpec.target);
-
-            const helper = new THREE.DirectionalLightHelper(light, 3);
         }
 
         light.position.set(...lightSpec.position);

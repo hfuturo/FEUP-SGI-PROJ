@@ -23,7 +23,7 @@ class MyTrack {
     }
 
     display() {
-        this.app.scene.add(this.representation);
+        this.representation.forEach((representation) => this.app.scene.add(representation));
 
         this.obstacles.forEach(obstacle => {
             obstacle.display();
@@ -77,13 +77,18 @@ class MyTrack {
 
         const mesh = new THREE.Mesh(geometry, this.material);
         mesh.scale.set(1, 0.01, 1);
-        return mesh;
+
+        const shadows = new THREE.Mesh(geometry, new THREE.ShadowMaterial({ opacity: 0.3 }));
+        shadows.scale.set(1, 0.01, 1);
+        shadows.receiveShadow = true;
+
+        return [mesh, shadows];
     }
 
     updateTrack(width) {
-        this.app.scene.remove(this.representation);
+        this.representation.forEach((representation) => this.app.scene.remove(representation));
         this.representation = this.#createTrack(width);
-        this.app.scene.add(this.representation);
+        this.app.scene.forEach((representation) => this.app.scene.add(representation));
     }
 
     getObstacles() {

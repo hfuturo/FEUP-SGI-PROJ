@@ -141,7 +141,7 @@ class MyContents {
 
     billboardObj.children.forEach((billboard) => {
       const bb = new MyBillboard(this.app, billboard.position, 3.2, billboard.rotation);
-      bb.addText('Game Name', -12, 36, 4);
+      bb.addText('Hot Air Kart', -16, 36, 4);
 
       bb.addPicture('textures/henrique.jpg', 20, 18, 4);
       bb.addText('Henrique Silva', 7, 18, 1);
