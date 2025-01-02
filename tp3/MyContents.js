@@ -701,9 +701,16 @@ class MyContents {
       "h": 0.12,
       "s": 0.96,
       "l": 0.71
-    }
-    this.boostersSparkles.push(new MySparkle(this.app, this.parkingLot1.getPosition(), 1, true, color));
-    this.boostersSparkles.push(new MySparkle(this.app, this.parkingLot2.getPosition(), 1, true, color));
+    };
+
+    const pl1 = this.parkingLot1.getPosition();
+    const pos1 = new THREE.Vector3(pl1.x, pl1.y - 0.2, pl1.z);
+
+    const pl2 = this.parkingLot2.getPosition();
+    const pos2 = new THREE.Vector3(pl2.x, pl2.y - 0.2, pl2.z);
+
+    this.boostersSparkles.push(new MySparkle(this.app, pos1, 1, true, color));
+    this.boostersSparkles.push(new MySparkle(this.app, pos2, 1, true, color));
 
     for (let i = 0; i < this.boostersSparkles.length; i++) {
       if (this.boostersSparkles[i].done) {
