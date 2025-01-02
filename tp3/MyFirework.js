@@ -94,7 +94,6 @@ class MyFirework {
         this.dest = [];
         this.vertices = [];
         this.colors = []; 
-        this.geometry.dispose();
         this.geometry = null;
         this.points = null;
     }

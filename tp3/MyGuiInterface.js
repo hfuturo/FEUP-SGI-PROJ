@@ -35,6 +35,7 @@ class MyGuiInterface  {
      */
     init() {
         this.general = this.datgui.addFolder('General')
+        this.general.add(this.contents.axis, 'visible').name('Axis')
 
         const wind = this.datgui.addFolder('Wind')
         wind.add(this, 'homogeneous').name('Homogeneous')

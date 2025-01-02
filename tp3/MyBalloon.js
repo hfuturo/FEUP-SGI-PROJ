@@ -463,17 +463,19 @@ class MyBallon {
         }
 
         const timePerUnit = lapTime / lapDistance;
-        const positions = [...this.representation.position], times = [0];
+        const positions = [...this.representation.position], times = [0], shadowPositions = [...this.shadow.position];
         for (let lap = 0; lap < numLaps; lap++) {
             route.forEach((point) => {
                 const distance = Math.sqrt(Math.pow(point.x - positions.at(-3), 2) + Math.pow(point.z - positions.at(-1), 2));
                 const time = distance * timePerUnit;
                 times.push(times.at(-1) + time);
                 positions.push(point.x, point.y, point.z);
+                shadowPositions.push(point.x, this.shadowY, point.z);
             });
         }
 
         this.balloonAnimation.createAnimation(times, positions);
+        this.shadowAnimation.createAnimation(times, shadowPositions);
     }
 }
 
