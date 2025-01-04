@@ -24,7 +24,6 @@
             "skybox": {
                 "size": {"x": 512.0, "y": 512.0, "z": 512.0},
                 "center": {"x": 0.0, "y": 0.0, "z": 0.0},
-                "emissive": {"r": 1.0, "g": 1.0, "b": 1.0},
                 "intensity": 0.0,
                 "front": "textures/skybox/front.jpeg",
                 "back": "textures/skybox/back.jpeg",
@@ -266,13 +265,20 @@
                         "type": "directionallight",
                         "position": {"x": -150, "y": 40, "z": -256},
                         "color": {"r": 1.0, "g": 0.95, "b": 0.77},
-                        "intensity": 10.0,
+                        "intensity": 5.0,
                         "castshadow": true,
                         "shadowleft": -256,
                         "shadowright": 256,
                         "shadowtop": 256,
                         "shadowbottom": -50,
-                        "shadowfar": 1000
+                        "shadowfar": 1000000.0
+                    },
+                    "pointlight": {
+                        "type": "pointlight",
+                        "position": {"x": 50, "y": 30, "z": -100},
+                        "color": {"r": 1.0, "g": 0.95, "b": 0.77},
+                        "intensity": 1,
+                        "decay": 0.1
                     }
                 }
             },

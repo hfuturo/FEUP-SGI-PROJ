@@ -78,7 +78,7 @@ class MyTrack {
         const mesh = new THREE.Mesh(geometry, this.material);
         mesh.scale.set(1, 0.01, 1);
 
-        const shadows = new THREE.Mesh(geometry, new THREE.ShadowMaterial({ opacity: 0.3 }));
+        const shadows = new THREE.Mesh(geometry, new THREE.ShadowMaterial({ opacity: 0.25 }));
         shadows.scale.set(1, 0.01, 1);
         shadows.receiveShadow = true;
 

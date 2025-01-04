@@ -33,7 +33,6 @@ class MySceneData {
         this.descriptors["skybox"] = [
             { name: "size", type: "vector3" },
             { name: "center", type: "vector3"},
-            { name: "emissive", type: "rgb"},
             { name: "intensity", type: "float"},
             { name: "front", type: "string"},
             { name: "back", type: "string"},

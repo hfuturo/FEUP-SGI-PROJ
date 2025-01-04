@@ -235,13 +235,11 @@ class MyInitializer {
             loader.load(skybox.right),
             loader.load(skybox.left)
         ]
-        const emissive = new THREE.Color(...skybox.emissive);
 
         const box = new THREE.BoxGeometry(...skybox.size);
         const mesh = new THREE.Mesh(box, textures.map(t => new THREE.MeshBasicMaterial({ 
             map: t, 
             side: THREE.BackSide, 
-            emissive: emissive, 
             emissiveIntensity: skybox.intensity 
         })));
         mesh.position.set(...skybox.center);
