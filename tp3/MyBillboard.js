@@ -1,7 +1,20 @@
 import * as THREE from 'three';
 import { MyAnimation } from './MyAnimation.js';
 
+/**
+ * @class MyBillboard
+ * Represents a billboard/outdoor display. Contains several methods that allow addition of elements and interaction with the billboard.
+ */
 class MyBillboard {
+    /**
+     * Creates an instance of MyBillboard.
+     * 
+     * @constructor
+     * @param {Object} app - The application instance.
+     * @param {Object} position - The position of the billboard.
+     * @param {number} depth - The depth of the billboard.
+     * @param {Object} [rotation] - The rotation of the billboard.
+     */
     constructor(app, position, depth, rotation) {
         this.app = app;
         this.position = position;
@@ -15,6 +28,13 @@ class MyBillboard {
 
     static font = new THREE.TextureLoader().load('textures/font.png');
 
+    /**
+     * Starts a timer and displays it on the screen.
+     * 
+     * @param {number} x - The x-coordinate for the timer display, relative to the billboard's position
+     * @param {number} y - The y-coordinate for the timer display, relative to the billboard's position
+     * @param {number} size - The font size of the timer display.
+     */
     startTimer(x, y, size) {
         this.startTime = Date.now();
         this.lastTime = this.startTime;
@@ -28,6 +48,11 @@ class MyBillboard {
         this.app.scene.add(this.pauseObj);
     }
 
+    /**
+     * Toggles the pause state of the timer and updates the scene accordingly.
+     * If the timer is paused, it displays a play icon. If the timer is resumed, it displays a pause icon.
+     * It also adjusts the start time to account for the paused duration.
+     */
     pauseTimer() {
         this.pause = !this.pause;
         this.app.scene.remove(this.pauseObj);
@@ -42,6 +67,12 @@ class MyBillboard {
         }
     }
 
+    /**
+     * Displays information about the layers of the balloon in real-time.
+     * 
+     * @param {number} x The x-coordinate for the layer display, relative to the billboard's position
+     * @param {number} y The y-coordinate for the layer display, relative to the billboard's position
+     */
     startLayer(x, y) {
         this.layer = 0;
         
@@ -60,6 +91,14 @@ class MyBillboard {
         this.windAnimation = new MyAnimation(this.layerObj[1]);
     }
 
+    /**
+     * Initializes and starts the lap counter on the billboard.
+     *
+     * @param {number} laps - The total number of laps to display.
+     * @param {number} x - The x-coordinate for the lap counter display.
+     * @param {number} y - The y-coordinate for the lap counter display.
+     * @param {number} size - The font size for the lap counter display.
+     */
     startLaps(laps, x, y, size) {
         this.addText('Lap', x + 0.75, y + 2, 2);
 
@@ -69,6 +108,13 @@ class MyBillboard {
         this.app.scene.add(this.lapObj[0]);
     }
 
+    /**
+     * Initializes and displays vouchers on the billboard.
+     *
+     * @param {number} x - The x-coordinate for the voucher display.
+     * @param {number} y - The y-coordinate for the voucher display.
+     * @param {number} size - The size of the voucher display.
+     */
     startVouchers(x, y, size) {
         this.addPicture('textures/voucher.png', x - size, y, size);
 
@@ -78,6 +124,13 @@ class MyBillboard {
         this.app.scene.add(this.vouchersObj[0]);
     }
 
+    /**
+     * Starts tracking the balloon position on a map representative of the track.
+     * 
+     * @param {number} x - The x-coordinate for the balloon tracking.
+     * @param {number} y - The y-coordinate for the balloon tracking.
+     * @param {number} size - The size of the balloon.
+     */
     startBalloonTracking(x, y, size) {
         this.addPicture('textures/track.png', x, y, size);
         this.addText('Player', x + 8, y - 6, 1);
@@ -114,23 +167,56 @@ class MyBillboard {
         this.app.scene.add(this.pc);
     }
 
+    /**
+     * Stops the timer.
+     * 
+     * @returns {number} The current display time.
+     */
     stopTimer() {
         this.startTime = null;
         return this.displayTime;
     }
 
+    /**
+     * Adds a text object to the billboard.
+     *
+     * @param {string} text - The text to be displayed.
+     * @param {number} x - The x-coordinate for the text position, relative to the billboard's position.
+     * @param {number} y - The y-coordinate for the text position, relative to the billboard's position.
+     * @param {number} size - The size of the text.
+     */
     addText(text, x, y, size) {
         const textObj = this.createText(text, x, y, size);
         this.textObjs.push(textObj);
         this.app.scene.add(textObj);
     }
 
+    /**
+     * Adds a picture to the scene.
+     *
+     * @param {string} texture - The texture of the picture.
+     * @param {number} x - The x-coordinate of the picture, relative to the billboard's position.
+     * @param {number} y - The y-coordinate of the picture, relative to the billboard's position.
+     * @param {number} size - The size of the picture.
+     * @param {number} [yRatio=1] - The y-axis ratio of the picture.
+     */
     addPicture(texture, x, y, size, yRatio=1) {
         const pictureObj = this.createPicture(texture, x, y, size, yRatio);
         this.pictureObjs.push(pictureObj);
         this.app.scene.add(pictureObj);
     }
 
+    /**
+     * Adds a button to the scene with specified properties and elements.
+     *
+     * @param {string} id - The identifier for the button.
+     * @param {number} x - The x-coordinate for the button's position, relative to the billboard's position.
+     * @param {number} y - The y-coordinate for the button's position, relative to the billboard's position.
+     * @param {number} width - The width of the button.
+     * @param {number} height - The height of the button.
+     * @param {Array<THREE.Object3D>} elements - The elements to be added to the button.
+     * @param {number} [color=0xff0000] - The color of the button (default is red).
+     */
     addButton(id, x, y, width, height, elements, color=0xff0000) {
         const group = new THREE.Group();
         const button = new THREE.Mesh(
@@ -158,6 +244,11 @@ class MyBillboard {
         this.app.scene.add(group);
     }
 
+    /**
+     * Highlights the button with the specified ID by changing its color.
+     *
+     * @param {string} id - The ID of the button to highlight.
+     */
     highlightButton(id) {
         this.buttonObjs.forEach((buttonObj) => {
             if (buttonObj.children[0].name === id) {
@@ -166,6 +257,11 @@ class MyBillboard {
         });
     }
 
+    /**
+     * Unhighlights a button by setting its color to red.
+     *
+     * @param {string} id - The ID of the button to unhighlight.
+     */
     unHighlightButton(id) {
         this.buttonObjs.forEach((buttonObj) => {
             if (buttonObj.children[0].name === id) {
@@ -174,6 +270,11 @@ class MyBillboard {
         });
     }
 
+    /**
+     * Removes the last added element to the button with the provided id.
+     *
+     * @param {string} id - The id of the button element to be removed.
+     */
     removeButtonElement(id) {
         this.buttonObjs.forEach((buttonObj) => {
             if (buttonObj.children[0].name === id) {
@@ -182,6 +283,12 @@ class MyBillboard {
         });
     }
 
+    /**
+     * Adds an element to the button object with the specified ID.
+     *
+     * @param {string} id - The ID of the button object to which the element will be added.
+     * @param {THREE.Object3D} element - The element to be added to the button object.
+     */
     addButtonElement(id, element) {
         this.buttonObjs.forEach((buttonObj) => {
             if (buttonObj.children[0].name === id) {
@@ -192,6 +299,11 @@ class MyBillboard {
         });
     }
 
+    /**
+     * Adds a temporary element to the scene and removes it after 3 seconds.
+     *
+     * @param {THREE.Object3D} element - The element to be added to the scene.
+     */
     addTempElement(element) {
         this.app.scene.add(element);
         setTimeout(() => {
@@ -199,6 +311,14 @@ class MyBillboard {
         }, 3000);
     }
 
+    /**
+     * Creates a 3D text object using a sprite sheet.
+     *
+     * @param {string} text - The text to be displayed.
+     * @param {number} size - The size of each character.
+     * @param {number} [color=0x000000] - The color of the text in hexadecimal format.
+     * @returns {THREE.Group} - A THREE.Group containing the 3D text meshes.
+     */
     static createText(text, size, color=0x000000) {
         const group = new THREE.Group();
         text = text.toUpperCase();
@@ -262,6 +382,16 @@ class MyBillboard {
         return group;
     }
 
+    /**
+     * Creates a text group with the specified properties and positions it based on the billboard's rotation.
+     *
+     * @param {string} text - The text to be displayed.
+     * @param {number} x - The x-coordinate offset for the text position.
+     * @param {number} y - The y-coordinate offset for the text position.
+     * @param {number} size - The size of the text.
+     * @param {number} [color=0x000000] - The color of the text in hexadecimal format.
+     * @returns {THREE.Group} The group containing the text meshes.
+     */
     createText(text, x, y, size, color=0x000000) {
         const group = MyBillboard.createText(text, size, color);
 
@@ -278,6 +408,16 @@ class MyBillboard {
         return group;
     }
 
+    /**
+     * Creates a picture mesh with the given texture and parameters.
+     *
+     * @param {string} texture - The path to the texture image.
+     * @param {number} x - The x position offset for the mesh.
+     * @param {number} y - The y position offset for the mesh.
+     * @param {number} size - The size of the plane geometry.
+     * @param {number} [yRatio=1] - The ratio of the height to the width of the picture.
+     * @returns {THREE.Mesh} The created mesh with the texture applied.
+     */
     createPicture(texture, x, y, size, yRatio=1) {
         const plane = new THREE.PlaneGeometry(size, size*yRatio);
         const tex = new THREE.TextureLoader().load(texture);
@@ -295,6 +435,14 @@ class MyBillboard {
     }
     
 
+    /**
+     * Updates the state of the billboard, including the displayed time and animations.
+     * 
+     * - If the timer is running and not paused, it updates the displayed time every second.
+     * - Updates the balloon and wind animations if they are active.
+     * 
+     * @method
+     */
     update() {
         if (this.startTime && !this.pause) {
             const currentTime = Date.now();
@@ -323,6 +471,11 @@ class MyBillboard {
         }
     }
 
+    /**
+     * Updates the layer and animates the balloon and wind elements based on the provided update value.
+     * 
+     * @param {number} update - The value to update the layer by. Either 1 or -1.
+     */
     updateLayer(update) {
         const positions = [
             ...this.layerObj[0].position,
@@ -398,6 +551,10 @@ class MyBillboard {
         this.layer += update;
     }
 
+    /**
+     * Increments the lap counter, updates the lap display, and adjusts its position if necessary.
+     * @method
+     */
     incrementLap() {
         this.app.scene.remove(this.lapObj[0]);
         this.lap++;
@@ -409,6 +566,12 @@ class MyBillboard {
         this.app.scene.add(this.lapObj[0]);
     }
 
+    /**
+     * Updates the voucher count and updates the displayed voucher text.
+     * If the current voucher count is zero and the quantity to be added is negative, the function returns without making any changes.
+     *
+     * @param {number} quantity - The number of vouchers to add (can be negative to subtract vouchers).
+     */
     updateVoucher(quantity) {
         if (this.vouchers === 0 && quantity < 0)
             return;
@@ -419,6 +582,14 @@ class MyBillboard {
         this.app.scene.add(this.vouchersObj[0]);
     }
 
+    /**
+     * Updates the positions of the player and PC balloons on the map.
+     *
+     * @param {number} xPlayer - The x-coordinate of the player.
+     * @param {number} zPlayer - The z-coordinate of the player.
+     * @param {number} xPC - The x-coordinate of the PC.
+     * @param {number} zPC - The z-coordinate of the PC.
+     */
     updateBalloonTracking(xPlayer, zPlayer, xPC, zPC) {
         if (this.rotation === Math.PI) {
             xPlayer *= -1;
@@ -432,6 +603,14 @@ class MyBillboard {
         this.pc.position.y = this.balloonTrackingOrigin[1] - zPC * this.balloonTrackingOrigin[2] / 250;
     }
 
+    /**
+     * Clears all objects from the scene.
+     * 
+     * This method removes all text, picture, button, time, layer, lap, vouchers, player, pc, and pause objects from the scene.
+     * It iterates through each type of object and removes them from the scene, then resets the corresponding arrays to empty.
+     * 
+     * @method clear
+     */
     clear() {
         this.textObjs.forEach((textObj) => this.app.scene.remove(textObj));
         this.textObjs = [];

@@ -193,6 +193,7 @@ class MyApp  {
             // required if controls.enableDamping or controls.autoRotate are set to true
             this.controls.update();
 
+            // render to texture
             if (this.renderTarget) {
                 this.renderTarget = false;
 

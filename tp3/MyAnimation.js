@@ -9,10 +9,21 @@ class MyAnimation {
         this.animationPlaying = false;
     }
 
+    /**
+     * @returns {boolean} True if an animation is playing, false otherwise.
+     */
     isPlaying() {
         return this.animationPlaying;
     }
 
+    /**
+     * Creates and plays an animation for the specified property of the object.
+     *
+     * @param {Array<number>} times - An array of keyframe times.
+     * @param {Array<number>} values - An array of keyframe values.
+     * @param {string} [property='position'] - The property to animate ('position', 'scale' or 'rotation').
+     * @throws {Error} If an animation is already playing.
+     */
     createAnimation(times, values, property='position') {
         if (this.isPlaying()) 
             throw new Error('Animation is already playing');
@@ -59,6 +70,9 @@ class MyAnimation {
         action.play()
     }
 
+    /**
+     * Updates the animation.
+     */
     update() {
         this.mixer.update(this.clock.getDelta());
     }

@@ -69,12 +69,19 @@ class MyContents {
     this.boostersSparkles = [];
   }
 
+  /**
+   * Updates the penalty time (used by the GUI)
+   * @param {number} val balloon penalty in seconds
+   */
   updatePenalty(val) {
     this.penalty = val;
     this.playerBalloon.setPenalty(this.penalty);
     this.opponentBalloon.setPenalty(this.penalty);
   }
 
+  /**
+   * Performs actions that required the YASF scene to be loaded
+   */
   onAfterSceneLoadedAndBeforeRender() {
     this.loadTrack();
     this.loadParkingLots();
@@ -86,6 +93,9 @@ class MyContents {
     this.app.gui.finish();
   }
 
+  /**
+   * Creates parking lot objects and displays them
+   */
   loadParkingLots() {
     const ballonsTransformations = this.initializer.balloons_transformations;
 
@@ -105,6 +115,9 @@ class MyContents {
     this.parkingLot2.display();
   }
 
+  /**
+   * Loads the track and its components
+   */
   loadTrack() {
     const track = this.initializer.track;
 
@@ -122,6 +135,9 @@ class MyContents {
     this.initializer.objects["gift"].parent.remove(this.initializer.objects["gift"]);
   }
 
+  /**
+   * Loads the billboards/outdoors according to the current state
+   */
   loadBillBoards() {
     this.billBoards.forEach((billboard) => {
       billboard.clear();
@@ -134,6 +150,10 @@ class MyContents {
     else if (this.state === state.END) this.loadBillBoardsEnd();
   }
 
+  /**
+   * Loads the billboards for the start state
+   * This includes displaying the start menu, with game title, authors, balloons selection, laps selection, and username input
+   */
   loadBillBoardsStart() {
     this.choosingBalloon = false;
     this.picker = new MyPicker(this.app, [], this.startMenuPicker.bind(this));
@@ -190,6 +210,10 @@ class MyContents {
     });
   }
 
+  /**
+   * Loads the billboards for the playing state
+   * This includes displaying the timer, laps, vouchers, balloon height information, and the map tracking the balloons
+   */
   loadBillBoardsPlaying() {
     const billboardObj = this.initializer.objects["out_billboards"];
 
@@ -206,6 +230,10 @@ class MyContents {
     });
   }
 
+  /**
+   * Loads the billboards for the end state
+   * This includes displaying the game over message, the timer, the player and PC balloons, the winner, the restart and exit buttons
+   */
   loadBillBoardsEnd() {
     this.picker = new MyPicker(this.app, [], this.endMenuPicker.bind(this));
 
@@ -263,6 +291,11 @@ class MyContents {
     document.addEventListener('keydown', this.keyHandler.bind(this));
   }
 
+  /**
+   * Changes the state of the application and performs necessary setup based on the new state.
+   * 
+   * @param {string} newState - The new state to transition to. Possible values are `state.START`, `state.PLAYING`, and `state.END`.
+   */
   changeState(newState) {
     this.state = newState;
 
@@ -324,6 +357,11 @@ class MyContents {
     this.loadBillBoards();
   }
 
+  /**
+   * Handles the selection of items for the initial menu based on the provided intersects array.
+   * 
+   * @param {Array} intersects - An array of intersected objects from a raycaster.
+   */
   startMenuPicker(intersects) {
     if (this.choosingBalloon) return;
 
@@ -363,6 +401,10 @@ class MyContents {
     }
   }
 
+  /**
+   * Logic associated with the START button
+   * Checks if all conditions for starting the game are met and changes the state to `state.PLAYING` if so.
+   */
   startGame() {
     const unhighlight = () => {
       setTimeout(() => {
@@ -404,12 +446,28 @@ class MyContents {
     this.changeState(state.PLAYING);
   }
 
+  /**
+   * Logic associated with the input of the username
+   * Setting acceptingInputs to true will display letters on the screen and allow the user to input their username
+   */
   insertName() {
     this.acceptingInputs = true;
   }
 
+  /**
+   * Chooses a balloon for the given player or opponent and sets up the scene accordingly.
+   * 
+   * @param {string} name - The name of the entity choosing the balloon ('player' or 'opponent').
+   * @returns {Promise<void>} A promise that resolves when the balloon selection process is complete.
+   */
   chooseBalloon(name) {
-    return new Promise((resolve) => {
+    return new Promise((resolve) => {      
+      /**
+       * This is the callback for the parking lot picker.
+       * It is responsible for updating the billboards with the selected balloon and starting position.
+       *
+       * @param {Object} ballon - The balloon object that is selected.
+       */
       const selectedBalloon = (ballon) => {
         this.billBoards.forEach((billboard) => {
           billboard.removeButtonElement(name);
@@ -422,6 +480,7 @@ class MyContents {
           billboard.addButtonElement(name, picture);
         });
 
+        // If the player balloon if being chosen, the starting position of the balloons is also chosen
         if (name === 'player') {
           this.playerBalloon = ballon;
           this.app.setActiveCamera("grid_selection")
@@ -453,6 +512,7 @@ class MyContents {
           this.app.scene.add(pos2);
 
           let highlighted;
+          // Create a picker to select the starting position
           const picker = new MyPicker(this.app, [base1, base2], (intersects) => {
             if (intersects.length > 0) {
               if (highlighted && highlighted.uuid === intersects[0].object.uuid) {
@@ -495,6 +555,7 @@ class MyContents {
           });
 
         } else {
+          // If a starting position is already chosen, display the starting positions on the billboards
           if (this.startPos) {
             this.billBoards.forEach((billboard) => {
               let pos;
@@ -527,6 +588,14 @@ class MyContents {
     });
   }
 
+  /** 
+   * If the name is 'lapsUp' and the current number of laps is less than 99, it increments the number of laps.
+   * If the name is 'lapsDown' and the current number of laps is greater than 1, it decrements the number of laps.
+   * 
+   * Updates the billboard elements to reflect the new number of laps.
+   * 
+   * @param {string} name - The name indicating the button that was pressed ('lapsUp' or 'lapsDown').
+   */
   changeNumLaps(name) {
     setTimeout(() => {
       if (this.highlight !== null) {
@@ -553,6 +622,14 @@ class MyContents {
     });
   }
 
+  /**
+   * Handles the end menu selection based on the intersected objects.
+   * If the intersected object's name is 'restart', it changes the state to PLAYING.
+   * If the intersected object's name is 'exit', it changes the state to START.
+   * Resets all fireworks and sparkles, then clears the arrays.
+   *
+   * @param {Array} intersects - Array of intersected objects.
+   */
   endMenuPicker(intersects) {
     if (intersects.length > 0) {
       const name = intersects[0].object.name;
@@ -571,6 +648,11 @@ class MyContents {
     }
   }
 
+  /**
+   * Handles key events based on the current state of the application.
+   * 
+   * @param {KeyboardEvent} event - The keyboard event object.
+   */
   keyHandler(event) {
     if (!this.acceptingInputs) return;
 
@@ -578,6 +660,16 @@ class MyContents {
     else if (this.state === state.PLAYING) this.keyHandlerPlaying(event);
   }
 
+  /**
+   * Handles keyboard events for updating the username (the only scenario in which the keyboard is used for the start state).
+   * 
+   * @param {KeyboardEvent} event - The keyboard event triggered by user input.
+   * 
+   * Key bindings:
+   * - 'a' to 'z': Appends the corresponding letter to the username if the username length is less than 8.
+   * - 'Backspace': Removes the last character from the username.
+   * - 'Enter' or 'Escape': Deselect username input option (stops receiving inputs).
+   */
   keyHandlerStart(event) {
     const updateDisplay = () => {
       this.billBoards.forEach((billboard) => {
@@ -605,6 +697,18 @@ class MyContents {
     }
   }
 
+  /**
+   * Handles key events when the game is in the playing state.
+   *
+   * @param {KeyboardEvent} event - The keyboard event triggered by the user.
+   * 
+   * Key bindings:
+   * - 'w': Moves the player balloon up and updates the layer of all billboards.
+   * - 's': Moves the player balloon down and updates the layer of all billboards.
+   * - 'c': Toggles between first-person and third-person camera views if the active camera is the balloon camera.
+   * - ' ': Pauses or resumes the game and toggles the visibility of the pause indicator.
+   * - 'h': Toggles the visibility of the HUD.
+   */
   keyHandlerPlaying(event) {
     switch (event.key) {
       case 'w':
@@ -639,6 +743,10 @@ class MyContents {
     }
   }
 
+  /**
+   * Sets up the camera to follow the player's balloon in first-person view.
+   * If no balloon is selected, a warning is logged to the console.
+   */
   balloonFirstPerson() {
     if (this.playerBalloon === undefined) {
       console.warn('No balloon selected');
@@ -651,6 +759,10 @@ class MyContents {
     this.app.updateTarget();
   }
 
+  /**
+   * Adjusts the camera to a third-person view following the player's balloon.
+   * If no balloon is selected, a warning is logged to the console.
+   */
   balloonThirdPerson() {
     if (this.playerBalloon === undefined) {
       console.warn('No balloon selected');
@@ -664,8 +776,8 @@ class MyContents {
   }
 
   /**
-   * updates the contents
-   * this method is called from the render method of the app
+   * Checks if it is necessary to update the relief image.
+   * Delegates other updates to state specific methods and object specific methods.
    */
   update() {
     if (this.track) {
@@ -696,6 +808,10 @@ class MyContents {
     this.app.gui.update();
   }
 
+  /**
+   * Updates the boosters by creating new sparkles at the positions of parkingLot1 and parkingLot2,
+   * and updating the existing sparkles. Removes sparkles that are marked as done.
+   */
   updateBoosters() {
     const color = {
       "h": 0.12,
@@ -722,6 +838,9 @@ class MyContents {
     }
   }
 
+  /**
+   * Updates the playing state of the game.
+   */
   updatePlaying() {
     this.playerBalloon.update();
     this.opponentBalloon.update();
@@ -763,6 +882,7 @@ class MyContents {
     this.#checkCollisions();
     this.#checkOffTrack();
 
+    // update camera lookAt so it follows the balloon
     if (this.app.activeCameraName === 'balloon') {
       const pos = this.playerBalloon.getPosition();
       if (this.balloonCamera === '1') {
@@ -775,6 +895,11 @@ class MyContents {
     }
   }
 
+  /**
+   * Checks if the player's balloon is off track and handles the consequences.
+   * If the balloon is off track and the player has vouchers, it decrements the voucher count.
+   * If the player has no vouchers, it freezes the balloon and replaces it at the closest point on the track.
+   */
   #checkOffTrack() {
     const {closestPoint, offTrack} = this.track.isBalloonOffTrack(this.playerBalloon.getShadowPosition());
 
@@ -787,6 +912,9 @@ class MyContents {
     }
   }
 
+  /**
+   * Checks for collisions between the player's balloon and obstacles, power-ups, and the opponent's balloon.
+   */
   #checkCollisions() {
     this.track.getObstacles().forEach((obstacle) => {
       if (!this.playerBalloon.collides(obstacle) || this.playerBalloon.collidedWith(obstacle)) return;
@@ -812,6 +940,11 @@ class MyContents {
     }
   }
 
+  /**
+   * Handles the shooting of fireworks.
+   * Iterates through the fireworks objects and randomly triggers new fireworks.
+   * Updates the state of each firework and removes those that are done.
+   */
   #shootFireworks() {
     this.fireworksObj.forEach((fireworkObj) => {
       if (Math.random() < 0.05) {
@@ -832,6 +965,11 @@ class MyContents {
     }
   }
 
+  /**
+   * Handles the shooting of sparkles.
+   * Iterates through the sparkles objects and triggers new sparkles.
+   * Updates the state of each sparkle and removes those that are done.
+   */
   #shootSparkles() {
     this.sparklesObj.forEach((sparkleObj) => {
       const pos = new THREE.Vector3();
@@ -849,6 +987,13 @@ class MyContents {
     }
   }
 
+  /**
+   * Updates the relief image in the scene.
+   * 
+   * This method retrieves a new relief image based on the target depth and RGB values
+   * from the application. If a relief mesh already exists, it removes it from the scene.
+   * Then, it sets the new mesh's position and rotation, and adds it to the scene.
+   */
   #updateReliefImage() {
     this.reliefImage.getImage(this.app.targetDepth, this.app.targetRGB).then(mesh => {
       if (this.reliefMesh) {

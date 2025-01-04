@@ -3,6 +3,14 @@ import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 
 class MyObstacle {
 
+    /**
+     * Creates an instance of MyObstacle.
+     * 
+     * @constructor
+     * @param {Object} app - The application instance.
+     * @param {Array<number>} pos - The position of the obstacke.
+     * @param {THREE.Object3D} simpleRepresentation - A simple representation of the obstacle.
+     */
     constructor(app, pos, simpleRepresentation) {
         this.app = app;
         this.pos = pos;
@@ -21,6 +29,10 @@ class MyObstacle {
         this.#initCollisionObjects();
     }
     
+    /**
+     * Initializes the collision objects for the obstacle.
+     * Creates a transparent sphere to represent the obstacle's collision area.
+     */
     #initCollisionObjects() {
         // need to manually update sclae if radius is changed
         this.RADIUS = 2.4;
@@ -30,6 +42,12 @@ class MyObstacle {
         );
     }
 
+    /**
+     * Initializes the complex representation of the obstacle using a FBX model.
+     * A Shader Material is applied to the model to make it pulsate.
+     * A modification is made to the original vertex shader to include the pulsating effect, and the fragment shader 
+     * and the maps are left unchanged to keep the original appearance. 
+     */
     async display() {
         const loader = new FBXLoader();
 
@@ -91,6 +109,12 @@ class MyObstacle {
         return this.RADIUS;
     }
 
+    /**
+     * Updates the time uniform of each material by incrementing it with the given delta value.
+     * The time value is wrapped around using the modulus operator to keep it within the range of 0 to 2*PI.
+     *
+     * @param {number} delta - The time delta to increment the time uniform by.
+     */
     update(delta) {
         this.materials.forEach(material => {
             material.uniforms.time.value = (material.uniforms.time.value + delta*2) % (2*Math.PI);

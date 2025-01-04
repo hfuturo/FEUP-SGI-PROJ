@@ -3,6 +3,14 @@ import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 
 class MyPowerUp {
 
+    /**
+     * Creates an instance of MyPowerUp.
+     * 
+     * @constructor
+     * @param {Object} app - The application instance.
+     * @param {Array<number>} pos - The position of the power-up.
+     * @param {THREE.Object3D} simpleRepresentation - A simple representation of the power-up.
+     */
     constructor(app, pos, simpleRepresentation) {
         this.app = app;
         this.pos = pos;
@@ -23,6 +31,11 @@ class MyPowerUp {
         this.#initCollisionObjects();
     }
 
+    /**
+     * Initializes the complex representation of the power-up using a FBX model.
+     * A Shader Material is applied to the model to make it pulsate.
+     * A modification is made to the original vertex shader to include the pulsating effect, and the fragment shader is left unchanged to keep the original appearance. 
+     */
     async display() {
         const loader = new FBXLoader();
 
@@ -71,6 +84,10 @@ class MyPowerUp {
         this.app.scene.add(this.representation);
     }
 
+    /**
+     * Initializes the collision objects for the power-up.
+     * Creates a transparent box mesh with the specified dimensions and adds it to the group.
+     */
     #initCollisionObjects() {
         this.box = new THREE.Mesh(
             new THREE.BoxGeometry(this.width, this.height, this.depth),
@@ -82,8 +99,6 @@ class MyPowerUp {
     }
 
     getPosition() {
-        const v = new THREE.Vector3();
-        this.box.getWorldPosition(v);
         return this.pos;
     }
 
@@ -99,6 +114,12 @@ class MyPowerUp {
         return this.depth;
     }
 
+    /**
+     * Updates the time uniform of each material by incrementing it with the given delta value.
+     * The time value is wrapped around using the modulus operator to keep it within the range of 0 to 2*PI.
+     *
+     * @param {number} delta - The time delta to increment the time uniform by.
+     */
     update(delta) {
         this.materials.forEach(material => {
             material.uniforms.time.value = (material.uniforms.time.value + delta*2) % (2*Math.PI);

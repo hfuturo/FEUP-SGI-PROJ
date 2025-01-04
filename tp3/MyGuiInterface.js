@@ -52,6 +52,12 @@ class MyGuiInterface  {
         this.reliefControllers.push(relief.add(this.contents.reliefImage, 'horizontalDivisions', 200, 1600, 100).name('Horizontal Divisions').onChange((val) => this.#changeProportions(val, 'h')))
     }
 
+    /**
+     * Changes the wind direction values homogeniously for all directions.
+     *
+     * @private
+     * @param {number} val - The value to set for the wind directions.
+     */
     #changeHomogeneous(val) {
         if (this.homogeneous) {
             this.contents.wind.north = val
@@ -63,6 +69,13 @@ class MyGuiInterface  {
         }
     }
 
+    /**
+     * Changes the resolution of the relief image keeping the proportions.
+     * 
+     * @param {number} val - The value to adjust.
+     * @param {string} type - The type of adjustment ('v' for vertical, 'h' for horizontal).
+     * @private
+     */
     #changeProportions(val, type) {
         if (this.reliefProportion) {
             if (type === 'v') {
@@ -77,6 +90,9 @@ class MyGuiInterface  {
         }
     }
 
+    /**
+     * Finish the gui interface. This function is called after loading YASF
+     */
     finish() {
         const data = {
             selectedRoute: null
@@ -103,6 +119,9 @@ class MyGuiInterface  {
         this.general.add(this.contents, 'opponentLapTime', 10, 150, 10).name('PC Lap Time')
     }
 
+    /**
+     * Updates the camera controller in case it was changed outside of the gui
+     */
     update() {
         if (this.cameraController)
             this.cameraController.updateDisplay();
