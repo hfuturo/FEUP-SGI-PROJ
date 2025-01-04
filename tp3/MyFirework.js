@@ -1,7 +1,19 @@
 import * as THREE from 'three';
 
+/**
+ * @class MyFirework
+ * 
+ * Represents a firework.
+ */
 class MyFirework {
 
+    /**
+     * Creates an instance of MyFirework.
+     * 
+     * @param {MyApp} app - The application instance.
+     * @param {THREE.Vector3} position - The position of the firework to be launched.
+     * @param {number} size - Size of the firework.
+     */
     constructor(app, position, size=0.5) {
         this.app = app;
         this.position = position;
@@ -31,12 +43,20 @@ class MyFirework {
         this.#launch();
     }
 
+    /**
+     * Returns a random color.
+     * 
+     * @returns {THREE.Color}
+     */
     #getRandomColor() {
         const color = new THREE.Color();
         color.setHSL(THREE.MathUtils.randFloat(0.1, 0.9), THREE.MathUtils.randFloat(0.5, 0.9), THREE.MathUtils.randFloat(0.5, 0.9));
         return color;
     }
 
+    /**
+     * Launces a firework into the sky.
+     */
     #launch() {
         const colors = [this.color.r, this.color.g, this.color.b];
 
@@ -57,6 +77,15 @@ class MyFirework {
         this.app.scene.add(this.points);
     }
 
+    /**
+     * Explodes the firework, sending multiple particles into random directions.
+     * There is a 5% chance the new particles will have random colors. Otherwise, the color will be the same as the original one.
+     * 
+     * @param {THREE.TypedArray} origin - The location where the firework exploded.
+     * @param {number} n - The number of particles that will be launced.
+     * @param {number} rangeBegin - Minimum distance the multiple particles need to travel.
+     * @param {number} rangeEnd - Maximum distance the multiple particles can travel.
+     */
     explode(origin, n, rangeBegin, rangeEnd) {
         let mixedColors = false;
         if (Math.random() < 0.05) {
@@ -89,6 +118,9 @@ class MyFirework {
         this.geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(this.colors), 3));
     }
 
+    /**
+     * Removes the firework.
+     */
     reset() {
         this.app.scene.remove(this.points);
         this.dest = [];
@@ -98,6 +130,13 @@ class MyFirework {
         this.points = null;
     }
 
+    /**
+     * Updates the firework.
+     * If the firework already reached 95% the maximum height, it will explode into multiple particles.
+     * The particles will then slowly fade away and disappear.
+     * 
+     * @returns {void}
+     */
     update() {
         // do only if objects exist
         if(this.points && this.geometry)

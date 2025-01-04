@@ -1,7 +1,21 @@
 import * as THREE from 'three';
 
+/**
+ * @class MySparkle
+ * 
+ * Represents a sparkle.
+ */
 class MySparkle {
 
+    /**
+     * Creates an instance of MySparkle.
+     * 
+     * @param {MyApp} app - The application instance.
+     * @param {THREE.Vector3} position - The position of the sparkle to be launced.
+     * @param {number} size - The size of the sparkle.
+     * @param {boolean} [inverted=false] - If set to true shoots the sparkles down. Otherwise shoots the sparkle up.
+     * @param {(THREE.Color|undefined)} color - Color of the sparkles.
+     */
     constructor(app, position, size=0.5, inverted=false, color=undefined) {
         this.app = app;
         this.position = position;
@@ -31,6 +45,9 @@ class MySparkle {
         this.#launch();
     }
 
+    /**
+     * Launches a sparkle. If the color is undefined, a random color will be attributed.
+     */
     #launch() {
         const color = new THREE.Color();
 
@@ -60,6 +77,9 @@ class MySparkle {
         this.app.scene.add(this.points);
     }
 
+    /**
+     * Removes the sparkle.
+     */
     reset() {
         this.app.scene.remove(this.points);
         this.dest = [];
@@ -69,6 +89,10 @@ class MySparkle {
         this.points = null;
     }
 
+    /**
+     * Updates the sparkle.
+     * Removes the sparkle once it reaches 95% of its height.
+     */
     update() {
         // do only if objects exist
         if(this.points && this.geometry)

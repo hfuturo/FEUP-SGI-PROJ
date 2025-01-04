@@ -1,6 +1,22 @@
 import * as THREE from 'three';
+import { MyApp } from './MyApp.js';
+import { MyObstacle } from './MyObstacle.js';
+import { MyPowerUp } from './MyPowerUp.js';
 
+/**
+ * @class MyTrack
+ * 
+ * Represents a track.
+ */
 class MyTrack {
+
+    /**
+     * Creates an instance of MyTrack.
+     * 
+     * @param {MyApp} app - The application instance.
+     * @param {MyObstacle[]} obstacles - Array containg the obstacles of the track. 
+     * @param {MyPowerUp[]} powerUps - Array containing the powerups of the track.
+     */
     constructor(app, obstacles, powerUps) {
         this.app = app;
         this.obstacles = obstacles;
@@ -22,6 +38,9 @@ class MyTrack {
         this.representation = this.#createTrack();
     }
 
+    /**
+     * Displays the track, obstacles and powerups.
+     */
     display() {
         this.representation.forEach((representation) => this.app.scene.add(representation));
 
@@ -34,6 +53,12 @@ class MyTrack {
         });
     }
 
+    /**
+     * Create a track from a list of THREE.Vector3 points.
+     * 
+     * @param {number} width - Width of the track.
+     * @returns {(THREE.Mesh<THREE.TubeGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap> | THREE.Mesh<THREE.TubeGeometry, THREE.ShadowMaterial, THREE.Object3DEventMap>)[]}
+     */
     #createTrack(width=20) {
         const points = [
             new THREE.Vector3(0, 0, 0),
@@ -85,20 +110,46 @@ class MyTrack {
         return [mesh, shadows];
     }
 
+    /**
+     * Update the track width.
+     * 
+     * @param {number} width - New track width.
+     */
     updateTrack(width) {
         this.representation.forEach((representation) => this.app.scene.remove(representation));
         this.representation = this.#createTrack(width);
         this.app.scene.forEach((representation) => this.app.scene.add(representation));
     }
 
+    /**
+     * Returns all obstascles from the track.
+     * 
+     * @returns {MyObstacle[]}
+     */
     getObstacles() {
         return this.obstacles;
     }
 
+    /**
+     * Returns all powerups from the track.
+     * 
+     * @returns {MyPowerUp[]}
+     */
     getPowerUps() {
         return this.powerUps;
     }
 
+    /**
+     * Checks if a balloon is outside of the track by comparing the distance of the shadow of the balloon and the closest center point of the track.
+     * The track will be divided into several points and each point will be compared to the shadow position.
+     * Returns an objects containg the closest center point of the track and a boolean.
+     * 
+     * @param {THREE.Vector3} shadowPos - The position of the shadow.
+     * @param {number} margin - Distance that will decide if a balloon is offtrack or not.
+     * @param {number} [nPoints=1000] - The number of points into which the curve will be divided.
+     * 
+     * @returns {{closestPoint: number; offTrack: boolean;}}
+     */
     isBalloonOffTrack(shadowPos, margin=(this.width * 0.9), nPoints=1000) {
         const curvePoints = this.curve.getSpacedPoints(nPoints);
 
@@ -120,6 +171,9 @@ class MyTrack {
         };
     }
 
+    /**
+     * Updates both powerups and obstacles.
+     */
     update() {
         const delta = this.clock.getDelta();
         this.powerUps.forEach(powerUp => {

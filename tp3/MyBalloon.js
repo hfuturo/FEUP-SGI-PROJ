@@ -6,9 +6,21 @@ import { MyObstacle } from "./MyObstacle.js";
 import { MyPowerUp } from "./MyPowerUp.js";
 import { MyAnimation } from "./MyAnimation.js";
 
-
+/**
+ * @class MyBalloon
+ * 
+ * Represents a balloon.
+ */
 class MyBallon {
     
+    /**
+     * Creates an instance of MyBalloon.
+     * 
+     * @param {MyApp} app - The application instance.
+     * @param {string} name - The id of the balloon. Despite being a number, it is passed as a string. 
+     * @param {Object} wind - Represents the wind layers.
+     * @param {Object} balloonTransformations - All information needed to load, resize and create the balloon's collision objects. 
+     */
     constructor(app, name, wind, balloonTransformations) {
         this.app = app;
         this.name = name;
@@ -54,14 +66,29 @@ class MyBallon {
         this.#initCollisionObjects();
     }
 
+    /**
+     * Sets a new penalty number.
+     * 
+     * @param {number} penalty - The new penalty.
+     */
     setPenalty(penalty) {
         this.penalty = penalty;
     }
 
+    /**
+     * Returns the position of the shadow.
+     * 
+     * @returns {THREE.Vector3}
+     */
     getShadowPosition() {
         return this.shadow.position;
     }
 
+    /**
+     * Get the top sphere collision object position and its radius.
+     * 
+     * @returns {{topPosition: THREE.Vector3, topRadius: number}}
+     */
     getTopSpherePosition() {
         const position = new THREE.Vector3();
         this.topSphere.getWorldPosition(position);
@@ -72,6 +99,11 @@ class MyBallon {
         };
     }
 
+    /**
+     * Get the bottom sphere collision object position and its radius.
+     * 
+     * @returns {{bottomPosition: THREE.Vector3, bottomRadius: number}}
+     */
     getBottomSpherePosition() {
         const position = new THREE.Vector3();
         this.bottomSphere.getWorldPosition(position);
@@ -82,6 +114,9 @@ class MyBallon {
         };
     }
 
+    /**
+     * Creates the balloon's collision objects and applies all the transformations needed to them.
+     */
     #initCollisionObjects() {
         // set opacity to 1 to see geometries
         this.collisionMaterial = new THREE.MeshBasicMaterial({ color: 0x0000FF, transparent: true, opacity: 0 });
@@ -116,6 +151,10 @@ class MyBallon {
         this.bottomSphere.position.set(...this.balloonTransformations.bottomSphere.position);
     }
 
+    /**
+     * Loads a balloon and displays it on the screen.
+     * The collision objects are also displayed, but they are invisible.
+     */
     display() {                
         if (this.balloonTransformations.type === 'obj') {
             const objLoader = new OBJLoader();
@@ -185,6 +224,12 @@ class MyBallon {
         this.app.scene.add(this.shadow);
     }
 
+    /**
+     * Moves the balloon upwards by creating an animation.
+     * If the balloon is freezed or in the highest layer or an animation is playing, the balloon will not be moved.
+     * 
+     * @returns {boolean} Returns true if the balloon will move or false otherwise.
+     */
     up() {
         if (this.freezed || this.height === 4 || this.balloonAnimation.isPlaying() || this.shadowAnimation.isPlaying()) return false;
 
@@ -229,6 +274,12 @@ class MyBallon {
         return true;
     }
 
+    /**
+     * Moves the balloon downwards by creating an animation.
+     * If the balloon is freezed or in the lowest layer or an animation is playing, the balloon will not be moved.
+     * 
+     * @returns {boolean} Returns true if the balloon will move or false otherwise.
+     */
     down() {
         if (this.freezed || this.height === 0 || this.balloonAnimation.isPlaying() || this.shadowAnimation.isPlaying()) return false;
         
@@ -272,6 +323,12 @@ class MyBallon {
         return true;
     }
 
+    /**
+     * Updates the balloon's position.
+     * If the balloon is freezed, the balloon will not be updated.
+     * 
+     * @returns {void}
+     */
     update() {
         if (this.freezed) return;
 
@@ -296,6 +353,12 @@ class MyBallon {
         this.shadowAnimation.update();
     }
 
+    /**
+     * Handles a collision with an object. 
+     * The object will be tagged so the balloon does not collides with it again as soon as it touches it.
+     * 
+     * @param {(MyObstacle|MyBallon|MyPowerUp)} object - The object that collided with the balloon.
+     */
     handleCollision(object) {
         if (object instanceof MyObstacle || object instanceof MyBallon) {
             this.vouchers === 0 ? this.freeze() : this.vouchers--;
@@ -307,6 +370,13 @@ class MyBallon {
         this.#tagObject(object);
     }
 
+    /**
+     * Checks if an object collided with the balloon.
+     * 
+     * @param {(MyObstacle|MyBallon|MyPowerUp)} object - Object to check the collision
+     * 
+     * @returns {boolean} - Returns true of there is a collision. Otherwise returns false.
+     */
     collides(object) {
 
         const objPosition = object.getPosition();
@@ -363,10 +433,27 @@ class MyBallon {
         return false;
     }
 
+    /**
+     * Checks if an object collided with the balloon recently.
+     * 
+     * @param {(MyObstacle|MyBallon|MyPowerUp)} object - Object to check.
+     * 
+     * @returns {boolean} True if the object collided recently. False otherwise.
+     */
     collidedWith(object) {
         return this.collidedObjects.includes(object);
     }
 
+    /**
+     * Checks if there is a sphere-sphere collision.
+     * 
+     * @param {THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap>} thisSphere - Balloon's sphere.
+     * @param {number} thisRadius - The radius of the thisSphere parameter.
+     * @param {(THREE.Vector3|number[])} objPosition - The object's sphere position.
+     * @param {number} objRadius - The radius of the objPosition sphere.
+     * 
+     * @returns {boolean} True if there is a collision. False otherwise.
+     */
     #checkSphereCollision(thisSphere, thisRadius, objPosition, objRadius) {
         const position = new THREE.Vector3();
         thisSphere.getWorldPosition(position);
@@ -378,6 +465,18 @@ class MyBallon {
         return Math.sqrt(diffX + diffY + diffZ) <= (objRadius + thisRadius);
     }
 
+    /**
+     * Checks if there is a sphere-cube collision.
+     * 
+     * @param {THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap>} thisSphere - Balloon's sphere.
+     * @param {number} radius - The radius of the sphere parameter.
+     * @param {number[]} objPosition - The position of the object's cube.
+     * @param {number} objWidth - The width of the cube.
+     * @param {number} objHeight - The height of the cube.
+     * @param {number} objDepth - The depth of the cube.
+     * 
+     * @returns True if there is a collision. False otherwise.
+     */
     #checkBoxCollision(sphere, radius, objPosition, objWidth, objHeight, objDepth) {
         const position = new THREE.Vector3();
         sphere.getWorldPosition(position);
@@ -403,19 +502,37 @@ class MyBallon {
         return cornerDistance < (radius * radius);
     }
     
+    /**
+     * Gets the balloon position.
+     * 
+     * @returns {THREE.Vector3}
+     */
     getPosition() {
         return this.representation.position;
     }
 
+    /**
+     * Updates both the balloon and the shadow position.
+     * 
+     * @param {THREE.Vector3} position - New position.
+     */
     setPosition(position) {
         this.representation.position.set(position.x, position.y, position.z);
         this.shadow.position.set(position.x, this.shadowY, position.z);
     }
 
+    /**
+     * Returns the number of vouchers this balloon has.
+     * 
+     * @returns {number}
+     */
     getVouchers() {
         return this.vouchers;
     }
 
+    /**
+     * Freezes the balloon and unfreezes it after a penalty has been applied.
+     */
     freeze() {
         this.freezed = true;
 
@@ -423,6 +540,13 @@ class MyBallon {
         setTimeout(() => this.freezed = false, this.penalty);
     }
 
+    /**
+     * Freezes the balloon and replces it in the closest track point.
+     * The balloon will be unfreezed after a penalty is applied.
+     * 
+     * @param {THREE.Vector3} point - Closest track point.
+     * @returns {void}
+     */
     freezeAndReplace(point) {
         if (this.balloonAnimation.isPlaying()) {
             this.balloonAnimation.stopAnimation();
@@ -445,6 +569,12 @@ class MyBallon {
         setTimeout(() => this.freezed = false, this.penalty);
     }   
 
+    /**
+     * Tags an object that just collided with the balloon.
+     * This is used so, when the balloon unfreezes, there is a gap so the balloon can move away from the obstacle
+     * 
+     * @param {(MyObstacle|MyPowerUp|MyBallon)} object - Object that just collided with the balloon.
+     */
     #tagObject(object) {
         this.collidedObjects.push(object);
     
@@ -452,10 +582,22 @@ class MyBallon {
         setTimeout(() => this.#removeTaggedObject(object), 2000 + this.penalty);
     }
     
+    /**
+     * Removes an object from the tagged objects.
+     * 
+     * @param {(MyObstacle|MyPowerUp|MyBallon)} object - Object to remove.
+     */
     #removeTaggedObject(object) {
         this.collidedObjects = this.collidedObjects.filter((obj) => obj !== object);
     }
 
+    /**
+     * Animates a balloon so that it will follow a route and complete the track.
+     * 
+     * @param {THREE.Vector3} route - Route that has the points the balloon needs to follow.
+     * @param {number} lapTime - Time the balloon will take to finish a lap.
+     * @param {number} numLaps - Number of laps the balloon needs to finish.
+     */
     animateAutonomous(route, lapTime, numLaps) {
         let lapDistance = Math.sqrt(Math.pow(route[0].x - this.representation.position.x, 2) + Math.pow(route[0].z - this.representation.position.z, 2));
         for (let i = 1; i < route.length; i++) {
