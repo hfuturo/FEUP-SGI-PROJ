@@ -57,6 +57,10 @@
             "wood": {
                 "filepath": "textures/wood.png",
                 "isVideo": false
+            },
+            "dirt": {
+                "filepath": "textures/dirt.jpg",
+                "isVideo": false
             }
         },
         "materials": {
@@ -161,6 +165,17 @@
                 "textureref": "wood",
                 "twosided": true,
                 "texlength_t": 0.1
+            },
+            "dirt": {
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "shininess": 1.0,
+                "transparent": false,
+                "opacity": 1,
+                "textureref": "dirt",
+                "twosided": true,
+                "texlength_t": 0.5
             }
         },
         "cameras": {
@@ -259,7 +274,8 @@
                         "spike",
                         "gift",
                         "finish_lines",
-                        "bridges"
+                        "bridges",
+                        "piles_of_dirt"
                     ],
                     "sun": {
                         "type": "directionallight",
@@ -279,6 +295,64 @@
                         "color": {"r": 1.0, "g": 0.95, "b": 0.77},
                         "intensity": 1,
                         "decay": 0.1
+                    }
+                }
+            },
+            "piles_of_dirt": {
+                "type": "node",
+                "children":{
+                    "nodesList":[
+                        "left_pile_of_dirt",
+                        "right_pile_of_dirt"
+                    ]
+                }
+            },
+            "right_pile_of_dirt": {
+                "type": "node",
+                "transforms":[
+                    {"type": "translate", "amount": {"x": 45, "y": 0, "z": 62}},
+                    {"type": "rotate", "amount": {"x": 0, "y": 90, "z": 0}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "dirt"
+                    ]
+                }
+            },
+            "left_pile_of_dirt": {
+                "type": "node",
+                "transforms":[
+                    {"type": "translate", "amount": {"x": 45, "y": 0, "z": -62}},
+                    {"type": "scale", "amount": {"x": 1, "y": 1.3, "z": 1}}
+                ],
+                "children":{
+                    "nodesList":[
+                        "dirt"
+                    ]
+                }
+            },
+            "dirt": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "dirt"
+                },
+                "transforms":[
+                    {"type": "translate", "amount": {"x": 0, "y": -3, "z": 0}},
+                    {"type": "scale", "amount": {"x": 6, "y": 6, "z": 6}}
+                ],
+                "children": {
+                    "dirt": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 20,
+                        "parts_v": 20,
+                        "controlpoints": [
+                            {"x": -2, "y": 0, "z": -2 }, {"x": -1, "y": 0, "z": -1.8 }, {"x": 1, "y": 0, "z": -1.5 }, {"x": 2, "y": 0, "z": -2.2 },
+                            {"x": -2, "y": 0.3, "z": -1.3 }, {"x": -1, "y": 2.9, "z": -0.5 }, {"x": 1, "y": 3.2, "z": -2.8 }, {"x": 2, "y": 0.2, "z": -1.9 },
+                            {"x": -2, "y": 0.1, "z": 1.2 }, {"x": -1, "y": 3.5, "z": 0.8 }, {"x": 1, "y": 4.8, "z": 2.5 }, {"x": 2, "y": 0.3, "z": 1.0 },
+                            {"x": -2, "y": 0, "z": 2.1 }, {"x": -1, "y": 0.6, "z": 1.7 }, {"x": 1, "y": 0.2, "z": 2.3 }, {"x": 2, "y": 0, "z": 2.0 }
+                        ]
                     }
                 }
             },
