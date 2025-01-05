@@ -1,20 +1,25 @@
 # SGI 2024/2025 - TP3
 
-## Group: T0xG0y
+## Group: T04G05
 
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| Henrique Silva   | 202105647 | up202105647@up.pt  |
+| Tomás Gaspar     | 202108828 | up202108828@up.pt  |
 
 ----
 ## Project information
 
-- (items describing main strong points)
-- Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
-----
-## Issues/Problems
+This project consists of a hot air balloon race game. The player controls a hot air balloon and must avoid obstacles while collecting vouchers.
 
-- (items describing unimplemented features, bugs, problems, etc.)
+![](./screenshots/main_menu.png)
+Main menu
+
+![](./screenshots/game_display.png)
+Game display
+
+![](./screenshots/end_menu.png)
+End menu
+
+![](./screenshots/scene_overview.png)
+Scene overview
