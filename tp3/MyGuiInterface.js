@@ -118,12 +118,7 @@ class MyGuiInterface  {
 
         this.general.add(this.contents, 'opponentLapTime', 10, 150, 10).name('PC Lap Time')
 
-        this.#lights();
-    }
-
-    #lights() {
-        const folder = this.datgui.addFolder('Lights');
-        folder.add(this.contents.sun, 'visible').name('Sun').onChange((val) => this.contents.sun.visible = val);
+        this.general.add(this.contents.sun, 'visible').name('Sun').onChange((val) => this.contents.sun.visible = val);
     }
 
     /**

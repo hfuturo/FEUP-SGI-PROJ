@@ -611,7 +611,7 @@ class MyBallon {
                 const distance = Math.sqrt(Math.pow(point.x - positions.at(-3), 2) + Math.pow(point.z - positions.at(-1), 2));
                 const time = distance * timePerUnit;
                 times.push(times.at(-1) + time);
-                positions.push(point.x, point.y, point.z);
+                positions.push(point.x, point.y + 2, point.z);
                 shadowPositions.push(point.x, this.shadowY, point.z);
             });
         }
