@@ -83,6 +83,8 @@ class MyContents {
    * Performs actions that required the YASF scene to be loaded
    */
   onAfterSceneLoadedAndBeforeRender() {
+    this.sun = this.initializer.lightClones.sun[0];
+
     this.loadTrack();
     this.loadParkingLots();
 
