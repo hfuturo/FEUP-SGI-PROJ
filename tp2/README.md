@@ -2,6 +2,8 @@
 
 ## Group: T04G05
 
+### Grade: 17.7
+
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
 | Henrique Silva   | 202105647 | up202105647@up.pt  |
